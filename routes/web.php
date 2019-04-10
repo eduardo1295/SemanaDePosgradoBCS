@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*putos todos*/
 Route::resourceVerbs([
     'create' => 'crear',
     'edit' => 'editar',
