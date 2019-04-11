@@ -1,36 +1,77 @@
-<section id="noticias" class="w-100">
-    <div class="site-section" id="fondo">
-        <div class="container mt-2" id="contenido">
+<section id="noticias" class="row">
+
+    <div class="">
+        <h2 class="pl-3 mb-0 rounded-left" id="titulo">Noticias.</h2>
+        <div class="col-12">
             <div class="row">
-                <h2 class="w-100 d-block d-lg-none pl-3 mb-0 rounded" id="titulo">Noticias.</h2>
-                <h2 class="w-75 d-none d-lg-block pl-3 mb-0 rounded-left" id="titulo">Noticias.</h2>
-                <h2 class="w-25 d-none d-lg-block  pl-3 mb-0 rounded-right" id="titulo">Sede</h2>                          
+                @php
+                $cont=0;
+                @endphp
+                @foreach ($noticias as $noticia)
+                <div class=" nota col-4 mb-lg-0">
+                    <div class="media-with-text  mt-4">
+                        <h2 class="h5 mb-2">
+                            <a href="#">{{$noticia->titulo}}</a>
+                        </h2>
+                        <span class="mb-2 d-block post-date">
+                            {{$noticia->fecha_actualizacion}}
+                        </span>
+                        <p> {{$noticia->resumen}} </p>
+                    </div>
+                    @if ($cont + 1 == 3)
+                    <div class="d-flex justify-content-end ">
+                        <h4>
+                            <a href="/noticia" class="badge badge-success">Ver todas.</a>
+                        </h4>
+                    </div>
+                    @endif
+                    @php
+                    $cont++;
+                    @endphp
+                </div>
+                @endforeach
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+{{--
+<section id="noticias" class="">
+    <div class="site-section" id="fondo">
+        <div class="mt-2" id="contenido">
+            <div class="row">
+              <div class="col-6">
+                  <h2 class="d-none d-lg-block pl-3 mb-0 rounded-left" id="titulo">Noticias.</h2>
+              </div>
+  
             </div>
           <div class="row mb-5">
             @php
                 $cont=0;
             @endphp
               @foreach ($noticias as $noticia)
-              <div class=" nota col mb-lg-0">
+              <div class=" nota col-2 mb-lg-0">
                   <div class="media-with-text  mt-4">
                     <h2 class="h5 mb-2"><a href="#">{{$noticia->titulo}}</a></h2>
-                    <span class="mb-2 d-block post-date">{{$noticia->fecha_actualizacion}}</span>
-                    <p>{{$noticia->resumen}}
-                    </p>
-                  </div>
-                  @if ($cont+1 == 3)
-                    <div class="d-flex justify-content-end ">
-                      <h4><a href="/noticia" class="badge badge-success">Ver todas.</a></h4>
-                    </div>
-                  @endif
-                  @php
-                      $cont++;
-                  @endphp
-                  
-                </div>  
-              @endforeach
-               
-            {{-- comment
+<span class="mb-2 d-block post-date">{{$noticia->fecha_actualizacion}}</span>
+<p>{{$noticia->resumen}}
+</p>
+</div>
+@if ($cont+1 == 3)
+<div class="d-flex justify-content-end ">
+    <h4><a href="/noticia" class="badge badge-success">Ver todas.</a></h4>
+</div>
+@endif
+@php
+$cont++;
+@endphp
+
+</div>
+@endforeach
+
+{{-- comment
             
             <div class="nota col-md-6 col-lg-3 mb-lg-0">
               <div class="media-with-text mt-4">
@@ -51,9 +92,9 @@
                 <h4><a href="/noticias" class="badge badge-success">Ver todas.</a></h4>
               </div>
             </div>
-             --}}
+             
             <h2 class="w-100 pl-3 mb-3 d-block d-lg-none rounded" id="titulo">Sede</h2>             
-            <div class="col">
+            <div class="col-2">
               <div class="mt-4 pb-5">
                       <div class="col-12 content-map">
                       <div class="embed-responsive embed-responsive-16by9">
@@ -67,7 +108,7 @@
       </div>
     </div>
 </section>
-
+--}}
 {{-- comment 
 <section id="noticias">
     <div class="site-section" id="fondo">
