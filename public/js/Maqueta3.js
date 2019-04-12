@@ -115,7 +115,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\laragon\www\SemanaPosgrado\resources\js\Maqueta3.js */"./resources/js/Maqueta3.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\SemanaDePosgradoBCS\resources\js\Maqueta3.js */"./resources/js/Maqueta3.js");
 
 
 /***/ })

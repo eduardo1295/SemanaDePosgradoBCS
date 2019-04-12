@@ -133,6 +133,7 @@ return [
         'email'    => [
             'unique' => 'El :attribute ya ha sido registrado.',
         ],
+        
     ],
 
     /*
@@ -178,4 +179,5 @@ return [
         'subject'               => 'asunto',
         'message'               => 'mensaje',
     ],
+    'recaptcha'=>'Demuestra que no eres un robot!',
 ];

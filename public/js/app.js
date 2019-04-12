@@ -36703,9 +36703,9 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! c:\laragon\www\SemanaPosgrado\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! c:\laragon\www\SemanaPosgrado\resources\sass\bootstrap.scss */"./resources/sass/bootstrap.scss");
-module.exports = __webpack_require__(/*! c:\laragon\www\SemanaPosgrado\resources\sass\Maqueta1.scss */"./resources/sass/Maqueta1.scss");
+__webpack_require__(/*! C:\laragon\www\SemanaDePosgradoBCS\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\laragon\www\SemanaDePosgradoBCS\resources\sass\bootstrap.scss */"./resources/sass/bootstrap.scss");
+module.exports = __webpack_require__(/*! C:\laragon\www\SemanaDePosgradoBCS\resources\sass\Maqueta1.scss */"./resources/sass/Maqueta1.scss");
 
 
 /***/ })

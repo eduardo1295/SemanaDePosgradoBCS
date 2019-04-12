@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use App\Http\Requests\ReCaptchataTestFormRequest;
 
 class LoginController extends Controller
 {
@@ -53,7 +54,7 @@ class LoginController extends Controller
         
     }
 
-    public function adminLogin(Request $request)
+    public function adminLogin(ReCaptchataTestFormRequest $request)
     {
         /*
         $this->validate($request, [

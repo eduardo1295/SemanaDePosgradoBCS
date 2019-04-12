@@ -7,22 +7,23 @@
     </ol>
     <div class="carousel-inner" role="listbox">
       <!-- Slide One - Set the background image for this slide in the line below -->
-      <div class="carousel-item active" style="background-image: url('/images/1.jpg')">
-        <div class="carousel-caption d-none d-md-block">
+      <div class="carousel-item active" style="">
+        <img src="/images/1.jpg" alt="" class="w-100 h-100">
+        <div class="carousel-caption d-none">
           <h3 class="display-4">First Slide</h3>
           <p class="lead">This is a description for the first slide.</p>
         </div>
       </div>
       <!-- Slide Two - Set the background image for this slide in the line below -->
       <div class="carousel-item" style="background-image: url('/images/2.jpg')">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-none">
           <h3 class="display-4">Second Slide</h3>
           <p class="lead">This is a description for the second slide.</p>
         </div>
       </div>
       <!-- Slide Three - Set the background image for this slide in the line below -->
       <div class="carousel-item" style="background-image: url('/images/3.jpg')">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-none">
           <h3 class="display-4">Third Slide</h3>
           <p class="lead">This is a description for the third slide.</p>
         </div>

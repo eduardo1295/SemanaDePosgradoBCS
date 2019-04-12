@@ -4,6 +4,8 @@
 
     <link rel="stylesheet" href="/css/Login/main2.css">
 	<link rel="stylesheet" href="/css/Login/util2.css">
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+
 	<style>
 	body{
 		background: #666666
@@ -23,7 +25,7 @@
 				</div>
 				
 				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-					<input class="input100" type="text" name="email">
+					<input class="input100" type="text" name="email" value="{{ old('email') }}">
 					<span class="focus-input100"></span>
 					<span class="label-input100">Email</span>
 				</div>
@@ -42,7 +44,6 @@
 						</span>
 					</div>
 				</div>
-		
 				<div class="flex-sb-m w-full p-t-3 p-b-32">
 					<div class="contact100-form-checkbox">
 						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
@@ -50,7 +51,6 @@
 							Remember me
 						</label>
 					</div>
-
 					<div>
 						<a href="#" class="txt1">
 							Forgot Password?
@@ -58,14 +58,22 @@
 					</div>
 				</div>
 				@csrf
+				<div class="g-recaptcha mb-3" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+				</div>
+				<div class="col-sm-12">
+					@if (count($errors) > 0)
+						<div class="alert alert-danger">
+							<p>{{ $errors->first('g-recaptcha-response') }}</p>
+						</div>
+					@endif
+			
+				</div>
 				<div class="container-login100-form-btn">
 					<input type="submit" value="Login" class="login100-form-btn">
 				</div>
 			</form>
 		</div>
     </div>
-
-
 @endsection
 	
 @section('scripts')
