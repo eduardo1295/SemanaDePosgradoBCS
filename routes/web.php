@@ -5,10 +5,15 @@
 | Web Routes
 |--------------------------------------------------------------------------
 |
+<<<<<<< HEAD
 | HOLA, Como estas?, todo bien
  is where you can register web routes for your application. These
+=======
+| HOLA HOLA is where you can register web routes for your application. These
+>>>>>>> origin/cris
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
+| prueba de que se sube algo
 |
 */
 Route::resourceVerbs([
