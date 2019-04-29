@@ -167,7 +167,7 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function noticias(){
-        return view('admin.noticias.adminNoticias');
+        return view('noticias.adminNoticias');
         
     }
 
