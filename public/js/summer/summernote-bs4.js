@@ -1635,7 +1635,7 @@
         /** @property {String} blank */
         blank: blankHTML,
         /** @property {String} emptyPara */
-        emptyPara: "<p>" + blankHTML + "</p>",
+        emptyPara: "<div>" + blankHTML + "</div>",
         makePredByNodeName: makePredByNodeName,
         isEditable: isEditable,
         isControlSizing: isControlSizing,
@@ -6059,7 +6059,7 @@
             var deactivateOffsetBottom = editorOffsetBottom - otherBarHeight - toolbarHeight;
             if ((currentOffset > activateOffset) && (currentOffset < deactivateOffsetBottom)) {
                 this.$toolbar.css({
-                    position: 'fixed',
+                    position: 'relative',
                     top: otherBarHeight,
                     width: editorWidth
                 });

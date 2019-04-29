@@ -57,9 +57,6 @@ class NoticiaController extends Controller
      */
     public function store(StoreNoticiaRequest $request)
     {
-        
-        $detail=$request->contenido;
-        
         $nuevo_nombre = 'sin imagen';
         if($request->hasFile('imgnoticia')){
             
@@ -68,43 +65,16 @@ class NoticiaController extends Controller
             $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_noticia . '.' . $imagennoticia->getClientOriginalExtension();
             $imagennoticia->move(public_path('img/noticias'), $nuevo_nombre);
         }
+
         
-       $dom = new \domdocument();
-        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        /*
-        $images = $dom->getelementsbytagname('img');
- 
-        //loop over img elements, decode their base64 src and save them to public folder,
-        //and then replace base64 src with stored image URL.
-        foreach($images as $k => $img){
-            $data = $img->getattribute('src');
- 
-            list($type, $data) = explode(';', $data);
-            list(, $data)      = explode(',', $data);
- 
-            $data = base64_decode($data);
-            $image_name= time().$k.'.png';
-            $path = public_path() .'/img/noticias/'. $image_name;
- 
-            file_put_contents($path, $data);
- 
-            $img->removeattribute('src');
-            $img->setattribute('src', '/img/noticias/'.$image_name);
-        }
- */
-        $detail = $dom->savehtml();
-              
-        $summernote = new Noticia;
-        $summernote->contenido = $detail;
-        $summernote->titulo = $request->titulo;
-        $summernote->url_imagen = $nuevo_nombre;
-        $summernote->resumen = $request->resumen;
-        $summernote->creada_por= 1;
-        $summernote->contenido = $detail;
-        $summernote->save();
-        
-        return back()-> with('info','Noticia creada exitosamente');
-        return view('noticias.verNoticia',compact('summernote'));
+        $noticia = new Noticia;
+        $noticia->contenido = $request->contenido;
+        $noticia->titulo = $request->titulo;
+        $noticia->url_imagen = $nuevo_nombre;
+        $noticia->resumen = $request->resumen;
+        $noticia->creada_por= 1;
+        $noticia->save();
+        return \Response::json($noticia);
     }
 
     /**
@@ -129,9 +99,8 @@ class NoticiaController extends Controller
     public function edit($id)
     {
     
-        $noticia  = Noticia::select('id_noticia','titulo','contenido','resumen','url_imagen','fecha_actualizacion')->where('id_noticia', $id)->first();
-        
-        return view('noticias.editar',compact('noticia'));
+        $noticia  = Noticia::where('id_noticia', $id)->first();
+        return \Response::json($noticia);
     }
 
     /**
@@ -143,57 +112,29 @@ class NoticiaController extends Controller
      */
     public function update(UpdateNoticiaRequest $request, $id)
     {
-        $noticia = Noticia::where('id_noticia',$id)->first();
-        $detail=$request->contenido;
-        
-        $nuevo_nombre = 'sin imagen';
+        $noticia  = Noticia::where('id_noticia', $id)->first();
+        $nuevo_nombre = 'no_logo.png';
         if($request->hasFile('imgnoticia')){
-            
             $imagennoticia = $request->file('imgnoticia');
-            //agregar id de usuarios a nombre
             $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_noticia . '.' . $imagennoticia->getClientOriginalExtension();
             $imagennoticia->move(public_path('img/noticias'), $nuevo_nombre);
-        }
-        else{
+        }else{
             $nuevo_nombre = $noticia->url_imagen;
         }
+
         
-        $dom = new \domdocument();
-        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        /*
-        $images = $dom->getelementsbytagname('img');
- 
-        //loop over img elements, decode their base64 src and save them to public folder,
-        //and then replace base64 src with stored image URL.
-        foreach($images as $k => $img){
-            $data = $img->getattribute('src');
- 
-            list($type, $data) = explode(';', $data);
-            list(, $data)      = explode(',', $data);
- 
-            $data = base64_decode($data);
-            $image_name= time().$k.'.png';
-            $path = public_path() .'/img/noticias/'. $image_name;
- 
-            file_put_contents($path, $data);
- 
-            $img->removeattribute('src');
-            $img->setattribute('src', '/img/noticias/'.$image_name);
-        }
- */
-        $detail = $dom->savehtml();
-              
         
+        $noticia->contenido = $request->contenido;
         $noticia->titulo = $request->titulo;
-        $noticia->contenido = $detail;
         $noticia->url_imagen = $nuevo_nombre;
         $noticia->resumen = $request->resumen;
-        $noticia->creada_por= 1;
         
         $noticia->save();
+        if($noticia){
+            //borrar imagen actual
+        }
         
-        return back()-> with('info','Noticia actualizada exitosamente');
-        return view('noticias.verNoticia',compact('summernote'));
+        return \Response::json($noticia);
     }
 
     /**
