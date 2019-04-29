@@ -479,7 +479,7 @@
                         $.ajax({
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             type: "PUT",
-                            url: "{{ url('noticia/reactivar')}}" + '/' + noticia_id,
+                            url: "{{ url('admin/noticia/reactivar')}}" + '/' + noticia_id,
                             success: function (data) {
                                 var oTable = $('#noticias').dataTable();
                                 if (table.data().count() == 1) {

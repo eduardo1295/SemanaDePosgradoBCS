@@ -81,7 +81,7 @@
 
 <script>
     function initialize() {
-    var myLatlng = new google.maps.LatLng(24.5908,-111.0903);
+    var myLatlng = new google.maps.LatLng(24.508742,-110.120850);
   var mapProp = {
     center:myLatlng,
     zoom:12,
@@ -95,8 +95,8 @@
       title: 'Hello World!',
       draggable:true  
   });
-    document.getElementById('lat').value= 24.5908
-    document.getElementById('lng').value=  -111.0903
+    document.getElementById('lat').value= 51.508742
+    document.getElementById('lng').value= -0.120850  
     // marker drag event
     google.maps.event.addListener(marker,'drag',function(event) {
         document.getElementById('lat').value = event.latLng.lat();
@@ -113,6 +113,7 @@
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
 
     var SITEURL = "{{URL::to('/')}}";
     var checkInsti='activos';
@@ -359,7 +360,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "PUT",
-                                url: "{{ url('institucion/reactivar')}}" + '/' + institucion_id,
+                                url: "{{ url('admin/institucion/reactivar')}}" + '/' + institucion_id,
                                 success: function (data) {              
                                     if(table.data().count()==1){
                                         $('#instituciones').DataTable().ajax.reload();
