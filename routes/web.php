@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes aaaaaaaa
 |--------------------------------------------------------------------------
 |
 | HOLA HOLA is where you can register web routes for your application. These
@@ -16,6 +16,9 @@ Route::resourceVerbs([
     'edit' => 'editar',
 ]);
 Route::view('/crearNoticia','crearNoticia');
+
+
+
 
 Route::get('admin/VerUsuarios', 'UserController@usuarios')->name('admin.usuarios');
 Route::get('admin/listUsuarios', 'UserController@listUsuarios')->name('admin.listUsuarios');
