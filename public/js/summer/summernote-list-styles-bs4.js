@@ -14,6 +14,21 @@
     }
   })(function($) {
     $.extend(true, $.summernote.lang, {
+      "es-ES": {
+        listStyleTypes: {
+          tooltip: "Lista de estilos",
+          labelsListStyleTypes: [
+            "Numerado",
+            "Alfa menor",
+            "Alfa mayor",
+            "Lower Roman",
+            "Upper Roman",
+            "Disco",
+            "Circulo",
+            "Cuadrado"
+          ]
+        }
+      },
       "en-US": {
         listStyleTypes: {
           tooltip: "List Styles",

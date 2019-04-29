@@ -8,6 +8,20 @@
     }
   }(function ($) {
     $.extend(true,$.summernote.lang, {
+      'es-ES': { /* Español */
+        findnreplace: {
+          tooltip:            'Buscar y reemplazar',
+          findBtn:            'Buscar ',
+          findPlaceholder:    'Ingrese el texto que desea encontrar...',
+          findResult:         ' resultados encontrados para ',
+          findError:          'Nada ingresado para buscar...',
+          replaceBtn:         'Reemplazar',
+          replacePlaceholder: 'Ingrese el texto para reemplazar el texto arriba o seleccionado...',
+          replaceResult:      ', reemplazado por ',
+          replaceError:       'Nada ingresado para reemplazar...',
+          noneSelected:       'Nada seleccionado para reemplazar...'
+        }
+      },
       'en-US': { /* English */
         findnreplace: {
           tooltip:            'Find \'N Replace',
@@ -56,18 +70,18 @@
         });
         this.initialize = function () {
           var fnrBody =
-          '<div id="findnreplaceToolbar" class="note-toolbar-wrapper panel-heading d-none">' +
+          '<div id="findnreplaceToolbar" class="note-toolbar-wrapper panel-heading d-none mt-1">' +
             '<small id="findnreplace-info" class="help-block small">&nbsp;</small>' +
             '<div class="form-group">' +
-              '<div class="input-group col-xs-12">' +
+              '<div class="input-group mb-1">' +
                 '<input id="note-findnreplace-find" type="text" class="note-findnreplace-find form-control input-sm" value="" placeholder="' + lang.findnreplace.findPlaceholder + '">' +
-                '<div class="input-group-btn">' +
+                '<div class="input-group-append">' +
                   '<button class="note-findnreplace-find-btn btn btn-sm btn-default" style="width: 100px;">' + lang.findnreplace.findBtn + '</button>' +
                 '</div>' +
               '</div>' +
-              '<div class="input-group col-xs-12">' +
+              '<div class="input-group">' +
                 '<input id="note-findnreplace-replace" type="text" class="note-findnreplace-replace form-control input-sm" value="" placeholder="' + lang.findnreplace.replacePlaceholder + '">' +
-                '<div class="input-group-btn">' +
+                '<div class="input-group-append">' +
                   '<button class="note-findnreplace-replace-btn btn btn-sm btn-default" style="width: 100px;">' + lang.findnreplace.replaceBtn + '</button>' +
                 '</div>' +
               '</div>' +
