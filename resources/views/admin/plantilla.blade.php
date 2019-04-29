@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/css/admin/menu2.css">
   <link rel="stylesheet" href="/css/admin/sidebar-themes.css">
   <link rel="stylesheet" href="/css/admin/jquery.mCustomScrollbar.css" />
-  <link rel="stylesheet" href="/css/contenido.css">
+  
   @yield('estilos')
 </head>
 
