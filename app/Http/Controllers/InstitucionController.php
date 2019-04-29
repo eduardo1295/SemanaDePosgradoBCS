@@ -60,6 +60,8 @@ class InstitucionController extends Controller
                     'numero' => $request->numero, 
                     'colonia' => $request->colonia, 
                     'cp' => $request->cp,
+                    'latitud' => $request->lat,
+                    'longitud' => $request->lng,
                     'url_logo'=> $nuevo_nombre ]);
         return \Response::json($institucion);
     }
@@ -123,6 +125,8 @@ class InstitucionController extends Controller
         $institucion->colonia = $request->colonia;
         $institucion->cp = $request->cp;
         $institucion->url_logo= $nuevo_nombre;
+        $institucion->latitud = $request->lat;
+        $institucion->longitud= $lng;
         $institucion->save();
         if($institucion){
             //borrar imagen actual

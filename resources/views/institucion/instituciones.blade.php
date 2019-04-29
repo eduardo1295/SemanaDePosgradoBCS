@@ -92,7 +92,6 @@
     var marker = new google.maps.Marker({
       position: myLatlng,
       map: map,
-      title: 'Hello World!',
       draggable:true  
   });
     document.getElementById('lat').value= 24.5908
@@ -107,8 +106,6 @@
     google.maps.event.addListener(marker,'dragend',function(event) {
         document.getElementById('lat').value = event.latLng.lat();
         document.getElementById('lng').value = event.latLng.lng();
-        alert("lat=>"+event.latLng.lat());
-        alert("long=>"+event.latLng.lng());
     });
 }
 
