@@ -84,8 +84,9 @@
                     <div class="col-3 holo bordeizqabajo bordederabajo" id="contenido">
                         <div class="embed-responsive embed-responsive-16by9 mt-3">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7281.759518255637!2d-110.3471169338684!3d24.14086048631198!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ae2cbee53fa875%3A0xbad08a31e0884b0d!2sCICIMAR!5e0!3m2!1ses-419!2smx!4v1553490975941"
+                                src="http://maps.google.com/maps?q=+{{$institucionSede->latitud}}+, +{{$institucionSede->longitud}}+&z=15&output=embed"
                                 frameborder="0" style="border:0" allowfullscreen></iframe>
+                                
                         </div>
                     </div>
                 </div>
