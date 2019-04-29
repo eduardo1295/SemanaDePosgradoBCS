@@ -1,10 +1,10 @@
 <section class="footer">
     <div class="container footer-block">
         <div class="row">
-            <div class="col-12 mb-3 mb-md-5">
+            <div class="col-12 mb-3">
                 <p><h2 class="text-center" id="Titulo">Contactos</h2></p>
             </div>
-            <div class="col-12 col-lg-6 mb-3 mb-md-5">
+            <div class="col-12 col-lg-6 mb-3 mb-md-2">
                 <div class="row">
                     <div class="col-12 col-md-3">
                             <img src="/img/tec_logo.png" alt="" class="img-fluid d-block d-md-inline mx-auto">
@@ -27,7 +27,7 @@
                 </div>
                 
             </div>
-            <div class="col-12 col-lg-6 mb-3 mb-md-5">
+            <div class="col-12 col-lg-6 mb-3 mb-md-3">
                 <div class="row">
                     <div class="col-12 col-md-3">
                     <img src="/img/aubcs_logo.png" alt="" class="img-fluid d-block d-md-inline mx-auto">
@@ -134,72 +134,11 @@
         </div>
     </div>
 </section>
-{{-- comment 
 
-<div class="footer">
-    <!-- footer-->
-    <div class="container">
-      <div class="footer-block">
-        <!-- footer block -->
-        <div class="row">
-          <div class="col-12 text-center">
-            <div class="footer-widget widget-newsletter">
-              <!-- newsletter block -->
-              <h2 class="widget-title">Contactos</h2>
-              <div class="row">
-                <div class="col-12 col-sm-6">
-                  <div class="widget-title">
-                    <p><i>Cicimar</i> <i class="far fa-flag" data-toggle="tooltip" data-placement="top" title="Sede" style="color: gold" ></i></p> 
-                    <i class="far fa-address-card"> Coordinador:</i> Dra. Norma Y. Hernández Saavedra <p></p>
-                    <i class="far fa-envelope" aria-hidden="true"> email:</i> <a href="mailto:nhernan04@cibnor.mx">nhernan04@cibnor.mx</a> 
-                  </div>
-                </div>
-                <div class="col-12 col-sm-6">
-                  <div class="widget-title">
-                    <p><i>TecNM</i></p>
-                    <i class="far fa-address-card"> Coordinador:</i> Dr. Lorenzo Fidel Cota Verdugo <p></p>
-                    <i class="far fa-envelope" aria-hidden="true"> email:</i> <a href="mailto:lfcota@itlp.edu.mx">lfcota@itlp.edu.mx</a>   
-                  </div>
-
-                </div>
-
-                <div class="col-12 col-sm-6">
-                  <div class="widget-title">
-                    <p><i>UABCS</i></p>
-                    <i class="far fa-address-card"> Coordinador:</i> Dr. Ricardo Bórquez Reyes <p></p>
-                    <i class="far fa-envelope" aria-hidden="true"> email:</i> <a href="mailto:apoyopos@uabcs.mx">apoyopos@uabcs.mx</a>  
-                  </div>
-
-                </div>
-
-                <div class="col-12 col-sm-6">
-                  <div class="widget-title">
-                    <p><i>Cicimar</i></p>
-                    <i class="far fa-address-card"> Coordinador:</i> Dr. Silverio López López <p></p>
-                    <i class="far fa-envelope" aria-hidden="true"> email:</i> <a href="mailto:silopez@ipn.mx">silopez@ipn.mx</a>  
-                  </div>
-                </div>
-                <!-- /input-group -->
-              </div>
-            </div>
-          </div>
-          </div>
+<section class="endfooter">
+    <div class="container-fluid">
+        <div class="text-center pb-3 pt-3">
+            Copyright © 2019 Todos los derechos reservados.
         </div>
-          <!-- /.tiny footer block -->
-        </div>
-        <!-- /.footer block -->
-      </div>
     </div>
-    <!--
-     jQuery (necessary for Bootstrap's JavaScript plugins) 
-    <script src="/js/jquery.min.js"></script>
-     Include /all compiled plugins (below), or include individual files as needed
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/menumaker.js"></script>
-     sticky header 
-    <script src="/js/jquery.sticky.js"></script>
-    <script src="/js/sticky-header.js"></script>
-    -->
-  </div>
-
-  --}}
+</section>

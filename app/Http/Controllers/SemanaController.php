@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Noticia;
-
+use App\Institucion;
 class SemanaController extends Controller
 {
     /**
@@ -15,8 +15,12 @@ class SemanaController extends Controller
     public function index()
     {
         $noticias = Noticia::latest('fecha_creacion')->take(3)->get();
-      
-        return view('Maqueta2', compact('noticias'));
+        $instituciones = Institucion::all();
+        
+        foreach ($instituciones as $u) {
+            echo($u->nombre);
+        }
+        return view('Maqueta2', compact(['noticias','instituciones']));
     }
 
     /**

@@ -42,6 +42,14 @@
                             <div class="col-11 pl-0">
                                 <span>Coordinador: </span>Dr. Lorenzo Fidel Cota Verdugo 
                            </div>
+                            <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
+                                <i class="fas fa-location-arrow"></i>
+                            </div>
+                            <div class="col-11 pl-0">
+                                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                                    Launch demo modal
+                                  </button>
+                            </div>
                         </div>
                   </div>
                 </div>
