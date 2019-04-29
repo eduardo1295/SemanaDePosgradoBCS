@@ -27,7 +27,7 @@ Route::get('excel', 'UserController@cargaExcel')->name('excel');
 Route::resource('admin', 'UserController')->middleware('auth:admin');
 
 
-Route::get('institucion/VerInstituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
+Route::get('admin/institucion/VerInstituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
 Route::get('institcucion/listUsuarios', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');
 Route::put('institucion/reactivar/{institucion}', 'InstitucionController@reactivar')->name('institucion.reactivar');
 

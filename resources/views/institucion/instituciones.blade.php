@@ -15,7 +15,7 @@
             <strong> </strong>
         </div>
     </div>
-    <div class="row  space-xx-small">
+    <div class="row mb-2">
         <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras instituciones</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
@@ -77,10 +77,48 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+
 <script>
+    function initialize() {
+    var myLatlng = new google.maps.LatLng(24.5908,-111.0903);
+  var mapProp = {
+    center:myLatlng,
+    zoom:12,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+      
+  };
+  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Hello World!',
+      draggable:true  
+  });
+    document.getElementById('lat').value= 24.5908
+    document.getElementById('lng').value=  -111.0903
+    // marker drag event
+    google.maps.event.addListener(marker,'drag',function(event) {
+        document.getElementById('lat').value = event.latLng.lat();
+        document.getElementById('lng').value = event.latLng.lng();
+    });
+
+    //marker drag event end
+    google.maps.event.addListener(marker,'dragend',function(event) {
+        document.getElementById('lat').value = event.latLng.lat();
+        document.getElementById('lng').value = event.latLng.lng();
+        alert("lat=>"+event.latLng.lat());
+        alert("long=>"+event.latLng.lng());
+    });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
     var SITEURL = "{{URL::to('/')}}";
     var checkInsti='activos';
     $(document).ready(function () {
+
+        
         $.extend($.fn.dataTableExt.oStdClasses, {
             "sFilterInput": "busqueda",
             "sLengthSelect": ""
@@ -138,7 +176,8 @@
 
         $("#close-sidebar").click(function () {
             //table.columns.adjust().responsive.recalc().draw('page');
-
+            $('.mensajeError').text("");
+            $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
         });
 
         $("#show-sidebar").click(function () {
@@ -203,10 +242,11 @@
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
             var institucion_id = $(this).data('id');
-            $.get(institucion_id + '/editar', function (data) {
+            var ruta = "{{url('institucion')}}/" + institucion_id + "/editar";
+            $.get(ruta, function (data) {
                 //$('#name-error').hide();
                 //$('#direccion_web-error').hide();
-                $('#institucionCrudModal').html("Editar institución");
+                $('#institucionCrudModal').html("Editar institución: "+data.nombre);
                 $('#btn-save').val("editar");
                 $('#institucion-crud-modal').modal('show');
                 $('#institucion_id').val(data.id);
@@ -404,7 +444,7 @@
                     $('#mensaje-acciones').removeClass('alert-warning');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    
+                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     
                     
                 },
@@ -424,7 +464,7 @@
         } else if (actionType == "crear-institucion") {
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
-            var ruta = "{{route('institucion.store')}}";
+            
             
             
             $.ajax({
@@ -452,6 +492,7 @@
                     $('#mensaje-acciones').removeClass('alert-warning');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
+                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -466,6 +507,14 @@
 
     })
 
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        if (!fileName.trim()) {
+            $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
+        } else {
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        }
+    });
 </script>
 @endsection
 
@@ -477,6 +526,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <style>
+    .custom-file-input~.custom-file-label::after {
+        content: "Elegir";
+    }
     tfoot input {
         width: 100%;
         padding: 3px;
@@ -500,6 +552,27 @@
         outline: 0;
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
     }
+    .fullscreen-modal .modal-dialog {
+  
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .fullscreen-modal .modal-dialog {
+    max-width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .fullscreen-modal .modal-dialog {
+    max-width: 90%;
+  }
+}
+@media (min-width: 1200px) {
+  .fullscreen-modal .modal-dialog {
+    max-width: 70%;
+  }
+}
 </style>
 
 @endsection
