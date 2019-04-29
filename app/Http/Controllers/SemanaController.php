@@ -16,11 +16,11 @@ class SemanaController extends Controller
     {
         $noticias = Noticia::latest('fecha_creacion')->take(3)->get();
         $instituciones = Institucion::all();
-        
+        $institucionSede =  Institucion::select('id','sede','latitud','longitud')->where('sede', 1)->first();
         foreach ($instituciones as $u) {
             echo($u->nombre);
         }
-        return view('Maqueta2', compact(['noticias','instituciones']));
+        return view('Maqueta2', compact(['noticias','instituciones','institucionSede']));
     }
 
     /**

@@ -60,8 +60,8 @@ class InstitucionController extends Controller
                     'numero' => $request->numero, 
                     'colonia' => $request->colonia, 
                     'cp' => $request->cp,
-                    'latitud' => $request->lat,
-                    'longitud' => $request->lng,
+                    'latitud' => $request->latitud,
+                    'longitud' => $request->longitud,
                     'url_logo'=> $nuevo_nombre ]);
         return \Response::json($institucion);
     }
@@ -124,9 +124,10 @@ class InstitucionController extends Controller
         $institucion->numero = $request->numero;
         $institucion->colonia = $request->colonia;
         $institucion->cp = $request->cp;
+        $institucion->latitud = $request->latitud;
+        $institucion->longitud=  $request->longitud;
         $institucion->url_logo= $nuevo_nombre;
-        $institucion->latitud = $request->lat;
-        $institucion->longitud= $lng;
+        
         $institucion->save();
         if($institucion){
             //borrar imagen actual
@@ -177,7 +178,7 @@ class InstitucionController extends Controller
     public function listInstituciones(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $selectinstituciones = Institucion::select('id','nombre','direccion_web','telefono','calle','colonia','numero','cp','fecha_actualizacion');
+            $selectinstituciones = Institucion::select('id','nombre','direccion_web','telefono','calle','colonia','numero','cp','latitud','longitud','fecha_actualizacion');
             /*
             return datatables()->of($selectinstituciones)
             ->addColumn('direccion', function($Dir){
@@ -196,7 +197,7 @@ class InstitucionController extends Controller
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $selectinstituciones = Institucion::onlyTrashed()->get(['id','nombre','direccion_web','telefono','calle','colonia','numero','cp','fecha_actualizacion']);
+            $selectinstituciones = Institucion::onlyTrashed()->get(['id','nombre','direccion_web','telefono','calle','colonia','numero','cp','latitud','longitud','fecha_actualizacion']);
             /*
             return datatables()->of($selectinstituciones)
             ->addColumn('direccion', function($Dir){

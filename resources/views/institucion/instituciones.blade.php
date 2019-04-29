@@ -80,36 +80,35 @@
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
 
 <script>
+    var lati = 24.5908;
+    var longi = -111.0903;
+    var myLatlng = new google.maps.LatLng(lati,longi);
+        var mapProp = {
+            center:myLatlng,
+            zoom:15,
+            mapTypeId:google.maps.MapTypeId.ROADMAP   
+        };
+        var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            draggable:true  
+        });
     function initialize() {
-    var myLatlng = new google.maps.LatLng(24.5908,-111.0903);
-  var mapProp = {
-    center:myLatlng,
-    zoom:12,
-    mapTypeId:google.maps.MapTypeId.ROADMAP
-      
-  };
-  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
-    var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      draggable:true  
-  });
-    document.getElementById('lat').value= 24.5908
-    document.getElementById('lng').value=  -111.0903
-    // marker drag event
-    google.maps.event.addListener(marker,'drag',function(event) {
-        document.getElementById('lat').value = event.latLng.lat();
-        document.getElementById('lng').value = event.latLng.lng();
-    });
+        // marker drag event
+        google.maps.event.addListener(marker,'drag',function(event) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
 
-    //marker drag event end
-    google.maps.event.addListener(marker,'dragend',function(event) {
-        document.getElementById('lat').value = event.latLng.lat();
-        document.getElementById('lng').value = event.latLng.lng();
-    });
-}
+        //marker drag event end
+        google.maps.event.addListener(marker,'dragend',function(event) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
+    }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', initialize);
 
     var SITEURL = "{{URL::to('/')}}";
     var checkInsti='activos';
@@ -184,57 +183,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             $('#instituciones').DataTable().ajax.reload(null, false);
         });
 
-        /*Accion al presionar el boton crear-institucion*/
-        $('#crear-institucion').click(function () {
-
-            $('#btn-save').val("crear-institucion");
-            $('#institucion_id').val('');
-            $('#institucionForm').trigger("reset");
-            $('#institucionCrudModal').html("Agregar nueva institución");
-            $('#institucion-crud-modal').modal({ backdrop: 'static', keyboard: false })
-            $('#institucion-crud-modal').modal('show');
-            $('#imglogo').prop('src',"");
-            //$('#imglogo').width('0').height('0');
-            $('#logoactual').html('');
-            
-            //$('#col-logo').html('');
-
-            
-            //obtener todos los renglones (no server side)
-            /*
-            myTable = $('#instituciones').DataTable();
-            var form_data  = myTable.rows().data();
-            var x ="";
-            $.each( form_data, function( key, value ) {
-                x+= key + ": " + value.nombre ;
-            });
-            alert(x);
-            */
-            /*
-            var req = $('#instituciones').DataTable().ajax.params();
-            
-            // Reset request parameters to retrieve all records
-            req.start = 0;
-            req.length = -1;
-            req.search.value = "";
-
-            $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                url: '{{ route("institucion.listInstituciones")}}',
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                    
-                },
-
-            });
-            */
-            //console.log($('#instituciones').DataTable().ajax.params());
-
-        });
+        
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
@@ -263,7 +212,30 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     //$('#imglogo').width('260').height('160');
                 //}
                 $('#logoactual').html('Logo actual');
-                
+                lati = data.latitud;
+longi = data.longitud;
+var Latlng = new google.maps.LatLng(lati,longi);
+mapProp = {
+            center:Latlng,
+            zoom:15,
+            mapTypeId:google.maps.MapTypeId.ROADMAP   
+        };
+        map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            var marker = new google.maps.Marker({
+            position: Latlng,
+            map: map,
+            draggable:true  
+        });
+        google.maps.event.addListener(marker,'drag',function(event) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
+
+        //marker drag event end
+        google.maps.event.addListener(marker,'dragend',function(event) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
                 
                 //var image = new Image();
                 //image.style = "width:304px;height:228px;";
@@ -386,6 +358,81 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
     });
 
+/*Accion al presionar el boton crear-institucion*/
+$('#crear-institucion').click(function () {
+
+$('#btn-save').val("crear-institucion");
+$('#institucion_id').val('');
+$('#institucionForm').trigger("reset");
+$('#institucionCrudModal').html("Agregar nueva institución");
+$('#institucion-crud-modal').modal({ backdrop: 'static', keyboard: false })
+$('#institucion-crud-modal').modal('show');
+$('#imglogo').prop('src',"");
+//$('#imglogo').width('0').height('0');
+$('#logoactual').html('');
+lati = 24.141474;
+longi = -110.31314;
+var Latlng = new google.maps.LatLng(lati,longi);
+mapProp = {
+            center:Latlng,
+            zoom:15,
+            mapTypeId:google.maps.MapTypeId.ROADMAP   
+        };
+map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            var marker = new google.maps.Marker({
+            position: Latlng,
+            map: map,
+            draggable:true  
+        });
+        // marker drag event
+        google.maps.event.addListener(marker,'drag',function(event) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
+
+        //marker drag event end
+        google.maps.event.addListener(marker,'dragend',function(event) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
+//$('#col-logo').html('');
+
+
+//obtener todos los renglones (no server side)
+/*
+myTable = $('#instituciones').DataTable();
+var form_data  = myTable.rows().data();
+var x ="";
+$.each( form_data, function( key, value ) {
+    x+= key + ": " + value.nombre ;
+});
+alert(x);
+*/
+/*
+var req = $('#instituciones').DataTable().ajax.params();
+
+// Reset request parameters to retrieve all records
+req.start = 0;
+req.length = -1;
+req.search.value = "";
+
+$.ajax({
+    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+    url: '{{ route("institucion.listInstituciones")}}',
+    dataType: 'json',
+    success: function (data) {
+        console.log(data);
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        
+    },
+
+});
+*/
+//console.log($('#instituciones').DataTable().ajax.params());
+
+});
 
     $('#btn-close').click(function () {
         $('.mensajeError').text("");

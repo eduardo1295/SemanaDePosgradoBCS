@@ -107,8 +107,8 @@
                             <label for="googleMap" class="control-label">Ubicación</label>
 
                             <div id="googleMap" style="height: 300px;"></div>
-                            <input type='hidden' name='lat' id='lat'>
-                            <input type='hidden' name='lng' id='lng'>
+                            <input type='hidden' name='latitud' id='lat'>
+                            <input type='hidden' name='longitud' id='lng'>
                         </div>
 
                     </div>
