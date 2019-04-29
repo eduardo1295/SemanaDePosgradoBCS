@@ -28,15 +28,15 @@ Route::resource('admin', 'UserController')->middleware('auth:admin');
 
 
 Route::get('admin/institucion/VerInstituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
-Route::get('institcucion/listUsuarios', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');
-Route::put('institucion/reactivar/{institucion}', 'InstitucionController@reactivar')->name('institucion.reactivar');
+Route::get('admin/institcucion/listUsuarios', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');
+Route::put('admin/institucion/reactivar/{institucion}', 'InstitucionController@reactivar')->name('institucion.reactivar');
 
 Route::resource('institucion', 'InstitucionController');
 
 Route::get('admin/noticias/VerNoticias', 'NoticiaController@noticias')->name('noticia.VerNoticias');
-Route::get('noticia/listNoticias', 'NoticiaController@listNoticias')->name('noticia.listNoticias');
-Route::get('noticia/fetch_data', 'NoticiaController@fetch_data');
-Route::put('noticia/reactivar/{noticia}', 'NoticiaController@reactivar')->name('noticia.reactivar');
+Route::get('admin/noticia/listNoticias', 'NoticiaController@listNoticias')->name('noticia.listNoticias');
+Route::get('admin/noticia/fetch_data', 'NoticiaController@fetch_data');
+Route::put('admin/noticia/reactivar/{noticia}', 'NoticiaController@reactivar')->name('noticia.reactivar');
 Route::resource('noticia', 'NoticiaController');
 Route::resource('semana', 'SemanaController');
 

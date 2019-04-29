@@ -49,7 +49,7 @@
             <div class="col-12 hololo mb-4" id="noticias">
                 <div class="row">
                     <div class="col-9 hololo d-flex justify-content-between align-items-center bordeizqarriba bordederarriba" id="titulo">
-                        <h2 class="pl-3  mb-0 rounded-left">Noticias.</h2>
+                        <h2 class="mb-0 rounded-left">Noticias.</h2>
                         <h4 class="mb-0" > <a href="/noticia" class="badge badge-primary mb-0 align-self-center">Ver todas <i class="fas fa-arrow-circle-right"></i></a> </h4>
 
                     </div>
