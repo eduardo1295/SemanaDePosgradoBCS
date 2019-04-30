@@ -102,36 +102,48 @@
 
 /*-------------- Noticias ------------*/                
 #noticias #fondo { background: white; }
-#noticias #contenido { background: #eeeeee; border-radius: 10px; }
+#noticias #contenido { background: #eeeeee;}
 #noticias #fondo #contenido h2 a{ color: black; }
-#noticias #titulo{ background: #dad6d6;}
+#noticias #titulo1{ background: #dad6d6; border-top-left-radius: 15px; border-top-right-radius: 15px} 
+#noticias #titulo2{ background: #dad6d6; border-top-left-radius: 20px; border-top-right-radius: 15px} 
+#noticias .nota { 
+    display: inline-block; vertical-align: middle; -webkit-transform: perspective(1px) translateZ(0); transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0); position: relative; -webkit-transition-property: color; transition-property: color; -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
 
-#noticias .nota { display: inline-block; vertical-align: middle; -webkit-transform: perspective(1px) translateZ(0); transform: perspective(1px) translateZ(0);
-        box-shadow: 0 0 1px rgba(0, 0, 0, 0); position: relative; -webkit-transition-property: color; transition-property: color; -webkit-transition-duration: 0.3s;
-        transition-duration: 0.3s;}
-.nota:before { content: ""; position: absolute; z-index: -1; top: 0; left: 0; right: 0; bottom: 0; /*background: rgb(231, 76, 76);*/
-    /*background: rgb(76, 182, 231);*/background: -moz-linear-gradient(top, white, #2098D1); background: -webkit-linear-gradient(top, white, #2098D1);
+#noticias .n1{
+    border-bottom-left-radius: 15px;
+}
+#noticias .n3{
+    border-bottom-right-radius: 15px;
+    
+}
+.n4{
+    border-left: 10px solid white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+}
+
+.nota:before { 
+    content: ""; position: absolute; z-index: -1; top: 0; left: 0; right: 0; bottom: 0; /*background: rgb(231, 76, 76);*/
+    background: -moz-linear-gradient(top, white, #2098D1); background: -webkit-linear-gradient(top, white, #2098D1);
     -webkit-transform: scaleY(0); transform: scaleY(0); -webkit-transform-origin: 50% 100%; transform-origin: 50% 100%; -webkit-transition-property: transform;
     transition-property: transform; -webkit-transition-duration: 0.3s;  transition-duration: 0.3s; -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out; }
 .nota:hover, .nota:focus, .nota:active { color: black; }
 .nota:hover:before, .nota:focus:before, .nota:active:before { -webkit-transform: scaleY(1); transform: scaleY(1); }
 
+
+
 /*-----------------------------Infomacion----------------------------------------*/
 #info #fondo{ background: white; }
 
-
-/*#info #contenido, #Mapa { background: #eeeeee; border-radius: 15px; }
-#info h2, #Mapa h2{ background: #dad6d6; border-top-left-radius: 15px; border-top-right-radius: 15px;}
-*/
 .contenidoPrincipal { background: #eeeeee; border-radius: 15px; }
 .contenidoSubPrincipal{ background: #dad6d6; border-top-left-radius: 15px; border-top-right-radius: 15px;}
-
 #about { margin-top: -20px;}
-
-
 #noticias #about .content-map{ background: #282725; border-radius: 15px; }
-
 
 
 /*carrusel Instituciones*/
@@ -206,19 +218,6 @@
     background: #cfcfcf;
 }
 
-
-.nota{
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    overflow: hidden;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: red, blue;
-    transition-property: red, blue;
-}
 
 #tituloNoticia{
     color: black;

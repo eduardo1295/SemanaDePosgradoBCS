@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Noticia;
 use App\Institucion;
+use DB;
 class SemanaController extends Controller
 {
     /**
@@ -15,8 +16,8 @@ class SemanaController extends Controller
     public function index()
     {
         $noticias = Noticia::latest('fecha_creacion')->take(3)->get();
-        $instituciones = Institucion::all();
-        $institucionSede =  Institucion::select('id','sede','latitud','longitud')->where('sede', 1)->first();
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         foreach ($instituciones as $u) {
             echo($u->nombre);
         }
