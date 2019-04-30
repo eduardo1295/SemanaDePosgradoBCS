@@ -19,7 +19,7 @@ class Institucion extends Model
      * @var array
      */
     protected $fillable = [
-        'id_institucion', 'nombre', 'telefono', 'ciudad', 'calle', 'numero', 'colonia', 'cp', 'direccion_web', 'url_logo', 'req_horas_minimas', 'horas_minimas', 'sede', 'creado_por', 'actualizado_por',
+        'id_institucion', 'nombre', 'telefono', 'ciudad', 'calle', 'numero', 'colonia', 'cp', 'direccion_web', 'latitud','longitud', 'url_logo', 'req_horas_minimas', 'horas_minimas', 'sede', 'creado_por', 'actualizado_por',
     ];
 
     protected $dates = ['deleted_at'];
