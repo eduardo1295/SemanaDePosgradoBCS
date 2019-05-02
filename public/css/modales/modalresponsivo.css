@@ -1,0 +1,21 @@
+.fullscreen-modal .modal-dialog {
+  
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 100%;
+  }
+  @media (min-width: 768px) {
+    .fullscreen-modal .modal-dialog {
+      max-width: 750px;
+    }
+  }
+  @media (min-width: 992px) {
+    .fullscreen-modal .modal-dialog {
+      max-width: 90%;
+    }
+  }
+  @media (min-width: 1200px) {
+    .fullscreen-modal .modal-dialog {
+      max-width: 70%;
+    }
+  }

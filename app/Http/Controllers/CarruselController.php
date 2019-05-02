@@ -161,14 +161,14 @@ class CarruselController extends Controller
     public function listCarrusel(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $selectcarrusel = Carrusel::select('id','titulo','contenido','url_imagen','fecha_actualizacion');
+            $selectcarrusel = Carrusel::select('id','titulo','url_imagen','fecha_actualizacion');
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.acciones')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $selectcarrusel = Carrusel::onlyTrashed()->get(['id','titulo','contenido','url_imagen','fecha_actualizacion']);
+            $selectcarrusel = Carrusel::onlyTrashed()->get(['id','titulo','url_imagen','fecha_actualizacion']);
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.reactivar')
             ->rawColumns(['action'])

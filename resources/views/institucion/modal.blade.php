@@ -86,29 +86,43 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        
+
 
                         <div class="form-group col-md-6">
                             <p id="imagenlogo"> Logo:</p>
                             <div class="custom-file">
-                                <input type="file" name="logo" class="custom-file-input" id="logo" lang="es">
+                                <input type="file" name="logo" class="custom-file-input" id="logo" lang="es"  onchange="readURL(this,'vistaPrevia');mostrar('nuevoLogo');">
                                 <label for="logo" class="custom-file-label">Seleccionar Archivo</label>
                             </div>
 
-                            <span class="mensajeError" id="imgnoticia_error"></span>
-                            <label for="imglogo" id="logoactual" class="control-label"></label>
+                            <span class="mensajeError" id="logo"></span>
+                            <div class="row">
 
-                            <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
-                                <img src="" alt="" id="imglogo" class="img-fluid mx-auto">
+                            
+                                <div id="logoAnterior" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                    <label for="imglogo" id="logoactual" class="control-label"></label>
+
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <img src="" alt="" id="imglogo" class="img-fluid mx-auto">
+                                    </div>
+                                </div>
+                                <div id="nuevoLogo" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-none">
+                                    <label for="imglogo" id="textVP" class="control-label">Nuevo Logo</label>
+
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <img src="" alt="" id="vistaPrevia" class="img-fluid mx-auto">
+                                    </div>
                             </div>
                         </div>
+                        </div>
+
 
                         <div class="form-group col-md-6" id="col-logo">
                             <label for="googleMap" class="control-label">Ubicación</label>
 
                             <div id="googleMap" style="height: 300px;"></div>
-                            <input type='hidden' name='latitud' id='lat'>
-                            <input type='hidden' name='longitud' id='lng'>
+                            <input type='hidden' name='lat' id='lat'>
+                            <input type='hidden' name='lng' id='lng'>
                         </div>
 
                     </div>

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Instituciones registradas
+                Imagenes en carrusel
             </h1>
         </div>
 
@@ -16,34 +16,33 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras instituciones</legend>
+        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras carrusel</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
+                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verSlider" value="activos">
                 <label class="form-check-label" for="inlineRadio1">Activas</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" name="verInsti" value="eliminados">
+                <input class="form-check-input" type="radio" id="inlineRadio2" name="verSlider" value="eliminados">
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-6">
             <div class="d-flex justify-content-end">
-                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-institucion"><span><i
-                            class="fas fa-plus"></i></span> Nueva Institución</a>
+                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-carrusel"><span><i
+                            class="fas fa-plus"></i></span> Nueva Imagen</a>
 
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="display" cellspacing="0" style="width:100%" id="instituciones">
+            <table class="display" cellspacing="0" style="width:100%" id="carruselLista">
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Nombre</th>
-                        <th>Direccion Web</th>
-                        <th>Telefono</th>
+                        <th>Titulo</th>
+                        <th>Imagen</th>
                         <th id="lad">Última actualización</th>
                         <th>Acciones</th>
                     </tr>
@@ -52,7 +51,6 @@
                     <tr>
                         <th></th>
                         <th></th>
-                        <th class="text-input">Direccion Web</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -68,7 +66,7 @@
 
 @endsection
 @section('extra')
-@include('institucion.modal')
+@include('carrusel.modal')
 @endsection
 @section('scripts')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -77,41 +75,13 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+
 <script src="/js/imagenes/vistaprevia.js"></script>
 
 <script>
-    var lati = 24.141474;
-    var longi = -110.31314; 
-    var posInicial = new google.maps.LatLng(lati,longi);
-
-    function iniciarMapa(posicion){
-        mapProp = {
-            center: posicion,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMA
-        };
-        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-        marker = new google.maps.Marker({
-            position: posicion,
-            map: map,
-            draggable: true
-        });
-        google.maps.event.addListener(marker, 'drag', function (event) {
-            $('#lat').val(event.latLng.lat());
-            $('#lng').val(event.latLng.lng());
-        })
-        //marker drag event end
-        google.maps.event.addListener(marker, 'dragend', function (event) {
-            $('#lat').val(event.latLng.lat());
-            $('#lng').val(event.latLng.lng());
-        });
-    }
-    google.maps.event.addDomListener(window, 'load', iniciarMapa(posInicial));    
-
 
     var SITEURL = "{{URL::to('/')}}";
-    var checkInsti = 'activos';
+    var checkSlide = 'activos';
     
     $(document).ready(function () {
 
@@ -120,12 +90,12 @@
             "sLengthSelect": ""
         });
 
-        $('#instituciones tfoot  th.text-input').each(function (i) {
+        $('#carruselLista tfoot  th.text-input').each(function (i) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
         });
 
-        var table = $('#instituciones').DataTable({
+        var table = $('#carruselLista').DataTable({
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -137,36 +107,22 @@
             "serverSide": true,
             "search": true,
             "ajax": {
-                "url": '{{ route("institucion.listInstituciones")}}',
+                "url": '{{ route("carrusel.listcarrusel")}}',
                 "data": function (d) {
-                    d.busqueda = checkInsti
+                    d.busqueda = checkSlide
                 }
-            },
-            initComplete: function () {
-                var api = this.api();
-                api.columns(2).every(function () {
-                    var that = this;
-                    $('input', this.footer()).on('keyup change', function () {
-                        if (that.search() !== this.value) {
-                            that
-                                .search(this.value)
-                                .draw();
-                        }
-                    });
-                })
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
-                { data: 'nombre', searchable: true },
-                { data: 'direccion_web', searchable: true },
-                { data: 'telefono', searchable: true },
-                { data: 'direccion', searchable: false },
+                { data: 'titulo', searchable: true },
+                { data: 'url_imagen', searchable: false },
+                { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 5 },
-                { width: 105, targets: 5 }
+                { responsivePriority: 2, targets: 3 },
+                { width: 105, targets: 3 }
             ]
         });
 
@@ -178,21 +134,21 @@
         });
 
         $("#show-sidebar").click(function () {
-            $('#instituciones').DataTable().ajax.reload(null, false);
+            $('#carruselLista').DataTable().ajax.reload(null, false);
         });
 
 
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
-            var institucion_id = $(this).data('id');
-            var ruta = "{{url('institucion')}}/" + institucion_id + "/editar";
+            var carrusel_id = $(this).data('id');
+            var ruta = "{{url('carrusel')}}/" + carrusel_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
-                $('#institucionCrudModal').html("Editar institución: " + data.nombre);
+                $('#carruselCrudModal').html("Editar imagen: " + data.nombre);
                 $('#btn-save').val("editar");
-                $('#institucion-crud-modal').modal('show');
-                $('#institucion_id').val(data.id);
+                $('#carrusel-crud-modal').modal('show');
+                $('#carrusel_id').val(data.id);
                 $('#nombre').val(data.nombre);
                 $('#direccion_web').val(data.direccion_web);
                 $('#telefono').val(data.telefono);
@@ -203,12 +159,6 @@
                 $('#cp').val(data.cp);
                 $('#imglogo').prop('src', "{{url('img/logo')}}/" + data.url_logo);
                 $('#logoactual').html('Logo actual');
-                lati = data.latitud;
-                longi = data.longitud;
-                $('#lat').val(data.latitud);
-                $('#lng').val(data.longitud);
-                var Latlng = new google.maps.LatLng(parseFloat(lati), parseFloat(longi));
-                iniciarMapa(Latlng);
                 $('#logoAnterior').removeClass('d-none');
 
             })
@@ -217,10 +167,10 @@
         //var info = table.page.info();
         /*Accion al presionar el boton eliminar*/
         $('body').on('click', '.eliminar', function () {
-            var institucion_id = $(this).data("id");
+            var carrusel_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: '¿Desea eliminar la institución?',
+                title: '¿Desea eliminar la imagen?',
                 content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
@@ -241,13 +191,13 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "DELETE",
-                                url: "{{ url('institucion')}}" + '/' + institucion_id,
+                                url: "{{ url('carrusel')}}" + '/' + carrusel_id,
                                 success: function (data) {
 
                                     if (table.data().count() == 1) {
-                                        $('#instituciones').DataTable().ajax.reload();
+                                        $('#carruselLista').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#instituciones').dataTable();
+                                        var oTable = $('#carruselLista').dataTable();
                                         oTable.fnDraw(false);
                                     }
                                     //$("#mensaje-acciones").text("Institución eliminada exitosamente.");
@@ -256,11 +206,8 @@
                                     //$('#mensaje-acciones').addClass('alert-warning');
                                     //$('#mensaje-acciones').removeClass('alert-success');
 
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución eliminada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                                    //$('#carruselLista').DataTable().ajax.reload(null, false);
+                                    //$('#carruselLista').DataTable().ajax.reload();
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -279,10 +226,10 @@
 
         /*Accion al presionar el boton reactivar*/
         $('body').on('click', '.reactivar', function () {
-            var institucion_id = $(this).data("id");
+            var carrusel_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: "¿Desea reactivar la institución?",
+                title: "¿Desea reactivar la imagen?",
                 content: 'This dialog will automatically trigger \'cancel\' in 8 seconds if you don\'t respond.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
@@ -300,12 +247,12 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "PUT",
-                                url: "{{ url('admin/institucion/reactivar')}}" + '/' + institucion_id,
+                                url: "{{ url('admin/carrusel/reactivar')}}" + '/' + carrusel_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
-                                        $('#instituciones').DataTable().ajax.reload();
+                                        $('#carruselLista').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#instituciones').dataTable();
+                                        var oTable = $('#carruselLista').dataTable();
                                         oTable.fnDraw(false);
                                     }
                                     //$("#mensaje-acciones").text("Institución activada exitosamente.");
@@ -313,11 +260,8 @@
                                     //$('#mensaje-acciones').delay(3000).fadeOut();
                                     //$('#mensaje-acciones').addClass('alert-warning');
                                     //$('#mensaje-acciones').removeClass('alert-success');
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución activada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                                    //$('#carruselLista').DataTable().ajax.reload(null, false);
+                                    //$('#carruselLista').DataTable().ajax.reload();
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -333,20 +277,18 @@
 
     });
 
-    /*Accion al presionar el boton crear-institucion*/
-    $('#crear-institucion').click(function () {
+    /*Accion al presionar el boton crear-carrusel*/
+    $('#crear-carrusel').click(function () {
 
-        $('#btn-save').val("crear-institucion");
-        $('#institucion_id').val('');
-        $('#institucionForm').trigger("reset");
-        $('#institucionCrudModal').html("Agregar nueva institución");
-        $('#institucion-crud-modal').modal({ backdrop: 'static', keyboard: false })
-        $('#institucion-crud-modal').modal('show');
+        $('#btn-save').val("crear-carrusel");
+        $('#carrusel_id').val('');
+        $('#carruselForm').trigger("reset");
+        $('#carruselCrudModal').html("Agregar nueva imagen");
+        $('#carrusel-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#carrusel-crud-modal').modal('show');
         $('#imglogo').prop('src', "");
         $('#logoactual').html('');
-        iniciarMapa(posInicial);
-        $('#lat').val(lati);
-        $('#lng').val(longi);
+        
         $('#logoAnterior').addClass('d-none');
 
     });
@@ -358,9 +300,9 @@
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
     })
 
-    $("input[name='verInsti']").change(function (e) {
-        checkInsti = $(this).val();
-        $('#instituciones').DataTable().ajax.reload();
+    $("input[name='verSlider']").change(function (e) {
+        checkSlide = $(this).val();
+        $('#carruselLista').DataTable().ajax.reload();
     });
     
     /*Accion al presionar el boton save*/
@@ -370,9 +312,9 @@
         var actionType = $('#btn-save').val();
         $('#btn-save').html('Guardando..');
         if (actionType == "editar") {
-            var id = $('#institucion_id').val();
-            var ruta = "{{url('institucion')}}/" + id + "";
-            var datos = new FormData($("#institucionForm")[0]);
+            var id = $('#carrusel_id').val();
+            var ruta = "{{url('carrusel')}}/" + id + "";
+            var datos = new FormData($("#carruselForm")[0]);
             datos.append('_method', 'PUT');
             console.log(Array.from(datos));
             $.ajax({
@@ -385,11 +327,11 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    $('#institucionForm').trigger("reset");
-                    $('#institucion-crud-modal').modal('hide');
+                    $('#carruselForm').trigger("reset");
+                    $('#carrusel-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#instituciones').dataTable();
+                    var oTable = $('#carruselLista').dataTable();
                     oTable.fnDraw(false);
                     //$("#mensaje-acciones").text("Actualización exitosa.");
                     //var x = document.getElementById("snackbar");
@@ -422,7 +364,7 @@
                 },
 
             });
-        } else if (actionType == "crear-institucion") {
+        } else if (actionType == "crear-carrusel") {
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
 
@@ -430,26 +372,26 @@
 
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                data: new FormData($("#institucionForm")[0]),
-                url: "{{route('institucion.store')}}",
+                data: new FormData($("#carruselForm")[0]),
+                url: "{{route('carrusel.store')}}",
                 type: "POST",
                 dataType: 'json',
                 contentType: false,
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    $('#institucionForm').trigger("reset");
-                    $('#institucion-crud-modal').modal('hide');
+                    $('#carruselForm').trigger("reset");
+                    $('#carrusel-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#instituciones').dataTable();
+                    var oTable = $('#carruselLista').dataTable();
                     oTable.fnDraw(false);
                     //$("#mensaje-acciones").text("Institución registrada exitosamente.");
                     //$("#mensaje-acciones").fadeIn();
                     //$('#mensaje-acciones').delay(3000).fadeOut();
                     //$('#mensaje-acciones').addClass('alert-success');
                     //$('#mensaje-acciones').removeClass('alert-warning');
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución registrada exitosamente.");
+                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen guardada exitosamente.");
                     $("#snackbar").addClass("show");
                     setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
                     $("#btn-save").prop("disabled", false);
@@ -479,23 +421,6 @@
         }
     });
     
-    /*
-    function iniciarMapa(posicion){
-        mapProp = {
-            center: posicion,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMA
-        };
-        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-        marker = new google.maps.Marker({
-            position: posicion,
-            map: map,
-            draggable: true
-        });
-        
-    }
-
-    */
     function mostrar(idMostrar) {
         $('#' + idMostrar).removeClass('d-none');
     }
