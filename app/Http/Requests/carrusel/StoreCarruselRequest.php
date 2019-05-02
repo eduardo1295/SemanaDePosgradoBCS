@@ -25,11 +25,8 @@ class StoreCarruselRequest extends FormRequest
     {
         return [
             //Validacion campos carrusel
-            'titulo' => 'required|string|max:50',
-
-            'contenido' => 'required|string|max:70',
-
-            'imgcarrusel' => 'mimes:jpeg,jpg,png|max:2048',
+            'link_web' => 'nullable|max:60',
+            'imagenCarrusel' => 'required|mimes:jpeg,jpg,png|max:2048',
 
         ];
     }

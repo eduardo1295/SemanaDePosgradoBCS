@@ -3,11 +3,10 @@
 
 
 <div class="container-fluid" id="#contenedor">
-          
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Secciones carrusel
+                Imagenes carrusel
             </h1>
         </div>
 
@@ -16,34 +15,34 @@
             <strong> </strong>
         </div>
     </div>
-    <div class="row  space-xx-small">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras secciones</legend>
+    <div class="row mb-2">
+        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras imagenes</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verNoti" value="activos">
+                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
                 <label class="form-check-label" for="inlineRadio1">Activas</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" name="verNoti" value="eliminados">
+                <input class="form-check-input" type="radio" id="inlineRadio2" name="verInsti" value="eliminados">
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-6">
             <div class="d-flex justify-content-end">
-                <a href="{{route('carrusel.create')}}" class="btn btn-info ml-3" id="crear-carrusel"><span><i
-                            class="fas fa-plus"></i></span> Nueva sección</a>
+                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-carrusel"><span><i
+                            class="fas fa-plus"></i></span> Nueva imagen</a>
 
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="display" cellspacing="0" style="width:100%" id="carruselE">
+            <table class="display" cellspacing="0" style="width:100%" id="slidersC">
                 <thead>
                     <tr>
-                        <th>id_carrusel</th>
-                        <th>Titulo</th>
-                        <th>Conteido</th>
+                        <th>id</th>
+                        <th>Link</th>
+                        <th>Imagen</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
@@ -51,19 +50,23 @@
                 <tfoot>
                     <tr>
                         <th></th>
-                        <th class="text-input">Titulo</th>
-                        <th class="text-input">Resumen</th>
                         <th></th>
                         <th></th>
+                        <th></th>
+                        <th></th>
+
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
-
+    <div id="snackbar"></div>
 </div>
 
 
+@endsection
+@section('extra')
+@include('carrusel.modal')
 @endsection
 @section('scripts')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -72,22 +75,26 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+<script src="/js/imagenes/vistaprevia.js"></script>
+
 <script>
 
+    var SITEURL = "{{URL::to('/')}}";
     var checkInsti = 'activos';
-    var titulo = "";
     $(document).ready(function () {
+
         $.extend($.fn.dataTableExt.oStdClasses, {
             "sFilterInput": "busqueda",
             "sLengthSelect": ""
         });
 
-        $('#carruselE tfoot  th.text-input').each(function (i) {
+        $('#slidersC tfoot  th.text-input').each(function (i) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
         });
 
-        var table = $('#carruselE').DataTable({
+        var table = $('#slidersC').DataTable({
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -106,7 +113,7 @@
             },
             initComplete: function () {
                 var api = this.api();
-                api.columns([1,2]).every(function () {
+                api.columns(2).every(function () {
                     var that = this;
                     $('input', this.footer()).on('keyup change', function () {
                         if (that.search() !== this.value) {
@@ -119,44 +126,66 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
-                { data: 'titulo', searchable: true },
-                { data: 'contenido', searchable: true },
+                { data: 'link_web', searchable: true },
+                {
+                    data: 'url_imagen',
+                    name: 'url_imagen',
+                    render: function (data, type, full, meta) {
+                        return "<img src={{ URL::to('/') }}/img/carrusel/" + data + " width='250px' class='img-thumbnail' />";
+                    },
+                    orderable: false, searchable: false
+                },
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
                 { responsivePriority: 2, targets: 4 },
+                { width: 250, targets: 2 },
                 { width: 105, targets: 4 }
             ]
         });
 
-        $("#show-sidebar").click(function () {
-            $('#carruselE').DataTable().ajax.reload(null, false);
+
+
+        $("#close-sidebar").click(function () {
+            $('.mensajeError').text("");
+            $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
         });
+
+        $("#show-sidebar").click(function () {
+            $('#slidersC').DataTable().ajax.reload(null, false);
+        });
+
+
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
             var carrusel_id = $(this).data('id');
-            var ruta = "{{url('carrusel')}}/" + carrusel_id+"/editar";
-            //alert(ruta);
-            window.location = ruta;
+            var ruta = "{{url('carrusel')}}/" + carrusel_id + "/editar";
+            $.get(ruta, function (data) {
+                //ocultar errores
+                $('#carruselCrudModal').html("Editar imagen");
+                $('#btn-save').val("editar");
+                $('#carrusel-crud-modal').modal('show');
+                console.log(data);
+                $('#carrusel_id').val(data.id);
+                $('#link_web').val(data.link_web);
+                
+                $('#imgslide').prop('src', "{{url('img/carrusel')}}/" + data.url_imagen);
+                $('#imagenactualT').html('Imagen actual');
+                $('#imagenAnterior').removeClass('d-none');
+
+            })
         });
 
-
-        $('#carruselE tbody').on('click', '.eliminar, .reactivar', function (e) {
-            var tr = $(this).closest("tr");
-            var data = $("#carruselE").DataTable().row(tr).data();
-            titulo = data.titulo;
-
-        });
-
+        //var info = table.page.info();
         /*Accion al presionar el boton eliminar*/
         $('body').on('click', '.eliminar', function () {
             var carrusel_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: '¿Desea eliminar la carrusel titulada ' + titulo + '?',
+                title: '¿Desea eliminar la imagen?',
                 content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
@@ -181,16 +210,22 @@
                                 success: function (data) {
 
                                     if (table.data().count() == 1) {
-                                        $('#carruselE').DataTable().ajax.reload();
+                                        $('#slidersC').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#carruselE').dataTable();
+                                        var oTable = $('#slidersC').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#mensaje-acciones").text("carrusel eliminada exitosamente.");
-                                    $("#mensaje-acciones").fadeIn();
-                                    $('#mensaje-acciones').delay(3000).fadeOut();
-                                    $('#mensaje-acciones').addClass('alert-warning');
-                                    $('#mensaje-acciones').removeClass('alert-success');
+                                    //$("#mensaje-acciones").text("imagen eliminada exitosamente.");
+                                    //$("#mensaje-acciones").fadeIn();
+                                    //$('#mensaje-acciones').delay(3000).fadeOut();
+                                    //$('#mensaje-acciones').addClass('alert-warning');
+                                    //$('#mensaje-acciones').removeClass('alert-success');
+
+                                    //$('#slidersC').DataTable().ajax.reload(null, false);
+                                    //$('#slidersC').DataTable().ajax.reload();
+                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> imagen eliminada exitosamente.");
+                                    $("#snackbar").addClass("show");
+                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -202,16 +237,18 @@
                     }
                 }
             });
-        });
 
+
+
+        });
 
         /*Accion al presionar el boton reactivar*/
         $('body').on('click', '.reactivar', function () {
             var carrusel_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: '¿Desea reactivar la carrusel titulada ' + titulo + '?',
-                content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
+                title: "¿Desea reactivar la imagen?",
+                content: 'This dialog will automatically trigger \'cancel\' in 8 seconds if you don\'t respond.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
                     cancelAction: {
@@ -228,21 +265,17 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "PUT",
-                                url: "{{ url('carrusel/reactivar')}}" + '/' + carrusel_id,
+                                url: "{{ url('admin/carrusel/reactivar')}}" + '/' + carrusel_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
-                                        $('#carruselE').DataTable().ajax.reload();
+                                        $('#slidersC').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#carruselE').dataTable();
+                                        var oTable = $('#slidersC').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#mensaje-acciones").text("carrusel activada exitosamente.");
-                                    $("#mensaje-acciones").fadeIn();
-                                    $('#mensaje-acciones').delay(3000).fadeOut();
-                                    $('#mensaje-acciones').addClass('alert-warning');
-                                    $('#mensaje-acciones').removeClass('alert-success');
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
+                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen activada exitosamente.");
+                                    $("#snackbar").addClass("show");
+                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -257,10 +290,172 @@
         });
 
     });
-    $("input[name='verNoti']").change(function (e) {
-        checkInsti = $(this).val();
-        $('#carruselE').DataTable().ajax.reload();
+
+    /*Accion al presionar el boton crear-carrusel*/
+    $('#crear-carrusel').click(function () {
+
+        $('#btn-save').val("crear-carrusel");
+        $('#carrusel_id').val('');
+        $('#carruselForm').trigger("reset");
+        $('#carruselCrudModal').html("Agregar nueva imagen");
+        $('#carrusel-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#carrusel-crud-modal').modal('show');
+        $('#imgslide').prop('src', "");
+        $('#imagenactualT').html('');
+        $('#imagenactual').addClass('d-none');
+
     });
+
+    $('#btn-close').click(function () {
+        $('.mensajeError').text("");
+        $('#vistaPrevia').prop('src', "");
+        $('#nuevaImagen').addClass('d-none');
+        $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+    })
+
+    $("input[name='verInsti']").change(function (e) {
+        checkInsti = $(this).val();
+        $('#slidersC').DataTable().ajax.reload();
+    });
+
+    /*Accion al presionar el boton save*/
+    $("#btn-save").click(function () {
+        $("#btn-save").prop("disabled", true);
+        $("#btn-close").prop("disabled", true);
+        var actionType = $('#btn-save').val();
+        $('#btn-save').html('Guardando..');
+        if (actionType == "editar") {
+            var id = $('#carrusel_id').val();
+            var ruta = "{{url('carrusel')}}/" + id + "";
+            var datos = new FormData($("#carruselForm")[0]);
+            datos.append('_method', 'PUT');
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: ruta,
+                type: "POST",
+                data: datos,
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    $('#carruselForm').trigger("reset");
+                    $('#carrusel-crud-modal').modal('hide');
+                    $('#btn-save').html('Guardar');
+                    //recargar serverside
+                    var oTable = $('#slidersC').dataTable();
+                    oTable.fnDraw(false);
+                    //$("#mensaje-acciones").text("Actualización exitosa.");
+                    //var x = document.getElementById("snackbar");
+                    //x.html("Actualización exitosa.");
+                    //x.className = "show";
+                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
+                    $("#snackbar").addClass("show");
+                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+
+                    //$("#mensaje-acciones").fadeIn();
+                    //$('#mensaje-acciones').delay(3000).fadeOut();
+                    //$('#mensaje-acciones').addClass('alert-success');
+                    //$('#mensaje-acciones').removeClass('alert-warning');
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+                    $('#nuevaImagen').addClass('d-none');
+                    console.log(data);
+                },
+                error: function (data) {
+                    
+                    
+                    if (data.status == 422) {
+                        
+                        var errores = data.responseJSON['errors'];
+                        $.each(errores, function (key, value) {
+                            $('#' + key + "_error").text(value);
+                        });
+                    }
+                    $('#btn-save').html('Guardar');
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                },
+
+            });
+        } else if (actionType == "crear-carrusel") {
+            $("#btn-save").prop("disabled", true);
+            $("#btn-close").prop("disabled", true);
+
+
+
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                data: new FormData($("#carruselForm")[0]),
+                url: "{{route('carrusel.store')}}",
+                type: "POST",
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    $('#carruselForm').trigger("reset");
+                    $('#carrusel-crud-modal').modal('hide');
+                    $('#btn-save').html('Guardar');
+                    //recargar serverside
+                    var oTable = $('#slidersC').dataTable();
+                    oTable.fnDraw(false);
+                    //$("#mensaje-acciones").text("imagen registrada exitosamente.");
+                    //$("#mensaje-acciones").fadeIn();
+                    //$('#mensaje-acciones').delay(3000).fadeOut();
+                    //$('#mensaje-acciones').addClass('alert-success');
+                    //$('#mensaje-acciones').removeClass('alert-warning');
+                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> imagen registrada exitosamente.");
+                    $("#snackbar").addClass("show");
+                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+                    $('#nuevaImagen').addClass('d-none');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    $('#btn-save').html('Guardar');
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                },
+
+
+            });
+        }
+
+    })
+
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        if (!fileName.trim()) {
+            $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
+        } else {
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        }
+    });
+
+    /*
+    function iniciarMapa(posicion){
+        mapProp = {
+            center: posicion,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMA
+        };
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        marker = new google.maps.Marker({
+            position: posicion,
+            map: map,
+            draggable: true
+        });
+        
+    }
+
+    */
+    function mostrar(idMostrar) {
+        $('#' + idMostrar).removeClass('d-none');
+    }
 </script>
 @endsection
 
@@ -271,29 +466,12 @@
 <link rel="stylesheet" href="/css/datatable/colores.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+<link href="/css/modales/modalresponsivo.css" rel="stylesheet">
+<link href="/css/modales/snackbar.css" rel="stylesheet">
+
 <style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-
-    .busqueda {
-        border: 1px solid #ced4da;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-
-    }
-
-    .busqueda:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    .custom-file-input~.custom-file-label::after {
+        content: "Elegir";
     }
 </style>
 
