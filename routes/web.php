@@ -56,7 +56,7 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('admin/carrusel/VerCarrusel', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
 Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('carrusel.listCarrusel');
-Route::put('carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
+Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
 Route::resource('carrusel', 'CarruselController');
 
 Auth::routes();

@@ -7,7 +7,7 @@ use App\Carrusel;
 use DataTables;
 use App\Http\Requests\carrusel\StoreCarruselRequest;
 use App\Http\Requests\carrusel\UpdateCarruselRequest;
-
+use Validator;
 class CarruselController extends Controller
 {
     /**
@@ -38,25 +38,26 @@ class CarruselController extends Controller
      */
     public function store(StoreCarruselRequest $request)
     {
-        
         $nuevo_nombre = 'sin imagen';
-        if($request->hasFile('imgcarrusel')){
+        if($request->hasFile('imagenCarrusel')){
             
-            $imagencarrusel = $request->file('imgcarrusel');
+            $imagencarrusel = $request->file('imagenCarrusel');
             //agregar id de usuarios a nombre
             $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
             $imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
         }
         
-        $summernote = new Carrusel;
-        $summernote->contenido =$request->contenido;
-        $summernote->titulo = $request->titulo;
-        $summernote->url_imagen = $nuevo_nombre;
-        $summernote->creado_por= 1;
-        $summernote->save();
-        $info = 'Slider creado exitosamente';
-        //return view('admin.carrusels.admincarrusels')->with('info',$info);
-        return back()-> with('info','carrusel creada exitosamente');
+        $carrusel = new Carrusel;
+        $carrusel->link_web = $request->link_web;
+        $carrusel->url_imagen = $nuevo_nombre;
+        $carrusel->creado_por= 1;
+        $carrusel->save();
+        $carrusel->save();
+        if($carrusel){
+            //borrar imagen actual
+        }
+        //$institucion->update($request->all());
+        return \Response::json($carrusel);
     }
 
     /**
@@ -78,9 +79,9 @@ class CarruselController extends Controller
      */
     public function edit($id)
     {
-        $carrusel  = Carrusel::select('id','titulo','contenido','url_imagen','fecha_actualizacion')->where('id', $id)->first();
+        $carrusel  = Carrusel::select('id','link_web','url_imagen')->where('id', $id)->first();
+        return \Response::json($carrusel);
         
-        return view('carrusel.editar',compact('carrusel'));
     }
 
     /**
@@ -90,34 +91,57 @@ class CarruselController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCarruselRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $carrusel = Carrusel::where('id',$id)->first();
-        $detail=$request->contenido;
         
+
+        $carrusel = Carrusel::where('id',$id)->first();
+        
+        $rules1 = [
+            'link_web' => 'nullable|max:60',
+            'imagenCarrusel' => 'required|mimes:jpeg,jpg,png|max:2048',
+        ];
+
+        $rules2 = [
+            'link_web' => 'nullable|max:60',
+        ];
+        $sinerror='verdadero';
         $nuevo_nombre = 'sin imagen';
-        if($request->hasFile('imgcarrusel')){
-            
-            $imagencarrusel = $request->file('imgcarrusel');
-            //agregar id de usuarios a nombre
-            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
-            $imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
+        if($request->hasFile('imagenCarrusel')){
+            $validator = Validator::make($request->all(), $rules1 );
+            if(!$validator->fails()){
+                $imagencarrusel = $request->file('imagenCarrusel');
+                $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
+                $imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
+            }else{
+                $sinerror='falso';
+            }
         }
         else{
+            $validator = Validator::make( $request->all(), $rules2 );
+            if(!$validator->fails()){
+                $sinerror='verdadero';
+            }else{
+                $sinerror='falso';
+            }
             $nuevo_nombre = $carrusel->url_imagen;
         }
         
-              
-        
-        $carrusel->titulo = $request->titulo;
-        $carrusel->contenido = $request->contenido;
-        $carrusel->url_imagen = $nuevo_nombre;
-        $carrusel->creado_por= 1;
-        
-        $carrusel->save();
-        
-        return back()-> with('info','carrusel actualizada exitosamente');
-        return view('carrusels.vercarrusel',compact('summernote'));
+        if ($sinerror=='verdadero') {
+            $carrusel->link_web = $request->link_web;
+            $carrusel->url_imagen = $nuevo_nombre;
+            $carrusel->creado_por= 1;
+            $carrusel->save();
+            if($carrusel){
+                //borrar imagen actual
+            }
+            //$institucion->update($request->all());
+            return \Response::json($carrusel);
+            
+        }
+        else{
+            return \Response::json(['errors' => $validator->errors()], 422);
+        }
     }
 
     /**
@@ -161,14 +185,14 @@ class CarruselController extends Controller
     public function listCarrusel(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $selectcarrusel = Carrusel::select('id','titulo','url_imagen','fecha_actualizacion');
+            $selectcarrusel = Carrusel::select('id','link_web','url_imagen','fecha_actualizacion');
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.acciones')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $selectcarrusel = Carrusel::onlyTrashed()->get(['id','titulo','url_imagen','fecha_actualizacion']);
+            $selectcarrusel = Carrusel::onlyTrashed()->get(['id','link_web','url_imagen','fecha_actualizacion']);
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.reactivar')
             ->rawColumns(['action'])
