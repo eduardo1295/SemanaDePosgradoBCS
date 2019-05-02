@@ -1,62 +1,83 @@
 @extends('layoutsM1.principal')
 
 @section('links')
-    <link rel="stylesheet" href="/css/Login/main.css">
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<style>
+	body{
+		background-image: url('/img/nature.jpg');
+		background-repeat: no-repeat; /* Do not repeat the image */
+		background-size: cover;
+		
+	}
+	</style>
 @endsection
 
-
 @section('contenido')
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <form class="login100-form validate-form" method="POST" action="/login">
-                @csrf
-                <span class="login100-form-title p-b-26">
-                    hola
-                </span>
+	<div class="container" style="width: 100%;  height: 300px ;">
+		<div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
+			<form action="/login" method="post" class="col-6" style="background : white;  opacity: 0.9">
+				@csrf
+				<div class="row">
+					<div class="col-12" style="background: #777777; color: white">
+						<h4 class="text-center pt-3"><strong >Login </strong></h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-10 offset-1 pt-3">
+							<label for="email"><strong>Email:</strong></label>
+							<input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-describedby="c1" required>
+							<small id="c1" class="text-muted">Ingrese su coreeo electronico</small>
+					</div>
+					<div class="form-group col-9 offset-1">
+							<label for="password"><strong>Contraseña:</strong></label>
+							<input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" aria-describedby="c2" required>
+							<small id="c2" class="text-muted">Ingrese su contraseña</small>
+							<div class="invalid-feedback">
+									<a href="#">Olvide mi contraseña</a>
+							</div>
+					</div>
+					<div class="col-1 d-flex align-items-center align-items-center">
+							<span class="btn-show-pass">
+								<i class="fas fa-eye"></i>
+							</span>
+					</div>
 
-                <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-                    <input class="input100" type="text" name="email">
-                    <span class="focus-input100" data-placeholder="Email"></span>
-                </div>
+					<div class="form-group col-10 offset-1">
+							<div class="g-recaptcha mb-3" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+					</div>
+					
 
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <span class="btn-show-pass">
-                        <i class="fas fa-eye"></i>
-                        
-                    </span>
-                    <input class="input100" type="password" name="password">
-                    <span class="focus-input100" data-placeholder="Password"></span>
-                </div>
+					<div class="col-sm-12">
+						@if (count($errors) > 0)
+							<div class="alert alert-danger">
+								<p>{{ $errors->first('g-recaptcha-response') }}</p>
+							</div>
+						@endif
+					</div>
+					
+					<div class="col-12 pb-3 pt-3">
+							<input type="submit" value="Login" class="btn btn-primary mx-auto pl-5 pr-5 w-100">
+					</div>
+				</div>
+				
+				
+					
+				
+				
+				
 
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button type="submit" class="login100-form-btn" id="btn">
-                            Login
-                        </button>
-                    </div>
-                </div>
+				
+				
 
-                <div class="text-center p-t-115">
-                    <span class="txt1">
-                        Don’t have an account?
-                    </span>
+				
+			</form>
+		</div>
+	</div>
 
-                    <a class="txt2" href="#">
-                        Sign Up
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div id="dropDownSelect1"></div>
 @endsection
 	
 @section('scripts')
-    <script src="js/Login/main.js"></script>
+	<script src="/js/Login/main2.js"></script>
+	<script src="/js/popper.min.js"></script>
 @endsection
 	

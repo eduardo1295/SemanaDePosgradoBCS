@@ -2,10 +2,10 @@
     <div class="header">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-4">
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
                     <a href="/"><img src="/img/logo.png" width="120px"  alt="Hair Salon Website Templates Free Download"></a>
                 </div>
-                <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-8">
+                <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 d-flex justify-content-end">
                     <div class="navigation float-none">
                         <div id="navigation">
                             <ul>

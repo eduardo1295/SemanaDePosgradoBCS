@@ -87,7 +87,9 @@
                                 <div class="col-12">
                                         <p class="text-center pt-2"> <strong>Institución: </strong> {{$institucionSede->nombre}} </p>
                                         <div class="d-flex">
-                                            <img class="img-fluid mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
+                                            <div class="col-12">
+                                                    <img class="img-fluid mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
+                                            </div>
                                         </div>
                                         <a class="nav-link active lead text-right" data-toggle="modal" href="#cerrar">
                                         <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>

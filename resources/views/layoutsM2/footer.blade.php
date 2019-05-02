@@ -4,29 +4,38 @@
             <div class="col-12 mb-3">
                 <p><h2 class="text-center" id="Titulo">Contactos</h2></p>
             </div>
+            @foreach ($instituciones as $institucion)
+                
+            
             <div class="col-12 col-lg-6 mb-3 mb-md-2">
                 <div class="row">
                     <div class="col-12 col-md-3">
-                            <img src="/img/tec_logo.png" alt="" class="img-fluid d-block d-md-inline mx-auto">
+                            <img src="{{url('img/logo')}}/{{ $institucion->url_logo }}" alt="" class="img-fluid d-block d-md-inline mx-auto">
                         </div>
                         <div class="col-12 col-sm-9 ml-auto mx-sm-auto">
                             <div class="row">
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fa  fa-phone"></i> </div>
-                                <div class="col-11 pr-0"> <span>Tel&eacute;fono:</span> (612) 121 0424</div>
+                            <div class="col-11 pr-0"> <span>Tel&eacute;fono:</span> {{$institucion->telefono}}</div>
 
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fa  fa-envelope"> </i> </div>
-                                <div class="col-11 pr-0"> <span>Email: </span><a href="mailto:lfcota@itlp.edu.mx">lfcota@itlp.edu.mx</a></div>
+                                <div class="col-11 pr-0"> <span>Email: </span><a href="mailto:lfcota@itlp.edu.mx">Pendiente</a></div>
 
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fas fa-globe"></i> </div>
-                                <div class="col-11 pr-0"> <span>Direcci&oacute;n Web: </span><a href="http://www.itlp.edu.mx/">ITLP</a></div>
+                                <div class="col-11 pr-0"> <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}">{{$institucion->direccion_web}}</a></div>
 
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="far fa-address-card"></i> </div>
-                                <div class="col-11 pr-0"> </i><span>Coordinador: </span>Dr. Lorenzo Fidel Cota Verdugo</div>
+                                <div class="col-11 pr-0"> </i><span>Coordinador: </span>Pendiente</div>
                             </div>
                     </div>
                 </div>
                 
             </div>
+            @endforeach
+
+
+
+            {{-- comment 
+            
             <div class="col-12 col-lg-6 mb-3 mb-md-3">
                 <div class="row">
                     <div class="col-12 col-md-3">
@@ -130,7 +139,7 @@
                     </div>
                 </div>
             </div>
-
+            --}}
         </div>
     </div>
 </section>

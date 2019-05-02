@@ -40,7 +40,8 @@ Route::put('admin/noticia/reactivar/{noticia}', 'NoticiaController@reactivar')->
 Route::resource('noticia', 'NoticiaController');
 Route::resource('semana', 'SemanaController');
 
-Route::resource('/', 'SemanaController');
+Route::get('/', 'SemanaController@index');
+Route::get('/home', 'SemanaController@index');
 
 
 

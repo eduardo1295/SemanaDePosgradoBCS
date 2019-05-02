@@ -20,16 +20,21 @@
             <h1>{{ $noticia->titulo }}</h1>
         </div>
     </div>
-    <div class="row mb-5 border pb-3" id="contenido">
-        <div class="col-12 break-word pb-3 pt-3">
+    <div class="row mb-5 pb-3" id="">
+        <div class="col-9 break-word pb-3 pt-3">
             {!! $noticia->contenido !!}
         </div>
-            <div class="col-2 offset-5" id="subcontenido">
-                @if ($noticia->url_imagen!='sin imagen')
-                <img src="{{url('img/noticias')}}/{{ $noticia->url_imagen }}" alt="" class="img-fluid">
-                @endif
-                
+        <div class="col-3 d-flex justify-content-center">
+        @if ($noticia->url_imagen!='sin imagen')
+                <div class="row">
+                    <div class="col-12">
+                        <img src="{{url('img/noticias')}}/{{ $noticia->url_imagen }}" alt="" class="img-fluid">
+                    </div>
             </div>
+        @endif
+        </div>
+                
+            
     </div>
 </div>
 
