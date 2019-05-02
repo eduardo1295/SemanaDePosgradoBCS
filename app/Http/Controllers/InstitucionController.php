@@ -66,8 +66,8 @@ class InstitucionController extends Controller
                     'numero' => $request->numero, 
                     'colonia' => $request->colonia, 
                     'cp' => $request->cp,
-                    'latitud' => $request->latitud,
-                    'longitud' => $request->longitud,
+                    'latitud' => $request->lat,
+                    'longitud' => $request->lng,
                     'url_logo'=> $nuevo_nombre ]);
         return \Response::json($institucion);
     }
@@ -130,8 +130,8 @@ class InstitucionController extends Controller
         $institucion->numero = $request->numero;
         $institucion->colonia = $request->colonia;
         $institucion->cp = $request->cp;
-        $institucion->latitud = $request->latitud;
-        $institucion->longitud=  $request->longitud;
+        $institucion->latitud = $request->lat;
+        $institucion->longitud=  $request->lng;
         $institucion->url_logo= $nuevo_nombre;
         
         $institucion->save();

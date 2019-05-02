@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-4">
-                    <a href="index.html"><img src="/img/logo.png" width="120px"  alt="Hair Salon Website Templates Free Download"></a>
+                    <a href="/"><img src="/img/logo.png" width="120px"  alt="Hair Salon Website Templates Free Download"></a>
                 </div>
                 <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-8">
                     <div class="navigation float-none">
@@ -20,8 +20,15 @@
                                     </ul>
                                 </li>
                                 <li><a href="contact.html" class="" title="Contact Us">Convocatoria</a> </li>
-                                <li><a href="styleguide.html" title="Styleguide">Acceso</a> </li>
+                                
+                                @if (!Auth('admin')->check() && !Auth::check())
+                                    <li><a href="/login" title="Styleguide">Acceso</a> </li>
+                                @endif
+                                
                                 <li><a href="styleguide.html" title="Styleguide">Soporte</a> </li>
+                                @if (Auth('admin')->check() || Auth::check())
+                                    <li><a href="/logout" title="Styleguide">Cerrar sesión</a> </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
