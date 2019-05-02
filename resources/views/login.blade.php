@@ -9,10 +9,10 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="login100-form validate-form" method="POST" action="/admin/login">
+            <form class="login100-form validate-form" method="POST" action="/login">
                 @csrf
                 <span class="login100-form-title p-b-26">
-                    Admin
+                    usuarios
                 </span>
 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">

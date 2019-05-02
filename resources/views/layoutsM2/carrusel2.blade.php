@@ -2,11 +2,9 @@
     <div id="carrusel" class="container-fluid border">
         <div id="carruselinst" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner" role="listbox">
-            
             @php
             $x = 0    
             @endphp
-            
             @foreach ($instituciones as $institucion)
             @if ($x==0)
             <div class="carousel-item active">
@@ -58,8 +56,8 @@
                                 <i class="fas fa-location-arrow"></i>
                             </div>
                             <div class="col-11 pl-0">
-                                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                                    Launch demo modal
+                                  <button type="button" class=" cola btn btn-outline-primary" style="border:none"  onclick="mostrarMapa({{$institucion->latitud}},{{$institucion->longitud}})">
+                                    Mostrar ubicación
                                   </button>
                             </div>
                         </div>
@@ -69,7 +67,34 @@
             </div>
             @endforeach
 
-
+            <section id="modales">
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-label="modalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h4 class="modal-title" id="modalLabel">
+                                  Ubicación sede
+                              </h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="row mt-2 justify-content-center">
+                                  <div class="embed-responsive embed-responsive-16by9 mt-3">
+                                      <iframe id="mapa12"
+                                          src="http://maps.google.com/maps?q=+{{$institucionSede->latitud}}+, +{{$institucionSede->longitud}}+&z=15&output=embed"
+                                          frameborder="0" style="border:0" allowfullscreen>
+                                      </iframe>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-primary lead" data-dismis="modal">Cerrar</button>
+                          </div>
+                      </div>
+                  </div>
+          </section>
 
 
 
@@ -86,4 +111,12 @@
               </a>
         </div>
       </div>
+
+    <script>
+    var mostrarMapa = function (latitud, longitud){
+      console.log(latitud);
+      $('#mapa12').prop('src','http://maps.google.com/maps?q='+latitud +','+ longitud+'&z=15&output=embed');
+      $('#exampleModal').modal('show');
+    }
+    </script>
 </section>

@@ -45,11 +45,13 @@ Route::resource('/', 'SemanaController');
 
 
 
+
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm')->name('esta');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin');
 
 Route::get('logout', 'Auth\LoginController@logout');
-Auth::routes();
+
+
 
 
 Route::get('admin/carrusel/VerCarrusel', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
@@ -57,6 +59,7 @@ Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('ca
 Route::put('carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
 Route::resource('carrusel', 'CarruselController');
 
+Auth::routes();
 /*
 Route::get('/',['as'=> 'home',function (){
     return view('home',compact('hola'));

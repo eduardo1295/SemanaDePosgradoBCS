@@ -18,9 +18,7 @@ class SemanaController extends Controller
         $noticias = Noticia::latest('fecha_creacion')->take(3)->get();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
-        foreach ($instituciones as $u) {
-            echo($u->nombre);
-        }
+        
         return view('Maqueta2', compact(['noticias','instituciones','institucionSede']));
     }
 
