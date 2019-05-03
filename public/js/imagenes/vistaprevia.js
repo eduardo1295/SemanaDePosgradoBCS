@@ -9,3 +9,7 @@ function readURL(input,idimg) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function mostrar(idMostrar) {
+        $('#' + idMostrar).removeClass('d-none');
+    }

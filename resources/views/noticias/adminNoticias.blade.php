@@ -89,6 +89,7 @@
 <script src="/js/summer/summernote-text-findnreplace.js"></script>
 <script src="/js/summer/summernote-list-styles-bs4.js"></script>
 <script src="/js/summer/summernote-cleaner.js"></script>
+<script src="/js/imagenes/vistaprevia.js"></script>
 
 <script>
 
@@ -518,13 +519,14 @@
             var newWin = document.open('', 'Vista previa', configuracion_ventana);
             
             //var newWin = window.open('', "fullscreen", 'top=0,left=0,width='+(screen.availWidth)+',height ='+(screen.availHeight)+',fullscreen=yes,toolbar=0 ,location=0,directories=0,status=0,menubar=0,resiz able=0,scrolling=0,scrollbars=0');
-
+            
             newWin.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">');
             newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"><\/script>');
             newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"><\/script>');
             newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"><\/script>');
-            newWin.document.write('<h1 class="display-1 w-75 mx-auto"> vista previa de la noticia<\/h1>');
+            newWin.document.write('<h1 class="display-1 w-75 mx-auto"> '+$("#titulo").val()+'<\/h1>');
             newWin.document.write('<div class="w-75 mx-auto" style="word-wrap: break-word;"' + $('.summernote').summernote('code') + '<\/div>');
+            newWin.document.write('<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><img src="'+vistaPrevia.src+'" alt="" id="vistaPrevia" class="img-fluid mx-auto"></div>');
             newWin.document.close();
             
         });
