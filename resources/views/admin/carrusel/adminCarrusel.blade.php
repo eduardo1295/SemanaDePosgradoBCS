@@ -67,6 +67,7 @@
 @endsection
 @section('extra')
 @include('carrusel.modal')
+@include('admin.modalimagenes')
 @endsection
 @section('scripts')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -75,8 +76,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+
 <script src="/js/imagenes/vistaprevia.js"></script>
+<script src="/js/imagenes/modalimagen.js"></script>
 
 <script>
 
@@ -131,7 +133,7 @@
                     data: 'url_imagen',
                     name: 'url_imagen',
                     render: function (data, type, full, meta) {
-                        return "<img src={{ URL::to('/') }}/img/carrusel/" + data + " width='250px' class='img-thumbnail' />";
+                        return "<img src={{ URL::to('/') }}/img/carrusel/" + data + " width='250px' class='img-thumbnail imgmodal' onclick='mostrarModal(this);' />";
                     },
                     orderable: false, searchable: false
                 },
@@ -361,6 +363,7 @@
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevaImagen').addClass('d-none');
+                    $('#vistaPrevia').prop('src', "");
                     console.log(data);
                 },
                 error: function (data) {
@@ -413,6 +416,7 @@
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevaImagen').addClass('d-none');
+                    $('#vistaPrevia').prop('src', "");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -434,27 +438,13 @@
         } else {
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         }
-    });
-
-    /*
-    function iniciarMapa(posicion){
-        mapProp = {
-            center: posicion,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMA
-        };
-        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-        marker = new google.maps.Marker({
-            position: posicion,
-            map: map,
-            draggable: true
-        });
-        
+    })
+    function mostrarModal(imagenMini){
+        $('#img01').prop('src',imagenMini.src);
+        $('#modalImagenes').css('display','block');
     }
-
-    */
-    function mostrar(idMostrar) {
-        $('#' + idMostrar).removeClass('d-none');
+    function cerrarModal(){
+        $('#modalImagenes').css('display','none');
     }
 </script>
 @endsection
@@ -468,6 +458,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <link href="/css/modales/modalresponsivo.css" rel="stylesheet">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
+<link href="/css/modales/modalimagen.css" rel="stylesheet">
 
 <style>
     .custom-file-input~.custom-file-label::after {
