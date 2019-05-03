@@ -75,7 +75,7 @@
                               <h4 class="modal-title" id="modalLabel">
                                   Ubicación sede
                               </h4>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <button type="button" class="close modalP" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                               </button>
                           </div>
@@ -88,9 +88,6 @@
                                       </iframe>
                                   </div>
                               </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-primary lead" data-dismis="modal">Cerrar</button>
                           </div>
                       </div>
                   </div>
@@ -118,5 +115,8 @@
       $('#mapa12').prop('src','http://maps.google.com/maps?q='+latitud +','+ longitud+'&z=15&output=embed');
       $('#exampleModal').modal('show');
     }
+    $('.modalP').click(function (){
+        $('#mapa12').prop('src',' ');
+    });
     </script>
 </section>
