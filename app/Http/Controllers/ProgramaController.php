@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Programa;
+use App\Institucion;
 use DataTables;
 use App\Http\Requests\carrusel\StoreCarruselRequest;
 use App\Http\Requests\carrusel\UpdateCarruselRequest;
@@ -99,7 +100,7 @@ class ProgramaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $programa = Program::where('id',$id)->first();
+        $programa = Programa::where('id',$id)->first();
         
         $rules1 = [
             'nombre' => 'nullable|max:100',
@@ -108,7 +109,6 @@ class ProgramaController extends Controller
         ];
         
         $sinerror='verdadero';
-        $nuevo_nombre = 'sin imagen';
         /*
         if($request->hasFile('imagenCarrusel')){
             $validator = Validator::make($request->all(), $rules1 );
@@ -131,15 +131,12 @@ class ProgramaController extends Controller
         }
         */
         
-        if ($sinerror=='verdadero') {
             $programa->id_programa = $request->id_programa;
             $programa->nombre = $request->nombre;
             $programa->nivel = $request->nivel;
-            $programa->perido = $request->periodo;
-
-
-
-            $programa->creado_por= 1;
+            $programa->periodo = $request->periodo;
+            $programa->id_institucion = $request->id_institucion;
+            $programa->actualizado_por= auth('admin')->user()->id ;
             $programa->save();
             /*
             if($carrusel){
@@ -149,10 +146,6 @@ class ProgramaController extends Controller
             //$institucion->update($request->all());
             return \Response::json($programa);
             
-        }
-        else{
-            return \Response::json(['errors' => $validator->errors()], 422);
-        }
     }
 
     /**
@@ -173,7 +166,8 @@ class ProgramaController extends Controller
     }
 
     public function programa(){
-        return view('admin.programa.adminPrograma');   
+        $instituciones = Institucion::select('id','nombre')->get();
+        return view('admin.programa.adminPrograma',compact(['instituciones']));   
     }
 
 

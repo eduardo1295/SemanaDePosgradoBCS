@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Noticia;
 use DataTables;
+use App\Institucion;
+use DB;
 use App\Http\Requests\noticias\StoreNoticiaRequest;
 use App\Http\Requests\noticias\UpdateNoticiaRequest;
 
@@ -17,12 +19,14 @@ class NoticiaController extends Controller
      */
      public function __construct(){
          //$this-> middleware('auth:admin')->only('noticias');
+         
 
      }
     public function index()
     {
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $data = Noticia::latest('fecha_creacion')->paginate(5);
-        return view('noticias.verNoticias', compact('data'));
+        return view('noticias.verNoticias', compact(['data','instituciones']));
         //return view('noticias', compact('data'));
 
         
@@ -85,9 +89,9 @@ class NoticiaController extends Controller
      */
     public function show($id)
     {
-        
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $noticia  = Noticia::select('id_noticia','titulo','contenido','url_imagen','fecha_actualizacion')->where('id_noticia', $id)->first();
-        return view('noticias.detalle', compact('noticia'));
+        return view('noticias.detalle', compact(['noticia','instituciones']));
     }
 
     /**

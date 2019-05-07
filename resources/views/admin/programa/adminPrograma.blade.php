@@ -167,8 +167,14 @@
                 $('#btn-save').val("editar");
                 $('#programa-crud-modal').modal('show');
                 console.log(data);
+                
+                $('#id_institucion').val(data.id_institucion);
+                $('#id_programa').val(data.id_programa);
+                $('#nombre').val(data.nombre);
+                $('#nivel').val(data.nivel);
+                $('#nivel').val(data.nivel);
+                $('#periodo').val(data.periodo);
                 $('#programa_id').val(data.id);
-                $('#link_web').val(data.link_web);
                 
                 $('#imgslide').prop('src', "{{url('img/programa')}}/" + data.url_imagen);
                 $('#imagenactualT').html('Imagen actual');
@@ -327,6 +333,7 @@
             var ruta = "{{url('programa')}}/" + id + "";
             var datos = new FormData($("#programaForm")[0]);
             datos.append('_method', 'PUT');
+            console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,

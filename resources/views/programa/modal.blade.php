@@ -19,13 +19,12 @@
                         </div>
                         
                         <div class="form-group col-6">
-                            <strong><label for="id_institucion" class="control-label">Código</label></strong>
-                            <select name="id_institucion" id="id_institucion" class="custom-select">
-                                <option selected>Seleccione una institucion</option>
-                                <option value="1">UABCS</option>
-                                <option value="2">TEC</option>
-                                <option value="3">CICIMAR</option>
-                                <option value="4">CIBNOR</option>
+                            <strong><label for="id_institucion" class="control-label">Institución</label></strong>
+                            <select class="form-control" id="id_institucion" name="id_institucion">
+                                <option selected value="">Seleccione una institución</option>
+                                @foreach ($instituciones as $institucion)
+                                <option value={{$institucion->id}}>{{$institucion->nombre}}</option>
+                                @endforeach
                             </select>
                             <span class="mensajeError" id="id_programa_error"></span>
                         </div>
@@ -38,9 +37,11 @@
                         </div>
                         <div class="form-group col-6">
                             <strong><label for="nivel" class="control-label">nivel</label></strong>
-                            <input type="text" class="form-control" id="nivel" name="nivel" placeholder="Ingrese nivel"
-                                value="" maxlength="30" required="">
-                            <span class="mensajeError" id="nivel_error"></span>
+                            <select class="form-control" id="nivel" name="nivel">
+                                <option selected value="">Seleccione nivel</option>
+                                <option value="1">Maestria</option>
+                                <option value="2">Doctorado</option>
+                            </select>
                         </div>
                         <div class="form-group col-6">
                                 <strong> <label for="periodo" class="control-label">periodo</label></strong>
