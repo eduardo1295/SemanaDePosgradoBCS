@@ -11,7 +11,7 @@
 
                     <div class="form-group">
                         <label for="institucionSelect">Institución</label>
-                        <select class="form-control" id="institucionSelect">
+                        <select class="form-control" id="institucionSelect" name="id_institucion">
                             <option selected value="">Seleccione una institución</option>
                             @foreach ($instituciones as $institucion)
                             <option value={{$institucion->id}}>{{$institucion->nombre}}</option>

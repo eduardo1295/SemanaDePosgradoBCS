@@ -312,6 +312,7 @@
     $("#btn-save").click(function () {
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
+        alert($('#institucionSelect').find("option:selected").val());
         var actionType = $('#btn-save').val();
         $('#btn-save').html('Guardando..');
         if (actionType == "editar") {
@@ -364,11 +365,8 @@
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
             var datos = new FormData($("#coordinadorForm")[0]);
-            datos.append('institucion', selectIDIns);
-            
-            for (var value of datos.values()) {
-            console.log(value); 
-            }
+            //datos.append('id_institucion', $('#institucionSelect').find("option:selected").val());
+            console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,
@@ -405,9 +403,8 @@
     })
     
     $('#institucionSelect').change(function () {
-    selectIDIns = $(this).find("option:selected").val();
-    
-});
+        selectIDIns = $(this).find("option:selected").val();
+    });
 </script>
 @endsection
 
