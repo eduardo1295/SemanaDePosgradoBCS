@@ -514,7 +514,7 @@
             var h = screen.availHeight - 150;
             var w = screen.availWidth - 200;
             var left = (screen.availWidth/2)-(w/2);
-            var top = (screen.availHeight/2)-(h/2);
+            var top = (screen.availHeight/2)-(h/2)-50;
             var configuracion_ventana = "location=no,resizable=yes,scrollbars=yes,status=no,width=" + w + ",height=" + h+ ",top=" + top+ ",left=" + left;
             var newWin = document.open('', 'Vista previa', configuracion_ventana);
             
@@ -525,7 +525,7 @@
             newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"><\/script>');
             newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"><\/script>');
             newWin.document.write('<h1 class="display-1 w-75 mx-auto"> '+$("#titulo").val()+'<\/h1>');
-            newWin.document.write('<div class="w-75 mx-auto" style="word-wrap: break-word;"' + $('.summernote').summernote('code') + '<\/div>');
+            newWin.document.write('<div class="w-75 mx-auto" style="word-wrap: break-word;">' + $('.summernote').summernote('code') + '<\/div>');
             newWin.document.write('<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><img src="'+vistaPrevia.src+'" alt="" id="vistaPrevia" class="img-fluid mx-auto"></div>');
             newWin.document.close();
             

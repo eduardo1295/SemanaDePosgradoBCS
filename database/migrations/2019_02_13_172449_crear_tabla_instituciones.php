@@ -31,7 +31,7 @@ class CrearTablaInstituciones extends Migration
             $table->boolean('req_horas_minimas')->default(false);
             $table->integer('horas_minimas')->nullable();
             $table->double('latitud')->default(0);
-            $table->double('longitud')->dafault(0);
+            $table->double('longitud')->default(0);
             $table->boolean('sede')->default(false);
             
             $table->integer('creado_por');

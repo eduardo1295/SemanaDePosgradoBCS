@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Instituciones registradas
+                Coordinadores
             </h1>
         </div>
 
@@ -16,35 +16,38 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras instituciones</legend>
+        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Coordinadores</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
-                <label class="form-check-label" for="inlineRadio1">Activas</label>
+                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verCoor" value="activos">
+                <label class="form-check-label" for="inlineRadio1">Activos</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" name="verInsti" value="eliminados">
-                <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
+                <input class="form-check-input" type="radio" id="inlineRadio2" name="verCoor" value="eliminados">
+                <label class="form-check-label" for="inlineRadio2">Eliminados</label>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-6">
             <div class="d-flex justify-content-end">
-                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-institucion"><span><i
-                            class="fas fa-plus"></i></span> Nueva Institución</a>
+                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-coordinador"><span><i
+                            class="fas fa-plus"></i></span> Agregar coordinador</a>
 
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="display" cellspacing="0" style="width:100%" id="instituciones">
+            <table class="display" cellspacing="0" style="width:100%" id="coordinadoresdt">
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th>Grado</th>
                         <th>Nombre</th>
-                        <th>Direccion Web</th>
-                        <th>Telefono</th>
-                        <th id="lad">Última actualización</th>
+                        <th>Primer apellido</th>
+                        <th>Segundo apellido</th>
+                        <th>Email</th>
+                        <th>Institución</th>
+                        
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -52,11 +55,12 @@
                     <tr>
                         <th></th>
                         <th></th>
-                        <th class="text-input">Direccion Web</th>
                         <th></th>
                         <th></th>
                         <th></th>
-
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>
@@ -68,7 +72,7 @@
 
 @endsection
 @section('extra')
-@include('institucion.modal')
+@include('admin.coordinador.modal')
 @endsection
 @section('scripts')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -77,42 +81,13 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
-<script src="/js/imagenes/vistaprevia.js"></script>
+
 
 <script>
-    var lati = 24.141474;
-    var longi = -110.31314; 
-    var posInicial = new google.maps.LatLng(lati,longi);
-
-    function iniciarMapa(posicion){
-        mapProp = {
-            center: posicion,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMA
-        };
-        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-        marker = new google.maps.Marker({
-            position: posicion,
-            map: map,
-            draggable: true
-        });
-        google.maps.event.addListener(marker, 'drag', function (event) {
-            $('#lat').val(event.latLng.lat());
-            $('#lng').val(event.latLng.lng());
-        })
-        //marker drag event end
-        google.maps.event.addListener(marker, 'dragend', function (event) {
-            $('#lat').val(event.latLng.lat());
-            $('#lng').val(event.latLng.lng());
-        });
-    }
-    google.maps.event.addDomListener(window, 'load', iniciarMapa(posInicial));    
-
 
     var SITEURL = "{{URL::to('/')}}";
-    var checkInsti = 'activos';
-    
+    var checkCoord = 'activos';
+    var selectIDIns= "";
     $(document).ready(function () {
 
         $.extend($.fn.dataTableExt.oStdClasses, {
@@ -120,12 +95,12 @@
             "sLengthSelect": ""
         });
 
-        $('#instituciones tfoot  th.text-input').each(function (i) {
+        $('#coordinadoresdt tfoot  th.text-input').each(function (i) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
         });
 
-        var table = $('#instituciones').DataTable({
+        var table = $('#coordinadoresdt').DataTable({
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -137,9 +112,9 @@
             "serverSide": true,
             "search": true,
             "ajax": {
-                "url": '{{ route("institucion.listInstituciones")}}',
+                "url": '{{ route("coordinador.listCoordinador")}}',
                 "data": function (d) {
-                    d.busqueda = checkInsti
+                    d.busqueda = checkCoord
                 }
             },
             initComplete: function () {
@@ -157,16 +132,18 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
+                { data: 'coordinadores.grado', searchable: false },
                 { data: 'nombre', searchable: true },
-                { data: 'direccion_web', searchable: true },
-                { data: 'telefono', searchable: true },
-                { data: 'direccion', searchable: false },
+                { data: 'primer_apellido', searchable: true },
+                { data: 'segundo_apellido', searchable: true },
+                { data: 'email', searchable: true },
+                { data: 'instituciones.nom_insti', searchable: true },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
-                { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 5 },
-                { width: 105, targets: 5 }
+                { responsivePriority: 1, targets: 2 },
+                { responsivePriority: 2, targets: 7 },
+                { width: 105, targets: 7 }
             ]
         });
 
@@ -174,42 +151,34 @@
 
         $("#close-sidebar").click(function () {
             $('.mensajeError').text("");
-            $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+            
         });
 
         $("#show-sidebar").click(function () {
-            $('#instituciones').DataTable().ajax.reload(null, false);
+            $('#coordinadoresdt').DataTable().ajax.reload(null, false);
         });
 
 
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
-            var institucion_id = $(this).data('id');
-            var ruta = "{{url('institucion')}}/" + institucion_id + "/editar";
+            var coordinador_id = $(this).data('id');
+            var ruta = "{{url('coordinador')}}/" + coordinador_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
-                $('#institucionCrudModal').html("Editar institución: " + data.nombre);
+                $('#coordinadorCrudModal').html("Editar coordinador:" + data.nombre);
                 $('#btn-save').val("editar");
-                $('#institucion-crud-modal').modal('show');
-                $('#institucion_id').val(data.id);
+                $('#coordinador-crud-modal').modal('show');
+                console.log(data);
+                $('#coordinador_id').val(data.id);
+                $('#institucion').val(data.institucion);
                 $('#nombre').val(data.nombre);
-                $('#direccion_web').val(data.direccion_web);
-                $('#telefono').val(data.telefono);
-                $('#ciudad').val(data.ciudad);
-                $('#calle').val(data.calle);
-                $('#numero').val(data.numero);
-                $('#colonia').val(data.colonia);
-                $('#cp').val(data.cp);
-                $('#imglogo').prop('src', "{{url('img/logo')}}/" + data.url_logo);
-                $('#logoactual').html('Logo actual');
-                lati = data.latitud;
-                longi = data.longitud;
-                $('#lat').val(data.latitud);
-                $('#lng').val(data.longitud);
-                var Latlng = new google.maps.LatLng(parseFloat(lati), parseFloat(longi));
-                iniciarMapa(Latlng);
-                $('#logoAnterior').removeClass('d-none');
+                $('#primer_apellido').val(data.primer_apellido);
+                $('#segundo_apellido').val(data.segundo_apellido);
+                $('#email').val(data.email);
+                $('#grado').val(data.coordinadores.grado);
+                $("#institucionSelect").val(data.instituciones.id);
+                
 
             })
         });
@@ -217,10 +186,10 @@
         //var info = table.page.info();
         /*Accion al presionar el boton eliminar*/
         $('body').on('click', '.eliminar', function () {
-            var institucion_id = $(this).data("id");
+            var coordinador_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: '¿Desea eliminar la institución?',
+                title: '¿Desea eliminar el coordinador?',
                 content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
@@ -241,26 +210,18 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "DELETE",
-                                url: "{{ url('institucion')}}" + '/' + institucion_id,
+                                url: "{{ url('coordinador')}}" + '/' + coordinador_id,
                                 success: function (data) {
 
                                     if (table.data().count() == 1) {
-                                        $('#instituciones').DataTable().ajax.reload();
+                                        $('#coordinadoresdt').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#instituciones').dataTable();
+                                        var oTable = $('#coordinadoresdt').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    //$("#mensaje-acciones").text("Institución eliminada exitosamente.");
-                                    //$("#mensaje-acciones").fadeIn();
-                                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                                    //$('#mensaje-acciones').addClass('alert-warning');
-                                    //$('#mensaje-acciones').removeClass('alert-success');
-
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución eliminada exitosamente.");
+                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> coordinador eliminada exitosamente.");
                                     $("#snackbar").addClass("show");
-                                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -279,10 +240,10 @@
 
         /*Accion al presionar el boton reactivar*/
         $('body').on('click', '.reactivar', function () {
-            var institucion_id = $(this).data("id");
+            var coordinador_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: "¿Desea reactivar la institución?",
+                title: "¿Desea reactivar el coordinador?",
                 content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
@@ -300,24 +261,17 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "PUT",
-                                url: "{{ url('admin/institucion/reactivar')}}" + '/' + institucion_id,
+                                url: "{{ url('admin/coordinador/reactivar')}}" + '/' + coordinador_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
-                                        $('#instituciones').DataTable().ajax.reload();
+                                        $('#coordinadoresdt').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#instituciones').dataTable();
+                                        var oTable = $('#coordinadoresdt').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    //$("#mensaje-acciones").text("Institución activada exitosamente.");
-                                    //$("#mensaje-acciones").fadeIn();
-                                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                                    //$('#mensaje-acciones').addClass('alert-warning');
-                                    //$('#mensaje-acciones').removeClass('alert-success');
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución activada exitosamente.");
+                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Cuenta activada exitosamente.");
                                     $("#snackbar").addClass("show");
-                                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -333,36 +287,27 @@
 
     });
 
-    /*Accion al presionar el boton crear-institucion*/
-    $('#crear-institucion').click(function () {
+    /*Accion al presionar el boton crear-coordinador*/
+    $('#crear-coordinador').click(function () {
 
-        $('#btn-save').val("crear-institucion");
-        $('#institucion_id').val('');
-        $('#institucionForm').trigger("reset");
-        $('#institucionCrudModal').html("Agregar nueva institución");
-        $('#institucion-crud-modal').modal({ backdrop: 'static', keyboard: false })
-        $('#institucion-crud-modal').modal('show');
-        $('#imglogo').prop('src', "");
-        $('#logoactual').html('');
-        iniciarMapa(posInicial);
-        $('#lat').val(lati);
-        $('#lng').val(longi);
-        $('#logoAnterior').addClass('d-none');
+        $('#btn-save').val("crear-coordinador");
+        $('#coordinador_id').val('');
+        $('#coordinadorForm').trigger("reset");
+        $('#coordinadorCrudModal').html("Agregar nueva cuenta de coordinador");
+        $('#coordinador-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#coordinador-crud-modal').modal('show');
 
     });
 
     $('#btn-close').click(function () {
         $('.mensajeError').text("");
-        $('#vistaPrevia').prop('src', "");
-        $('#nuevoLogo').addClass('d-none');
-        $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
     })
 
-    $("input[name='verInsti']").change(function (e) {
-        checkInsti = $(this).val();
-        $('#instituciones').DataTable().ajax.reload();
+    $("input[name='verCoor']").change(function (e) {
+        checkCoord = $(this).val();
+        $('#coordinadoresdt').DataTable().ajax.reload();
     });
-    
+
     /*Accion al presionar el boton save*/
     $("#btn-save").click(function () {
         $("#btn-save").prop("disabled", true);
@@ -370,11 +315,10 @@
         var actionType = $('#btn-save').val();
         $('#btn-save').html('Guardando..');
         if (actionType == "editar") {
-            var id = $('#institucion_id').val();
-            var ruta = "{{url('institucion')}}/" + id + "";
-            var datos = new FormData($("#institucionForm")[0]);
+            var id = $('#coordinador_id').val();
+            var ruta = "{{url('coordinador')}}/" + id + "";
+            var datos = new FormData($("#coordinadorForm")[0]);
             datos.append('_method', 'PUT');
-            console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,
@@ -385,32 +329,26 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    $('#institucionForm').trigger("reset");
-                    $('#institucion-crud-modal').modal('hide');
+                    $('#coordinadorForm').trigger("reset");
+                    $('#coordinador-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#instituciones').dataTable();
+                    var oTable = $('#coordinadoresdt').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("Actualización exitosa.");
-                    //var x = document.getElementById("snackbar");
-                    //x.html("Actualización exitosa.");
-                    //x.className = "show";
+                    
                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
                     $("#snackbar").addClass("show");
-                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
 
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-                    $('#nuevoLogo').addClass('d-none');
-
+                    console.log(data);
                 },
                 error: function (data) {
+                    
+                    
                     if (data.status == 422) {
+                        
                         var errores = data.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
@@ -422,40 +360,36 @@
                 },
 
             });
-        } else if (actionType == "crear-institucion") {
+        } else if (actionType == "crear-coordinador") {
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
-
-
-
+            var datos = new FormData($("#coordinadorForm")[0]);
+            datos.append('institucion', selectIDIns);
+            
+            for (var value of datos.values()) {
+            console.log(value); 
+            }
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                data: new FormData($("#institucionForm")[0]),
-                url: "{{route('institucion.store')}}",
+                data: datos,
+                url: "{{route('coordinador.store')}}",
                 type: "POST",
                 dataType: 'json',
                 contentType: false,
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    $('#institucionForm').trigger("reset");
-                    $('#institucion-crud-modal').modal('hide');
+                    $('#coordinadorForm').trigger("reset");
+                    $('#coordinador-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#instituciones').dataTable();
+                    var oTable = $('#coordinadoresdt').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("Institución registrada exitosamente.");
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución registrada exitosamente.");
+                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Coordinador registrado exitosamente.");
                     $("#snackbar").addClass("show");
-                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-                    $('#nuevoLogo').addClass('d-none');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -469,36 +403,11 @@
         }
 
     })
-
-    $('.custom-file-input').on('change', function () {
-        let fileName = $(this).val().split('\\').pop();
-        if (!fileName.trim()) {
-            $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
-        } else {
-            $(this).next('.custom-file-label').addClass("selected").html(fileName);
-        }
-    });
     
-    /*
-    function iniciarMapa(posicion){
-        mapProp = {
-            center: posicion,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMA
-        };
-        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-        marker = new google.maps.Marker({
-            position: posicion,
-            map: map,
-            draggable: true
-        });
-        
-    }
-
-    */
-    function mostrar(idMostrar) {
-        $('#' + idMostrar).removeClass('d-none');
-    }
+    $('#institucionSelect').change(function () {
+    selectIDIns = $(this).find("option:selected").val();
+    
+});
 </script>
 @endsection
 
@@ -512,10 +421,5 @@
 <link href="/css/modales/modalresponsivo.css" rel="stylesheet">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
 
-<style>
-    .custom-file-input~.custom-file-label::after {
-        content: "Elegir";
-    }
-</style>
 
 @endsection
