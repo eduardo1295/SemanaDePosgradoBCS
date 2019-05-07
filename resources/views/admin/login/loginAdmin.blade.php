@@ -31,9 +31,9 @@
 					<div class="form-group col-9 offset-1">
 							<label for="password"><strong>Contraseña:</strong></label>
 							<input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" aria-describedby="c2" required>
-							<small id="c2" class="text-muted">Ingrese su contraseña</small>
+							<small id="c2" class="text-muted"><a href="{{route('recuperarAdmin')}}">Olvide mi contraseña</a></small>
 							<div class="invalid-feedback">
-									<a href="#">Olvide mi contraseña</a>
+									
 							</div>
 					</div>
 					<div class="col-1 d-flex align-items-center align-items-center">
@@ -41,7 +41,7 @@
 								<i class="fas fa-eye"></i>
 							</span>
 					</div>
-
+					
 					<div class="form-group col-10 offset-1">
 							<div class="g-recaptcha mb-3" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
 					</div>
@@ -54,9 +54,8 @@
 							</div>
 						@endif
 					</div>
-					
 					<div class="col-12 pb-3 pt-3">
-							<input type="submit" value="Login" class="btn btn-primary mx-auto pl-5 pr-5 w-100">
+							<input type="submit" value="Login" class="btn btn-primary mx-auto  w-100">
 					</div>
 				</div>
 				

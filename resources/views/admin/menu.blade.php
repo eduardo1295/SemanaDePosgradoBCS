@@ -90,7 +90,20 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                </li>
+                <li class="sidebar-dropdown">
+                    <a>
+                        <i class="far fa-id-card"></i>
+                        <span>Programas</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                               <strong><a href="{{route('programa.VerPrograma')}}">Agregar Programa</a></strong>
+                            </li>
+                        </ul>
+                    </div>
+            </li>
 
             </ul>
         </div>

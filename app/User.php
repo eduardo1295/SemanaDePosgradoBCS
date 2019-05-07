@@ -80,5 +80,18 @@ class User extends Authenticatable
         return $this->hasManyThrough('App\Trabajo', 'App\Alumno', 'id','id');
     }
     */
-    
+
+    public function hasRoles(array $roles){
+
+        foreach ($roles as $rol) {
+            foreach ($this->roles as $rolUsuario) {
+                if($rolUsuario->nombre === $rol){
+                return true;
+            }    
+            }
+            
+        }
+
+        return false;
+    }
 }

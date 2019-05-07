@@ -24,8 +24,15 @@
             <div class="carousel-item active" style="">
         @else
         <div class="carousel-item" style="">
-        @endif    
+        @endif
+          @if(isset($slide->link_web))
+          <a href="{{$slide->link_web}}" target="_blank">
             <img src="{{url('img/carrusel')}}/{{ $slide->url_imagen }}" alt="" class="w-100 h-100">
+          </a>
+          @else
+            <img src="{{url('img/carrusel')}}/{{ $slide->url_imagen }}" alt="" class="w-100 h-100">
+          @endif
+          
             <div class="carousel-caption d-none">
             </div>
           </div>

@@ -43,7 +43,7 @@ class LoginController extends Controller
     }
     public function showAdminLoginForm()
     {
-        return view('login2', ['url' => 'admin']);
+        return view('admin.login.loginAdmin', ['url' => 'admin']);
         //return 'Hola';
         
     }

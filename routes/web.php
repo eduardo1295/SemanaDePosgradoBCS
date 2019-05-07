@@ -61,6 +61,13 @@ Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar'
 Route::resource('carrusel', 'CarruselController');
 
 Auth::routes();
+
+Route::view('/login/admin/recuperar','admin.login.recuperarAdmin')->name('recuperarAdmin');
+
+Route::get('admin/programa/VerPrograma', 'ProgramaController@programa')->name('programa.VerPrograma');
+Route::get('programa/listPrograma', 'ProgramaController@listPrograma')->name('programa.listPrograma');
+Route::put('admin/programa/reactivar/{programa}', 'ProgramaController@reactivar')->name('programa.reactivar');
+Route::resource('programa', 'ProgramaController');
 /*
 Route::get('/',['as'=> 'home',function (){
     return view('home',compact('hola'));

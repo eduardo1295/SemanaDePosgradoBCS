@@ -3,7 +3,8 @@
         <div id="carruselinst" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner" role="listbox">
             @php
-            $x = 0    
+            $x = 0 
+               
             @endphp
             @foreach ($instituciones as $institucion)
             @if ($x==0)
@@ -83,7 +84,7 @@
                               <div class="row mt-2 justify-content-center">
                                   <div class="embed-responsive embed-responsive-16by9 mt-3">
                                       <iframe id="mapa12"
-                                          src="http://maps.google.com/maps?q=+{{$institucionSede->latitud}}+, +{{$institucionSede->longitud}}+&z=15&output=embed"
+                                          src=""
                                           frameborder="0" style="border:0" allowfullscreen>
                                       </iframe>
                                   </div>

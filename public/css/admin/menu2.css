@@ -395,7 +395,7 @@
       -webkit-transition: padding-left .3s ease;
       transition: padding-left .3s ease;
       /*overflow-x: hidden; */
-      margin-top: 20px;
+      /*margin-top: 20px;*/
     }
       .page-wrapper .page-content .overlay {
         position: fixed;
@@ -558,4 +558,8 @@
       transition: padding-left .3s ease;
       margin-top: 20px;
     }
+   #navbarM2{
+     padding-left: 35px; 
+     
+   }
     

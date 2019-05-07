@@ -1,53 +1,48 @@
-<section id="navbarM2">
-    <div class="header">
-        <div class="container">
-            <div class="row">
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                    <a href="/"><img src="/img/logo.png" width="120px"  alt="Hair Salon Website Templates Free Download"></a>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 d-flex justify-content-end">
-                    <div class="navigation float-none">
-                        <div id="navigation">
-                            <ul>
-                                <li class="has-sub"><a href="blog-default.html" title="Blog ">Programa</a>
-                                    <ul>
-                                        <li><a href="blog-default.html" title="Blog">coli</a></li>
-                                        <li><a href="blog-single.html" title="Blog Single ">Póster</a></li>
-                                        <li><a href="blog-single.html" title="Blog Single ">Entrevista</a></li>
-                                        <li><a href="blog-single.html" title="Blog Single ">Video</a></li>
-                                    </ul>
-                                </li>
-                                
-                                
-                                @if (!Auth('admin')->check() && !Auth::check())
-                                    <li><a href="/login" title="Styleguide">Acceso</a> </li>
-                                @endif
-                                
-                                <li><a href="styleguide.html" title="Styleguide">Soporte</a> </li>
-                                @if(Auth('admin')->check())
-                                    <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth('admin')->user()->nombre}}</a> </li>
-                                    
-                                @endif
+<div class="container-fluid" id="#contenedor" style="z-index:0">
+    <div class="row">
+        <div class="col-12">
+            <div class="row d-flex  justify-contentcenter justify-content-sm-between align-items-center">
+                <div class="col-12 col-md-3 d-flex justify-content-center justify-content-sm-start">
+                    <a href="/"><img src="/img/logo.png" width="120px"
+                            alt="Hair Salon Website Templates Free Download"></a>
+                </div>
+                <div class="col-12 col-md-6 pt-3 pt-md-0">
+                    <h1 class="text-center">Área Administrativa</h1>
+                </div>
+                <div class="col-12 col-md-3 d-flex justify-content-end aa">
+                    <div class="dropdown d-flex justify-content-end">
+                        <button class="btn btn-sm btnmenu  btn-primary dropdown-toggle d-block d-sm-none" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            <i class="fas fa-bars"></i>
+                        </button>
 
-                                {{-- comment 
-                                
-                                @if (Auth('admin')->check())
-                                    <li><a href="/logout" title="Styleguide">Cerrar sesión 1</a> </li>
-                                @endif
-                                
-                                @if( Auth('api')->check())
-                                <li><a href="/logout" title="Styleguide">Cerrar sesión 2</a> </li>
-                                @elseif(Auth('admin')->check())
-                                    <h1>si</h1>
-                                @else
-                                <h1>nel</h1>
-                                @endif
-                                --}}
-                            </ul>
+                        <button class="btn btn-primary dropdown-toggle d-none d-sm-block" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i> {{auth('admin')->user()->nombre}}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Mi Perfil</a>
+                            <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
-  </div>
-</section>
+    </div>
+</div>
+
+<style>
+
+@media screen and (max-width: 768px) {
+  .dropdown-toggle::after { display: none !important; }
+  .aa{ position: fixed; top: 25px; left: 15px;  }
+  .btnmenu{ width: 35px; border-radius: 4px 0  0px 4px; }
+}
+
+/*
+@media screen (max-with: 200px){
+    
+    
+*/
+
+</style>

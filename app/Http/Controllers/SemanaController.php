@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Noticia;
 use App\Institucion;
+use App\User;
 use DB;
 use App\Carrusel;
+use Auth;
 class SemanaController extends Controller
 {
     /**
@@ -20,6 +22,8 @@ class SemanaController extends Controller
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
+        //dd(Auth::guard()->user());
+        
         return view('Maqueta2', compact(['noticias','instituciones','institucionSede','carrusel']));
     }
 

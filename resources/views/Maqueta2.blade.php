@@ -85,6 +85,7 @@
                         <div class="col-3 n4 mx-auto" id="contenido">
                             <div class="row">
                                 <div class="col-12">
+                                    @if (isset($institucionSede))
                                         <p class="text-center pt-2"> <strong>Institución: </strong> {{$institucionSede->nombre}} </p>
                                         <div class="d-flex">
                                             <div class="col-12">
@@ -93,6 +94,7 @@
                                         </div>
                                         <a class="nav-link active lead text-right" data-toggle="modal" href="#cerrar">
                                         <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
+                                    @endif
                                 </div>
                                     
                             </div>
@@ -104,33 +106,6 @@
         </div>
     </div>
 
-    {{--
-    <div class="container">
-        <div class="row" >
-            <div class="col-8" id="contenido">
-                    @include('layoutsM2.noticias')        
-            </div>
-            <div class="col-4" id="contenido">
-                hola
-            </div>
-                
-        </div>
-        
-    </div>
-    --}}
-
-    {{--
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 ">
-                    @include('layoutsM2.informacion')
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-5 pr-0">
-                @include('layoutsM2.sede')
-            </div>
-        </div>
-    </div>    
-    --}}
     <section id="carruselInstituciones" class="mb-5">
         <div id="fondo">
 
@@ -147,6 +122,7 @@
         </div>
     </section>
 
+    @if (isset($institucionSede))
     <section id="modales">
         <div class="modal fade" id="cerrar" tabindex="-1" role="dialog" aria-label="modalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -176,6 +152,7 @@
                 </div>
             </div>
     </section>
+    @endif
 
 
 

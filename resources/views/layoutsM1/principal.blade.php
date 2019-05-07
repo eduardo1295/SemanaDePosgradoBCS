@@ -1,3 +1,7 @@
+{{-- comment 
+
+{{dd(auth()->user()->roles->toArray())}}
+--}}
 <!DOCTYPE html>
 <html lang="es">
 
