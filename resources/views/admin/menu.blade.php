@@ -16,7 +16,7 @@
         <!-- sidebar-brand  -->
 
         <!-- sidebar-header -->
-        
+
 
         <!-- sidebar-menu  -->
 
@@ -75,22 +75,12 @@
                         </ul>
                     </div>
                 </li>
-                <li class="sidebar-dropdown">
-                        <a>
-                            <i class="far fa-id-card"></i>
-                            <span>Administrar Carrusel</span>
+                <li>
+                        <a href="{{route('carrusel.VerCarrusel')}}">
+                                <i class="fab fa-slideshare"></i>
+                            <span><strong>Carrusel</strong></span>
                         </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="#">Agregar Carrusel</a>
-                                </li>
-                                <li>
-                                   <strong><a href="{{route('carrusel.VerCarrusel')}}">Ver Carrusel</a></strong>
-                                </li>
-                            </ul>
-                        </div>
-                </li>
+                    </li>
                 <li class="sidebar-dropdown">
                     <a>
                         <i class="far fa-id-card"></i>
@@ -99,11 +89,18 @@
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                               <strong><a href="{{route('programa.VerPrograma')}}">Agregar Programa</a></strong>
+                                <strong><a href="{{route('programa.VerPrograma')}}">Agregar Programa</a></strong>
                             </li>
                         </ul>
                     </div>
-            </li>
+                </li>
+                <li>
+                    <a href="{{route('coordinador.VerCoodinadores')}}">
+                        <i class="fas fa-user-tie"></i>
+                        <span><strong>Coordinadores</strong></span>
+                    </a>
+                </li>
+
 
             </ul>
         </div>

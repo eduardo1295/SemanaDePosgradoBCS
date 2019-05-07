@@ -170,7 +170,7 @@
                 $('#carruselCrudModal').html("Editar imagen");
                 $('#btn-save').val("editar");
                 $('#carrusel-crud-modal').modal('show');
-                console.log(data);
+                
                 $('#carrusel_id').val(data.id);
                 $('#link_web').val(data.link_web);
                 

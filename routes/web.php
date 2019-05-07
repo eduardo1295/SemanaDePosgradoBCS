@@ -60,7 +60,7 @@ Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('ca
 Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
 Route::resource('carrusel', 'CarruselController');
 
-Route::get('admin/coordinador/VerCoordinadores', 'CoordinadorController@coordinador')->name('coordonador.VerCoodinadores');
+Route::get('admin/coordinador/VerCoordinadores', 'CoordinadorController@coordinador')->name('coordinador.VerCoodinadores');
 Route::get('coordinador/listCoordinador', 'CoordinadorController@listCoordinador')->name('coordinador.listCoordinador');
 Route::put('admin/coordinador/reactivar/{coordinador}', 'CoordinadorController@reactivar')->name('coordinador.reactivar');
 Route::resource('coordinador', 'CoordinadorController');
