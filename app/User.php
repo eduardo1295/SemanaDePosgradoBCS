@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function instituciones()
     {
-        return $this->hasOne(Institucion::class, 'id', 'id_institucion');
+        return $this->hasOne(Institucion::class, 'id', 'id');
     }
 
     public function noticias()

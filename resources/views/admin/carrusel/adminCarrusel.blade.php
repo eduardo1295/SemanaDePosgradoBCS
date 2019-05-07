@@ -250,7 +250,7 @@
             $.confirm({
                 columnClass: 'col-md-6',
                 title: "¿Desea reactivar la imagen?",
-                content: 'This dialog will automatically trigger \'cancel\' in 8 seconds if you don\'t respond.',
+                content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
                     cancelAction: {
