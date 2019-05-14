@@ -29,7 +29,7 @@ class UpdateNoticiaRequest extends FormRequest
 
             'resumen' => 'required|string|max:100',
 
-            'contenido' => 'required|string|max:65535',
+            'contenido' => 'required|string',
 
             'imgnoticia' => 'mimes:jpeg,jpg,png|max:2048',
         ];

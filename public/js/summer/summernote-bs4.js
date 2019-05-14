@@ -2676,6 +2676,7 @@
      */
     function createImage(url) {
         return $$1.Deferred(function (deferred) {
+            
             var $img = $$1('<img>');
             $img.one('load', function () {
                 $img.off('error abort');
@@ -3810,7 +3811,7 @@
             var tds = [];
             var tdHTML;
             for (var idxCol = 0; idxCol < colCount; idxCol++) {
-                tds.push('<td>' + dom.blank + '</td>');
+                tds.push('<td style="word-break: break-all;">' + dom.blank + '</td>');
             }
             tdHTML = tds.join('');
             var trs = [];
@@ -3819,7 +3820,7 @@
                 trs.push('<tr>' + tdHTML + '</tr>');
             }
             trHTML = trs.join('');
-            var $table = $$1('<table>' + trHTML + '</table>');
+            var $table = $$1('<table style="width:100%;border-collapse: collapse;">' + trHTML + '</table>');
             if (options && options.tableClassName) {
                 $table.addClass(options.tableClassName);
             }

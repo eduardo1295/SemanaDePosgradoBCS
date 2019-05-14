@@ -18,7 +18,7 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function __construct(){
-         //$this-> middleware('auth:admin')->only('noticias');
+         $this-> middleware('auth:admin')->only('noticias');
          
 
      }
@@ -61,6 +61,7 @@ class NoticiaController extends Controller
      */
     public function store(StoreNoticiaRequest $request)
     {
+        /*
         $nuevo_nombre = 'sin imagen';
         if($request->hasFile('imgnoticia')){
             
@@ -69,12 +70,40 @@ class NoticiaController extends Controller
             $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_noticia . '.' . $imagennoticia->getClientOriginalExtension();
             $imagennoticia->move(public_path('img/noticias'), $nuevo_nombre);
         }
-
+        */
+        $dom = new \domdocument();
+        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        
+        $images = $dom->getelementsbytagname('img');
+ 
+        //loop over img elements, decode their base64 src and save them to public folder,
+        //and then replace base64 src with stored image URL.
+        $ultimaImagen ="";
+        foreach($images as $k => $img){
+            $data = $img->getattribute('src');
+            $ultimaImagen = $data;
+            if (substr($data, 0, 5) == 'data:') {
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+    
+                $data = base64_decode($data);
+                $image_name= time().$k.'.png';
+                $path = public_path() .'/img/noticias/'. $image_name;
+    
+                file_put_contents($path, $data);
+    
+                $img->removeattribute('src');
+                $img->setattribute('src', '/img/noticias/'.$image_name);
+                $ultimaImagen = '/img/noticias/'.$image_name;
+            }
+        }
+ 
+        $detail = $dom->savehtml();
         
         $noticia = new Noticia;
-        $noticia->contenido = $request->contenido;
+        $noticia->contenido = $detail;
         $noticia->titulo = $request->titulo;
-        $noticia->url_imagen = $nuevo_nombre;
+        $noticia->url_imagen = $ultimaImagen;
         $noticia->resumen = $request->resumen;
         $noticia->creada_por= 1;
         $noticia->save();
@@ -117,6 +146,8 @@ class NoticiaController extends Controller
     public function update(UpdateNoticiaRequest $request, $id)
     {
         $noticia  = Noticia::where('id_noticia', $id)->first();
+        
+        /*
         $nuevo_nombre = 'no_logo.png';
         if($request->hasFile('imgnoticia')){
             $imagennoticia = $request->file('imgnoticia');
@@ -125,12 +156,40 @@ class NoticiaController extends Controller
         }else{
             $nuevo_nombre = $noticia->url_imagen;
         }
-
+        */
+        $detail=$request->contenido;
         
+        $dom = new \domdocument();
+        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
-        $noticia->contenido = $request->contenido;
+        $images = $dom->getelementsbytagname('img');
+        $ultimaImagen ="";
+        //loop over img elements, decode their base64 src and save them to public folder,
+        //and then replace base64 src with stored image URL.
+        foreach($images as $k => $img){
+            $data = $img->getattribute('src');
+            $ultimaImagen = $data;
+            if (substr($data, 0, 5) == 'data:') {
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+    
+                $data = base64_decode($data);
+                $image_name= time().$k.'.png';
+                $path = public_path() .'/img/noticias/'. $image_name;
+    
+                file_put_contents($path, $data);
+    
+                $img->removeattribute('src');
+                $img->setattribute('src', '/img/noticias/'.$image_name);
+                $ultimaImagen = '/img/noticias/'.$image_name;
+            }
+        }
+ 
+        $detail = $dom->savehtml();
+        
+        $noticia->contenido = $detail;
         $noticia->titulo = $request->titulo;
-        $noticia->url_imagen = $nuevo_nombre;
+        $noticia->url_imagen = $ultimaImagen;
         $noticia->resumen = $request->resumen;
         
         $noticia->save();

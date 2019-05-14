@@ -27,6 +27,11 @@ class SemanaController extends Controller
         return view('Maqueta2', compact(['noticias','instituciones','institucionSede','carrusel']));
     }
 
+    public function indexAdmin()
+    {
+        return view ('admin.index');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

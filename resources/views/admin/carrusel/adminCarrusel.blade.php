@@ -217,17 +217,11 @@
                                         var oTable = $('#slidersC').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    //$("#mensaje-acciones").text("imagen eliminada exitosamente.");
-                                    //$("#mensaje-acciones").fadeIn();
-                                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                                    //$('#mensaje-acciones').addClass('alert-warning');
-                                    //$('#mensaje-acciones').removeClass('alert-success');
 
-                                    //$('#slidersC').DataTable().ajax.reload(null, false);
-                                    //$('#slidersC').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> imagen eliminada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    var x = document.getElementById("snackbar");
+                                    x.innerHTML="<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen eliminada exitosamente.";
+                                    x.className = "show";
+                                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -275,6 +269,8 @@
                                         var oTable = $('#slidersC').dataTable();
                                         oTable.fnDraw(false);
                                     }
+                                    
+                                    
                                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen activada exitosamente.");
                                     $("#snackbar").addClass("show");
                                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
@@ -295,7 +291,6 @@
 
     /*Accion al presionar el boton crear-carrusel*/
     $('#crear-carrusel').click(function () {
-
         $('#btn-save').val("crear-carrusel");
         $('#carrusel_id').val('');
         $('#carruselForm').trigger("reset");
@@ -347,18 +342,11 @@
                     //recargar serverside
                     var oTable = $('#slidersC').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("Actualización exitosa.");
-                    //var x = document.getElementById("snackbar");
-                    //x.html("Actualización exitosa.");
-                    //x.className = "show";
+                    
                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
                     $("#snackbar").addClass("show");
                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
 
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -404,11 +392,7 @@
                     //recargar serverside
                     var oTable = $('#slidersC').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("imagen registrada exitosamente.");
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
+                    
                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> imagen registrada exitosamente.");
                     $("#snackbar").addClass("show");
                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);

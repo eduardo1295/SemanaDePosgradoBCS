@@ -98,8 +98,8 @@
                   $note.summernote('pasteHTML', $note.summernote('createRange').toString());
                 else
                   $note.summernote('code', cleanText($note.summernote('code')));
-                if ($editor.find('.note-status-output').length > 0)
-                  $editor.find('.note-status-output').html('<div class="alert alert-success">' + lang.cleaner.not + '</div>');
+                if ($editor.find('.note-status-bar').length > 0)
+                  $editor.find('.note-status-bar').html('<div class="alert alert-success">' + lang.cleaner.not + '</div>');
                 else
                   $editor.find('.note-editing-area').append('<div class="alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
               }
@@ -109,9 +109,9 @@
         }
         this.events = {
           'summernote.init':function () { 
-            if ($editor.find('.note-status-output').length < 1) {
-              $editor.find('.note-statusbar').prepend('<output class="note-status-output"></output>');
-              $("head").append('<style>.note-statusbar .note-status-output{display:block;padding-top:7px;width:100%;font-size:14px;line-height:1.42857143;height:25px;color:#000}.note-statusbar .pull-right{float:right!important}.note-statusbar .note-status-output .text-muted{color:#777}.note-statusbar .note-status-output .text-primary{color:#286090}.note-statusbar .note-status-output .text-success{color:#3c763d}.note-statusbar .note-status-output .text-info{color:#31708f}.note-statusbar .note-status-output .text-warning{color:#8a6d3b}.note-statusbar .note-status-output .text-danger{color:#a94442}.note-statusbar .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-statusbar .alert .note-icon{margin-right:5px}.note-statusbar .alert-success{color:#3c763d!important;background-color: #dff0d8 !important;border-color:#d6e9c6}.note-statusbar .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-statusbar .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-statusbar .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
+            if ($editor.find('.note-status-bar').length < 1) {
+              $editor.find('.note-statusbar').prepend('<output class="note-status-bar"></output>');
+              $("head").append('<style>.note-statusbar .note-status-bar{display:block;padding-top:7px;width:100%;font-size:14px;line-height:1.42857143;height:25px;color:#000}.note-statusbar .pull-right{float:right!important}.note-statusbar .note-status-bar .text-muted{color:#777}.note-statusbar .note-status-bar .text-primary{color:#286090}.note-statusbar .note-status-bar .text-success{color:#3c763d}.note-statusbar .note-status-bar .text-info{color:#31708f}.note-statusbar .note-status-bar .text-warning{color:#8a6d3b}.note-statusbar .note-status-bar .text-danger{color:#a94442}.note-statusbar .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-statusbar .alert .note-icon{margin-right:5px}.note-statusbar .alert-success{color:#3c763d!important;background-color: #dff0d8 !important;border-color:#d6e9c6}.note-statusbar .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-statusbar .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-statusbar .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
             }
             if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
                 var textLength = $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
@@ -124,15 +124,16 @@
               if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both') lengthStatus += lang.cleaner.limitText + ': ' + textLength.length+'/'+options.cleaner.limitChars;
               if (options.cleaner.limitDisplay == 'both') lengthStatus += ' / ';
               if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both') lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
-              $editor.find('.note-status-output').html('<small class="pull-right ' + lengthStatus + '&nbsp;</small>');
+              $editor.find('.note-status-bar').html('<small class="pull-right ' + lengthStatus + '&nbsp;</small>');
             }
           },
           'summernote.keydown':function (we, e) {
-            
+            var node = document.createElement('div');
             if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
                 var textLength =  $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
                 var codeLength =  $editor.find('.note-editable').html();
               var lengthStatus = '';
+              
               if (options.cleaner.limitStop == true && textLength.length >= options.cleaner.limitChars) {
                      var key = e.keyCode;
                 allowed_keys = [8, 13, 37, 38, 39, 40, 46]
@@ -155,9 +156,11 @@
                   lengthStatus += ' / ';
                 if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both')
                   lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
-                $editor.find('.note-status-output').html('<small class="cleanerLimit pull-right ' + lengthStatus + '&nbsp;</small>');
+                $editor.find('.note-status-bar').html('<small class="cleanerLimit pull-right ' + lengthStatus + '&nbsp;</small>');
               }*/
+              
             }
+            
           },
           'summernote.change':function (we, e) {
             
@@ -165,6 +168,9 @@
               var textLength =  $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
               var codeLength =  $editor.find('.note-editable').html();
             var lengthStatus = '';
+            if(codeLength.length==0 || codeLength == '<br>'){
+              $('#contenido').summernote('code','<div><br></div>');
+            }
             if (options.cleaner.limitStop == true && textLength.length <= options.cleaner.limitChars) {
               if (textLength.length >= options.cleaner.limitChars && options.cleaner.limitChars > 0)
                 lengthStatus += 'text-danger">';
@@ -176,10 +182,11 @@
                 lengthStatus += ' / ';
               if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both')
                 lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
-              $editor.find('.note-status-output').html('<small class="cleanerLimit pull-right ' + lengthStatus + '&nbsp;</small>');
-            
-            } 
+              $editor.find('.note-status-bar').html('<small class="cleanerLimit pull-right ' + lengthStatus + '&nbsp;</small>');
+              
+            }
           }
+          
           },
           'summernote.paste':function (we, e) {
             var textLength =  $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
@@ -193,14 +200,14 @@
                 var text = window.clipboardData.getData("Text");
               else
                 var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'Text' : 'text/plain');
-              alert(text.length);
+              
               if (text && (text.length+textLength.length<=options.cleaner.limitChars)) {
                 if (msie || ffox)
                   setTimeout(function(){$note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));}, 1);
                 else
                   $note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));
-                if ($editor.find('.note-status-output').length > 0)
-                  $editor.find('.note-status-output').html('<div class="summernote-cleanerAlert alert alert-success">' + lang.cleaner.not + '</div>');
+                if ($editor.find('.note-status-bar').length > 0)
+                  $editor.find('.note-status-bar').html('<div class="summernote-cleanerAlert alert alert-success">' + lang.cleaner.not + '</div>');
                 else
                   $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
               }

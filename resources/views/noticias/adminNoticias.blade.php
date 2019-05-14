@@ -99,18 +99,44 @@
     var titulo = "";
     var table = "";
     $(document).ready(function () {
-        
+        $('.note-statusbar').hide();
         $("#show-sidebar").click(function () {
             $('#noticias').DataTable().ajax.reload(null, false);
         });
 
         function registerSummernote(element, placeholder, max, callbackMax) {
             $(element).summernote({
+                callbacks: {
+                    onInit: function () {
+                        $(".note-editor").on('click', '.btn-fullscreen', function (e) {
+                            $(".modal-dialog").toggleClass('modal100');
+                        });
+                    },
+                    onImageUpload : function(files) {
+      if (!files.length) return;
+      var file = files[0];
+      // create FileReader
+      var reader  = new FileReader();
+      reader.onloadend = function () {
+          // when loaded file, img's src set datauri
+          console.log("img",$("<img>"));
+          var img = $("<img>").attr({src: reader.result, width: "50%",style:"margin:1px;float: left;",class:"img-responsive note-float-left"}); // << Add here img attributes !
+          console.log("var img", img);
+          $("#contenido").summernote("insertNode", img[0]);
+      }
+
+      if (file) {
+        // convert fileObject to datauri
+        reader.readAsDataURL(file);
+      }
+  }
+
+                },
                 //toolbarContainer: '.my-toolbar',
 
                 placeholder,
                 lang: 'es-ES', // Change to your chosen language
-
+                disableResizeEditor: true,
                 dialogsInBody: true,
                 dialogsFade: false,
                 shortcuts: false,
@@ -125,7 +151,7 @@
                     ['fontname', ['fontname']],
                     ['fontsize', ['fontsize']],
                     ['font', ['bold', 'italic', 'underline', 'clear']],
-
+                    ['picture'],
 
                     ['para', ['ul', 'ol', 'listStyles', 'paragraph']],
                     ['height', ['height']],
@@ -137,7 +163,7 @@
                 popover: {
                     image: [
                         ['custom', ['imageTitle']],
-                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['imagesize', ['imageSize100', 'imageSize50']],
                         ['float', ['floatLeft', 'floatRight', 'floatNone']],
                         ['remove', ['removeMedia']]
                     ],
@@ -158,10 +184,14 @@
                 },
                 styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
             });
+
         }
 
+
+
+
         $(function () {
-            registerSummernote('.summernote', 'Contenido de la noticia', 50, function (max) {
+            registerSummernote('.summernote', 'Contenido de la noticia', 500, function (max) {
                 $('#maxContentPost').text(max)
             });
         });
@@ -183,7 +213,7 @@
             responsive: true,
             autoWidth: false,
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                "url": "/js/datatableJS/es.json"
             },
             "processing": true,
             "serverSide": true,
@@ -247,8 +277,10 @@
         }
     });
 
+
     /*Al presionar el boton editar*/
     $('body').on('click', '.editar', function () {
+        reiniciar();
         var noticia_id = $(this).data('id');
         var ruta = "{{url('noticia')}}/" + noticia_id + "/editar";
 
@@ -275,7 +307,7 @@
 
     /*Accion al presionar el boton crear-noticia*/
     $('#crear-noticia').click(function () {
-
+        reiniciar();
         $('#btn-save').val("crear-noticia");
         $('#noticia_id').val('');
         $('#noticiaForm').trigger("reset");
@@ -302,6 +334,7 @@
 
     /*Accion al presionar el boton save*/
     $("#btn-save").click(function () {
+        $('.mensajeError').text("");
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var actionType = $('#btn-save').val();
@@ -509,34 +542,39 @@
         });
     });
 
-    $('.preview-btn').on('click', function(e) {
-            e.preventDefault();
-            var h = screen.availHeight - 150;
-            var w = screen.availWidth - 200;
-            var left = (screen.availWidth/2)-(w/2);
-            var top = (screen.availHeight/2)-(h/2)-50;
-            var configuracion_ventana = "location=no,resizable=yes,scrollbars=yes,status=no,width=" + w + ",height=" + h+ ",top=" + top+ ",left=" + left;
-            var newWin = document.open('', 'Vista previa', configuracion_ventana);
-            
-            //var newWin = window.open('', "fullscreen", 'top=0,left=0,width='+(screen.availWidth)+',height ='+(screen.availHeight)+',fullscreen=yes,toolbar=0 ,location=0,directories=0,status=0,menubar=0,resiz able=0,scrolling=0,scrollbars=0');
-            
-            newWin.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">');
-            newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"><\/script>');
-            newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"><\/script>');
-            newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"><\/script>');
-            newWin.document.write('<h1 class="display-1 w-75 mx-auto"> '+$("#titulo").val()+'<\/h1>');
-            newWin.document.write('<div class="w-75 mx-auto" style="word-wrap: break-word;">' + $('.summernote').summernote('code') + '<\/div>');
-            newWin.document.write('<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><img src="'+vistaPrevia.src+'" alt="" id="vistaPrevia" class="img-fluid mx-auto"></div>');
-            newWin.document.close();
-            
-        });
+    $('.preview-btn').on('click', function (e) {
+        e.preventDefault();
+        var h = screen.availHeight - 150;
+        var w = screen.availWidth - 200;
+        var left = (screen.availWidth / 2) - (w / 2);
+        var top = (screen.availHeight / 2) - (h / 2) - 50;
+        var configuracion_ventana = "location=no,resizable=yes,scrollbars=yes,status=no,width=" + w + ",height=" + h + ",top=" + top + ",left=" + left;
+        var newWin = document.open('', 'Vista previa', configuracion_ventana);
+
+        //var newWin = window.open('', "fullscreen", 'top=0,left=0,width='+(screen.availWidth)+',height ='+(screen.availHeight)+',fullscreen=yes,toolbar=0 ,location=0,directories=0,status=0,menubar=0,resiz able=0,scrolling=0,scrollbars=0');
+
+        newWin.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">');
+        newWin.document.write('<link rel="stylesheet" href="/css/imagenes/imagenes.css">');
+        newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"><\/script>');
+        newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"><\/script>');
+        newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"><\/script>');
+        newWin.document.write('<h1 class="display-1 w-75 mx-auto"> ' + $("#titulo").val() + '<\/h1>');
+        newWin.document.write('<div class="w-75 mx-auto" style="word-wrap: break-word;">' + $('.summernote').summernote('code') + '<\/div>');
+        newWin.document.write('<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><img src="' + vistaPrevia.src + '" alt="" id="vistaPrevia" class="img-fluid mx-auto"></div>');
+        newWin.document.close();
+
+    });
 
 
     $('#btn-close').click(function () {
+        
+    });
+
+    function reiniciar(){
         $('.mensajeError').text("");
         $('#contenido').summernote("reset");
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-    });
+    }
 
 </script>
 
@@ -545,7 +583,7 @@
 @endsection
 
 @section('estilos')
-
+<link rel="stylesheet" href="/css/imagenes/imagenes.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
 <link rel="stylesheet" href="/css/datatable/colores.css">
@@ -605,10 +643,6 @@
 <link href="/css/summer/summernote-list-styles-bs4.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <style>
-    html {
-        overflow-y: scroll;
-    }
-
     .custom-file-input~.custom-file-label::after {
         content: "Elegir";
     }
@@ -620,6 +654,31 @@
 
     .cke_show_borders {
         overflow-y: scroll; // vertical scrollbar
+    }
+
+    .modal100 {
+        max-width: 100% !important;
+        margin: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100vh !important;
+        display: flex;
+    }
+
+    .modal {
+        overflow-y: auto;
+    }
+
+
+
+    .responsive {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+    }
+
     }
 </style>
 @endsection

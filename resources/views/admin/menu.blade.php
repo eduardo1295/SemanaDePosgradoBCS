@@ -22,78 +22,39 @@
 
         <div class="sidebar-menu">
             <ul>
-                <li class="header-menu">
-                    <strong><span>General</span></strong>
-                </li>
-                <li class="sidebar-dropdown">
-                    <a>
-                        <i class="fa fa-tachometer-alt"></i>
-                        <span>Administrar semanas</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="#">Agregar semana
+                    <li>
+                            <a href="{{route('admin.indexadmin')}}">
+                                    <i class="fas fa-home"></i>
+                                <span><strong>Inicio</strong></span>
+                            </a>
+                        </li>
+                    <li>
+                            <a href="{{route('noticia.VerNoticias')}}">
+                            <i class="fas fa-newspaper"></i>
+                                <span><strong>Noticias</strong></span>
+                            </a>
+                        </li>
+
+                        <li>
+                                <a href="{{route('institucion.VerInstituciones')}}">
+                                        <i class="fas fa-school"></i>
+                                    <span><strong>Instituciones</strong></span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">Ver semanas</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="sidebar-dropdown">
-                    <a>
-                        <i class="fas fa-newspaper"></i>
-                        <span>Administrar noticias</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{route('noticia.create')}}">Agregar noticia
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{route('noticia.VerNoticias')}}">Ver noticias</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="sidebar-dropdown">
-                    <a>
-                        <i class="fas fa-school"></i>
-                        <span>Administrar Instituciones</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="#">Agregar institución</a>
-                            </li>
-                            <li>
-                                <a href="{{route('institucion.VerInstituciones')}}">Ver instituciones</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+
                 <li>
                         <a href="{{route('carrusel.VerCarrusel')}}">
                                 <i class="fab fa-slideshare"></i>
                             <span><strong>Carrusel</strong></span>
                         </a>
                     </li>
-                <li class="sidebar-dropdown">
-                    <a>
-                        <i class="far fa-id-card"></i>
-                        <span>Programas</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <strong><a href="{{route('programa.VerPrograma')}}">Agregar Programa</a></strong>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                    
+                <li>
+                        <a href="{{route('programa.VerPrograma')}}">
+                            <i class="fas fa-user-tie"></i>
+                            <span><strong>Programa</strong></span>
+                        </a>
+                    </li>
                 <li>
                     <a href="{{route('coordinador.VerCoodinadores')}}">
                         <i class="fas fa-user-tie"></i>

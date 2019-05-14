@@ -24,7 +24,7 @@ Route::get('admin/VerUsuarios', 'UserController@usuarios')->name('admin.usuarios
 Route::get('admin/listUsuarios', 'UserController@listUsuarios')->name('admin.listUsuarios');
 Route::get('excel', 'UserController@cargaExcel')->name('excel');
 
-Route::resource('admin', 'UserController')->middleware('auth:admin');
+Route::resource('usuario', 'UserController')->middleware('auth:admin');
 
 
 Route::get('admin/institucion/VerInstituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
@@ -38,6 +38,9 @@ Route::get('admin/noticia/listNoticias', 'NoticiaController@listNoticias')->name
 Route::get('noticia/fetch_data', 'NoticiaController@fetch_data');
 Route::put('admin/noticia/reactivar/{noticia}', 'NoticiaController@reactivar')->name('noticia.reactivar');
 Route::resource('noticia', 'NoticiaController');
+
+
+Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
 Route::resource('semana', 'SemanaController');
 
 Route::get('/', 'SemanaController@index');
