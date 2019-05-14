@@ -121,28 +121,26 @@
     });
 
     function myFunction(x) {
-        var alto = $('.carousel-item').height();
-        var ancho = $('.carousel-item').width();
-        console.log(alto);
-          if (extra_small.matches) { // If media query matches
-            document.body.style.backgroundColor = "yellow";
-          } else if(small.matches) {
-            document.body.style.backgroundColor = "pink";
-          } else if(medium.matches){
-            document.body.style.backgroundColor = "red";
-          }else if(large.matches){
-            document.body.style.backgroundColor = "blue";
-          }else{
-            document.body.style.backgroundColor = "orange";
-          }
-        }
+      if (x.matches) { document.body.style.backgroundColor = "yellow"; } 
+      else{
+        console.log('nada');
+      }
+    }
+    var extra_small = window.matchMedia("(max-width: 100px and max-width: 200px)");
+    myFunction(extra_small) 
+    extra_small.addListener(myFunction) 
 
-        var extra_small = window.matchMedia("(max-width: 576px)");
-        var small = window.matchMedia("(max-width: 568px)");
-        var medium = window.matchMedia("(max-width: 992px)");
-        var large = window.matchMedia("(max-width: 1200)");
-        myFunction(extra_small); // Call listener function at run time
-        x.addListener(myFunction); // Attach listener function on state changes
-        window.onload =myFunction(x);
+    function myFunction2(x) {
+      if (x.matches) { document.body.style.backgroundColor = "red"; } 
+    }
+    var small = window.matchMedia("(max-width: 300px and max-width: 400px)");
+    myFunction2(small) 
+    small.addListener(myFunction2) 
+
+        
+        
+        
+
+        
     </script>
 </section>
