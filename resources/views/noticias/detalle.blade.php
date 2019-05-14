@@ -21,9 +21,10 @@
         </div>
     </div>
     <div class="row mb-5 pb-3" id="">
-        <div class="col-9 break-word pb-3 pt-3">
+        <div class="col-12 break-word pb-3 pt-3">
             {!! $noticia->contenido !!}
         </div>
+        {{-- comment 
         <div class="col-3 d-flex justify-content-center">
         @if ($noticia->url_imagen!='sin imagen')
                 <div class="row">
@@ -32,7 +33,10 @@
                     </div>
             </div>
         @endif
-        </div>
+        </div>    
+        --}}
+        
+        
                 
             
     </div>

@@ -1,6 +1,4 @@
 {{-- SECCION BLADE--}}
-
-
 @extends('layoutsM1.principal')
 
 @section('contenido')
@@ -74,7 +72,7 @@
                                         <p class="text-md-center pt-2">{{$institucionSede->nombre}} </p>
                                         <div class="d-flex">
                                             <div class="col-12 d-flex justify-content-center">
-                                                    <img class="img-fluid mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
+                                                    <img id="logoSede" class="mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
                                             </div>
                                         </div>
                                         <a class="nav-link active lead text-md-right" data-toggle="modal" href="#cerrar">

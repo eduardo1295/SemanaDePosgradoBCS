@@ -1,7 +1,7 @@
 
 <section id="navbarM2">
     <div class="header">
-        <div class="container">
+        <div class="container-fluid pl-5 pr-5">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
                     <a href="/"><img src="/img/logo.png" width="120px"  alt="Hair Salon Website Templates Free Download"></a>
