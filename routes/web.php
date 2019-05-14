@@ -50,7 +50,7 @@ Route::get('/home', 'SemanaController@index');
 
 
 
-Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm')->name('esta');
+Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin');
 
 Route::get('logout', 'Auth\LoginController@logout');
@@ -76,6 +76,11 @@ Route::get('admin/programa/VerPrograma', 'ProgramaController@programa')->name('p
 Route::get('programa/listPrograma', 'ProgramaController@listPrograma')->name('programa.listPrograma');
 Route::put('admin/programa/reactivar/{programa}', 'ProgramaController@reactivar')->name('programa.reactivar');
 Route::resource('programa', 'ProgramaController');
+
+Route::get('admin/modalidad/VerModalidad', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
+Route::get('modalidad/listModalidad', 'ModalidadController@listModalidad')->name('modalidad.listModalidad');
+Route::put('admin/modalidad/reactivar/{modalidad}', 'ModalidadController@reactivar')->name('modalidad.reactivar');
+Route::resource('modalidad', 'ModalidadController');
 /*
 Route::get('/',['as'=> 'home',function (){
     return view('home',compact('hola'));

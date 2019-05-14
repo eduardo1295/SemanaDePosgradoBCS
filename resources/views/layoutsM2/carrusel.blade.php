@@ -1,4 +1,4 @@
-<div id="carrusel" class="container-fluid">
+<div id="carrusel" class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       @for ($i = 0; $i < $carrusel->count(); $i++)

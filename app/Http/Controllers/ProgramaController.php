@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Programa;
 use App\Institucion;
 use DataTables;
-use App\Http\Requests\carrusel\StoreCarruselRequest;
-use App\Http\Requests\carrusel\UpdateCarruselRequest;
+use App\Http\Requests\programas\StoreProgramaRequest;
+use App\Http\Requests\programas\UpdateProgramaRequest;
 use Validator;
 
 class ProgramaController extends Controller
@@ -18,6 +18,11 @@ class ProgramaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct(){
+        $this-> middleware('auth:admin');
+     }
+
     public function index()
     {
         //
@@ -39,7 +44,7 @@ class ProgramaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProgramaRequest $request)
     {   
         /*
         $nuevo_nombre = 'sin imagen';
@@ -174,14 +179,14 @@ class ProgramaController extends Controller
     public function listPrograma(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $selectcarrusel = Programa::select('id','nombre','nivel','periodo','fecha_actualizacion');
+            $selectcarrusel = Programa::select('id','id_programa','nombre','nivel','periodo','fecha_actualizacion');
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.acciones')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $selectcarrusel = Programa::onlyTrashed()->get(['id','nombre','nivel','periodo','fecha_actualizacion']);
+            $selectcarrusel = Programa::onlyTrashed()->get(['id','id_programa','nombre','nivel','periodo','fecha_actualizacion']);
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.reactivar')
             ->rawColumns(['action'])

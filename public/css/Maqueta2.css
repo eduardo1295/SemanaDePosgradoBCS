@@ -125,6 +125,13 @@
     border-bottom-right-radius: 15px;
 
 }
+@media (max-width: 768px) {
+    .n4 {
+        border-left: none;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+  }
 
 .nota:before { 
     content: ""; position: absolute; z-index: -1; top: 0; left: 0; right: 0; bottom: 0; /*background: rgb(231, 76, 76);*/
@@ -150,10 +157,10 @@
 
 #intitucionesCa .carousel-item {height: 270px; background: no-repeat center center scroll; -webkit-background-size: cover;-moz-background-size: cover;
     -o-background-size: cover; background-size: cover; }
-
+/*
 @media (max-width: 540px) {
     #intitucionesCa .carousel-item {
-        min-height: 500px;
+        min-height: 550px;
     }
 }
 @media (min-width: 541px) {
@@ -161,6 +168,7 @@
         min-height: 75px;
     }
 }
+*/
 
 #carruselInstituciones{
     background: white;
@@ -225,4 +233,8 @@
 .endfooter .container-fluid{
     background: #44423f;
     color: white;
+}
+#logoSede{
+    width: 80%;
+    height: 200px;
 }

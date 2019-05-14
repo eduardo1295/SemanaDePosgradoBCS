@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Programa
+                Programas
             </h1>
         </div>
 
@@ -30,7 +30,7 @@
         <div class="col-12 col-md-6 col-lg-6">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-programa"><span><i
-                            class="fas fa-plus"></i></span> Nueva aaa</a>
+                            class="fas fa-plus"></i></span> Nuevo Programa</a>
 
             </div>
         </div>
@@ -41,15 +41,17 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>nombre</th>
-                        <th>nivel</th>
-                        <th>periodo</th>
+                        <th>Clave Programa</th>
+                        <th>Nombre</th>
+                        <th>Nivel</th>
+                        <th>Periodo</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -130,6 +132,7 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
+                { data: 'id_programa', searchable: true },
                 { data: 'nombre', searchable: true },
                 { data: 'nivel', searchable: true },
                 { data: 'periodo', searchable: true },
@@ -324,6 +327,7 @@
 
     /*Accion al presionar el boton save*/
     $("#btn-save").click(function () {
+        $('.mensajeError').text("");
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var actionType = $('#btn-save').val();
@@ -370,10 +374,7 @@
                     console.log(data);
                 },
                 error: function (data) {
-                    
-                    
                     if (data.status == 422) {
-                        
                         var errores = data.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
@@ -422,10 +423,17 @@
                     $('#vistaPrevia').prop('src', "");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    if (xhr.status == 422) {
+                        var errores = xhr.responseJSON['errors'];
+                        $.each(errores, function (key, value) {
+                            $('#' + key + "_error").text(value);
+                        });
+                    }
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
+                    
                 },
 
 
@@ -454,11 +462,22 @@
 
 @section('estilos')
 
+{{-- comment 
+<link rel="stylesheet" href="/css/datatable/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/css/datatable/responsive.dataTables.min.css">
+<link rel="stylesheet" href="/css/datatable/jquery-confirm.min.css">
+<link rel="stylesheet" href="/css/datatable/buttons.dataTables.min.css">
+--}}
+
+
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="/css/datatable/colores.css">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+
+<link rel="stylesheet" href="/css/datatable/colores.css">
 <link href="/css/modales/modalresponsivo.css" rel="stylesheet">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
 <link href="/css/modales/modalimagen.css" rel="stylesheet">

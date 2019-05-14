@@ -1,6 +1,4 @@
 {{-- SECCION BLADE--}}
-
-
 @extends('layoutsM1.principal')
 
 @section('contenido')
@@ -11,6 +9,7 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
 </script>
 <style>
     .holo {
@@ -20,40 +19,21 @@
 @endsection
 
 @include('layoutsM2.carrusel')
-{{-- comment 
-    
-    <div class="container mt-4 mb-4">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-8 contenidoPrincipal">
-                @include('layoutsM2.informacion')
-            </div>
-            <div class="col-4">
-                @include('layoutsM2.noticias')
-            </div>
-        </div>
-    </div>
-    --}}
-<div class="container mt-5 mb-4">
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 contenidoPrincipal">
-            @include('layoutsM2.informacion')
-        </div>
+
+<div class="container-fluid mt-5 mb-4 pl-1 pr-1 pl-md-5 pr-md-5">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 contenidoPrincipal">
+        @include('layoutsM2.informacion')
     </div>
 </div>
-<div class="container">
-    
-
-
-    <div class="row">
-        {{--Lo que funca--}}
+<div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
         <div class="col-12  mb-4" id="noticias">
             <div class="row">
-                <div class="col-9  d-flex justify-content-between align-items-center " id="titulo1">
+                <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
                     <h2 class="mb-0 rounded-left">Noticias.</h2>
                     <h4 class="mb-0"> <a href="/noticia" class="badge badge-primary mb-0 align-self-center">Ver todas 
                         <i class="fas fa-arrow-circle-right"></i></a> </h4>
                 </div>
-                <div class="pl-0 col-3 holo bordeizqarriba bordederarriba" id="titulo2">
+                <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
                     <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
                 </div>
                 @php
@@ -61,11 +41,11 @@
                 @endphp
                 @foreach ($noticias as $noticia)
                 @if ($cont == 0)
-                <div class=" nota n1 col-3 mb-lg-0 " id="contenido">
+                <div class=" nota n1 col-12 col-md-3 mb-lg-0 " id="contenido">
                     @elseif ($cont == 2 )
-                    <div class=" nota n3 col-3 mb-lg-0 " id="contenido">
+                    <div class=" nota n3 col-12 col-md-3 mb-lg-0 " id="contenido">
                         @else
-                        <div class=" nota n2 col-3 mb-lg-0 " id="contenido">
+                        <div class=" nota n2 col-12 col-md-3 mb-lg-0 " id="contenido">
                             @endif
                             <div class="media-with-text  mt-4">
                                 <h2 class="h5 mb-2">
@@ -82,17 +62,20 @@
                         $cont++;
                         @endphp
                         @endforeach
-                        <div class="col-3 n4 mx-auto" id="contenido">
+                        <div class="pl-0 mt-3 col-12 d-block d-md-none  bordeizqarriba bordederarriba" id="titulo2">
+                                <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+                        </div>
+                        <div class="col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">
                             <div class="row">
                                 <div class="col-12">
                                     @if (isset($institucionSede))
-                                        <p class="text-center pt-2"> <strong>Institución: </strong> {{$institucionSede->nombre}} </p>
+                                        <p class="text-md-center pt-2">{{$institucionSede->nombre}} </p>
                                         <div class="d-flex">
-                                            <div class="col-12">
-                                                    <img class="img-fluid mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
+                                            <div class="col-12 d-flex justify-content-center">
+                                                    <img id="logoSede" class="mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
                                             </div>
                                         </div>
-                                        <a class="nav-link active lead text-right" data-toggle="modal" href="#cerrar">
+                                        <a class="nav-link active lead text-md-right" data-toggle="modal" href="#cerrar">
                                         <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
                                     @endif
                                 </div>
@@ -104,12 +87,9 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <section id="carruselInstituciones" class="mb-5">
+    <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
         <div id="fondo">
-
-            <div class="container" id="contenido">
+            <div class="container-fluid" id="contenido">
                 <div class="row">
                     <h2 id="titulo" class="w-100">Instituciones Participantes</h2>
                 </div>
@@ -153,9 +133,6 @@
             </div>
     </section>
     @endif
-
-
-
 
     @section('menu')
     @include('layoutsM2.navbar')
