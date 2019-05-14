@@ -48,7 +48,6 @@
                             <span><strong>Carrusel</strong></span>
                         </a>
                     </li>
-<<<<<<< HEAD
                     
                 <li>
                         <a href="{{route('programa.VerPrograma')}}">
@@ -56,14 +55,6 @@
                             <span><strong>Programa</strong></span>
                         </a>
                     </li>
-=======
-                <li>
-                        <a href="{{route('programa.VerPrograma')}}">
-                                <i class="far fa-id-card"></i>
-                            <span><strong>Programa</strong></span>
-                        </a>
-                </li>
->>>>>>> origin/rente
                 <li>
                     <a href="{{route('modalidad.VerModalidad')}}">
                             <i class="far fa-id-card"></i>
