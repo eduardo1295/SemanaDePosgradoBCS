@@ -157,7 +157,7 @@
 
 #intitucionesCa .carousel-item {height: 270px; background: no-repeat center center scroll; -webkit-background-size: cover;-moz-background-size: cover;
     -o-background-size: cover; background-size: cover; }
-
+/*
 @media (max-width: 540px) {
     #intitucionesCa .carousel-item {
         min-height: 550px;
@@ -168,6 +168,7 @@
         min-height: 75px;
     }
 }
+*/
 
 #carruselInstituciones{
     background: white;
