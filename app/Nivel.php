@@ -5,12 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\DataBase\Eloquent\SoftDeletes;
 
-class Modalidad extends Model
+class Nivel extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'modalidades';
-    protected $primaryKey = 'id_modalidad';
+    protected $table = 'niveles';
+    protected $primaryKey = 'id';
     
     const CREATED_AT = 'fecha_creacion';
     const UPDATED_AT = 'fecha_actualizacion';
@@ -20,17 +20,16 @@ class Modalidad extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'descripcion', 'creada_por', 'actualizado_por',
+        'grado', 'semestre','trimestre','cuatrimestre','creado_por', 'actualizado_por',
     ];
 
     protected $dates = ['deleted_at'];
 
-    
-    public function niveles()
+    public function modalidades()
     {
-        return $this->belongsToMany(Nivel::class, 'modalidad_nivel', 'id_modalidad', 'id')
+        return $this->belongsToMany(Modalidad::class, 'modalidad_nivel','id','id_modalidad')
                     ->withPivot('creada_por', 'actualizado_por')
                     ->withTimestamps();
     }
-    
 }
+

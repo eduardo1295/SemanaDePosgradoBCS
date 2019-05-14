@@ -81,19 +81,20 @@
                             <span><strong>Carrusel</strong></span>
                         </a>
                     </li>
-                <li class="sidebar-dropdown">
-                    <a>
-                        <i class="far fa-id-card"></i>
-                        <span>Programas</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <strong><a href="{{route('programa.VerPrograma')}}">Agregar Programa</a></strong>
-                            </li>
-                        </ul>
-                    </div>
+                <li>
+                        <a href="{{route('programa.VerPrograma')}}">
+                                <i class="far fa-id-card"></i>
+                            <span><strong>Programa</strong></span>
+                        </a>
                 </li>
+                <li>
+                    <a href="{{route('modalidad.VerModalidad')}}">
+                            <i class="far fa-id-card"></i>
+                        <span><strong>Modalidades</strong></span>
+                    </a>
+            </li>
+                
+                
                 <li>
                     <a href="{{route('coordinador.VerCoodinadores')}}">
                         <i class="fas fa-user-tie"></i>

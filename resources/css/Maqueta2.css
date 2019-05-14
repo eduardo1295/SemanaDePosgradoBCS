@@ -125,6 +125,13 @@
     border-bottom-right-radius: 15px;
 
 }
+@media (max-width: 768px) {
+    .n4 {
+        border-left: none;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+  }
 
 .nota:before { 
     content: ""; position: absolute; z-index: -1; top: 0; left: 0; right: 0; bottom: 0; /*background: rgb(231, 76, 76);*/
@@ -153,7 +160,7 @@
 
 @media (max-width: 540px) {
     #intitucionesCa .carousel-item {
-        min-height: 500px;
+        min-height: 550px;
     }
 }
 @media (min-width: 541px) {

@@ -27,6 +27,7 @@
 							<label for="email"><strong>Email:</strong></label>
 							<input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-describedby="c1" required>
 							<small id="c1" class="text-muted">Ingrese su coreeo electronico</small>
+							{{$errors->first('email')}}
 					</div>
 					<div class="form-group col-9 offset-1">
 							<label for="password"><strong>Contraseña:</strong></label>

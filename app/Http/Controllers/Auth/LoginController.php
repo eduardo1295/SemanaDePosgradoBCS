@@ -56,12 +56,12 @@ class LoginController extends Controller
 
     public function adminLogin(ReCaptchataTestFormRequest $request)
     {
-        /*
+        
         $this->validate($request, [
             'email'   => 'required|email',
             'password' => 'required|min:6'
         ]);
-        */
+        
         if(isset($_POST['recaptcha_response'])) {
 
         // Build POST request:

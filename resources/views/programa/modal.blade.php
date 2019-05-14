@@ -15,7 +15,7 @@
                                 <strong><label for="id_programa" class="control-label">Código</label></strong>
                                 <input type="text" class="form-control" id="id_programa" name="id_programa" placeholder="Ingrese codigo"
                                     value="" maxlength="100" required="">
-                                <span class="mensajeError" id="id_programa_error"></span>
+                                <small><span class="text-danger mensajeError" id="id_programa_error"></span></small>
                         </div>
                         
                         <div class="form-group col-6">
@@ -26,28 +26,33 @@
                                 <option value={{$institucion->id}}>{{$institucion->nombre}}</option>
                                 @endforeach
                             </select>
-                            <span class="mensajeError" id="id_programa_error"></span>
+                            <small><span class="text-danger mensajeError" id="id_institucion_error"></span></small>
                         </div>
 
                         <div class="form-group col-6">
                             <strong><label for="nombre" class="control-label">Nombre</label></strong>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre"
-                                value="" maxlength="100" required="">
-                            <span class="mensajeError" id="nivel_error"></span>
+                               value="" maxlength="100" required="">
+                            <small> <span class="text-danger mensajeError" id="nombre_error"></span> </small>                            
+                                
                         </div>
                         <div class="form-group col-6">
-                            <strong><label for="nivel" class="control-label">nivel</label></strong>
+                            <strong><label for="nivel" class="control-label">Nivel</label></strong>
                             <select class="form-control" id="nivel" name="nivel">
                                 <option selected value="">Seleccione nivel</option>
                                 <option value="1">Maestria</option>
                                 <option value="2">Doctorado</option>
                             </select>
+                            <small> <span class="text-danger mensajeError" id="nivel_error"></span> </small>
                         </div>
                         <div class="form-group col-6">
-                                <strong> <label for="periodo" class="control-label">periodo</label></strong>
-                                <input type="text" class="form-control" id="periodo" name="periodo" placeholder="Ingrese periodo"
-                                    value="" maxlength="30" required="">
-                                <span class="mensajeError" id="periodo_error"></span>
+                                <strong> <label for="periodo" class="control-label">Periodo</label></strong>
+                                <select class="form-control" id="nivel" name="periodo">
+                                    <option selected value="">Seleccione periodo</option>
+                                    <option value="1">Semestre</option>
+                                    <option value="2">Trimestre</option>
+                                </select>
+                                <small> <span class="text-danger mensajeError" id="periodo_error"></span> </small>
                         </div>
                         {{-- comment 
                         <div class="form-group col-6">

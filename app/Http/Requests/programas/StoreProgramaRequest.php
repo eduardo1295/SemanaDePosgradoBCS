@@ -13,7 +13,7 @@ class StoreProgramaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -32,7 +32,17 @@ class StoreProgramaRequest extends FormRequest
             'nivel' => 'required|string|max:30',
             
             'periodo' => 'required|string|max:30',
-        
+            
+            'id_institucion' => 'required|max:10' 
+        ];
+
+    }
+    
+    public function messages(){
+        return [
+            'id_programa.required' => 'El campo es obligatorio',
+            
+            'id_institucion.required' => 'El campo es obligatorio' 
         ];
     }
 }

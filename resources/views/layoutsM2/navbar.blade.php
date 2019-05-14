@@ -10,17 +10,17 @@
                     <div class="navigation float-none">
                         <div id="navigation">
                             <ul>
-                                <li class="active"><a href="/" title="Home">Incio</a></li>
-                                <li><a href="contact.html" class="" title="Contact Us">Modalidades</a> </li>
-                                <li class="has-sub"><a href="blog-default.html" title="Blog ">Programa</a>
+                                <li class="active"><a href="/">Incio</a></li>
+                                <li><a href="contact.html" class="">Modalidades</a> </li>
+                                <li class="has-sub"><a href="blog-default.html">Programa</a>
                                     <ul>
-                                        <li><a href="blog-default.html" title="Blog">General</a></li>
-                                        <li><a href="blog-single.html" title="Blog Single ">Póster</a></li>
-                                        <li><a href="blog-single.html" title="Blog Single ">Entrevista</a></li>
-                                        <li><a href="blog-single.html" title="Blog Single ">Video</a></li>
+                                        <li><a href="blog-default.html">General</a></li>
+                                        <li><a href="blog-single.html">Póster</a></li>
+                                        <li><a href="blog-single.html">Entrevista</a></li>
+                                        <li><a href="blog-single.html">Video</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html" class="" title="Contact Us">Convocatoria</a> </li>
+                                <li><a href="contact.html" class="">Convocatoria</a> </li>
                                 
                                 @if(Auth::guard()->check())
                                     @if(auth()->user()->hasRoles(['alumno']))
