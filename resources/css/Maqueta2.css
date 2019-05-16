@@ -243,6 +243,10 @@
     width: 180px;
     height: 130px;
 }
+.img-carrusel-logo{
+        width: 180px;
+        height: 150px;
+}
 
 @media (min-width: 0px) and (max-width: 576px)   { #logoSede{ width: 200px; height: 150px; } }
 @media (min-width: 576px) and (max-width: 768px) { #logoSede{ width: 200px; height: 150px; } }
