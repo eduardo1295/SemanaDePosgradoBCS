@@ -73,6 +73,7 @@
 <script src="/vendors/ckeditor5/ckeditor.js"></script>-->
 
 
+
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
@@ -95,9 +96,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js"></script>
 
 <script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
 
+$( '.input-range').each(function(){
+	var value = $(this).attr('data-slider-value');
+	var separator = value.indexOf(',');
+	if( separator !== -1 ){
+		value = value.split(',');
+		value.forEach(function(item, i, arr) {
+			arr[ i ] = parseFloat( item );
+		});
+	} else {
+		value = parseFloat( value );
+	}
+	$( this ).slider({
+		formatter: function(value) {
+			console.log(value);
+			return '$' + value;
+		},
+		min: parseFloat( $( this ).attr('data-slider-min') ),
+		max: parseFloat( $( this ).attr('data-slider-max') ), 
+		range: $( this ).attr('data-slider-range'),
+		value: value,
+		tooltip_split: $( this ).attr('data-slider-tooltip_split'),
+		tooltip: $( this ).attr('data-slider-tooltip')
+	});
+});
+</script>
 
-
+<script>
     var checkInsti = 'activos';
     var titulo = "";
     var table = "";
@@ -265,21 +294,7 @@
 		    tooltip: $( this ).attr('data-slider-tooltip')
 	    });
     });
-    $("#ex25").slider({
-        min: 0,
-        max: 10,
-        value: [0, 10],
-        focus: true,
-        tooltip_position:'bottom',
-         });
-        
-        
 
-        var r = $('#ex25').slider()
-		.on('slide', function(){
-            hola = $('#ex25')[0];
-            console.log(hola.value);
-    });        
     
     });
 

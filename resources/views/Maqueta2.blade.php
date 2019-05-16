@@ -120,12 +120,10 @@
                                     src="http://maps.google.com/maps?q=+{{$institucionSede->latitud}}+, +{{$institucionSede->longitud}}+&z=15&output=embed"
                                     frameborder="0" style="border:0" allowfullscreen>
                                 </iframe>
-
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary lead" data-dismis="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
