@@ -9,7 +9,7 @@
     /* start of medium tablet styles */
     /* Adding a fixed/percentage min-width could ensure that the image doesn't get too small */
     .img-responsive {
-      min-width: 75% !Important;
+      min-width: 100% !Important;
     }
 }
 

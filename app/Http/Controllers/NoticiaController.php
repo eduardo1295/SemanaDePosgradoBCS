@@ -257,4 +257,9 @@ class NoticiaController extends Controller
             ->toJson();   
         }
     }
+
+    public function vistaPrevia(Request $noticia){
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        return \Response::json(view('noticias.vistaPrevia', compact(['noticia','instituciones']))->render());
+    }
 }

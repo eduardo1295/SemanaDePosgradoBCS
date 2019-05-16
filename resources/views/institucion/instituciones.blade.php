@@ -80,6 +80,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
 <script src="/js/imagenes/vistaprevia.js"></script>
+<script src="/js/snack/snack.js"></script>
 
 <script>
     var lati = 24.141474;
@@ -132,7 +133,7 @@
             responsive: true,
             autoWidth: false,
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                "url": "/js/datatableJS/es.json"
             },
             "processing": true,
             "serverSide": true,
@@ -186,6 +187,7 @@
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
+            reiniciar();
             var institucion_id = $(this).data('id');
             var ruta = "{{url('institucion')}}/" + institucion_id + "/editar";
             $.get(ruta, function (data) {
@@ -251,17 +253,8 @@
                                         var oTable = $('#instituciones').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    //$("#mensaje-acciones").text("Institución eliminada exitosamente.");
-                                    //$("#mensaje-acciones").fadeIn();
-                                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                                    //$('#mensaje-acciones').addClass('alert-warning');
-                                    //$('#mensaje-acciones').removeClass('alert-success');
-
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución eliminada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución eliminada exitosamente.");
+                                    
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -309,17 +302,8 @@
                                         var oTable = $('#instituciones').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    //$("#mensaje-acciones").text("Institución activada exitosamente.");
-                                    //$("#mensaje-acciones").fadeIn();
-                                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                                    //$('#mensaje-acciones').addClass('alert-warning');
-                                    //$('#mensaje-acciones').removeClass('alert-success');
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución activada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
-                                },
+                                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución activada exitosamente.");
+                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
                                 }
@@ -336,7 +320,7 @@
 
     /*Accion al presionar el boton crear-institucion*/
     $('#crear-institucion').click(function () {
-
+        reiniciar();
         $('#btn-save').val("crear-institucion");
         $('#institucion_id').val('');
         $('#institucionForm').trigger("reset");
@@ -352,12 +336,6 @@
 
     });
 
-    $('#btn-close').click(function () {
-        $('.mensajeError').text("");
-        $('#vistaPrevia').prop('src', "");
-        $('#nuevoLogo').addClass('d-none');
-        $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-    })
 
     $("input[name='verInsti']").change(function (e) {
         checkInsti = $(this).val();
@@ -366,6 +344,7 @@
     
     /*Accion al presionar el boton save*/
     $("#btn-save").click(function () {
+        
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var actionType = $('#btn-save').val();
@@ -392,18 +371,8 @@
                     //recargar serverside
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("Actualización exitosa.");
-                    //var x = document.getElementById("snackbar");
-                    //x.html("Actualización exitosa.");
-                    //x.className = "show";
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
-
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
+                    
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -445,14 +414,7 @@
                     //recargar serverside
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("Institución registrada exitosamente.");
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución registrada exitosamente.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function(){ $("#snackbar").removeClass("show"); }, 5000);
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución registrada exitosamente.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -499,6 +461,13 @@
     */
     function mostrar(idMostrar) {
         $('#' + idMostrar).removeClass('d-none');
+    }
+
+    function reiniciar() {
+        $('.mensajeError').text("");
+        $('#vistaPrevia').prop('src', "");
+        $('#nuevoLogo').addClass('d-none');
+        $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
     }
 </script>
 @endsection

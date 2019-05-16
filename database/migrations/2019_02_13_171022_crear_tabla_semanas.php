@@ -16,6 +16,7 @@ class CrearTablaSemanas extends Migration
         Schema::create('semanas', function (Blueprint $table) {
             $table->increments('id_semana');
             $table->string('nombre', 100);
+            $table->string('desc_general', 1000);
             $table->string('url_logo',100)->nullable();
             $table->date('fecha_inicio');
             $table->date('fecha_fin');

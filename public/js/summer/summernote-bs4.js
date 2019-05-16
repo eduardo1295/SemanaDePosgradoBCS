@@ -5742,7 +5742,7 @@
                 return _this.button({
                     contents: '<span class="note-fontsize-10">100%</span>',
                     tooltip: _this.lang.image.resizeFull,
-                    click: _this.context.createInvokeHandler('editor.resize', '1')
+                    click: _this.context.createInvokeHandler('editor.resize', '0.95')
                 }).render();
             });
             this.context.memo('button.imageSize50', function () {
