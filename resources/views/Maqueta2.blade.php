@@ -52,9 +52,7 @@
                                     <a href="/noticia/{{$noticia->id_noticia}}"
                                         id="tituloNoticia">{{$noticia->titulo}}</a>
                                 </h2>
-                                <span class="mb-2 d-block post-date">
-                                    {{$noticia->fecha_actualizacion}}
-                                </span>
+                                <small><span class="mb-2 d-block post-date"> {{$noticia->fecha_actualizacion}}</span></small>
                                 <p> {{$noticia->resumen}} </p>
                             </div>
                         </div>

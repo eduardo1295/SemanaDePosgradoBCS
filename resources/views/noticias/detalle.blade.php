@@ -1,7 +1,7 @@
 @extends('layoutsM1.principal')
 @section('links')
     <link rel="stylesheet" href="{{ mix('css/Maqueta2.css')}} ">
-    <link rel="stylesheet" href="/.css"> 
+    
 @endsection
 @section('menu')
     @include('layoutsM2.navbar')

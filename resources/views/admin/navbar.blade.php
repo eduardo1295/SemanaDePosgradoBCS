@@ -1,12 +1,12 @@
-<div class="container-fluid" id="#contenedor" style="z-index:0">
-    <div class="row">
-        <div class="col-10 offset-1 col-sm-12 offset-sm-0">
+<div class="container-fluid" id="#contenedor" style="z-index:0 ; background:blue;" >
+    <div class="row" >
+        <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-sm-between align-items-center">
-                <div class="col-12 col-md-3 d-flex justify-content-center justify-content-sm-start">
+                <div class="col-12 col-sm-6 col-md-3 d-flex justify-content-center justify-content-sm-start">
                     <a href="/"><img src="/img/logo.png" width="120px"
-                            alt="Hair Salon Website Templates Free Download"></a>
+                            alt=""></a>
                 </div>
-                <div class="col-12 col-md-6 pt-3 pt-md-0">
+                <div class="col-12 col-sm-6 col-md-6 pt-3 pt-md-0" style="background:pink;">
                     <h1 class="text-center">Área Administrativa</h1>
                 </div>
                 <div class="col-12 col-md-3 d-flex justify-content-end">

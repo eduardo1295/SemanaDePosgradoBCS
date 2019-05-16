@@ -11,6 +11,10 @@ use App\Carrusel;
 use Auth;
 class SemanaController extends Controller
 {
+    public function __construct(){
+         $this-> middleware('auth:admin')->only('indexAdmin');
+
+    }
     /**
      * Display a listing of the resource.
      *

@@ -1,6 +1,6 @@
 <section class="footer">
-    <div class="container footer-block">
-        <div class="row">
+    <div class="container-fluid pl-5 pr-5">
+        <div class="row footer-block ml-0 mr-0">
             <div class="col-12 mb-3">
                 <p><h2 class="text-center" id="Titulo">Contactos</h2></p>
             </div>

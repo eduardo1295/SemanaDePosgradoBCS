@@ -4,7 +4,7 @@
         <div class="container-fluid pl-5 pr-5">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                    <a href="/"><img src="/img/logo.png" width="120px"  alt="Hair Salon Website Templates Free Download"></a>
+                    <a href="/"><img src="/img/logo.png" width="120px"  alt=""></a>
                 </div>
                 <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 d-md-flex justify-content-md-end">
                     <div class="navigation float-none">
@@ -23,14 +23,16 @@
                                 <li><a href="contact.html" class="">Convocatoria</a> </li>
                                 
                                 @if(Auth::guard()->check())
+                                    {{-- comment 
                                     @if(auth()->user()->hasRoles(['alumno']))
                                         <li><a href="/login" title="Styleguide">Entro</a> </li>
                                     @endif
-
-                                    <li><a href="/login" title="Styleguide">hola 1</a> </li>
-
+                                    --}}
+                                    <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth()->user()->nombre}}</a> </li>
+                                    
                                 @elseif(Auth::guard('admin')->check())
-                                    <li><a href="/logout" title="Styleguide">hola 2</a> </li>
+                                    <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth('admin')->user()->nombre}}</a> </li>
+                                    
                                 @else
                                 <li><a href="/login" title="Styleguide">Acceso</a> </li>
                                 @endif

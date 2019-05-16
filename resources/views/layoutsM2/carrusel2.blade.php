@@ -1,5 +1,5 @@
 <section id="intitucionesCa">
-    <div id="carrusel" class="container-fluid border">
+    <div id="" class="container-fluid border">
         <div id="carruselinst" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner" role="listbox">
             @php
@@ -16,13 +16,14 @@
             <div class="carousel-item">
             @endif
               <div class="carousel-caption d-block text-justify">
-                <div class="row">
+                <div class="row d-flex justify-content-center">
                   <div class="col-12 col-sm-3 d-flex">
                     <img src="{{url('img/logo')}}/{{ $institucion->url_logo }}" class="mx-auto img-fluid align-self-center" alt="">
                   </div>
-                  <div class="col-12 col-sm-9">
+                  <div class="col-10  col-sm-9">
                       <h4>{{$institucion->nombre}} </h4> <br>
                       <div class="row">
+                            
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="fa  fa-map-marker"></i> 
                             </div> 
@@ -44,8 +45,8 @@
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center"> 
                                 <i class="fas fa-globe"></i> 
                             </div>
-                            <div class="col-11 pl-0">
-                                    <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}">{{$institucion->direccion_web}}</a> 
+                            <div class="col-11 pl-0 text-left">
+                                    <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}" > {{$institucion->direccion_web}}</a> 
                             </div>  
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="far fa-address-card"></i> 
@@ -119,28 +120,51 @@
     $('.modalP').click(function (){
         $('#mapa12').prop('src',' ');
     });
-
+/*
     function myFunction(x) {
-      if (x.matches) { document.body.style.backgroundColor = "yellow"; } 
-      else{
-        console.log('nada');
-      }
+      if (x.matches) {  
+        console.log($('.carousel-item'));
+        
+        //var datos2 =  $('.carousel-item').height();
+        
+        console.log(datos+','+datos2);
+        } 
+      else{  }
     }
-    var extra_small = window.matchMedia("(max-width: 100px and max-width: 200px)");
-    myFunction(extra_small) 
-    extra_small.addListener(myFunction) 
-
     function myFunction2(x) {
-      if (x.matches) { document.body.style.backgroundColor = "red"; } 
+      if (x.matches) { console.log("si2"); }
+      else{  }
     }
-    var small = window.matchMedia("(max-width: 300px and max-width: 400px)");
-    myFunction2(small) 
-    small.addListener(myFunction2) 
+    function myFunction3(x) {
+      if (x.matches) { console.log("si3"); }
+      else{  }
+    }
+    function myFunction4(x) {
+      if (x.matches) { console.log("si4"); }
+      else{  }
+    }
+    function myFunction5(x) {
+      if (x.matches) { console.log("si5"); }
+      else{  }
+    }
 
-        
-        
-        
+    var extra_small = window.matchMedia("(min-width: 0) and (max-width: 576px)");
+    var small = window.matchMedia("(min-width: 577px) and (max-width: 767px)");
+    var medium = window.matchMedia("(min-width: 767px) and (max-width: 992px)");
+    var large = window.matchMedia("(min-width: 992px) and (max-width: 1200px)");
+    var extra_large= window.matchMedia("(min-width: 1200px)");
 
-        
+    myFunction(extra_small); 
+    myFunction(small); 
+    myFunction(medium); 
+    myFunction(large); 
+    myFunction(extra_large); 
+
+    extra_small.addListener(myFunction);
+    small.addListener(myFunction2);
+    medium.addListener(myFunction3);
+    large.addListener(myFunction4);
+    extra_large.addListener(myFunction5);
+    */
     </script>
 </section>
