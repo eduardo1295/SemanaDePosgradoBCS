@@ -3,14 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Semana;
 use App\Noticia;
 use App\Institucion;
 use App\User;
 use DB;
 use App\Carrusel;
 use Auth;
+
 class SemanaController extends Controller
 {
+    public function __construct(){
+        $this-> middleware('auth:admin')->only('noticias');
+        
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +57,58 @@ class SemanaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dom = new \domdocument();
+        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        
+        $images = $dom->getelementsbytagname('img');
+ 
+        //loop over img elements, decode their base64 src and save them to public folder,
+        //and then replace base64 src with stored image URL.
+        
+        foreach($images as $k => $img){
+            $data = $img->getattribute('src');
+            if (substr($data, 0, 5) == 'data:') {
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+    
+                $data = base64_decode($data);
+                $image_name= time().$k.'.png';
+                $path = public_path() .'/img/semanaDesGe/'. $image_name;
+    
+                file_put_contents($path, $data);
+    
+                $img->removeattribute('src');
+                $img->setattribute('src', '/img/semanaDesGe/'.$image_name);
+            }
+        }
+ 
+        $nuevo_nombre = 'no_logo.png';
+        if($request->hasFile('imagensemana')){
+            $imagenLogo = $request->file('imagensemana');
+            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
+            $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
+        }
+
+        $detail = $dom->savehtml();
+        
+        $semana = new Semana;
+        $fechas = explode(" - ", $request->fecha);
+        $semana->nombre = $request->nombre;
+        $semana->desc_general = $detail;
+        $semana->fecha_inicio = $fechas[0];
+        $semana->fecha_fin = $fechas[1];
+        $semana->desc_general = $detail;
+        $semana->url_logo = $nuevo_nombre;
+        $semana->vigente= 1;
+        $semana->creado_por= 1;
+        $semana->save();
+        if($semana){
+            DB::table('semanas')
+            ->where('vigente', 1)
+            ->where('id_semana','!=',$semana->id_semana)
+            ->update(['vigente' => 0]);
+        }
+        return \Response::json($semana);
     }
 
     /**
@@ -72,7 +130,8 @@ class SemanaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $semana  = Semana::where('id_semana', $id)->first();
+        return \Response::json($semana);
     }
 
     /**
@@ -84,7 +143,60 @@ class SemanaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $semana = Semana::where('id_semana', $id)->first();
+        $dom = new \domdocument();
+        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        
+        $images = $dom->getelementsbytagname('img');
+ 
+        //loop over img elements, decode their base64 src and save them to public folder,
+        //and then replace base64 src with stored image URL.
+        
+        foreach($images as $k => $img){
+            $data = $img->getattribute('src');
+            if (substr($data, 0, 5) == 'data:') {
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+    
+                $data = base64_decode($data);
+                $image_name= time().$k.'.png';
+                $path = public_path() .'/img/semanaDesGe/'. $image_name;
+    
+                file_put_contents($path, $data);
+    
+                $img->removeattribute('src');
+                $img->setattribute('src', '/img/semanaDesGe/'.$image_name);
+            }
+        }
+ 
+        $nuevo_nombre = 'no_logo.png';
+        if($request->hasFile('imagensemana')){
+            $imagenLogo = $request->file('imagensemana');
+            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
+            $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
+        }else{
+            $nuevo_nombre = $semana->url_logo;
+        }
+
+        $detail = $dom->savehtml();
+        
+        $fechas = explode(" - ", $request->fecha);
+        $semana->nombre = $request->nombre;
+        $semana->desc_general = $detail;
+        $semana->fecha_inicio = $fechas[0];
+        $semana->fecha_fin = $fechas[1];
+        $semana->desc_general = $detail;
+        $semana->url_logo = $nuevo_nombre;
+        $semana->vigente= 1;
+        $semana->creado_por= 1;
+        $semana->save();
+        if($semana){
+            DB::table('semanas')
+            ->where('vigente', 1)
+            ->where('id_semana','!=',$semana->id_semana)
+            ->update(['vigente' => 0]);
+        }
+        return \Response::json($semana);
     }
 
     /**
@@ -95,6 +207,24 @@ class SemanaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $semana = Semana::where('id_semana',$id)->delete();
+        return \Response::json($semana);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listSemanas(Request $request ){
+        $busqueda = $request->busqueda;
+            $selectsemanas = Semana::select('id_semana as id','nombre','fecha_inicio','fecha_fin','creado_por','actulizado_por','fecha_actualizacion')->where('vigente', 1);
+       
+            return datatables()->of($selectsemanas)
+            ->addColumn('action', 'admin.acciones')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->toJson();
+        
     }
 }

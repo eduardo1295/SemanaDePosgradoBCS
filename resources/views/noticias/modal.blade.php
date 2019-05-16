@@ -41,29 +41,6 @@
                                     </div>
                     </div>
 
-                    <div class="form-row mt-2">
-                        <div class="form-group col-md-6">
-                            <p id="imagennoticia1"> Imagen para la noticia:</p> 
-                            <div class="custom-file">
-                                <input type="file" name="imgnoticia" class="custom-file-input" id="imgnoticia" lang="es"
-                                onchange="readURL(this,'vistaPrevia');mostrar('nuevaImagen');">
-                                <label for="logo" class="custom-file-label">Seleccionar Archivo</label>
-                                
-                            </div>
-                            
-                            <span class="mensajeError" id="imgnoticia_error"></span>
-                            
-                        </div>
-                        <div class="form-group col-md-6">
-                            <div id="nuevaImagen" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-none">
-                                <label for="imgni" id="textVP" class="control-label">Nueva imagen</label>
-
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <img src="" alt="" id="vistaPrevia" class="img-fluid mx-auto">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                    
                 </form>
             </div>

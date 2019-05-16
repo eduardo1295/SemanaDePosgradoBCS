@@ -67,6 +67,8 @@
 @endsection
 @section('extra')
 @include('noticias.modal')
+<div id="snackbar"></div>
+<div id="snackbarError" style="z-index:1051;"></div>
 @endsection
 @section('scripts')
 <!--<script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
@@ -82,15 +84,21 @@
 
 <!--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
--->
+
 
 <script src="/js/summer/summernote-bs4.js"></script>
 <script src="/js/summer/summernote-es-ES.js"></script>
 <script src="/js/summer/summernote-text-findnreplace.js"></script>
 <script src="/js/summer/summernote-list-styles-bs4.js"></script>
 <script src="/js/summer/summernote-cleaner.js"></script>
+<script src="/plugins/summernote/plugin/findnreplace/summernote-text-findnreplace.js"></script>
+-->
 <script src="/js/imagenes/vistaprevia.js"></script>
+<script src="/plugins/summernote/summernote-bs4.js"></script>
+<script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
 
+<script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
+<script src="/js/snack/snack.js"></script>
 <script>
 
 
@@ -112,24 +120,24 @@
                             $(".modal-dialog").toggleClass('modal100');
                         });
                     },
-                    onImageUpload : function(files) {
-      if (!files.length) return;
-      var file = files[0];
-      // create FileReader
-      var reader  = new FileReader();
-      reader.onloadend = function () {
-          // when loaded file, img's src set datauri
-          console.log("img",$("<img>"));
-          var img = $("<img>").attr({src: reader.result, width: "50%",style:"margin:1px;float: left;",class:"img-responsive note-float-left"}); // << Add here img attributes !
-          console.log("var img", img);
-          $("#contenido").summernote("insertNode", img[0]);
-      }
+                    onImageUpload: function (files) {
+                        if (!files.length) return;
+                        var file = files[0];
+                        // create FileReader
+                        var reader = new FileReader();
+                        reader.onloadend = function () {
+                            // when loaded file, img's src set datauri
 
-      if (file) {
-        // convert fileObject to datauri
-        reader.readAsDataURL(file);
-      }
-  }
+                            var img = $("<img>").attr({ src: reader.result, width: "50%", style: "margin:1px;float: left;", class: "img-responsive note-float-left" }); // << Add here img attributes !
+
+                            $("#contenido").summernote("insertNode", img[0]);
+                        }
+
+                        if (file) {
+                            // convert fileObject to datauri
+                            reader.readAsDataURL(file);
+                        }
+                    }
 
                 },
                 //toolbarContainer: '.my-toolbar',
@@ -154,11 +162,9 @@
                     ['picture'],
 
                     ['para', ['ul', 'ol', 'listStyles', 'paragraph']],
-                    ['height', ['height']],
                     ['table', ['table']],
                     ['insert', ['link', 'hr']],
                     ['view', ['fullscreen']], //, 'codeview'
-                    ['custom', ['findnreplace']],
                 ],
                 popover: {
                     image: [
@@ -208,6 +214,7 @@
         });
 
         table = $('#noticias').DataTable({
+            "order": [[ 3, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -239,8 +246,8 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
-                { data: 'titulo', searchable: true },
-                { data: 'resumen', searchable: true },
+                { data: 'titulo',  orderable: false, searchable: true },
+                { data: 'resumen',  orderable: false, searchable: true },
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
@@ -268,14 +275,6 @@
 
     });
 
-    $('.custom-file-input').on('change', function () {
-        let fileName = $(this).val().split('\\').pop();
-        if (!fileName.trim()) {
-            $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
-        } else {
-            $(this).next('.custom-file-label').addClass("selected").html(fileName);
-        }
-    });
 
 
     /*Al presionar el boton editar*/
@@ -294,13 +293,6 @@
             $('#resumen').val(data.resumen);
 
             $('#contenido').summernote('code', data.contenido);
-            //$('#imglogo').prop('src',"");
-            if (data.url_imagen != "sin imagen") {
-                $('#logoactual').html('Imagen actual de la noticia');
-                $('#imglogo').prop('src', "{{url('img/noticias')}}/" + data.url_imagen);
-            } else {
-                $('#logoactual').html('');
-            }
         })
     });
 
@@ -314,9 +306,6 @@
         $('#noticiaCrudModal').html("Agregar nueva noticia");
         $('#noticia-crud-modal').modal({ backdrop: 'static', keyboard: false })
         $('#noticia-crud-modal').modal('show');
-        $('#imglogo').prop('src', "");
-
-        $('#logoactual').html('');
     });
 
     $('.modal-btn').click(function () {
@@ -326,9 +315,6 @@
         $('#noticiaCrudModal').html("Agregar nueva institución");
         $('#noticia-crud-modal').modal({ backdrop: 'static', keyboard: false })
         $('#noticia-crud-modal').modal('show');
-        $('#imglogo').prop('src', "");
-        //$('#imglogo').width('0').height('0');
-        $('#logoactual').html('');
     });
 
 
@@ -363,12 +349,8 @@
                     var oTable = $('#noticias').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
-                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                    $("#mensaje-acciones").text("Actualización exitosa.");
-                    $("#mensaje-acciones").fadeIn();
-                    $('#mensaje-acciones').delay(3000).fadeOut();
-                    $('#mensaje-acciones').addClass('alert-success');
-                    $('#mensaje-acciones').removeClass('alert-warning');
+                    
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -408,12 +390,7 @@
                     var oTable = $('#noticias').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
-                    //$('#instituciones').DataTable().ajax.reload();
-                    $("#mensaje-acciones").text("Not5icia registrada exitosamente.");
-                    $("#mensaje-acciones").fadeIn();
-                    $('#mensaje-acciones').delay(3000).fadeOut();
-                    $('#mensaje-acciones').addClass('alert-success');
-                    $('#mensaje-acciones').removeClass('alert-warning');
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia guardada exitosamente.");;
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -471,11 +448,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                $("#mensaje-acciones").text("Noticia eliminada exitosamente.");
-                                $("#mensaje-acciones").fadeIn();
-                                $('#mensaje-acciones').delay(3000).fadeOut();
-                                $('#mensaje-acciones').addClass('alert-warning');
-                                $('#mensaje-acciones').removeClass('alert-success');
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia eliminada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -522,13 +495,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                $("#mensaje-acciones").text("Noticia activada exitosamente.");
-                                $("#mensaje-acciones").fadeIn();
-                                $('#mensaje-acciones').delay(3000).fadeOut();
-                                $('#mensaje-acciones').addClass('alert-warning');
-                                $('#mensaje-acciones').removeClass('alert-success');
-                                //$('#instituciones').DataTable().ajax.reload(null, false);
-                                //$('#instituciones').DataTable().ajax.reload();
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia activada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -543,34 +510,36 @@
     });
 
     $('.preview-btn').on('click', function (e) {
+
         e.preventDefault();
-        var h = screen.availHeight - 150;
-        var w = screen.availWidth - 200;
-        var left = (screen.availWidth / 2) - (w / 2);
-        var top = (screen.availHeight / 2) - (h / 2) - 50;
-        var configuracion_ventana = "location=no,resizable=yes,scrollbars=yes,status=no,width=" + w + ",height=" + h + ",top=" + top + ",left=" + left;
-        var newWin = document.open('', 'Vista previa', configuracion_ventana);
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            data: new FormData($("#noticiaForm")[0]),
+            url: "{{route('noticia.vistaPrevia')}}",
+            type: "POST",
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                win = window.open("", "_blank");
+                win.document.write(data);
+                win.document.close();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            },
 
-        //var newWin = window.open('', "fullscreen", 'top=0,left=0,width='+(screen.availWidth)+',height ='+(screen.availHeight)+',fullscreen=yes,toolbar=0 ,location=0,directories=0,status=0,menubar=0,resiz able=0,scrolling=0,scrollbars=0');
 
-        newWin.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">');
-        newWin.document.write('<link rel="stylesheet" href="/css/imagenes/imagenes.css">');
-        newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"><\/script>');
-        newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"><\/script>');
-        newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"><\/script>');
-        newWin.document.write('<h1 class="display-1 w-75 mx-auto"> ' + $("#titulo").val() + '<\/h1>');
-        newWin.document.write('<div class="w-75 mx-auto" style="word-wrap: break-word;">' + $('.summernote').summernote('code') + '<\/div>');
-        newWin.document.write('<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><img src="' + vistaPrevia.src + '" alt="" id="vistaPrevia" class="img-fluid mx-auto"></div>');
-        newWin.document.close();
-
+        });
     });
 
 
     $('#btn-close').click(function () {
-        
+
     });
 
-    function reiniciar(){
+    function reiniciar() {
         $('.mensajeError').text("");
         $('#contenido').summernote("reset");
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -583,79 +552,19 @@
 @endsection
 
 @section('estilos')
-<link rel="stylesheet" href="/css/imagenes/imagenes.css">
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="/css/datatable/colores.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+
+<link rel="stylesheet" href="/css/datatable/colores.css">
+<link rel="stylesheet" href="/css/imagenes/imagenes.css">
+<link rel="stylesheet" href="/css/modales/modalresponsivo.css">
+<link href="/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+<link href="/css/modales/snackbar.css" rel="stylesheet">
+
 <style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-
-    .busqueda {
-        border: 1px solid #ced4da;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-
-    }
-
-    .busqueda:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
-    }
-
-    .fullscreen-modal .modal-dialog {
-
-        margin-right: auto;
-        margin-left: auto;
-        max-width: 100%;
-    }
-
-    @media (min-width: 768px) {
-        .fullscreen-modal .modal-dialog {
-            max-width: 750px;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .fullscreen-modal .modal-dialog {
-            max-width: 90%;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .fullscreen-modal .modal-dialog {
-            max-width: 70%;
-        }
-    }
-</style>
-
-<link href="/css/summer/summernote-list-styles-bs4.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
-<style>
-    .custom-file-input~.custom-file-label::after {
-        content: "Elegir";
-    }
-
-    .ck-editor__editable {
-        min-height: 290px;
-        max-height: 290px;
-    }
-
-    .cke_show_borders {
-        overflow-y: scroll; // vertical scrollbar
-    }
-
     .modal100 {
         max-width: 100% !important;
         margin: 0;
@@ -669,16 +578,6 @@
 
     .modal {
         overflow-y: auto;
-    }
-
-
-
-    .responsive {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-    }
-
     }
 </style>
 @endsection

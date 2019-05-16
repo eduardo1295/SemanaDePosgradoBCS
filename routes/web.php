@@ -33,6 +33,7 @@ Route::put('admin/institucion/reactivar/{institucion}', 'InstitucionController@r
 
 Route::resource('institucion', 'InstitucionController');
 
+Route::post('noticias/vistaPrevia', 'NoticiaController@vistaPrevia')->name('noticia.vistaPrevia');
 Route::get('admin/noticias/VerNoticias', 'NoticiaController@noticias')->name('noticia.VerNoticias');
 Route::get('admin/noticia/listNoticias', 'NoticiaController@listNoticias')->name('noticia.listNoticias');
 Route::get('noticia/fetch_data', 'NoticiaController@fetch_data');
