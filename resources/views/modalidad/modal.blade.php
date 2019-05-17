@@ -130,12 +130,14 @@
                                         <label class="form-check-label" for="inlineCheckbox3">Semestre</label>
                                 </div>
                         </div>
-                        <div class="form-group col-6 pl-3">
-                            <strong><label for="id_institucion" class="control-label">Grado</label></strong> <div id="resultado"></div>  <br>
-			                <div class="slider-wrapper slider-primary slider-strips slider-ghost">
-				                <input class="input-range ml-5" type="text" data-slider-step="1" data-slider-value="1, 10" data-slider-min="1" data-slider-max="10" data-slider-range="true" data-slider-tooltip_split="true" />
-			                </div>
-		                </div>
+                        <div class="form-group col-6 pl-3">	                        
+                            <strong><label for="id_institucion" class="control-label">Grado</label> <label id="resultado">1-10 </label></strong>  <br>	                            
+                            <input id="ex25" type="text" class="ml-5" />
+                        </div>
+                        <div class="form-group col-6 pl-3">	                        
+                            <strong><label for="id_institucion" class="control-label">Grado</label></strong>  <br>	                            
+                            <div id="slider"></div>
+                        </div>
                     </div>
                     <div class="form-row mt-2">
                         <div class="form-group col-12">

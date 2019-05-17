@@ -94,46 +94,15 @@
 <script src="/js/imagenes/vistaprevia.js"></script>
 <!--Nuevo Rente-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.js"></script>
+<script src="/wNumb.js"></script>
 
-<script>
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
-$( '.input-range').each(function(){
-	var value = $(this).attr('data-slider-value');
-	var separator = value.indexOf(',');
-	if( separator !== -1 ){
-		value = value.split(',');
-		value.forEach(function(item, i, arr) {
-			arr[ i ] = parseFloat( item );
-		});
-	} else {
-		value = parseFloat( value );
-	}
-	$( this ).slider({
-		formatter: function(value) {
-			console.log(value);
-			return '$' + value;
-		},
-		min: parseFloat( $( this ).attr('data-slider-min') ),
-		max: parseFloat( $( this ).attr('data-slider-max') ), 
-		range: $( this ).attr('data-slider-range'),
-		value: value,
-		tooltip_split: $( this ).attr('data-slider-tooltip_split'),
-		tooltip: $( this ).attr('data-slider-tooltip')
-	});
-});
-</script>
 
 <script>
     var checkInsti = 'activos';
     var titulo = "";
     var table = "";
     $(document).ready(function () {
-        
-        
-
         $("#show-sidebar").click(function () {
             $('#modalidad').DataTable().ajax.reload(null, false);
         });
@@ -269,34 +238,62 @@ $( '.input-range').each(function(){
         });
 
 
-    /*PARTE NUEVA RENTERIA*/
-    $('.input-range').each(function(){
-	var value = $(this).attr('data-slider-value');
-	var separator = value.indexOf(',');
-	    if( separator !== -1 ){
-	    	value = value.split(',');
-	    	value.forEach(function(item, i, arr) {
-	    		arr[ i ] = parseFloat( item );
-	    	});
-	    } else {
-		    value = parseFloat( value );
-	    }
-	    $( this ).slider({
-		    formatter: function(value) {
-		    	console.log(value);
-		    	return '$' + value;
-		    },
-		    min: parseFloat( $( this ).attr('data-slider-min') ),
-		    max: parseFloat( $( this ).attr('data-slider-max') ), 
-		    range: $( this ).attr('data-slider-range'),
-		    value: value,
-		    tooltip_split: $( this ).attr('data-slider-tooltip_split'),
-		    tooltip: $( this ).attr('data-slider-tooltip')
-	    });
-    });
+    $("#ex25").slider({	
+        min: 1,	
+        max: 10,	
+        value: [1, 10],	
+        focus: true,	
+        tooltip_position:'bottom',	
+         });	
+        	
+        	
+    var r = $('#ex25').slider()	
+		.on('slide', function(){	
+            hola = $('#ex25')[0];
+            ne = hola["value"].split(',');
+            if(ne[0] == ne[1]){
+                $('#resultado').html(ne[0]);	
+            }
+            else{
+                $('#resultado').html(ne[0]+ '-' +ne[1]);	
+            }
+            
+            console.log(hola.value);	
+    });     
 
-    
+    function filterPips(value, type) {
+                if (type === 0) {
+                    return value < 2000 ? -1 : 0;
+                }
+                return value % 1000 ? 2 : 1;
+            }
+            var slider = document.getElementById('slider');
+            noUiSlider.create(slider, {
+                start: [1, 10], //num, [num], [num,num]
+                format: wNumb({
+                    decimals: 0
+                }),
+                pips: {
+                    mode: 'steps',
+                    density: 3,
+                    filter: filterPips,
+                    format: wNumb({
+                        decimals: 0,
+
+                    })
+                },
+                range: {
+                    'min': [1],
+                    'max': [10]
+                },
+                behaviour: 'drag',
+                connect: true,
+                animate: true,
+                step: 1,
+                orientation: 'horizontal',
+                tooltips: [true, true],
     });
+});
 
     $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
@@ -669,6 +666,7 @@ $( '.input-range').each(function(){
 -->
 <link rel="stylesheet" href="/css/admin/styleRange.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.css">
 <style>
     html {
         overflow-y: scroll;
@@ -685,6 +683,19 @@ $( '.input-range').each(function(){
 
     .cke_show_borders {
         overflow-y: scroll; // vertical scrollbar
+    }
+</style>
+<style>
+    .noUi-connect {
+        background: blue !important;
+    }
+
+    .noUi-value-sub {
+        color: black !important;
+        font-size: 10px;
+    }
+    .noUi-horizontal .noUi-tooltip {
+        bottom: -36px !important;
     }
 </style>
 @endsection

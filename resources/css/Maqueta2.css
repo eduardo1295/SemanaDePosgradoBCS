@@ -85,7 +85,7 @@
 #noticias .n1{border-bottom-left-radius: 15px;}
 #noticias .n3{border-bottom-right-radius: 15px;}
 .n4{border-left: 10px solid white;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;}
-@media (max-width: 768px) { .n4 {border-left: none;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px; } }
+
 
 .nota:before { 
     content: ""; position: absolute; z-index: -1; top: 0; left: 0; right: 0; bottom: 0; /*background: rgb(231, 76, 76);*/
@@ -175,7 +175,10 @@
     height: 100px;
 }
 
-@media (min-width: 0px) and (max-width: 576px)   { #logoSede{ width: 200px; height: 150px; } }
+@media (min-width: 0px) and (max-width: 576px)   {
+  .n4 {border-left: none;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
+  .n1 , .n3 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px !important}
+  #logoSede{ width: 200px; height: 150px; } }
 @media (min-width: 576px) and (max-width: 768px) { #logoSede{ width: 200px; height: 150px; } }
 @media (min-width: 768px) and (max-width: 992px) { #logoSede{ width: 115px; height: 95px;  } }
 @media (min-width: 992px) and (max-width: 1200px){#logoSede { width: 200px; height: 170px; } }
