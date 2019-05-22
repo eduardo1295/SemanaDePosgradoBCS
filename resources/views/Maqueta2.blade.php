@@ -28,48 +28,65 @@
 <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
         <div class="col-12  mb-4" id="noticias">
             <div class="row">
-                <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
+                @if (count($noticias) > 0)
+                    <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
                     <h2 class="mb-0 rounded-left">Noticias.</h2>
                     <h4 class="mb-0"> <a href="/noticia" class="badge badge-primary mb-0 align-self-center">Ver todas 
-                        <i class="fas fa-arrow-circle-right"></i></a> </h4>
-                </div>
-                <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
-                    <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
-                </div>
+                    <i class="fas fa-arrow-circle-right"></i></a> </h4>
+                    </div>
+                    <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
+                            <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+                    </div>
+                @else
+                    <div class="pl-0 col-12 d-none d-md-block bordeizqarriba bordederarriba" id="titulo2">
+                            <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+                    </div>
+                @endif
+                
                 @php
                 $cont=0;
                 @endphp
+            </div>
+
+            <div class="row">    
                 @foreach ($noticias as $noticia)
-                @if ($cont == 0)
-                <div class=" nota n1 col-12 col-md-3 mb-lg-0 " id="contenido">
-                    @elseif ($cont == 2 )
-                    <div class=" nota n3 col-12 col-md-3 mb-lg-0 " id="contenido">
-                        @else
-                        <div class=" nota n2 col-12 col-md-3 mb-lg-0 " id="contenido">
-                            @endif
-                            <div class="media-with-text  mt-4">
-                                <h2 class="h5 mb-2">
-                                    <a href="/noticia/{{$noticia->id_noticia}}"
-                                        id="tituloNoticia">{{$noticia->titulo}}</a>
-                                </h2>
-                                <small><span class="mb-2 d-block post-date"> {{$noticia->fecha_actualizacion}}</span></small>
-                                <p> {{$noticia->resumen}} </p>
-                            </div>
-                        </div>
-                        @php
-                        $cont++;
-                        @endphp
-                        @endforeach
+                @if ($cont == 0 && count($noticias) == ($cont+1) )
+                <div class=" nota n1 n3 col-12 col-md mb-lg-0 " id="contenido">
+                @elseif($cont == 0)
+                    <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido">
+                @elseif(count($noticias) == ($cont+1))
+                    <div class=" nota n3 col-12 col-md mb-lg-0 " id="contenido">
+                @else
+                    <div class=" nota col-12 col-md mb-lg-0 " id="contenido">
+                @endif
+                    <div class="media-with-text  mt-4">
+                        <h2 class="h5 mb-2">
+                            <a href="/noticia/{{$noticia->id_noticia}}"
+                                id="tituloNoticia">{{$noticia->titulo}}</a>
+                        </h2>
+                        <small><span class="mb-2 d-block post-date"> {{$noticia->fecha_actualizacion}}</span></small>
+                        <p> {{$noticia->resumen}} </p>
+                    </div>
+                </div>
+                @php
+                $cont++;
+                @endphp
+                @endforeach
                         <div class="pl-0 mt-3 col-12 d-block d-md-none  bordeizqarriba bordederarriba" id="titulo2">
                                 <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
                         </div>
-                        <div class="col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">
+                        @if (count($noticias) > 0)
+                        <div class=" col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">    
+                        @else
+                        <div class="col-12  mx-auto ubicacionSede" id="contenido"> 
+                        @endif
+                        
                             <div class="row">
                                 <div class="col-12">
                                     @if (isset($institucionSede))
                                         <p class="text-md-center pt-2">{{$institucionSede->nombre}} </p>
-                                        <div class="d-flex">
-                                            <div class="col-12 d-flex justify-content-center">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="col-3 col-md-12 d-flex  justify-content-center">
                                                     <img id="logoSede" class="mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
                                             </div>
                                         </div>

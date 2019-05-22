@@ -16,7 +16,7 @@ class CrearTablaSemanas extends Migration
         Schema::create('semanas', function (Blueprint $table) {
             $table->increments('id_semana');
             $table->integer('id_sede')->unsigned();
-            $table->foreign('id_sede')->references('id')->on('instituciones');
+            //$table->foreign('id_sede')->references('id')->on('instituciones');
             $table->string('nombre', 100);
             $table->text('desc_general');
             $table->string('url_logo',100)->nullable();

@@ -1,5 +1,6 @@
 <script>
-var x = 1, libre = new Array();
+var x = 1;
+var y = 1;
 var hola;
 </script>
 <div class="modal fullscreen-modal fade" id="modalidad-crud-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -92,9 +93,13 @@ function filterPips(value, type) {
                 return value % 1000 ? 2 : 1;
 }
 var nuevooo = function(){
-    
-    $( '#nuevorenglon_'+x).after('<div class="row sliderQuitar nr" id="nuevorenglon_'+(x+1)+'"><div class="form-group col-3"> <strong><label for="posgrado" class="control-label">Nivel</label></strong> <select class="form-control posgrado" id="posgrado" name="posgrado"><option selected value="">Seleccione el grado</option><option value="maestria">Maestria</option><option value="doctorado">Doctorado</option></select><small><span class="text-danger mensajeError" id="id_institucion_error"></span></small></div><div class="form-group col-3"><strong><label for="periodo" class="control-label">Nivel</label></strong><select class="form-control periodo" id="periodo" name="periodo"><option selected value="">Seleccione el grado</option><option value="trimestre">Trimestre</option><option value="cuatrimestre">Cuatrimestre</option><option value="semestre">Semestre</option></select><small><span class="text-danger mensajeError" id="id_institucion_error"></span></small></div><div class="form-group col-5 pl-3 pb-3"><strong><label for="id_institucion" class="control-label">Grado</label></strong><br><div id="slider'+ x +'" class="sliderrr"></div></div><div class="form-group col-1 d-flex align-items-center"><i class="fas fa-times btn btn-danger " onclick="quitar('+(x+1)+')"></i></div></div>');
-    var slider = document.getElementById('slider'+x);
+    var auxid;
+    $('.nr').each(function (i) {
+        auxid = $(this)[0].id;
+    });
+    $('#'+auxid).after('<div class="row sliderQuitar nr" id="nuevorenglon_'+(x+1)+'"><div class="form-group col-3"> <strong><label for="posgrado" class="control-label">Nivel</label></strong> <select class="form-control posgrado" id="posgrado" name="posgrado"><option selected value="">Seleccione el grado</option><option value="maestria">Maestria</option><option value="doctorado">Doctorado</option></select><small><span class="text-danger mensajeError" id="id_institucion_error"></span></small></div><div class="form-group col-3"><strong><label for="periodo" class="control-label">Nivel</label></strong><select class="form-control periodo" id="periodo" name="periodo"><option selected value="">Seleccione el grado</option><option value="trimestre">Trimestre</option><option value="cuatrimestre">Cuatrimestre</option><option value="semestre">Semestre</option></select><small><span class="text-danger mensajeError" id="id_institucion_error"></span></small></div><div class="form-group col-5 pl-3 pb-3"><strong><label for="id_institucion" class="control-label">Grado</label></strong><br><div id="slider'+ x +'" class="sliderrr"></div></div><div class="form-group col-1 d-flex align-items-center"><i class="fas fa-times btn btn-danger " onclick="quitar('+(x+1)+')"></i></div></div>');
+    var slider ;
+        slider = document.getElementById('slider'+x);
             noUiSlider.create(slider, {
                 start: [1, 10], //num, [num], [num,num]
                 format: wNumb({
@@ -121,15 +126,14 @@ var nuevooo = function(){
                 tooltips: [true, true],
     });
     x++;
+    y++;
     hola = $('#posgrado');
 
 }
 var quitar = function(quita){
     var quitando = $('#nuevorenglon_'+quita);
-    libre.push(quitando[0].id.split('_')[1]);
     $(quitando).remove();
-    console.log(quitando);
-    x--;
+    
     
 }
 

@@ -280,7 +280,7 @@ class SemanaController extends Controller
 
     public function verConvocatoria(){
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
-        $semana = Semana::select('id_semana as id','url_convocatoria')->where('vigente',1)->first();
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
         return view('admin.semana.verConvocatoria', compact(['semana','instituciones']));
     }
