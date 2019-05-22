@@ -177,8 +177,13 @@
 
 @media (min-width: 0px) and (max-width: 576px)   {
   .n4 {border-left: none;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
-  .n1 , .n3 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px !important}
+  .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px !important}
+  .n3 { border-bottom-left-radius: 15px; border-bottom-left-radius: 15px}
   #logoSede{ width: 200px; height: 150px; } }
-@media (min-width: 576px) and (max-width: 768px) { #logoSede{ width: 200px; height: 150px; } }
+@media (min-width: 576px) and (max-width: 768px) {
+   #logoSede{ width: 200px; height: 150px; }
+   .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px !important}
+   .n3 { border-bottom-left-radius: 15px; border-bottom-left-radius: 15px}
+   }
 @media (min-width: 768px) and (max-width: 992px) { #logoSede{ width: 115px; height: 95px;  } }
 @media (min-width: 992px) and (max-width: 1200px){#logoSede { width: 200px; height: 170px; } }

@@ -213,7 +213,7 @@
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
                 { data: 'nombre', searchable: true },
-                { data: 'descripcion', searchable: true },
+                { data: 'descripcion', searchable: true , 'visible': false },
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
@@ -236,30 +236,6 @@
             titulo = data.titulo;
 
         });
-
-
-    $("#ex25").slider({	
-        min: 1,	
-        max: 10,	
-        value: [1, 10],	
-        focus: true,	
-        tooltip_position:'bottom',	
-         });	
-        	
-        	
-    var r = $('#ex25').slider()	
-		.on('slide', function(){	
-            hola = $('#ex25')[0];
-            ne = hola["value"].split(',');
-            if(ne[0] == ne[1]){
-                $('#resultado').html(ne[0]);	
-            }
-            else{
-                $('#resultado').html(ne[0]+ '-' +ne[1]);	
-            }
-            
-            console.log(hola.value);	
-    });     
 
     function filterPips(value, type) {
                 if (type === 0) {
@@ -293,8 +269,11 @@
                 orientation: 'horizontal',
                 tooltips: [true, true],
     });
+    $('#slider').change(function(){
+        console.log('hola');
+    });
 });
-
+    
     $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
         if (!fileName.trim()) {
@@ -415,15 +394,30 @@
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
 
+            var sli = $('.sliderrr');
+            var auxDatos = new Array() , auxPosgrado = new Array() , auxperiodo = new Array();
+            for(w=0; w< sli.length; w++){
+                //var ee = sli[w];
+                auxDatos.push(sli[w].noUiSlider.get());
+                auxPosgrado.push($('.posgrado')[w].value);
+                auxperiodo.push($('.periodo')[w].value);
+            }
+            console.log(auxDatos);
+            var content = $('#contenido').val();
+            
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                data: new FormData($("#modalidadForm")[0]),
+                data: {  nombres: $('#titulo').val(),
+                         contenido: content,
+                         slider: auxDatos,
+                         posgrado: auxPosgrado,
+                         periodo: auxperiodo
+                    },
                 url: "{{route('modalidad.store')}}",
                 type: "POST",
-                dataType: 'json',
-                contentType: false,
-                cache: false,
-                processData: false,
+                //contentType: false,
+                //cache: false,
+                //processData: false,
                 success: function (data) {
                     $('#modalidadForm').trigger("reset");
                     $('#modalidad-crud-modal').modal('hide');
@@ -593,6 +587,7 @@
         $('.mensajeError').text("");
         $('#contenido').summernote("reset");
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+        $('.sliderQuitar').remove();
     });
 
 </script>

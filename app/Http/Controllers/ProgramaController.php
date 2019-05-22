@@ -63,7 +63,7 @@ class ProgramaController extends Controller
         $programa->nivel = $request->nivel;
         $programa->periodo = $request->periodo;
         $programa->id_institucion = $request->id_institucion;
-        $programa->creado_por= 1;
+        $programa->creado_por= auth('admin')->user()->id;
         $programa->save();
         $programa->save();
         if($programa){

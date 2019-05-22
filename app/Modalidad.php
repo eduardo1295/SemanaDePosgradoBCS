@@ -20,7 +20,7 @@ class Modalidad extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'descripcion', 'creada_por', 'actualizado_por',
+        'nombre', 'descripcion', 'creado_por', 'actualizado_por',
     ];
 
     protected $dates = ['deleted_at'];
@@ -28,9 +28,7 @@ class Modalidad extends Model
     
     public function niveles()
     {
-        return $this->belongsToMany(Nivel::class, 'modalidad_nivel', 'id_modalidad', 'id')
-                    ->withPivot('creada_por', 'actualizado_por')
-                    ->withTimestamps();
+        return $this->hasMany(Posgrado::class,'id_modalidad', 'id_modalidad');
     }
     
 }

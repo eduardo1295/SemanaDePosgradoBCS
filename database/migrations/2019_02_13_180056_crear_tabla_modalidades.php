@@ -16,7 +16,7 @@ class CrearTablaModalidades extends Migration
         Schema::create('modalidades', function (Blueprint $table) {
             $table->increments('id_modalidad');
             $table->string('nombre', 50);
-            $table->string('descripcion', 1000);
+            $table->text('descripcion');
 
             $table->integer('creado_por');
             $table->timestamp('fecha_creacion')->nullable();
