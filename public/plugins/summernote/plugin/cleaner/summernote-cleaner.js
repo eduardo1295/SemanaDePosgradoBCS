@@ -130,7 +130,7 @@
           'summernote.keydown':function (we, e) {
             var node = document.createElement('div');
             if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
-                var textLength =  $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ").replace(/ /g,"").replace(/\u00a0/g, "");;
+                var textLength =  $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ").replace(/\u00a0/g, "").replace(/\s/g,'');
                 var codeLength =  $editor.find('.note-editable').html();
               var lengthStatus = '';
               

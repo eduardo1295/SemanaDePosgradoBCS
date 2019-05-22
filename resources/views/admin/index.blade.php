@@ -17,20 +17,10 @@
         </div>
     </div>
     <div class="row mb-3">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras noticias</legend>
-        <div class="col-12 col-md-4 col-lg-4">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verNoti" value="activos">
-                <label class="form-check-label" for="inlineRadio1">Activas</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" name="verNoti" value="eliminados">
-                <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-6">
+        
+        <div class="col-12 col-md-12 col-lg-12">
             <div class="d-flex justify-content-end">
-                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-noticia"><span><i
+                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-semana"><span><i
                             class="fas fa-plus"></i></span> Nuevo evento</a>
 
             </div>
@@ -39,12 +29,15 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="display" cellspacing="0" style="width:100%" id="noticias">
+            <table class="display" cellspacing="0" style="width:100%" id="semanas">
                 <thead>
                     <tr>
-                        <th>id_noticia</th>
-                        <th>Titulo</th>
-                        <th>Resumen</th>
+                        <th>id_semana</th>
+                        <th>Nombre</th>
+                        <th>Sede</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                        <th>Convocatoria</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
@@ -52,8 +45,11 @@
                 <tfoot>
                     <tr>
                         <th></th>
-                        <th class="text-input">Titulo</th>
-                        <th class="text-input">Resumen</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -86,6 +82,8 @@
 <script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
 
 <script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
+<script src="/plugins/summernote/plugin/summernote-table-headers-master/summernote-table-headers.js"></script>
+<script src="/plugins/summernote/plugin/list-styles-bs4/summernote-list-styles-bs4.js"></script>
 <script src="/js/snack/snack.js"></script>
 
 
@@ -136,13 +134,13 @@
 
 
 
-    var checkInsti = 'activos';
+    var checkSemana = 'activos';
     var titulo = "";
     var table = "";
     $(document).ready(function () {
         $('.note-statusbar').hide();
         $("#show-sidebar").click(function () {
-            $('#noticias').DataTable().ajax.reload(null, false);
+            $('#semanas').DataTable().ajax.reload(null, false);
         });
 
         function registerSummernote(element, placeholder, max, callbackMax) {
@@ -159,9 +157,8 @@
                         // create FileReader
                         var reader = new FileReader();
                         reader.onloadend = function () {
-                            // when loaded file, img's src set datauri
 
-                            var img = $("<img>").attr({ src: reader.result, width: "50%", style: "margin:1px;float: left;", class: "img-responsive note-float-left" }); // << Add here img attributes !
+                            var img = $("<img>").attr({ src: reader.result, width: "40%", style: "display:block;",class:"mx-auto img-fluid" }); // << Add here img attributes !
 
                             $("#contenido").summernote("insertNode", img[0]);
                         }
@@ -173,17 +170,16 @@
                     }
 
                 },
-                //toolbarContainer: '.my-toolbar',
 
                 placeholder,
-                lang: 'es-ES', // Change to your chosen language
+                lang: 'es-ES', 
                 disableResizeEditor: true,
                 dialogsInBody: true,
                 dialogsFade: false,
                 shortcuts: false,
                 disableDragAndDrop: true,
-                height: 200,                 // set editor height
-                minHeight: 200,             // set minimum height of editor
+                height: 200,                 
+                minHeight: 200,
                 maxHeight: 200,
                 toolbar: [
 
@@ -203,8 +199,12 @@
                     image: [
                         ['custom', ['imageTitle']],
                         ['imagesize', ['imageSize100', 'imageSize50']],
-                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
                         ['remove', ['removeMedia']]
+                    ],
+                    table: [
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                        ['custom', ['tableHeaders']]
                     ],
                 },
                 cleaner: {
@@ -230,7 +230,7 @@
 
 
         $(function () {
-            registerSummernote('.summernote', 'Contenido de la noticia', 500, function (max) {
+            registerSummernote('.summernote', 'Descripción general del evento', 1000, function (max) {
                 $('#maxContentPost').text(max)
             });
         });
@@ -241,13 +241,13 @@
             "sLengthSelect": ""
         });
 
-        $('#noticias tfoot  th.text-input').each(function (i) {
+        $('#semanas tfoot  th.text-input').each(function (i) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
         });
 
-        table = $('#noticias').DataTable({
-            "order": [[ 3, "desc" ]],
+        table = $('#semanas').DataTable({
+            "order": [[ 6, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -259,28 +259,28 @@
             "serverSide": true,
             "search": true,
             "ajax": {
-                "url": '{{ route("noticia.listNoticias")}}',
+                "url": '{{ route("semana.listSemanas")}}',
                 "data": function (d) {
-                    d.busqueda = checkInsti
+                    d.busqueda = checkSemana
                 }
             },
-            initComplete: function () {
-                var api = this.api();
-                api.columns(1).every(function () {
-                    var that = this;
-                    $('input', this.footer()).on('keyup change', function () {
-                        if (that.search() !== this.value) {
-                            that
-                                .search(this.value)
-                                .draw();
-                        }
-                    });
-                })
-            },
             "columns": [
-                { data: 'id', name: 'id', 'visible': false },
-                { data: 'titulo',  orderable: false, searchable: true },
-                { data: 'resumen',  orderable: false, searchable: true },
+                { data: 'id', name: 'id', 'visible': false,searchable: false  },
+                { data: 'nombre',  orderable: false, searchable: true },
+                { data: 'instituciones[0].nombre',  orderable: false, searchable: true },
+                { data: 'fecha_inicio',  orderable: false, searchable: false },
+                { data: 'fecha_fin',  orderable: false, searchable: false },
+                {
+                    data: 'url_convocatoria',
+                    name: 'url_convocatoria',
+                    render: function (data, type, full, meta) {
+                        if(data == "no_disponible")
+                            return data.replace("_"," ");
+                        else
+                            return "<a target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" + data +">"+data+ "<a/>";
+                    },
+                    orderable: false, searchable: false
+                },
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
@@ -292,14 +292,10 @@
         });
 
 
-        $("input[name='verNoti']").change(function (e) {
-            checkInsti = $(this).val();
-            $('#noticias').DataTable().ajax.reload();
-        });
 
-        $('#noticias tbody').on('click', '.eliminar, .reactivar', function (e) {
+        $('#semanas tbody').on('click', '.eliminar, .reactivar', function (e) {
             var tr = $(this).closest("tr");
-            var data = $("#noticias").DataTable().row(tr).data();
+            var data = $("#semanas").DataTable().row(tr).data();
             titulo = data.titulo;
 
         });
@@ -313,41 +309,53 @@
     /*Al presionar el boton editar*/
     $('body').on('click', '.editar', function () {
         reiniciar();
-        var noticia_id = $(this).data('id');
-        var ruta = "{{url('noticia')}}/" + noticia_id + "/editar";
+        var semana_id = $(this).data('id');
+        var ruta = "{{url('semana')}}/" + semana_id + "/editar";
 
 
         $.get(ruta, function (data) {
-            $('#noticiaCrudModal').html("Editar noticia: " + data.titulo);
+            
+            $('#semanaCrudModal').html("Editar semana: " + data.nombre);
             $('#btn-save').val("editar");
-            $('#noticia-crud-modal').modal('show');
-            $('#noticia_id').val(data.id_noticia);
-            $('#titulo').val(data.titulo);
-            $('#resumen').val(data.resumen);
-
+            $('#semana-crud-modal').modal('show');
+            $('#semana_id').val(data.id_semana);
+            $('#nombre').val(data.nombre);
+            $('#contenido').summernote('code', data.desc_general);
+            $('#fecha').val(data.fecha)
+            $("#institucionSelect").val(data.instituciones[0].id);
             $('#contenido').summernote('code', data.contenido);
+            $('#imglogo').prop('src', "{{url('img/semanaLogo')}}/" + data.url_logo);
+            $('#logoactual').html('Logo actual');
+            $('#logoAnterior').removeClass('d-none');
+            if(data.url_convocatoria=='no_disponible')
+                $('#ligaConvo').html('No se ha cargado convocatoria')
+            else
+                $('#ligaConvo').html('Convocatoria <a target="_blank" href={{ URL::to("/") }}/pdf/convocatoria/' + data.url_convocatoria +'>'+data.url_convocatoria+ '<a/>');
+            
         })
     });
 
 
-    /*Accion al presionar el boton crear-noticia*/
-    $('#crear-noticia').click(function () {
+    /*Accion al presionar el boton crear-semana*/
+    $('#crear-semana').click(function () {
         reiniciar();
-        $('#btn-save').val("crear-noticia");
-        $('#noticia_id').val('');
-        $('#noticiaForm').trigger("reset");
-        $('#noticiaCrudModal').html("Nueva Evento Semana de Posgrado");
-        $('#noticia-crud-modal').modal({ backdrop: 'static', keyboard: false })
-        $('#noticia-crud-modal').modal('show');
+        $('#btn-save').val("crear-semana");
+        $('#semana_id').val('');
+        $('#semanaForm').trigger("reset");
+        $('#imglogo').prop('src', "");
+        $('#logoactual').html('');
+        $('#semanaCrudModal').html("Nueva Evento Semana de Posgrado");
+        $('#semana-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#semana-crud-modal').modal('show');
     });
 
     $('.modal-btn').click(function () {
-        $('#btn-save').val("crear-noticia");
-        $('#noticia_id').val('');
-        $('#noticiaForm').trigger("reset");
-        $('#noticiaCrudModal').html("Agregar nueva institución");
-        $('#noticia-crud-modal').modal({ backdrop: 'static', keyboard: false })
-        $('#noticia-crud-modal').modal('show');
+        $('#btn-save').val("crear-semana");
+        $('#semana_id').val('');
+        $('#semanaForm').trigger("reset");
+        $('#semanaCrudModal').html("Agregar nueva institución");
+        $('#semana-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#semana-crud-modal').modal('show');
     });
 
 
@@ -359,9 +367,9 @@
         var actionType = $('#btn-save').val();
         $('#btn-save').html('Guardando..');
         if (actionType == "editar") {
-            var id = $('#noticia_id').val();
-            var ruta = "{{url('noticia')}}/" + id + "";
-            var datos = new FormData($("#noticiaForm")[0]);
+            var id = $('#semana_id').val();
+            var ruta = "{{url('semana')}}/" + id + "";
+            var datos = new FormData($("#semanaForm")[0]);
             datos.append('_method', 'PUT');
             //console.log(Array.from(datos));
             $.ajax({
@@ -375,11 +383,11 @@
                 processData: false,
                 success: function (data) {
                     //console.log(data);
-                    $('#noticiaForm').trigger("reset");
-                    $('#noticia-crud-modal').modal('hide');
+                    $('#semanaForm').trigger("reset");
+                    $('#semana-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#noticias').dataTable();
+                    var oTable = $('#semanas').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     
@@ -402,10 +410,10 @@
                 },
 
             });
-        } else if (actionType == "crear-noticia") {
+        } else if (actionType == "crear-semana") {
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
-            var datos = new FormData($("#noticiaForm")[0]);
+            var datos = new FormData($("#semanaForm")[0]);
             console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -417,17 +425,18 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    $('#noticiaForm').trigger("reset");
-                    $('#noticia-crud-modal').modal('hide');
+                    $('#semanaForm').trigger("reset");
+                    $('#semana-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#noticias').dataTable();
+                    var oTable = $('#semanas').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia guardada exitosamente.");;
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana guardada exitosamente.");;
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+                    $('#nuevoLogo').addClass('d-none');
                 },
                 error: function (data) {
                     if (data.status == 422) {
@@ -449,10 +458,10 @@
 
     /*Accion al presionar el boton eliminar*/
     $('body').on('click', '.eliminar', function () {
-        var noticia_id = $(this).data("id");
+        var semana_id = $(this).data("id");
         $.confirm({
             columnClass: 'col-md-6',
-            title: '¿Desea eliminar la noticia titulada ' + titulo + '?',
+            title: '¿Desea eliminar la semana titulada ' + titulo + '?',
             content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
             autoClose: 'cancelAction|8000',
             buttons: {
@@ -473,16 +482,16 @@
                         $.ajax({
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             type: "DELETE",
-                            url: "{{ url('noticia')}}" + '/' + noticia_id,
+                            url: "{{ url('semana')}}" + '/' + semana_id,
                             success: function (data) {
-                                var oTable = $('#noticias').dataTable();
+                                var oTable = $('#semanas').dataTable();
                                 if (table.data().count() == 1) {
-                                    $('#noticias').DataTable().ajax.reload();
+                                    $('#semanas').DataTable().ajax.reload();
                                 } else {
 
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia eliminada exitosamente.");
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana eliminada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -499,10 +508,10 @@
 
     /*Accion al presionar el boton reactivar*/
     $('body').on('click', '.reactivar', function () {
-        var noticia_id = $(this).data("id");
+        var semana_id = $(this).data("id");
         $.confirm({
             columnClass: 'col-md-6',
-            title: '¿Desea reactivar la noticia titulada ' + titulo + '?',
+            title: '¿Desea reactivar la semana titulada ' + titulo + '?',
             content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
             autoClose: 'cancelAction|8000',
             buttons: {
@@ -520,16 +529,16 @@
                         $.ajax({
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             type: "PUT",
-                            url: "{{ url('admin/noticia/reactivar')}}" + '/' + noticia_id,
+                            url: "{{ url('admin/semana/reactivar')}}" + '/' + semana_id,
                             success: function (data) {
-                                var oTable = $('#noticias').dataTable();
+                                var oTable = $('#semanas').dataTable();
                                 if (table.data().count() == 1) {
-                                    $('#noticias').DataTable().ajax.reload();
+                                    $('#semanas').DataTable().ajax.reload();
                                 } else {
 
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia activada exitosamente.");
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana activada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -548,8 +557,8 @@
         e.preventDefault();
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            data: new FormData($("#noticiaForm")[0]),
-            url: "{{route('noticia.vistaPrevia')}}",
+            data: new FormData($("#semanaForm")[0]),
+            url: "{{route('semana.vistaPrevia')}}",
             type: "POST",
             dataType: 'json',
             contentType: false,
@@ -578,8 +587,8 @@
         e.preventDefault();
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            data: new FormData($("#noticiaForm")[0]),
-            url: "{{route('noticia.vistaPrevia')}}",
+            data: new FormData($("#semanaForm")[0]),
+            url: "{{route('semana.vistaPrevia')}}",
             type: "POST",
             dataType: 'json',
             contentType: false,
@@ -601,6 +610,8 @@
         $('.mensajeError').text("");
         $('#contenido').summernote("reset");
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+        $('#nuevoLogo').addClass('d-none');
+        $('#ligaConvo').html('Convocatoria');
     }
     $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
@@ -610,6 +621,7 @@
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         }
     });
+
 </script>
 
 

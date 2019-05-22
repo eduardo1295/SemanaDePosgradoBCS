@@ -1,12 +1,12 @@
-<div class="container-fluid" id="#contenedor" style="z-index:0 ; background:blue;" >
+<div class="container-fluid" id="#contenedor" style="z-index:0 ; background:#ececec;" >
     <div class="row" >
         <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-sm-between align-items-center">
                 <div class="col-12 col-sm-6 col-md-3 d-flex justify-content-center justify-content-sm-start">
-                    <a href="/"><img src="/img/logo.png" width="120px"
+                    <a href="/admin"><img src="/img/logo.png" width="120px"
                             alt=""></a>
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 pt-3 pt-md-0" style="background:pink;">
+                <div class="col-12 col-sm-6 col-md-6 pt-3 pt-md-0">
                     <h1 class="text-center">Área Administrativa</h1>
                 </div>
                 <div class="col-12 col-md-3 d-flex justify-content-end">

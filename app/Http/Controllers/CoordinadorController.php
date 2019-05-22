@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Coordinador;
 use App\Institucion;
+use App\Semana;
 use DataTables;
 use App\Http\Requests\coodinador\StoreCoordinadorRequest;
 use App\Http\Requests\coodinador\UpdateCoordinadorRequest;
@@ -40,26 +41,25 @@ class CoordinadorController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo_nombre = 'sin imagen';
-        if($request->hasFile('imagenCarrusel')){
-            
-            $imagencarrusel = $request->file('imagenCarrusel');
-            //agregar id de usuarios a nombre
-            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
-            $imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
+
+        $user = new User([
+            'nombre'     => $request->nombre,
+            'email'     => $request->email,
+            'password' => bcrypt($request->password),
+            'primer_apellido'   => $request->primer_apellido, 
+            'segundo_apellido'  => $request->segundo_apellido, 
+            'id_institucion'    => $request->id_institucion,
+            'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
+        ]);
+        $user->save();
+        
+        
+        if($user){
+            $user->coordinadores()->create(['grado'=>'doc','id_semana'=>1]);
+            $user->roles()->attach([$user->id => ['id_rol'=>'1', 'creada_por'=>'1']]);
         }
         
-        $carrusel = new Carrusel;
-        $carrusel->link_web = $request->link_web;
-        $carrusel->url_imagen = $nuevo_nombre;
-        $carrusel->creado_por= 1;
-        $carrusel->save();
-        $carrusel->save();
-        if($carrusel){
-            //borrar imagen actual
-        }
-        //$institucion->update($request->all());
-        return \Response::json($carrusel);
+        return \Response::json($user);
     }
 
     /**
@@ -81,8 +81,8 @@ class CoordinadorController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::select('id','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id_usuario,grado','instituciones:id,nombre as nom_insti')->where('id',$id)->first();
         
+        $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,grado','instituciones:id,nombre')->where('id',$id)->first();
         return \Response::json($usuario);
         
     }
@@ -97,54 +97,22 @@ class CoordinadorController extends Controller
     public function update(Request $request, $id)
     {
         
-
-        $carrusel = Carrusel::where('id',$id)->first();
+        $user = User::find($id);
+        $user->nombre = $request->nombre;
+        $user->primer_apellido = $request->primer_apellido;
+        $user->segundo_apellido = $request->segundo_apellido;
+        $user->password = bcrypt($request->password);
+        $user->id_institucion = $request->id_institucion;
+        $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         
-        $rules1 = [
-            'link_web' => 'nullable|max:60',
-            'imagenCarrusel' => 'required|mimes:jpeg,jpg,png|max:2048',
-        ];
-
-        $rules2 = [
-            'link_web' => 'nullable|max:60',
-        ];
-        $sinerror='verdadero';
-        $nuevo_nombre = 'sin imagen';
-        if($request->hasFile('imagenCarrusel')){
-            $validator = Validator::make($request->all(), $rules1 );
-            if(!$validator->fails()){
-                $imagencarrusel = $request->file('imagenCarrusel');
-                $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
-                $imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
-            }else{
-                $sinerror='falso';
-            }
-        }
-        else{
-            $validator = Validator::make( $request->all(), $rules2 );
-            if(!$validator->fails()){
-                $sinerror='verdadero';
-            }else{
-                $sinerror='falso';
-            }
-            $nuevo_nombre = $carrusel->url_imagen;
+        $user->save();
+        
+        if($user){
+            $user->coordinadores()->update(['grado'=>'doc','id_semana'=>1]);
+            $user->roles()->attach([$user->id => ['id_rol'=>'1', 'creada_por'=>'1']]);
         }
         
-        if ($sinerror=='verdadero') {
-            $carrusel->link_web = $request->link_web;
-            $carrusel->url_imagen = $nuevo_nombre;
-            $carrusel->creado_por= 1;
-            $carrusel->save();
-            if($carrusel){
-                //borrar imagen actual
-            }
-            //$institucion->update($request->all());
-            return \Response::json($carrusel);
-            
-        }
-        else{
-            return \Response::json(['errors' => $validator->errors()], 422);
-        }
+        return \Response::json($user);
     }
 
     /**
@@ -177,6 +145,7 @@ class CoordinadorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function coordinador(){
+        $semana = Semana::select('id_semana','vigente')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre')->get();
         return view('admin.coordinador.adminCoordinador',compact(['instituciones']));   
     }
@@ -189,14 +158,14 @@ class CoordinadorController extends Controller
     public function listCoordinador(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $usuarios = User::select('id','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id_usuario,grado','instituciones:id,nombre as nom_insti')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
+            $usuarios = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,grado','instituciones:id,nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
             return datatables()->of($usuarios)
             ->addColumn('action', 'admin.acciones')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $usuarios = User::onlyTrashed()->select('id','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id_usuario,grado','instituciones:id,nombre as nom_insti')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
+            $usuarios = User::onlyTrashed()->select('id','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,grado','instituciones:id,nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
             return datatables()->of($usuarios)
             ->addColumn('action', 'admin.reactivar')
             ->rawColumns(['action'])

@@ -8,7 +8,6 @@
             <div class="modal-body">
                 <form id="coordinadorForm" name="coordinadorForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="coordinador_id" id="coordinador_id">
-
                     <div class="form-group">
                         <label for="institucionSelect">Institución</label>
                         <select class="form-control" id="institucionSelect" name="id_institucion">
@@ -21,7 +20,7 @@
                     <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email" class="control-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="email del usuario"
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Email del usuario"
                             value="" maxlength="500" required="">
                         <span class="mensajeError" id="email_error"></span>
 

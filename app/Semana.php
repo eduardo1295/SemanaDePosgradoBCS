@@ -17,7 +17,7 @@ class Semana extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'url_logo', 'fecha_inicio', 'fecha_fin', 'creado_por', 'actualizado_por', 'vigente',
+        'nombre', 'url_logo','url_convocatoria', 'fecha_inicio', 'fecha_fin', 'creado_por', 'actualizado_por', 'vigente',
     ];
 
     public function users()
@@ -27,6 +27,6 @@ class Semana extends Model
 
     public function instituciones()
     {
-        return $this->hasMany(Institucion::class, 'id_semana', 'id_semana');
+        return $this->hasMany(Institucion::class, 'id', 'id_sede');
     }
 }

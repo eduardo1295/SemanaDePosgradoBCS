@@ -4,7 +4,7 @@
         <div class="container-fluid pl-5 pr-5">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                    <a href="/"><img src="/img/logo.png" width="120px"  alt=""></a>
+                    <a href="/"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px"  alt=""></a>
                 </div>
                 <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 d-md-flex justify-content-md-end">
                     <div class="navigation float-none">
@@ -20,7 +20,7 @@
                                         <li><a href="blog-single.html">Video</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html" class="">Convocatoria</a> </li>
+                                <li><a href="{{route('semana.verConvocatoria')}}" class="">Convocatoria</a> </li>
                                 
                                 @if(Auth::guard()->check())
                                     {{-- comment 

@@ -3185,7 +3185,7 @@
           var clustereds = lists.clusterBy(paras, func.peq2('parentNode'));
           $$1.each(clustereds, function (idx, paras) {
               var head = lists.head(paras);
-              if (dom.isLi(head)) {
+              /*if (dom.isLi(head)) {
                   var previousList_1 = _this.findList(head.previousSibling);
                   if (previousList_1) {
                       paras
@@ -3198,13 +3198,13 @@
                           .map(function (para) { return _this.appendToPrevious(para); });
                   }
               }
-              else {
+              else {*/
                   $$1.each(paras, function (idx, para) {
                       $$1(para).css('marginLeft', function (idx, val) {
                           return (parseInt(val, 10) || 0) + 25;
                       });
                   });
-              }
+              //}
           });
           rng.select();
       };
@@ -3218,17 +3218,17 @@
           var clustereds = lists.clusterBy(paras, func.peq2('parentNode'));
           $$1.each(clustereds, function (idx, paras) {
               var head = lists.head(paras);
-              if (dom.isLi(head)) {
+              /*if (dom.isLi(head)) {
                   _this.releaseList([paras]);
               }
-              else {
+              else {*/
                   $$1.each(paras, function (idx, para) {
                       $$1(para).css('marginLeft', function (idx, val) {
                           val = (parseInt(val, 10) || 0);
                           return val > 25 ? val - 25 : '';
                       });
                   });
-              }
+              //}
           });
           rng.select();
       };
@@ -3279,7 +3279,7 @@
           var last = lists.last(paras);
           var prevList = dom.isList(head.previousSibling) && head.previousSibling;
           var nextList = dom.isList(last.nextSibling) && last.nextSibling;
-          var listNode = prevList || dom.insertAfter(dom.create(listName || 'UL'), last);
+          var listNode = dom.insertAfter(dom.create(listName || 'UL'), last);
           // P to LI
           paras = paras.map(function (para) {
               return dom.isPurePara(para) ? dom.replace(para, 'LI') : para;
