@@ -125,6 +125,7 @@ var nuevooo = function(){
 
 }
 var quitar = function(quita){
+    console.log(quita);
     var quitando = $('#nuevorenglon_'+quita);
     libre.push(quitando[0].id.split('_')[1]);
     $(quitando).remove();
