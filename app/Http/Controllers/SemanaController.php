@@ -111,7 +111,6 @@ class SemanaController extends Controller
         $semana->desc_general = $detail;
         $semana->fecha_inicio = $fechas[0];
         $semana->fecha_fin = $fechas[1];
-        $semana->desc_general = $detail;
         $semana->url_logo = $nuevo_nombre;
         
         $semana->url_convocatoria = $nuevo_convocatoria;
@@ -168,13 +167,15 @@ class SemanaController extends Controller
     {
         $semana = Semana::where('id_semana', $id)->first();
         $dom = new \domdocument();
-        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $removerXML = str_replace('<!--?xml encoding="utf-8" ?-->','',$request->contenido);
+        
+        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$removerXML, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
         $images = $dom->getelementsbytagname('img');
  
         //loop over img elements, decode their base64 src and save them to public folder,
         //and then replace base64 src with stored image URL.
-        
+
         foreach($images as $k => $img){
             $data = $img->getattribute('src');
             if (substr($data, 0, 5) == 'data:') {
@@ -195,7 +196,7 @@ class SemanaController extends Controller
         $nuevo_nombre = 'no_logo.png';
         if($request->hasFile('imagensemana')){
             $imagenLogo = $request->file('imagensemana');
-            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
+            $nuevo_nombre = date("m-d-Y_h-i-s"). $imagenLogo->getClientOriginalExtension();
             $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
         }else{
             $nuevo_nombre = $semana->url_logo;
@@ -224,7 +225,6 @@ class SemanaController extends Controller
         $semana->desc_general = $detail;
         $semana->fecha_inicio = $fechas[0];
         $semana->fecha_fin = $fechas[1];
-        $semana->desc_general = $detail;
         $semana->url_logo = $nuevo_nombre;
         $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;

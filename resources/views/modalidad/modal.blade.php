@@ -131,6 +131,7 @@ var nuevooo = function(){
 
 }
 var quitar = function(quita){
+    console.log(quita);
     var quitando = $('#nuevorenglon_'+quita);
     $(quitando).remove();
     

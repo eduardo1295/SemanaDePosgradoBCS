@@ -158,10 +158,11 @@ class NoticiaController extends Controller
             $nuevo_nombre = $noticia->url_imagen;
         }
         */
-        $detail=$request->contenido;
+        
         
         $dom = new \domdocument();
-        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $removerXML = str_replace('<!--?xml encoding="utf-8" ?-->','',$request->contenido);
+        $dom->loadHtml('<?xml encoding="utf-8" ?>'.$removerXML, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
         $images = $dom->getelementsbytagname('img');
         $ultimaImagen ="";
