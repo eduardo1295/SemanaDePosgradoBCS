@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Coordinador extends Model
 {
     protected $table = 'coordinadores';
-    
+    protected $primaryKey = null;
+
+    public $incrementing = false;
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -15,7 +17,7 @@ class Coordinador extends Model
      * @var array
      */
     protected $fillable = [
-        'id_usuario', 'grado',
+        'grado','id_semana'
     ];
 
     public function user(){

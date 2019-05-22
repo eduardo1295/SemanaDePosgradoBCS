@@ -11,3 +11,10 @@
         <span><i class="fas fa-trash-alt"></i>
         </span></a>
 </div>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger : 'hover'
+        }) 
+    });
+</script>

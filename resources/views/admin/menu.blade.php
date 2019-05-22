@@ -78,10 +78,10 @@
     </div>
     <!-- sidebar-footer  -->
     <div class="sidebar-footer">
+        <!--
         <div class="dropdown">
             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-cog"></i>
-                <span class="badge-sonar"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuMessage">
                 <a class="dropdown-item" href="#">Mi cuenta</a>
@@ -89,9 +89,10 @@
                 <a class="dropdown-item" href="#">Setting</a>
             </div>
         </div>
+    -->
         <div>
 
-            <a href="/logout">
+            <a href="/logout">Cerrar Sesión
                 <i class="fas fa-power-off"></i>
             </a>
         </div>

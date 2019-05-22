@@ -10,6 +10,7 @@ use App\User;
 use DB;
 use App\Carrusel;
 use Auth;
+use Illuminate\Support\Str as Str;
 
 class SemanaController extends Controller
 {
@@ -26,18 +27,20 @@ class SemanaController extends Controller
      */
     public function index()
     {
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
         $noticias = Noticia::latest('fecha_creacion')->take(3)->get();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
         //dd(Auth::guard()->user());
         
-        return view('Maqueta2', compact(['noticias','instituciones','institucionSede','carrusel']));
+        return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel']));
     }
 
     public function indexAdmin()
     {
-        return view ('admin.index');
+        $instituciones = Institucion::select('id','nombre')->get();
+        return view('admin.index',compact(['instituciones']));   
     }
 
     /**
@@ -90,16 +93,28 @@ class SemanaController extends Controller
             $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
         }
 
+        $nuevo_convocatoria = 'no_disponible';
+        if($request->hasFile('convocatoria')){
+            $convocactoriaA = $request->file('convocatoria');
+            $urlAmigable = Str::slug($convocactoriaA->getClientOriginalName().'.'. $convocactoriaA->getClientOriginalExtension());
+            //$nuevo_convocatoria = 'Convocatoria'.'_'.$request->nombre ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
+            $nuevo_convocatoria = $urlAmigable;
+            $convocactoriaA->move(public_path('pdf/convocatoria'), $urlAmigable);
+        }
+
         $detail = $dom->savehtml();
         
         $semana = new Semana;
         $fechas = explode(" - ", $request->fecha);
+        $semana->id_sede = $request->id_institucion;
         $semana->nombre = $request->nombre;
         $semana->desc_general = $detail;
         $semana->fecha_inicio = $fechas[0];
         $semana->fecha_fin = $fechas[1];
         $semana->desc_general = $detail;
         $semana->url_logo = $nuevo_nombre;
+        
+        $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;
         $semana->creado_por= 1;
         $semana->save();
@@ -108,6 +123,13 @@ class SemanaController extends Controller
             ->where('vigente', 1)
             ->where('id_semana','!=',$semana->id_semana)
             ->update(['vigente' => 0]);
+            DB::table('instituciones')
+            ->where('sede', 1)
+            ->where('id','!=',$request->id_institucion)
+            ->update(['sede' => 0]);
+            DB::table('instituciones')
+            ->where('id',$request->id_institucion)
+            ->update(['sede' => 1]);
         }
         return \Response::json($semana);
     }
@@ -131,7 +153,7 @@ class SemanaController extends Controller
      */
     public function edit($id)
     {
-        $semana  = Semana::where('id_semana', $id)->first();
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede',DB::raw("CONCAT(fecha_inicio,' - ',fecha_fin) AS fecha"))->with('instituciones:id,nombre')->where('id_semana',$id)->first();
         return \Response::json($semana);
     }
 
@@ -179,15 +201,32 @@ class SemanaController extends Controller
             $nuevo_nombre = $semana->url_logo;
         }
 
+        $nuevo_convocatoria = 'no_disponible';
+        if($request->hasFile('convocatoria')){
+            $convocactoriaA = $request->file('convocatoria');
+            $nuevo_convocatoria = 'Convocatoria'.'_'. date("Y") .'.' . $convocactoriaA->getClientOriginalExtension();
+            $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
+        }
+        else{
+            $nuevo_convocatoria = $semana->url_convocatoria;
+        }
+        if($request->id_institucion==""){
+            $semana->id_sede = $semana->id_sede;
+        }
+        else{
+            $semana->id_sede = $request->id_institucion;
+        }
         $detail = $dom->savehtml();
         
         $fechas = explode(" - ", $request->fecha);
+        
         $semana->nombre = $request->nombre;
         $semana->desc_general = $detail;
         $semana->fecha_inicio = $fechas[0];
         $semana->fecha_fin = $fechas[1];
         $semana->desc_general = $detail;
         $semana->url_logo = $nuevo_nombre;
+        $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;
         $semana->creado_por= 1;
         $semana->save();
@@ -196,6 +235,13 @@ class SemanaController extends Controller
             ->where('vigente', 1)
             ->where('id_semana','!=',$semana->id_semana)
             ->update(['vigente' => 0]);
+            DB::table('instituciones')
+            ->where('sede', 1)
+            ->where('id','!=',$request->id_institucion)
+            ->update(['sede' => 0]);
+            DB::table('instituciones')
+            ->where('id',$request->id_institucion)
+            ->update(['sede' => 1]);
         }
         return \Response::json($semana);
     }
@@ -211,7 +257,7 @@ class SemanaController extends Controller
         $semana = Semana::where('id_semana',$id)->delete();
         return \Response::json($semana);
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -219,13 +265,24 @@ class SemanaController extends Controller
      */
     public function listSemanas(Request $request ){
         $busqueda = $request->busqueda;
-            $selectsemanas = Semana::select('id_semana as id','nombre','fecha_inicio','fecha_fin','creado_por','actulizado_por','fecha_actualizacion')->where('vigente', 1);
-       
-            return datatables()->of($selectsemanas)
-            ->addColumn('action', 'admin.acciones')
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->toJson();
+        $selectsemanas = Semana::select('id_semana as id','id_sede','nombre','url_convocatoria','fecha_inicio','fecha_fin','creado_por','actualizado_por','fecha_actualizacion')->with('instituciones:id,nombre');
+    
+        return datatables()->of($selectsemanas)
+        ->addColumn('action', 'admin.acciones')
+        ->rawColumns(['action'])
+        ->addIndexColumn()
+        ->toJson();
         
     }
+
+    public function vistaPrevia(Request $noticia){
+    }
+
+    public function verConvocatoria(){
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $semana = Semana::select('id_semana as id','url_convocatoria')->where('vigente',1)->first();
+        
+        return view('admin.semana.verConvocatoria', compact(['semana','instituciones']));
+    }
+     
 }

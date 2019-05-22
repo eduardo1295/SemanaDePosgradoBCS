@@ -354,6 +354,7 @@
     }
 
     #show-sidebar {
+        cursor: pointer;
         position: fixed;
         left: 0;
         top: 25px;
@@ -412,7 +413,7 @@
       left: 0px; }
     @media screen and (min-width: 992px) {
       .page-wrapper.toggled .page-content {
-        padding-left: 300px; } 
+        padding-left: 260px; } 
         .page-wrapper.toggled .nav-header {
           padding-left: 300px; } 
       }

@@ -89,7 +89,7 @@
     var checkCoord = 'activos';
     var selectIDIns= "";
     $(document).ready(function () {
-
+        
         $.extend($.fn.dataTableExt.oStdClasses, {
             "sFilterInput": "busqueda",
             "sLengthSelect": ""
@@ -106,7 +106,7 @@
             responsive: true,
             autoWidth: false,
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                "url": "/js/datatableJS/es.json"
             },
             "processing": true,
             "serverSide": true,
@@ -131,13 +131,13 @@
                 })
             },
             "columns": [
-                { data: 'id', name: 'id', 'visible': false },
+                { data: 'id', name: 'id', 'visible': false,searchable: false },
                 { data: 'coordinadores.grado', searchable: false },
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
                 { data: 'email', searchable: true },
-                { data: 'instituciones.nom_insti', searchable: true },
+                { data: 'instituciones.nombre', searchable: true },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [

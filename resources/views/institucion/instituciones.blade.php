@@ -158,7 +158,7 @@
                 })
             },
             "columns": [
-                { data: 'id', name: 'id', 'visible': false },
+                { data: 'id', name: 'id', 'visible': false,searchable: false },
                 { data: 'nombre', searchable: true },
                 { data: 'direccion_web', searchable: true },
                 { data: 'telefono', searchable: true },

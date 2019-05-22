@@ -41,6 +41,10 @@ Route::put('admin/noticia/reactivar/{noticia}', 'NoticiaController@reactivar')->
 Route::resource('noticia', 'NoticiaController');
 
 
+
+Route::post('semanas/vistaPrevia', 'SemanaController@vistaPrevia')->name('semana.vistaPrevia');
+Route::get('admin/semana/listSemanas', 'SemanaController@listSemanas')->name('semana.listSemanas');
+Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.verConvocatoria');
 Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
 Route::resource('semana', 'SemanaController');
 

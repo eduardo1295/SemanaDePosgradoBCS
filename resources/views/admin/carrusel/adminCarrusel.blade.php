@@ -127,7 +127,7 @@
                 })
             },
             "columns": [
-                { data: 'id', name: 'id', 'visible': false },
+                { data: 'id', name: 'id', 'visible': false,searchable: false },
                 { data: 'link_web', searchable: true },
                 {
                     data: 'url_imagen',

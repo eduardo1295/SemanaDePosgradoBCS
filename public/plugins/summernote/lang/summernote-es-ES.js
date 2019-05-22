@@ -60,6 +60,7 @@
         delRow: 'Borrar fila',
         delCol: 'Eliminar columna',
         delTable: 'Eliminar tabla',
+        tableHeaders: 'Encabezado primera fila',
       },
       hr: {
         insert: 'Insertar línea horizontal',

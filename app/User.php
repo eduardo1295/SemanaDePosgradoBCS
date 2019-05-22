@@ -51,22 +51,22 @@ class User extends Authenticatable
 
     public function coordinadores()
     {
-        return $this->hasOne(Coordinador::class, 'id_usuario', 'id');
+        return $this->hasOne(Coordinador::class, 'id', 'id');
     }
 
     public function directortesis()
     {
-        return $this->hasOne(DirectorTesis::class, 'id_usuario', 'id');
+        return $this->hasOne(DirectorTesis::class, 'id', 'id');
     }
 
     public function alumnos()
     {
-        return $this->hasOne(Alumno::class, 'id_usuario', 'id');
+        return $this->hasOne(Alumno::class, 'id', 'id');
     }
 
     public function instituciones()
     {
-        return $this->hasOne(Institucion::class, 'id', 'id');
+        return $this->hasOne(Institucion::class, 'id', 'id_institucion')->withDefault(['nombre'=>'']);
     }
 
     public function noticias()
