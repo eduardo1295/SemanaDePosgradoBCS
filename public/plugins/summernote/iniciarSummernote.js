@@ -12,9 +12,8 @@ function registerSummernote(element, placeholder, max, callbackMax) {
                 // create FileReader
                 var reader = new FileReader();
                 reader.onloadend = function () {
-                    // when loaded file, img's src set datauri
 
-                    var img = $("<img>").attr({ src: reader.result, width: "50%", style: "margin:1px;float: left;", class: "img-responsive note-float-left" }); // << Add here img attributes !
+                    var img = $("<img>").attr({ src: reader.result, width: "40%", style: "display:block;", class: "mx-auto img-fluid img-responsive" }); // << Add here img attributes !
 
                     $("#contenido").summernote("insertNode", img[0]);
                 }
@@ -26,17 +25,16 @@ function registerSummernote(element, placeholder, max, callbackMax) {
             }
 
         },
-        //toolbarContainer: '.my-toolbar',
 
         placeholder,
-        lang: 'es-ES', // Change to your chosen language
+        lang: 'es-ES',
         disableResizeEditor: true,
         dialogsInBody: true,
         dialogsFade: false,
         shortcuts: false,
         disableDragAndDrop: true,
-        height: 200,                 // set editor height
-        minHeight: 200,             // set minimum height of editor
+        height: 200,
+        minHeight: 200,
         maxHeight: 200,
         toolbar: [
 
@@ -56,8 +54,12 @@ function registerSummernote(element, placeholder, max, callbackMax) {
             image: [
                 ['custom', ['imageTitle']],
                 ['imagesize', ['imageSize100', 'imageSize50']],
-                ['float', ['floatLeft', 'floatRight', 'floatNone']],
                 ['remove', ['removeMedia']]
+            ],
+            table: [
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                ['custom', ['tableHeaders']]
             ],
         },
         cleaner: {

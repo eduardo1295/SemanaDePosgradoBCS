@@ -25,9 +25,10 @@ class NoticiaController extends Controller
      }
     public function index()
     {
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $data = Noticia::latest('fecha_creacion')->paginate(5);
-        return view('noticias.verNoticias', compact(['data','instituciones']));
+        return view('noticias.verNoticias', compact(['data','instituciones','semana']));
         //return view('noticias', compact('data'));
 
         
@@ -119,9 +120,10 @@ class NoticiaController extends Controller
      */
     public function show($id)
     {
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $noticia  = Noticia::select('id_noticia','titulo','contenido','url_imagen','fecha_actualizacion')->where('id_noticia', $id)->first();
-        return view('noticias.detalle', compact(['noticia','instituciones']));
+        return view('noticias.detalle', compact(['noticia','instituciones','semana']));
     }
 
     /**
@@ -170,7 +172,9 @@ class NoticiaController extends Controller
         //and then replace base64 src with stored image URL.
         foreach($images as $k => $img){
             $data = $img->getattribute('src');
-            $ultimaImagen = $data;
+            $ruta = explode('/',$data);
+            $ultimaImagen = $ruta[3];
+            
             if (substr($data, 0, 5) == 'data:') {
                 list($type, $data) = explode(';', $data);
                 list(, $data)      = explode(',', $data);
@@ -263,6 +267,6 @@ class NoticiaController extends Controller
     public function vistaPrevia(Request $noticia){
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
-        return \Response::json(view('noticias.vistaPrevia', compact(['semana','noticia','instituciones']))->render());
+        return \Response::json(view('noticias.detalle', compact(['semana','noticia','instituciones']))->render());
     }
 }

@@ -83,7 +83,7 @@
 
 <!--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
--->
+
 
 <script src="/js/summer/summernote-bs4.js"></script>
 <script src="/js/summer/summernote-es-ES.js"></script>
@@ -91,6 +91,13 @@
 <script src="/js/summer/summernote-list-styles-bs4.js"></script>
 <script src="/js/summer/summernote-cleaner.js"></script>
 <script src="/js/imagenes/vistaprevia.js"></script>
+-->
+<script src="/plugins/summernote/summernote-bs4.js"></script>
+<script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
+<script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
+<script src="/plugins/summernote/plugin/summernote-table-headers-master/summernote-table-headers.js"></script>
+<script src="/plugins/summernote/plugin/list-styles-bs4/summernote-list-styles-bs4.js"></script>
+<script src="/plugins/summernote/iniciarSummernote.js"></script>
 <!--Nuevo Rente-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js"></script>
 <script src="/plugins/nouislider/nouislider.js"></script>
@@ -106,64 +113,9 @@
             $('#modalidad').DataTable().ajax.reload(null, false);
         });
 
-        function registerSummernote(element, placeholder, max, callbackMax) {
-            $(element).summernote({
-                //toolbarContainer: '.my-toolbar',
-
-                placeholder,
-                lang: 'es-ES', // Change to your chosen language
-
-                dialogsInBody: true,
-                dialogsFade: false,
-                shortcuts: false,
-                disableDragAndDrop: true,
-                height: 200,                 // set editor height
-                minHeight: 200,             // set minimum height of editor
-                maxHeight: 200,
-                toolbar: [
-
-                    ['color', ['color']],
-                    ['style', ['style']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-
-
-                    ['para', ['ul', 'ol', 'listStyles', 'paragraph']],
-                    ['height', ['height']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'hr']],
-                    ['view', ['fullscreen']], //, 'codeview'
-                    ['custom', ['findnreplace']],
-                ],
-                popover: {
-                    image: [
-                        ['custom', ['imageTitle']],
-                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                        ['remove', ['removeMedia']]
-                    ],
-                },
-                cleaner: {
-                    action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-                    newline: '<br>', // Summernote's default is to use '<p><br></p>'
-                    notStyle: 'position:relative;top:0;left:0;right:0', // Position of Notification
-                    icon: '<i class="note-icon">[Your Button]</i>',
-                    keepHtml: false, // Remove all Html formats
-                    keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>', '<i>', '<a>'], // If keepHtml is true, remove all tags except these
-                    keepClasses: false, // Remove Classes
-                    badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
-                    badAttributes: ['style', 'start'], // Remove attributes from remaining tags
-                    limitChars: max, // 0/false|# 0/false disables option
-                    limitDisplay: 'text', // text|html|both
-                    limitStop: true // true/false
-                },
-                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-            });
-        }
 
         $(function () {
-            registerSummernote('.summernote', 'Contenido de la modalidad', 50, function (max) {
+            registerSummernote('.summernote', 'Contenido de la modalidad', 1000, function (max) {
                 $('#maxContentPost').text(max)
             });
         });
@@ -410,8 +362,11 @@
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     if (xhr.status == 422) {
                         var errores = xhr.responseJSON['errors'];
+                        var key2;
                         $.each(errores, function (key, value) {
-                            $('#' + key + "_error").text(value);
+                            key2= key.replace('.','\\.');
+                            $('#' + key2 + '_error').text(value);
+                            console.log(($('#' + key + "_error")));
                         });
                     }
                     $('#btn-save').html('Guardar');
@@ -706,35 +661,15 @@
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
     }
 
-    .fullscreen-modal .modal-dialog {
-
-        margin-right: auto;
-        margin-left: auto;
-        max-width: 100%;
-    }
-
-    @media (min-width: 768px) {
-        .fullscreen-modal .modal-dialog {
-            max-width: 750px;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .fullscreen-modal .modal-dialog {
-            max-width: 90%;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .fullscreen-modal .modal-dialog {
-            max-width: 70%;
-        }
-    }
 </style>
-
-<link href="/css/summer/summernote-list-styles-bs4.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/imagenes/imagenes.css">
+<link rel="stylesheet" href="/css/modales/modalresponsivo.css">
+<link href="/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <!--
+<link href="/css/summer/summernote-list-styles-bs4.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+
     Nuevo Rente
 -->
 <link rel="stylesheet" href="/css/admin/styleRange.css">

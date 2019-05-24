@@ -4,6 +4,7 @@
 @section('contenido')
 @section('links')
 <link rel="stylesheet" href="{{ mix('css/Maqueta2.css')}} ">
+<link rel="stylesheet" href="/css/imagenes/imagenes.css">
 <script src="/js/owl.carousel.min.js"> </script>
 <script>
     $(function () {
