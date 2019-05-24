@@ -17,15 +17,11 @@ Route::resourceVerbs([
 ]);
 Route::view('/crearNoticia','crearNoticia');
 
-
-
-
 Route::get('admin/VerUsuarios', 'UserController@usuarios')->name('admin.usuarios');
 Route::get('admin/listUsuarios', 'UserController@listUsuarios')->name('admin.listUsuarios');
 Route::get('excel', 'UserController@cargaExcel')->name('excel');
 
 Route::resource('usuario', 'UserController')->middleware('auth:admin');
-
 
 Route::get('admin/instituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
 Route::get('admin/institcucion/listUsuarios', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');

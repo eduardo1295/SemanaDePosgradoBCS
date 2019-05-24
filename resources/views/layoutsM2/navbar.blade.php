@@ -12,7 +12,7 @@
                             <ul>
                                 <li class="active"><a href="/">Incio</a></li>
                                 <li><a href="contact.html" class="">Modalidades</a> </li>
-                                <li class="has-sub"> <div class="aliga">Programa </div> 
+                                <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-md-inline-block "></i></div> 
                                     <ul>
                                         <li><a href="blog-default.html">General</a></li>
                                         <li><a href="blog-single.html">Póster</a></li>

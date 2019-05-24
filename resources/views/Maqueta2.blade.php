@@ -51,7 +51,7 @@
             <div class="row">    
                 @foreach ($noticias as $noticia)
                 @if ($cont == 0 && count($noticias) == ($cont+1) )
-                <div class=" nota n1 n3 col-12 col-md mb-lg-0 " id="contenido">
+                <div class=" nota n3 n1 col-12 col-md mb-lg-0 " id="contenido">
                 @elseif($cont == 0)
                     <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido">
                 @elseif(count($noticias) == ($cont+1))

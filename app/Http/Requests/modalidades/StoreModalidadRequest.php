@@ -30,11 +30,14 @@ class StoreModalidadRequest extends FormRequest
             'contenido' => 'required|string|max:1000',
             'posgrado' => 'required|array',
             'posgrado.*' => 'required',
+            'periodo' => 'required|array',
+            'periodo.*' => 'required',
         ];
     }
     public function messages(){
         return [
             'posgrado.*.required' => 'El campo es obligatorio',
+            'periodo.*.required' => 'El campo es obligatorio',
             
         ];
     }
