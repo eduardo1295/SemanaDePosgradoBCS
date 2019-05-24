@@ -5,10 +5,9 @@
 | Web Routes aaaaaaaa
 |--------------------------------------------------------------------------
 |
-| HOLA HOLA is where you can register web routes for your application. These
+| is where you can register web routes for your application. These
 | routes are loaaaaaaaaaaaaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-| prueba de que se sube algo otraaaaaaa vez cris aaaaaaaa bbbbbbbbb
 |
 */
 Route::resourceVerbs([
