@@ -41,6 +41,7 @@ Route::resource('noticia', 'NoticiaController');
 Route::post('semanas/vistaPrevia', 'SemanaController@vistaPrevia')->name('semana.vistaPrevia');
 Route::get('admin/semana/listSemanas', 'SemanaController@listSemanas')->name('semana.listSemanas');
 Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.verConvocatoria');
+Route::get('/modalidades', 'SemanaController@verModalidades')->name('semana.verModalidades');
 Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
 Route::resource('semana', 'SemanaController');
 

@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras imagenes</legend>
+        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras Programas</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
@@ -45,12 +45,14 @@
                         <th>Nombre</th>
                         <th>Nivel</th>
                         <th>Periodo</th>
+                        <th>Institucion</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -101,6 +103,7 @@
         });
 
         var table = $('#slidersC').DataTable({
+            "order":[[6,"desc"]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -136,14 +139,14 @@
                 { data: 'nombre', searchable: true },
                 { data: 'nivel', searchable: true },
                 { data: 'periodo', searchable: true },
+                { data: 'institucion.nombre', searchable: true },
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 4 },
-                { width: 250, targets: 2 },
-                { width: 105, targets: 4 }
+                { responsivePriority: 2, targets:7 },
+                { width: 105, targets: 7 }
             ]
         });
 
@@ -304,7 +307,7 @@
         $('#btn-save').val("crear-programa");
         $('#programa_id').val('');
         $('#programaForm').trigger("reset");
-        $('#programaCrudModal').html("Agregar nueva imagen");
+        $('#programaCrudModal').html("Agregar nuevo programa");
         $('#programa-crud-modal').modal({ backdrop: 'static', keyboard: false })
         $('#programa-crud-modal').modal('show');
         $('#imgslide').prop('src', "");

@@ -12,8 +12,8 @@
 
                     <div class="form-row">
                         <div class="form-group col-6">
-                                <strong><label for="id_programa" class="control-label">Código</label></strong>
-                                <input type="text" class="form-control" id="id_programa" name="id_programa" placeholder="Ingrese codigo"
+                                <strong><label for="id_programa" class="control-label">Clave del programa</label></strong>
+                                <input type="text" class="form-control" id="id_programa" name="id_programa" placeholder="Ingrese Clave del programa"
                                     value="" maxlength="100" required="">
                                 <small><span class="text-danger mensajeError" id="id_programa_error"></span></small>
                         </div>
@@ -40,17 +40,18 @@
                             <strong><label for="nivel" class="control-label">Nivel</label></strong>
                             <select class="form-control" id="nivel" name="nivel">
                                 <option selected value="">Seleccione nivel</option>
-                                <option value="1">Maestria</option>
-                                <option value="2">Doctorado</option>
+                                <option value="maestria">Maestría</option>
+                                <option value="doctorado">Doctorado</option>
                             </select>
                             <small> <span class="text-danger mensajeError" id="nivel_error"></span> </small>
                         </div>
                         <div class="form-group col-6">
                                 <strong> <label for="periodo" class="control-label">Periodo</label></strong>
-                                <select class="form-control" id="nivel" name="periodo">
+                                <select class="form-control" id="periodo" name="periodo">
                                     <option selected value="">Seleccione periodo</option>
-                                    <option value="1">Semestre</option>
-                                    <option value="2">Trimestre</option>
+                                    <option value="trimestre">Trimestre</option>
+                                    <option value="cuatrimestre">Cuatrimestre</option>
+                                    <option value="semestre">Semestre</option>
                                 </select>
                                 <small> <span class="text-danger mensajeError" id="periodo_error"></span> </small>
                         </div>

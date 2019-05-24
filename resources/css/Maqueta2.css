@@ -175,16 +175,17 @@
     height: 100px;
 }
 
+
 @media (min-width: 0px) and (max-width: 576px)   {
-  .n4 {border-left: none;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
-  .n1 { border-bottom-left-radius: 0px ; border-bottom-right-radius: 0px}
+  .n4 {border-left: 0px ;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
+  .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px}
   .n3 { border-bottom-left-radius: 15px !important; border-bottom-left-radius: 15px}
   
   #logoSede{ width: 200px; height: 150px; } }
 @media (min-width: 576px) and (max-width: 768px) {
   .n4 {border-left: none;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
    #logoSede{ width: 200px; height: 150px; }
-   .n1 { border-bottom-left-radius: 0px ; border-bottom-right-radius: 0px;}
+   .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px;}
    .n3 { border-bottom-left-radius: 15px !important; border-bottom-left-radius: 15px !important;}
    }
 @media (min-width: 768px) and (max-width: 992px) { #logoSede{ width: 115px; height: 95px;  } }

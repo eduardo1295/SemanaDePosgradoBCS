@@ -67,6 +67,8 @@
 @endsection
 @section('extra')
 @include('modalidad.modal')
+<div id="snackbar"></div>
+<div id="snackbarError" style="z-index:1051;"></div>
 @endsection
 @section('scripts')
 
@@ -102,7 +104,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js"></script>
 <script src="/plugins/nouislider/nouislider.js"></script>
 <script src="/plugins/nouislider/wNumb.js"></script>
-
+<script src="/js/snack/snack.js"></script>
 
 <script>
     var checkInsti = 'activos';
@@ -132,6 +134,7 @@
         });
 
         table = $('#modalidad').DataTable({
+            "order":[[3,"desc"]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -225,14 +228,6 @@
     });
 });
     
-    $('.custom-file-input').on('change', function () {
-        let fileName = $(this).val().split('\\').pop();
-        if (!fileName.trim()) {
-            $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
-        } else {
-            $(this).next('.custom-file-label').addClass("selected").html(fileName);
-        }
-    });
 
     /*Al presionar el boton editar*/
     $('body').on('click', '.editar', function () {
@@ -261,13 +256,7 @@
             });
 
             $('#contenido').summernote('code', data.modalidad.descripcion);
-            //$('#imglogo').prop('src',"");
-            if (data.url_imagen != "sin imagen") {
-                $('#logoactual').html('Imagen actual de la modalidad');
-                $('#imglogo').prop('src', "{{url('img/modalidad')}}/" + data.url_imagen);
-            } else {
-                $('#logoactual').html('');
-            }
+            
         })
     });
 
@@ -282,9 +271,7 @@
         $('#modalidadCrudModal').html("Agregar nueva modalidad");
         $('#modalidad-crud-modal').modal({ backdrop: 'static', keyboard: false })
         $('#modalidad-crud-modal').modal('show');
-        $('#imglogo').prop('src', "");
-
-        $('#logoactual').html('');
+  
     });
 
     $('.modal-btn').click(function () {
@@ -294,9 +281,7 @@
         $('#modalidadCrudModal').html("Agregar nueva institución");
         $('#modalidad-crud-modal').modal({ backdrop: 'static', keyboard: false })
         $('#modalidad-crud-modal').modal('show');
-        $('#imglogo').prop('src', "");
-        //$('#imglogo').width('0').height('0');
-        $('#logoactual').html('');
+      
     });
 
 
@@ -348,14 +333,9 @@
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     //$('#instituciones').DataTable().ajax.reload(null, false);
-                    $("#mensaje-acciones").text("Actualización exitosa.");
-                    $("#mensaje-acciones").fadeIn();
-                    $('#mensaje-acciones').delay(3000).fadeOut();
-                    $('#mensaje-acciones').addClass('alert-success');
-                    $('#mensaje-acciones').removeClass('alert-warning');
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -412,14 +392,9 @@
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     //$('#instituciones').DataTable().ajax.reload();
-                    $("#mensaje-acciones").text("Not5icia registrada exitosamente.");
-                    $("#mensaje-acciones").fadeIn();
-                    $('#mensaje-acciones').delay(3000).fadeOut();
-                    $('#mensaje-acciones').addClass('alert-success');
-                    $('#mensaje-acciones').removeClass('alert-warning');
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Modalidad agregada exitosamente.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                 },
                 error: function (data) {
                     if (data.status == 422) {
@@ -476,11 +451,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                $("#mensaje-acciones").text("Noticia eliminada exitosamente.");
-                                $("#mensaje-acciones").fadeIn();
-                                $('#mensaje-acciones').delay(3000).fadeOut();
-                                $('#mensaje-acciones').addClass('alert-warning');
-                                $('#mensaje-acciones').removeClass('alert-success');
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Modalidad eliminada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -527,13 +498,10 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                $("#mensaje-acciones").text("Noticia activada exitosamente.");
-                                $("#mensaje-acciones").fadeIn();
-                                $('#mensaje-acciones').delay(3000).fadeOut();
-                                $('#mensaje-acciones').addClass('alert-warning');
-                                $('#mensaje-acciones').removeClass('alert-success');
+                                
                                 //$('#instituciones').DataTable().ajax.reload(null, false);
                                 //$('#instituciones').DataTable().ajax.reload();
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Modalidad activada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -547,35 +515,6 @@
         });
     });
 
-    $('.preview-btn').on('click', function(e) {
-            e.preventDefault();
-            var h = screen.availHeight - 150;
-            var w = screen.availWidth - 200;
-            var left = (screen.availWidth/2)-(w/2);
-            var top = (screen.availHeight/2)-(h/2)-50;
-            var configuracion_ventana = "location=no,resizable=yes,scrollbars=yes,status=no,width=" + w + ",height=" + h+ ",top=" + top+ ",left=" + left;
-            var newWin = document.open('', 'Vista previa', configuracion_ventana);
-            
-            //var newWin = window.open('', "fullscreen", 'top=0,left=0,width='+(screen.availWidth)+',height ='+(screen.availHeight)+',fullscreen=yes,toolbar=0 ,location=0,directories=0,status=0,menubar=0,resiz able=0,scrolling=0,scrollbars=0');
-            
-            newWin.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">');
-            newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"><\/script>');
-            newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"><\/script>');
-            newWin.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"><\/script>');
-            newWin.document.write('<h1 class="display-1 w-75 mx-auto"> '+$("#titulo").val()+'<\/h1>');
-            newWin.document.write('<div class="w-75 mx-auto" style="word-wrap: break-word;">' + $('.summernote').summernote('code') + '<\/div>');
-            newWin.document.write('<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><img src="'+vistaPrevia.src+'" alt="" id="vistaPrevia" class="img-fluid mx-auto"></div>');
-            newWin.document.close();
-            
-        });
-
-
-    $('#btn-close').click(function () {
-        $('.mensajeError').text("");
-        $('#contenido').summernote("reset");
-        $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-        
-    });
     var x = 1;
     var y = 1;
     var crearRenglon = function(agregar){
@@ -636,35 +575,11 @@
 <link rel="stylesheet" href="/css/datatable/colores.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
 
-    .busqueda {
-        border: 1px solid #ced4da;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-
-    }
-
-    .busqueda:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
-    }
-
-</style>
 <link rel="stylesheet" href="/css/imagenes/imagenes.css">
 <link rel="stylesheet" href="/css/modales/modalresponsivo.css">
 <link href="/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+<link href="/css/modales/snackbar.css" rel="stylesheet">
 <!--
 <link href="/css/summer/summernote-list-styles-bs4.css" rel="stylesheet">
 
@@ -676,21 +591,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.css">
 <link rel="stylesheet" href="/plugins/nouislider/nouislider.css">
 <style>
-    html {
-        overflow-y: scroll;
+    .modal100 {
+        max-width: 100% !important;
+        margin: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100vh !important;
+        display: flex;
     }
 
-    .custom-file-input~.custom-file-label::after {
-        content: "Elegir";
-    }
-
-    .ck-editor__editable {
-        min-height: 290px;
-        max-height: 290px;
-    }
-
-    .cke_show_borders {
-        overflow-y: scroll; // vertical scrollbar
+    .modal {
+        overflow-y: auto;
     }
 </style>
 <style>

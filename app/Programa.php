@@ -28,4 +28,7 @@ class Programa extends Model
     {
         return $this->hasMany(Alumno::class, 'id_programa', 'id');
     }
+    public function institucion(){
+        return $this->belongsTo(Institucion::class,'id_institucion','id');
+    }
 }

@@ -413,7 +413,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana eliminada exitosamente.");
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento eliminado exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -460,7 +460,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana activada exitosamente.");
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento activado exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -474,60 +474,6 @@
         });
     });
 
-    $('.preview-btn').on('click', function (e) {
-
-        e.preventDefault();
-        $.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            data: new FormData($("#semanaForm")[0]),
-            url: "{{route('semana.vistaPrevia')}}",
-            type: "POST",
-            dataType: 'json',
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function (data) {
-                win = window.open("", "_blank");
-                win.document.write(data);
-                win.document.close();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            },
-
-
-        });
-    });
-
-
-    $('#btn-close').click(function () {
-
-    });
-
-    $('.preview-btn').on('click', function (e) {
-
-        e.preventDefault();
-        $.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            data: new FormData($("#semanaForm")[0]),
-            url: "{{route('semana.vistaPrevia')}}",
-            type: "POST",
-            dataType: 'json',
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function (data) {
-                win = window.open("", "_blank");
-                win.document.write(data);
-                win.document.close();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            },
-
-
-        });
-    });
     function reiniciar() {
         $('.mensajeError').text("");
         $('#contenido').summernote("reset");

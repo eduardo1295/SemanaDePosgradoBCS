@@ -210,7 +210,16 @@ class modalidadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $modalidad = Modalidad::find($id);
+        /*
+        $posgrado = $modalidad->niveles()->get();
+        foreach ($posgrado as $posgr) {
+            $periodoo = $posgr->periodos()->delete();
+        }
+        $modalidad->niveles()->delete();
+        */
+        $modalidad->delete();
+
     }
     public function modalidad(){
         return view('admin.modalidad.adminModalidades');

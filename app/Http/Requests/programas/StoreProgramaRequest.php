@@ -29,9 +29,9 @@ class StoreProgramaRequest extends FormRequest
 
             'nombre' => 'required|string|max:100',
             
-            'nivel' => 'required|string|max:30',
+            'nivel' => 'required|string|max:30|in:maestria,doctorado',
             
-            'periodo' => 'required|string|max:30',
+            'periodo' => 'required|string|max:30|in:semestre,trimestre,cuatrimestre',
             
             'id_institucion' => 'required|max:10' 
         ];
@@ -42,7 +42,11 @@ class StoreProgramaRequest extends FormRequest
         return [
             'id_programa.required' => 'El campo es obligatorio',
             
-            'id_institucion.required' => 'El campo es obligatorio' 
+            'id_institucion.required' => 'El campo es obligatorio' ,
+            
+            'periodo.in' =>'Periodo no válido',
+            
+            'nivel.in' =>'Nivel no válido',
         ];
     }
 }

@@ -179,14 +179,15 @@ class ProgramaController extends Controller
     public function listPrograma(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $selectcarrusel = Programa::select('id','id_programa','nombre','nivel','periodo','fecha_actualizacion');
+            
+            $selectcarrusel =  Programa::select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.acciones')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $selectcarrusel = Programa::onlyTrashed()->get(['id','id_programa','nombre','nivel','periodo','fecha_actualizacion']);
+            $selectcarrusel = Programa::onlyTrashed()->select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
             return datatables()->of($selectcarrusel)
             ->addColumn('action', 'admin.reactivar')
             ->rawColumns(['action'])
