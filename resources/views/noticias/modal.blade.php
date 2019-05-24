@@ -12,14 +12,14 @@
                         <label for="titulo" class="control-label">Titulo</label>
                         <input type="text" class="form-control" id="titulo" name="titulo"
                             placeholder="Titulo de la noticia" value="" maxlength="500" required="">
-                        <span class="mensajeError" id="titulo_error"></span>
+                        <small><span class="mensajeError text-danger" id="titulo_error"></span></small>
 
                     </div>
                     <div class="form-group">
                         <label for="resumen" class="control-label">Resumen</label>
                         <input type="text" class="form-control" id="resumen" name="resumen"
                             placeholder="Resumen de la noticia" value="" maxlength="500" required="">
-                        <span class="mensajeError" id="resumen_error"></span>
+                        <small><span class="mensajeError text-danger" id="resumen_error"></span></small>
 
                     </div>
                     <div class="form-row mt-2">
@@ -27,7 +27,7 @@
                             <strong>Contenido:</strong>
                             <textarea class="summernote"  style=" word-wrap: break-word;"  id="contenido" name="contenido"></textarea>
                           </div>
-                          <span class="mensajeError" id="contenido_error"></span>
+                          <small><span class="mensajeError text-danger" id="contenido_error"></span></small>
                     </div>
 
                     <div class="form-row mt-1">

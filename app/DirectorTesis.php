@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class DirectorTesis extends Model
 {
     protected $table = 'directores_tesis';
-    
+    protected $primaryKey = null;
+
+    public $incrementing = false;
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -15,7 +17,7 @@ class DirectorTesis extends Model
      * @var array
      */
     protected $fillable = [
-        'id_usuario', 'grado',
+        'grado',
     ];
 
     public function user(){

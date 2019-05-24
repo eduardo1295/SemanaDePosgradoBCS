@@ -27,14 +27,14 @@ Route::get('excel', 'UserController@cargaExcel')->name('excel');
 Route::resource('usuario', 'UserController')->middleware('auth:admin');
 
 
-Route::get('admin/institucion/VerInstituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
+Route::get('admin/instituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
 Route::get('admin/institcucion/listUsuarios', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');
 Route::put('admin/institucion/reactivar/{institucion}', 'InstitucionController@reactivar')->name('institucion.reactivar');
 
 Route::resource('institucion', 'InstitucionController');
 
 Route::post('noticias/vistaPrevia', 'NoticiaController@vistaPrevia')->name('noticia.vistaPrevia');
-Route::get('admin/noticias/VerNoticias', 'NoticiaController@noticias')->name('noticia.VerNoticias');
+Route::get('admin/noticias', 'NoticiaController@noticias')->name('noticia.VerNoticias');
 Route::get('admin/noticia/listNoticias', 'NoticiaController@listNoticias')->name('noticia.listNoticias');
 Route::get('noticia/fetch_data', 'NoticiaController@fetch_data');
 Route::put('admin/noticia/reactivar/{noticia}', 'NoticiaController@reactivar')->name('noticia.reactivar');
@@ -63,15 +63,26 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 
 
-Route::get('admin/carrusel/VerCarrusel', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
+Route::get('admin/carruselImagenes', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
 Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('carrusel.listCarrusel');
 Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
 Route::resource('carrusel', 'CarruselController');
 
-Route::get('admin/coordinador/VerCoordinadores', 'CoordinadorController@coordinador')->name('coordinador.VerCoodinadores');
+Route::get('admin/coordinadores', 'CoordinadorController@coordinador')->name('coordinador.VerCoodinadores');
 Route::get('coordinador/listCoordinador', 'CoordinadorController@listCoordinador')->name('coordinador.listCoordinador');
 Route::put('admin/coordinador/reactivar/{coordinador}', 'CoordinadorController@reactivar')->name('coordinador.reactivar');
 Route::resource('coordinador', 'CoordinadorController');
+
+
+Route::get('admin/directores', 'DirectorController@director')->name('director.VerDirectores');
+Route::get('director/listDirector', 'DirectorController@listDirector')->name('director.listDirector');
+Route::put('admin/director/reactivar/{director}', 'DirectorController@reactivar')->name('director.reactivar');
+Route::resource('director', 'DirectorController');
+
+Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
+Route::get('alumno/listAlumno', 'AlumnoController@listAlumno')->name('alumno.listAlumno');
+Route::put('admin/alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
+Route::resource('alumno', 'AlumnoController');
 
 Auth::routes();
 

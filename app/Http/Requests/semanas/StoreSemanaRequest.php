@@ -13,7 +13,7 @@ class StoreSemanaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,10 +26,28 @@ class StoreSemanaRequest extends FormRequest
         return [
             //Validacion campos semana
             'nombre' => 'required|string|max:100',
-            
-            'fecha_inicio' => 'required|date_format:d/m/Y|after:tomorrow',
 
-            'fecha_fin' => 'required|date_format:d/m/Y|after_or_equal:fecha_inicio'
+            'contenido' =>'required',
+            
+            'fecha_inicio' => 'required|date_format:Y-m-d',
+
+            'fecha_fin' => 'required|date_format:Y-m-d|after_or_equal:fecha_inicio',
+
+            'id_institucion'    => 'required|exists:instituciones,id',
+
+            'convocatoria' => 'mimes:pdf|max:2048',
+
+            'imagensemana' => 'mimes:jpeg,jpg,png|max:2048',
         ];
     }
+
+    public function attributes()
+{
+    return [
+        'fecha_inicio' => 'Inicio del evento',
+        'fecha_fin' => 'final del evento',
+        'contenido' => 'información general',
+        'imagensemana' => 'logo del evento',
+    ];
+}
 }

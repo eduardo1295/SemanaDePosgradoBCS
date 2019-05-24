@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\semanas\StoreSemanaRequest;
 use App\Semana;
 use App\Noticia;
 use App\Institucion;
@@ -59,7 +60,7 @@ class SemanaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSemanaRequest $request)
     {
         $dom = new \domdocument();
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -96,10 +97,11 @@ class SemanaController extends Controller
         $nuevo_convocatoria = 'no_disponible';
         if($request->hasFile('convocatoria')){
             $convocactoriaA = $request->file('convocatoria');
-            $urlAmigable = Str::slug($convocactoriaA->getClientOriginalName().'.'. $convocactoriaA->getClientOriginalExtension());
+            $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
+            $nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
             //$nuevo_convocatoria = 'Convocatoria'.'_'.$request->nombre ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
-            $nuevo_convocatoria = $urlAmigable;
-            $convocactoriaA->move(public_path('pdf/convocatoria'), $urlAmigable);
+            //$nuevo_convocatoria = $urlAmigable;
+            $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
 
         $detail = $dom->savehtml();
@@ -205,7 +207,9 @@ class SemanaController extends Controller
         $nuevo_convocatoria = 'no_disponible';
         if($request->hasFile('convocatoria')){
             $convocactoriaA = $request->file('convocatoria');
-            $nuevo_convocatoria = 'Convocatoria'.'_'. date("Y") .'.' . $convocactoriaA->getClientOriginalExtension();
+            $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
+            $nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
+            //$nuevo_convocatoria = 'Convocatoria'.'_'. date("Y") .'.' . $convocactoriaA->getClientOriginalExtension();
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
         else{

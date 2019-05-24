@@ -14,7 +14,7 @@
                             <label for="nombre" class="control-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"
                                 value="" maxlength="100" required="">
-                            <span class="mensajeError" id="nombre_error"></span>
+                            <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="institucionSelect">Institución</label>
@@ -24,6 +24,7 @@
                                 <option value={{$institucion->id}}>{{$institucion->nombre}}</option>
                                 @endforeach
                             </select>
+                            <small><span class="mensajeError text-danger" id="id_institucion_error"></span></small>
                         </div>
                     </div>
 
@@ -32,8 +33,8 @@
                             <label for="fecha" class="control-label">Periodo del evento</label>
                             <input type="text" id="fecha" name="fecha" class="form-control"
                                 value="{{date('Y-m-d')}} - {{date('Y-m-d')}}">
-                            <span class="mensajeError" id="fecha_inicio_error"></span>
-                            <span class="mensajeError" id="fecha_fin_error"></span>
+                            <small><span class="mensajeError text-danger" id="fecha_inicio_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="fecha_fin_error"></span></small>
                         </div>
                         <div class="form-group col-md-6">
                             <label id="ligaConvo"> Convocatoria</label>
@@ -45,7 +46,7 @@
                                     lang="es">
                                 <label for="convocan" class="custom-file-label">Seleccionar Archivo</label>
                             </div>
-                            <span class="mensajeError" id="convocatoria_error"></span>
+                            <small><span class="mensajeError text-danger" id="convocatoria_error"></span></small>
                         </div>
 
                     </div>
@@ -55,20 +56,11 @@
                             <strong>Información genereal:</strong>
                             <textarea class="summernote" style=" word-wrap: break-word;" id="contenido"
                                 name="contenido"></textarea>
-                        </div>
-                        <span class="mensajeError" id="infoge_error"></span>
-                    </div>
-
-                    <div class="form-row">
-
-                        <div class="col-12">
-
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-success preview-btn">Vista previa</button>
+                                <small><span class="mensajeError text-danger" id="contenido_error"></span></small>
                             </div>
-
-                        </div>
+                        
                     </div>
+
                     <div class="form-row">
 
 
@@ -80,7 +72,7 @@
                                 <label for="imagen" class="custom-file-label">Seleccionar Archivo</label>
                             </div>
 
-                            <span class="mensajeError" id="imagensemana_error"></span>
+                            <small><span class="mensajeError text-danger" id="imagensemana_error"></span></small>
                             <div class="row">
                                 <div id="imagenAnterior" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <label for="imglogo" id="imagenactualT" class="control-label"></label>

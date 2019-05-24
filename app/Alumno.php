@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Alumno extends Model
 {
     protected $table = 'alumnos';
-    
+    protected $primaryKey = null;
+
+    public $incrementing = false;
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -15,7 +17,7 @@ class Alumno extends Model
      * @var array
      */
     protected $fillable = [
-        'id_usuario', 'id_programa', 'num_control', 'semestre', 'constancia_generada', 'fecha_constancia', 'gafete_generado', 'fecha_gafete',
+        'id_programa', 'num_control', 'semestre', 'constancia_generada', 'fecha_constancia', 'gafete_generado', 'fecha_gafete',
     ];
 
     protected $dates = [

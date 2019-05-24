@@ -3,11 +3,11 @@
 
 
 <div class="container-fluid" id="#contenedor">
-    
+
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Eventos Semana de Posgrado 
+                Eventos Semana de Posgrado
             </h1>
         </div>
 
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        
+
         <div class="col-12 col-md-12 col-lg-12">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-semana"><span><i
@@ -91,43 +91,45 @@
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script>
-    $(function() {
-      $('input[name="fecha"]').daterangepicker({
-        opens: 'left',
-        "locale": {
-    "format": "YYYY-MM-DD",
-    "separator": " - ",
-    "applyLabel": "Aplicar",
-    "cancelLabel": "Cancelar",
-    "fromLabel": "De",
-    "toLabel": "a",
-    "customRangeLabel": "Custom",
-    "daysOfWeek": [
-        "do",
-        "lu",
-        "ma",
-        "mi",
-        "ju",
-        "vi",
-        "sá"
-    ],
-    "monthNames": [
-        "énero",
-        "febrero",
-        "marzo",
-        "abril",
-        "mayo",
-        "junio",
-        "julio",
-        "agusto",
-        "septiembre",
-        "octubre",
-        "noviembre",
-        "diciembre"
-    ],
-    "firstDay": 1
-}
-      });
+    $(function () {
+        $('input[name="fecha"]').daterangepicker(
+            {
+                opens: 'left',
+                "locale": {
+                    "format": "YYYY-MM-DD",
+                    "separator": " - ",
+                    "applyLabel": "Aplicar",
+                    "cancelLabel": "Cancelar",
+                    "fromLabel": "De",
+                    "toLabel": "a",
+                    "customRangeLabel": "Custom",
+                    "daysOfWeek": [
+                        "do",
+                        "lu",
+                        "ma",
+                        "mi",
+                        "ju",
+                        "vi",
+                        "sá"
+                    ],
+                    "monthNames": [
+                        "énero",
+                        "febrero",
+                        "marzo",
+                        "abril",
+                        "mayo",
+                        "junio",
+                        "julio",
+                        "agusto",
+                        "septiembre",
+                        "octubre",
+                        "noviembre",
+                        "diciembre"
+                    ],
+                    "firstDay": 1
+                }
+            }
+        );
     });
 </script>
 <script>
@@ -158,7 +160,7 @@
                         var reader = new FileReader();
                         reader.onloadend = function () {
 
-                            var img = $("<img>").attr({ src: reader.result, width: "40%", style: "display:block;",class:"mx-auto img-fluid" }); // << Add here img attributes !
+                            var img = $("<img>").attr({ src: reader.result, width: "40%", style: "display:block;", class: "mx-auto img-fluid" }); // << Add here img attributes !
 
                             $("#contenido").summernote("insertNode", img[0]);
                         }
@@ -172,13 +174,13 @@
                 },
 
                 placeholder,
-                lang: 'es-ES', 
+                lang: 'es-ES',
                 disableResizeEditor: true,
                 dialogsInBody: true,
                 dialogsFade: false,
                 shortcuts: false,
                 disableDragAndDrop: true,
-                height: 200,                 
+                height: 200,
                 minHeight: 200,
                 maxHeight: 200,
                 toolbar: [
@@ -247,7 +249,7 @@
         });
 
         table = $('#semanas').DataTable({
-            "order": [[ 6, "desc" ]],
+            "order": [[6, "desc"]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -265,19 +267,19 @@
                 }
             },
             "columns": [
-                { data: 'id', name: 'id', 'visible': false,searchable: false  },
-                { data: 'nombre',  orderable: false, searchable: true },
-                { data: 'instituciones[0].nombre',  orderable: false, searchable: true },
-                { data: 'fecha_inicio',  orderable: false, searchable: false },
-                { data: 'fecha_fin',  orderable: false, searchable: false },
+                { data: 'id', name: 'id', 'visible': false, searchable: false },
+                { data: 'nombre', orderable: false, searchable: true },
+                { data: 'instituciones[0].nombre', orderable: false, searchable: true },
+                { data: 'fecha_inicio', orderable: false, searchable: false },
+                { data: 'fecha_fin', orderable: false, searchable: false },
                 {
                     data: 'url_convocatoria',
                     name: 'url_convocatoria',
                     render: function (data, type, full, meta) {
-                        if(data == "no_disponible")
-                            return data.replace("_"," ");
+                        if (data == "no_disponible")
+                            return data.replace("_", " ");
                         else
-                            return "<a target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" + data +">"+data+ "<a/>";
+                            return "<a target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" + data + ">" + data + "<a/>";
                     },
                     orderable: false, searchable: false
                 },
@@ -314,7 +316,7 @@
 
 
         $.get(ruta, function (data) {
-            
+
             $('#semanaCrudModal').html("Editar semana: " + data.nombre);
             $('#btn-save').val("editar");
             $('#semana-crud-modal').modal('show');
@@ -327,11 +329,11 @@
             $('#imglogo').prop('src', "{{url('img/semanaLogo')}}/" + data.url_logo);
             $('#logoactual').html('Logo actual');
             $('#logoAnterior').removeClass('d-none');
-            if(data.url_convocatoria=='no_disponible')
+            if (data.url_convocatoria == 'no_disponible')
                 $('#ligaConvo').html('No se ha cargado convocatoria')
             else
-                $('#ligaConvo').html('Convocatoria <a target="_blank" href={{ URL::to("/") }}/pdf/convocatoria/' + data.url_convocatoria +'>'+data.url_convocatoria+ '<a/>');
-            
+                $('#ligaConvo').html('Convocatoria <a target="_blank" href={{ URL::to("/") }}/pdf/convocatoria/' + data.url_convocatoria + '>' + data.url_convocatoria + '<a/>');
+
         })
     });
 
@@ -390,7 +392,7 @@
                     var oTable = $('#semanas').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
-                    
+
                     mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
@@ -414,6 +416,9 @@
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
             var datos = new FormData($("#semanaForm")[0]);
+            var rFechas = $('#fecha').val().split(' - ');
+            datos.append('fecha_inicio', rFechas[0]);
+            datos.append('fecha_fin', rFechas[1]);
             console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -657,6 +662,7 @@
     .modal {
         overflow-y: auto;
     }
+
     .custom-file-input~.custom-file-label::after {
         content: "Elegir";
     }

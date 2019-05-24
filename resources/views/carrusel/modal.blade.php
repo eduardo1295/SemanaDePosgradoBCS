@@ -13,7 +13,7 @@
                         <label for="link_web" class="control-label">Link para la imagen</label>
                         <input type="text" class="form-control" id="link_web" name="link_web" placeholder="Link para la imagen"
                             value="" maxlength="500" required="">
-                        <span class="mensajeError" id="link_web_error"></span>
+                        <small><span class="mensajeError text-danger" id="link_web_error"></span></small>
 
                     </div>
 
@@ -31,7 +31,7 @@
                                 <label for="imagen" class="custom-file-label">Seleccionar Archivo</label>
                             </div>
 
-                            <span class="mensajeError" id="imagenCarrusel_error"></span>
+                            <small><span class="mensajeError text-danger" id="imagenCarrusel_error"></span></small>
                             <div class="row">
                                 <div id="imagenAnterior" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <label for="imgslide" id="imagenactualT" class="control-label"></label>
