@@ -19,11 +19,17 @@
 @endsection
 
 
+@if ($semana->url_convocatoria=='no_disponible')
+    <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5" style="height:100vh">
+        <h1>Convocatoria no no disponible</h1>
+    </div> 
+@else
+    <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
+        <embed class="embed-responsive-item" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}"
+            type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
+    </div> 
+@endif
 
-<div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
-    <embed class="embed-responsive-item" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}"
-        type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
-</div>
 
 @section('menu')
 @include('layoutsM2.navbar')

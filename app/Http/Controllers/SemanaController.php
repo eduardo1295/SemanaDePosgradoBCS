@@ -98,8 +98,9 @@ class SemanaController extends Controller
         if($request->hasFile('convocatoria')){
             $convocactoriaA = $request->file('convocatoria');
             $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
-            $nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
-            //$nuevo_convocatoria = 'Convocatoria'.'_'.$request->nombre ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
+            //$nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
+            $nombreEvento = Str::slug($request->nombre);
+            $nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
             //$nuevo_convocatoria = $urlAmigable;
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
@@ -208,8 +209,11 @@ class SemanaController extends Controller
         if($request->hasFile('convocatoria')){
             $convocactoriaA = $request->file('convocatoria');
             $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
-            $nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
+            //$nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
             //$nuevo_convocatoria = 'Convocatoria'.'_'. date("Y") .'.' . $convocactoriaA->getClientOriginalExtension();
+            $nombreEvento = Str::slug($request->nombre);
+            $nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
+            
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
         else{
