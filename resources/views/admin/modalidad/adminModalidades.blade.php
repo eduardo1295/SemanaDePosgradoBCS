@@ -31,7 +31,7 @@
         <div class="col-12 col-md-6 col-lg-6">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-modalidad"><span><i
-                            class="fas fa-plus"></i></span> Nueva Noticia</a>
+                            class="fas fa-plus"></i></span> Nueva Modalidad</a>
 
             </div>
 
@@ -69,8 +69,7 @@
 @include('modalidad.modal')
 @endsection
 @section('scripts')
-<!--<script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
-<script src="/vendors/ckeditor5/ckeditor.js"></script>-->
+
 
 
 
@@ -94,8 +93,8 @@
 <script src="/js/imagenes/vistaprevia.js"></script>
 <!--Nuevo Rente-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.js"></script>
-<script src="/wNumb.js"></script>
+<script src="/plugins/nouislider/nouislider.js"></script>
+<script src="/plugins/nouislider/wNumb.js"></script>
 
 
 <script>
@@ -287,17 +286,29 @@
     $('body').on('click', '.editar', function () {
         var modalidad_id = $(this).data('id');
         var ruta = "{{url('modalidad')}}/" + modalidad_id + "/editar";
+        reiniciar();
 
 
         $.get(ruta, function (data) {
-            $('#modalidadCrudModal').html("Editar modalidad: " + data.titulo);
+            $('#modalidadCrudModal').html("Editar modalidad: " + data.modalidad.nombre);
             $('#btn-save').val("editar");
             $('#modalidad-crud-modal').modal('show');
-            $('#modalidad_id').val(data.id_modalidad);
-            $('#titulo').val(data.titulo);
-            $('#resumen').val(data.resumen);
+            $('#modalidad_id').val(data.modalidad.id_modalidad);
+            $('#titulo').val(data.modalidad.nombre);
 
-            $('#contenido').summernote('code', data.contenido);
+            //$('#contenido').val(data.modalidad.descripcion);
+            crearRenglon((data.posgrado.length-1));
+            $('.posgrado').each(function (i) {
+                $(this).val(data.posgrado[i].grado);
+            });
+            $('.periodo').each(function (i) {
+                $(this).val(data.posgrado[i].periodo);
+            });
+            $('.sliderrr').each(function (i) {
+                this.noUiSlider.set([data.periodo[i].periodo_min,data.periodo[i].periodo_max]);
+            });
+
+            $('#contenido').summernote('code', data.modalidad.descripcion);
             //$('#imglogo').prop('src',"");
             if (data.url_imagen != "sin imagen") {
                 $('#logoactual').html('Imagen actual de la modalidad');
@@ -311,7 +322,8 @@
 
     /*Accion al presionar el boton crear-modalidad*/
     $('#crear-modalidad').click(function () {
-
+        reiniciar();
+        slider.noUiSlider.set([1,10]);
         $('#btn-save').val("crear-modalidad");
         $('#modalidad_id').val('');
         $('#modalidadForm').trigger("reset");
@@ -338,6 +350,7 @@
 
     /*Accion al presionar el boton save*/
     $("#btn-save").click(function () {
+        $('.mensajeError').text("");
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var actionType = $('#btn-save').val();
@@ -345,18 +358,34 @@
         if (actionType == "editar") {
             var id = $('#modalidad_id').val();
             var ruta = "{{url('modalidad')}}/" + id + "";
-            var datos = new FormData($("#modalidadForm")[0]);
-            datos.append('_method', 'PUT');
+            var sli = $('.sliderrr');
+            var auxDatos = new Array() , auxPosgrado = new Array() , auxperiodo = new Array();
+            for(w=0; w< sli.length; w++){
+                //var ee = sli[w];
+                auxDatos.push(sli[w].noUiSlider.get());
+                auxPosgrado.push($('.posgrado')[w].value);
+                auxperiodo.push($('.periodo')[w].value);
+            }
+            console.log(auxDatos);
+            var content = $('#contenido').val();
+            //var datos = new FormData($("#modalidadForm")[0]);
+            //periodo.append('_method', 'PUT');
             //console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,
-                type: "POST",
-                data: datos,
-                dataType: 'JSON',
-                contentType: false,
-                cache: false,
-                processData: false,
+                type: "PUT",
+                data: {  nombres: $('#titulo').val(),
+                         contenido: content,
+                         slider: auxDatos,
+                         posgrado: auxPosgrado,
+                         periodo: auxperiodo
+                },
+                //data: datos,
+                //dataType: 'JSON',
+                //contentType: false,
+                //cache: false,
+                //processData: false,
                 success: function (data) {
                     //console.log(data);
                     $('#modalidadForm').trigger("reset");
@@ -377,9 +406,10 @@
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
 
                 },
-                error: function (data) {
-                    if (data.status == 422) {
-                        var errores = data.responseJSON['errors'];
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    if (xhr.status == 422) {
+                        var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
                         });
@@ -439,8 +469,11 @@
                 error: function (data) {
                     if (data.status == 422) {
                         var errores = data.responseJSON['errors'];
+                        var key2;
                         $.each(errores, function (key, value) {
-                            $('#' + key + "_error").text(value);
+                            key2= key.replace('.','\\.');
+                            $('#' + key2 + '_error').text(value);
+                            console.log(($('#' + key + "_error")));
                         });
                     }
                     $('#btn-save').html('Guardar');
@@ -451,7 +484,6 @@
 
             });
         }
-
     });
 
     /*Accion al presionar el boton eliminar*/
@@ -587,8 +619,54 @@
         $('.mensajeError').text("");
         $('#contenido').summernote("reset");
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-        $('.sliderQuitar').remove();
+        
     });
+    var x = 1;
+    var y = 1;
+    var crearRenglon = function(agregar){
+        for (var index = 0; index < agregar; index++) {
+            var auxid;
+            $('.nr').each(function (i) {
+                auxid = $(this)[0].id;
+            });
+            $('#'+auxid).after('<div class="row sliderQuitar nr" id="nuevorenglon_'+(x+1)+'"><div class="form-group col-3"> <strong><label for="posgrado" class="control-label">Nivel</label></strong> <select class="form-control posgrado" id="posgrado" name="posgrado"><option selected value="">Seleccione el grado</option><option value="maestria">Maestria</option><option value="doctorado">Doctorado</option></select><small><span class="text-danger mensajeError" id="id_institucion_error"></span></small></div><div class="form-group col-3"><strong><label for="periodo" class="control-label">Nivel</label></strong><select class="form-control periodo" id="periodo" name="periodo"><option selected value="">Seleccione el grado</option><option value="trimestre">Trimestre</option><option value="cuatrimestre">Cuatrimestre</option><option value="semestre">Semestre</option></select><small><span class="text-danger mensajeError" id="id_institucion_error"></span></small></div><div class="form-group col-5 pl-3 pb-3"><strong><label for="id_institucion" class="control-label">Grado</label></strong><br><div id="slider'+ x +'" class="sliderrr"></div></div><div class="form-group col-1 d-flex align-items-center"><i class="fas fa-times btn btn-danger " onclick="quitar('+(x+1)+')"></i></div></div>');
+            var slider ;
+                slider = document.getElementById('slider'+x);
+                    noUiSlider.create(slider, {
+                        start: [1, 10], //num, [num], [num,num]
+                        format: wNumb({
+                            decimals: 0
+                        }),
+                        pips: {
+                            mode: 'steps',
+                            density: 3,
+                            filter: filterPips,
+                            format: wNumb({
+                                decimals: 0,
+
+                            })
+                        },
+                        range: {
+                            'min': [1],
+                            'max': [10]
+                        },
+                        behaviour: 'drag',
+                        connect: true,
+                        animate: true,
+                        step: 1,
+                        orientation: 'horizontal',
+                        tooltips: [true, true],
+            });
+            x++;
+            y++;
+        }
+        
+    }
+    function reiniciar() {
+        $('.sliderQuitar').remove();
+        $('#contenido').summernote("reset");
+        $('.mensajeError').text("");
+    }
 
 </script>
 
@@ -661,7 +739,7 @@
 -->
 <link rel="stylesheet" href="/css/admin/styleRange.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.css">
+<link rel="stylesheet" href="/plugins/nouislider/nouislider.css">
 <style>
     html {
         overflow-y: scroll;

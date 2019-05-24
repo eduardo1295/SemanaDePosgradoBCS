@@ -13,7 +13,7 @@ class StoreModalidadRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +23,19 @@ class StoreModalidadRequest extends FormRequest
      */
     public function rules()
     {
+        
         return [
             //Validacion campos modalidad
-            'nombre' => 'required|string|max:50',
-
-            'descripcion' => 'required|string|max:1000',
+            'nombres' => 'required|string|max:50',
+            'contenido' => 'required|string|max:1000',
+            'posgrado' => 'required|array',
+            'posgrado.*' => 'required',
+        ];
+    }
+    public function messages(){
+        return [
+            'posgrado.*.required' => 'El campo es obligatorio',
+            
         ];
     }
 }
