@@ -14,8 +14,8 @@ class CrearTablaAlumnos extends Migration
     public function up()
     {
         Schema::create('alumnos', function (Blueprint $table) {
-            $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id')->unsigned();
+            $table->foreign('id')->references('id')->on('users');
             $table->integer('id_programa')->unsigned();
             //$table->foreign('id_programa')->references('id')->on('programas');
 

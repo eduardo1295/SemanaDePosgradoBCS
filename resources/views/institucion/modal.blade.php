@@ -13,7 +13,7 @@
                         <label for="nombre" class="control-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre"
                             placeholder="Nombre de la institución" value="" maxlength="500" required="">
-                        <span class="mensajeError" id="nombre_error"></span>
+                        <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
 
                     </div>
 
@@ -25,7 +25,7 @@
 
                             <input type="text" class="form-control" id="direccion_web" name="direccion_web"
                                 placeholder="Ingrese la URL de la institución" value="" required="">
-                            <span class="mensajeError" id="direccion_web_error"></span>
+                            <small><span class="mensajeError text-danger" id="direccion_web_error"></span></small>
 
                         </div>
 
@@ -34,7 +34,7 @@
 
                             <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Télefono"
                                 value="" required="">
-                            <span class="mensajeError" id="telefono_error"></span>
+                            <small><span class="mensajeError text-danger" id="telefono_error"></span></small>
 
                         </div>
                     </div>
@@ -44,7 +44,7 @@
 
                             <input type="text" class="form-control" id="ciudad" name="ciudad"
                                 placeholder="Ciudad de la institución" value="" required="">
-                            <span class="mensajeError" id="ciudad_error"></span>
+                            <small><span class="mensajeError text-danger" id="ciudad_error"></span></small>
 
                         </div>
 
@@ -53,7 +53,7 @@
 
                             <input type="text" class="form-control" id="calle" name="calle"
                                 placeholder="Calle de la institución" value="" required="">
-                            <span class="mensajeError" id="calle_error"></span>
+                            <small><span class="mensajeError text-danger" id="calle_error"></span></small>
 
                         </div>
 
@@ -62,7 +62,7 @@
 
                             <input type="text" class="form-control" id="numero" name="numero" placeholder="0000"
                                 value="" required="">
-                            <span class="mensajeError" id="numero_error"></span>
+                            <small><span class="mensajeError text-danger" id="numero_error"></span></small>
 
                         </div>
                     </div>
@@ -72,7 +72,7 @@
 
                             <input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia"
                                 value="" required="">
-                            <span class="mensajeError" id="colonia_error"></span>
+                            <small><span class="mensajeError text-danger" id="colonia_error"></span></small>
 
                         </div>
 
@@ -81,7 +81,7 @@
 
                             <input type="text" class="form-control" id="cp" name="cp" placeholder="00000" value=""
                                 required="">
-                            <span class="mensajeError" id="cp_error"></span>
+                            <small><span class="mensajeError text-danger" id="cp_error"></span></small>
 
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                                 <label for="logo" class="custom-file-label">Seleccionar Archivo</label>
                             </div>
 
-                            <span class="mensajeError" id="logo"></span>
+                            <small><span class="mensajeError text-danger" id="logo"></span></small>
                             <div class="row">
 
                             

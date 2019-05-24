@@ -31,7 +31,7 @@ class StoreNoticiaRequest extends FormRequest
 
             'contenido' => 'required|string',
 
-            'imgnoticia' => 'mimes:jpeg,jpg,png|max:2048',
+            
 
         ];
     }

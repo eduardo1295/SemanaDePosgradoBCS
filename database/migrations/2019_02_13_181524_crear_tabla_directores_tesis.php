@@ -14,8 +14,8 @@ class CrearTablaDirectoresTesis extends Migration
     public function up()
     {
         Schema::create('directores_tesis', function (Blueprint $table) {
-            $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id')->unsigned();
+            $table->foreign('id')->references('id')->on('users');
 
             $table->string('grado', 30);
 

@@ -47,12 +47,13 @@
                         <th>Segundo apellido</th>
                         <th>Email</th>
                         <th>Institución</th>
-                        
+                        <th>Última Actualización</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -101,6 +102,7 @@
         });
 
         var table = $('#coordinadoresdt').DataTable({
+            "order": [[ 7, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -138,12 +140,13 @@
                 { data: 'segundo_apellido', searchable: true },
                 { data: 'email', searchable: true },
                 { data: 'instituciones.nombre', searchable: true },
+                { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 2 },
-                { responsivePriority: 2, targets: 7 },
-                { width: 105, targets: 7 }
+                { responsivePriority: 2, targets: 8 },
+                { width: 105, targets: 8 }
             ]
         });
 
@@ -162,10 +165,12 @@
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
+            reiniciar();
             var coordinador_id = $(this).data('id');
             var ruta = "{{url('coordinador')}}/" + coordinador_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
+                $('#password').attr("placeholder", "Nueva contraseña");
                 $('#coordinadorCrudModal').html("Editar coordinador:" + data.nombre);
                 $('#btn-save').val("editar");
                 $('#coordinador-crud-modal').modal('show');
@@ -219,7 +224,7 @@
                                         var oTable = $('#coordinadoresdt').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> coordinador eliminada exitosamente.");
+                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Cuenta eliminada exitosamente.");
                                     $("#snackbar").addClass("show");
                                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                                 },
@@ -289,9 +294,10 @@
 
     /*Accion al presionar el boton crear-coordinador*/
     $('#crear-coordinador').click(function () {
-
+        reiniciar();
         $('#btn-save').val("crear-coordinador");
         $('#coordinador_id').val('');
+        $('#password').attr("placeholder", "Contraseña para el usuario");
         $('#coordinadorForm').trigger("reset");
         $('#coordinadorCrudModal').html("Agregar nueva cuenta de coordinador");
         $('#coordinador-crud-modal').modal({ backdrop: 'static', keyboard: false })
@@ -310,9 +316,9 @@
 
     /*Accion al presionar el boton save*/
     $("#btn-save").click(function () {
+        $('.mensajeError').text("");
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
-        alert($('#institucionSelect').find("option:selected").val());
         var actionType = $('#btn-save').val();
         $('#btn-save').html('Guardando..');
         if (actionType == "editar") {
@@ -345,12 +351,11 @@
                     $("#btn-close").prop("disabled", false);
                     console.log(data);
                 },
-                error: function (data) {
-                    
-                    
-                    if (data.status == 422) {
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    if (xhr.status == 422) {
                         
-                        var errores = data.responseJSON['errors'];
+                        var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
                         });
@@ -390,7 +395,14 @@
                     $("#btn-close").prop("disabled", false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    if (xhr.status == 422) {
+                        
+                        var errores = xhr.responseJSON['errors'];
+                        $.each(errores, function (key, value) {
+                            $('#' + key + "_error").text(value);
+                        });
+                    }
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
@@ -405,6 +417,29 @@
     $('#institucionSelect').change(function () {
         selectIDIns = $(this).find("option:selected").val();
     });
+
+    
+    var showPass = 0;
+    $('.btn-show-pass').on('click', function(){
+        if(showPass == 0) {
+            $("#password").attr('type','text');
+            $(this).find('i').removeClass('fa-eye');
+            $(this).find('i').addClass('fa-eye-slash');
+            showPass = 1;
+        }
+        else {
+            $("#password").attr('type','password');
+            $(this).find('i').addClass('fa-eye');
+            $(this).find('i').removeClass('fa-eye-slash');
+            showPass = 0;
+        }
+        
+    });
+
+    function reiniciar() {
+        $('.mensajeError').text("");
+    }
+
 </script>
 @endsection
 
