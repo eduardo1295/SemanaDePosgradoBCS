@@ -8,7 +8,7 @@
                             <h2 class="pb-1 pt-1 pl-3 contenidoSubPrincipal">{{$semana->nombre}}</h2>
                         </div>
                         <div class="col-12 ">
-                            <div class="media-with-text mt-2 text-justify">
+                            <div class="pl-5 pr-5 media-with-text mt-2 text-justify">
                                 {!!$semana->desc_general!!}
                             </div>
                         </div>

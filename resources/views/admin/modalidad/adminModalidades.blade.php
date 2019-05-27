@@ -117,7 +117,7 @@
 
 
         $(function () {
-            registerSummernote('.summernote', 'Contenido de la modalidad', 1000, function (max) {
+            registerSummernote('.summernote', 'Contenido de la modalidad', 1200, function (max) {
                 $('#maxContentPost').text(max)
             });
         });

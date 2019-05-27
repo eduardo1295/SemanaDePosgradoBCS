@@ -2,11 +2,28 @@
 @extends('layoutsM1.principal')
 
 @section('contenido')
+<button onclick="topFunction()" id="myBtn"><i  id="flecha" class="fas fa-arrow-up"></i></button>
 @section('links')
-<link rel="stylesheet" href="{{ mix('css/Maqueta2.css')}} ">
+<link rel="stylesheet" href="css/Maqueta2.css">
 <link rel="stylesheet" href="/css/imagenes/imagenes.css">
 <script src="/js/owl.carousel.min.js"> </script>
 <script>
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+      } else {
+        document.getElementById("myBtn").style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
@@ -27,136 +44,142 @@
     </div>
 </div>
 <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
-        <div class="col-12  mb-4" id="noticias">
-            <div class="row">
-                @if (count($noticias) > 0)
-                    <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
-                    <h2 class="mb-0 rounded-left">Noticias.</h2>
-                    <h4 class="mb-0"> <a href="/noticia" class="badge badge-primary mb-0 align-self-center">Ver todas 
-                    <i class="fas fa-arrow-circle-right"></i></a> </h4>
-                    </div>
-                    <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
-                            <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
-                    </div>
-                @else
-                    <div class="pl-0 col-12 d-none d-md-block bordeizqarriba bordederarriba" id="titulo2">
-                            <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
-                    </div>
-                @endif
-                
-                @php
-                $cont=0;
-                @endphp
+    <div class="col-12  mb-4" id="noticias">
+        <div class="row">
+            @if (count($noticias) > 0)
+            <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
+                <h2 class="mb-0 rounded-left">Noticias.</h2>
+                <h4 class="mb-0"> <a href="/noticia" class="badge badge-primary mb-0 align-self-center">Ver todas
+                        <i class="fas fa-arrow-circle-right"></i></a> </h4>
             </div>
+            <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
+                <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+            </div>
+            @else
+            <div class="pl-0 col-12 d-none d-md-block bordeizqarriba bordederarriba" id="titulo2">
+                <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+            </div>
+            @endif
 
-            <div class="row">    
-                @foreach ($noticias as $noticia)
-                @if ($cont == 0 && count($noticias) == ($cont+1) )
-                <div class=" nota n3 n1 col-12 col-md mb-lg-0 " id="contenido">
+            @php
+            $cont=0;
+            @endphp
+        </div>
+
+        <div class="row">
+            @foreach ($noticias as $noticia)
+            @if ($cont == 0 && count($noticias) == ($cont+1) )
+            <div class=" nota n3 n1 col-12 col-md mb-lg-0 " id="contenido">
                 @elseif($cont == 0)
-                    <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido">
-                @elseif(count($noticias) == ($cont+1))
+                <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido">
+                    @elseif(count($noticias) == ($cont+1))
                     <div class=" nota n3 col-12 col-md mb-lg-0 " id="contenido">
-                @else
-                    <div class=" nota col-12 col-md mb-lg-0 " id="contenido">
-                @endif
-                    <div class="media-with-text  mt-4">
-                        <h2 class="h5 mb-2">
-                            <a href="/noticia/{{$noticia->id_noticia}}"
-                                id="tituloNoticia">{{$noticia->titulo}}</a>
-                        </h2>
-                        <small><span class="mb-2 d-block post-date"> {{$noticia->fecha_actualizacion}}</span></small>
-                        <p> {{$noticia->resumen}} </p>
-                    </div>
-                </div>
-                @php
-                $cont++;
-                @endphp
-                @endforeach
+                        @else
+                        <div class=" nota col-12 col-md mb-lg-0 " id="contenido">
+                            @endif
+                            <div class="media-with-text  mt-4">
+                                <h2 class="h5 mb-2">
+                                    <a href="/noticia/{{$noticia->id_noticia}}"
+                                        id="tituloNoticia">{{$noticia->titulo}}</a>
+                                </h2>
+                                <small><span class="mb-2 d-block post-date">
+                                        {{$noticia->fecha_actualizacion}}</span></small>
+                                <p> {{$noticia->resumen}} </p>
+                            </div>
+                        </div>
+                        @php
+                        $cont++;
+                        @endphp
+                        @endforeach
                         <div class="pl-0 mt-3 col-12 d-block d-md-none  bordeizqarriba bordederarriba" id="titulo2">
-                                <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+                            <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
                         </div>
                         @if (count($noticias) > 0)
-                        <div class=" col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">    
-                        @else
-                        <div class="col-12  mx-auto ubicacionSede" id="contenido"> 
-                        @endif
-                        
-                            <div class="row">
-                                <div class="col-12">
-                                    @if (isset($institucionSede))
+                        <div class=" col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">
+                            @else
+                            <div class="col-12  mx-auto ubicacionSede" id="contenido">
+                                @endif
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        @if (isset($institucionSede))
                                         <p class="text-md-center pt-2">{{$institucionSede->nombre}} </p>
                                         <div class="d-flex justify-content-center">
                                             <div class="col-3 col-md-12 d-flex  justify-content-center">
-                                                    <img id="logoSede" class="mx-auto" src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="" >
+                                                <img id="logoSede" class="mx-auto"
+                                                    src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="">
                                             </div>
                                         </div>
-                                        <a class="nav-link active lead text-md-right" data-toggle="modal" href="#cerrar">
-                                        <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
-                                    @endif
+                                        <a class="nav-link active lead text-md-right" data-toggle="modal"
+                                            href="#cerrar">
+                                            <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
+                                        @endif
+                                    </div>
+
                                 </div>
-                                    
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
-        <div id="fondo">
-            <div class="container-fluid" id="contenido">
-                <div class="row">
-                    <h2 id="titulo" class="w-100">Instituciones Participantes</h2>
-                </div>
-                <div class="row">
-                    <div class=" col-12 pb-4 pt-4">
-                        @include('layoutsM2.carrusel2')
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    @if (isset($institucionSede))
-    <section id="modales">
-        <div class="modal fade" id="cerrar" tabindex="-1" role="dialog" aria-label="modalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="modalLabel">
-                            Ubicación sede
-                        </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mt-2 justify-content-center">
-                            <div class="embed-responsive embed-responsive-16by9 mt-3">
-                                <iframe
-                                    src="http://maps.google.com/maps?q=+{{$institucionSede->latitud}}+, +{{$institucionSede->longitud}}+&z=15&output=embed"
-                                    frameborder="0" style="border:0" allowfullscreen>
-                                </iframe>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                </div>
+        </div>
+            <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
+                <div id="fondo">
+                    <div class="container-fluid" id="contenido">
+                        <div class="row">
+                            <h2 id="titulo" class="w-100">Instituciones Participantes</h2>
+                        </div>
+                        <div class="row">
+                            <div class=" col-12 pb-4 pt-4">
+                                @include('layoutsM2.carrusel2')
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-    </section>
-    @endif
+            </section>  
+            @if (isset($institucionSede))
+            <section id="modales">
+                <div class="modal fade" id="cerrar" tabindex="-1" role="dialog" aria-label="modalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modalLabel">
+                                    Ubicación sede
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mt-2 justify-content-center">
+                                    <div class="embed-responsive embed-responsive-16by9 mt-3">
+                                        <iframe
+                                            src="http://maps.google.com/maps?q=+{{$institucionSede->latitud}}+, +{{$institucionSede->longitud}}+&z=15&output=embed"
+                                            frameborder="0" style="border:0" allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
 
-    @section('menu')
-    @include('layoutsM2.navbar')
-    @endsection
-    @section('footer')
-    @include('layoutsM2.footer')
-    @endsection
-    {{-- END SECCION BLADE--}}
+                    </div>
+            </section>
+            @endif
 
-    @section('scripts')
-    <script src="/js/menumaker.js"></script>
-    @endsection
-    @endsection
+
+            {{-- END SECCION BLADE--}}
+
+            @section('scripts')
+            <script src="/js/menumaker.js"></script>
+            @endsection
+            @endsection
+
+            @section('menu')
+            @include('layoutsM2.navbar')
+            @endsection
+            @section('footer')
+            @include('layoutsM2.footer')
+            @endsection

@@ -27,7 +27,7 @@ class StoreModalidadRequest extends FormRequest
         return [
             //Validacion campos modalidad
             'nombres' => 'required|string|max:50',
-            'contenido' => 'required|string|max:1000',
+            'contenido' => 'required|string',
             'posgrado' => 'required|array',
             'posgrado.*' => 'required',
             'periodo' => 'required|array',

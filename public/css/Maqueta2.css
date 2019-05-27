@@ -1,5 +1,11 @@
+
 @charset "UTF-8";
-#navbarM2 .header { background-color: #fff; z-index: 9999; position: relative; padding-top: 20px; padding-bottom: 20px; }
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+#espacioBlanco{padding-top: 90px;}
+#navbarM2{ position: fixed; z-index: 1000; width: 100%; }
+#navbarM2 .header { background-color: #fff; z-index: 9999; position: relative; padding-top: 20px; padding-bottom: 3px; }
 #navbarM2 .top-text { text-align: right; }
 #navbarM2 .top-text .text-block { padding-left: 20px; color: #fff; line-height: 18px; }
 #navbarM2 .hero-section { padding-top: 135px; padding-bottom: 135px; background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)), rgba(36, 39, 38, 0.5) url(../images/hero-img.jpg) no-repeat center; background-size: cover; }
@@ -17,9 +23,9 @@
 #navbarM2 #navigation.align-center > ul > li { display: inline-block; float: none; }
 #navbarM2 #navigation.align-center ul ul { text-align: left; }
 #navbarM2 #navigation.align-right > ul > li { float: right; }
-#navbarM2 #navigation > ul > li > a , #navbarM2 #navigation > ul > li > .aliga { padding: 20px; font-size: 13px; color: #18150d; text-decoration: none; font-weight: 500; text-transform: uppercase; }
+#navbarM2 #navigation > ul > li > a , #navbarM2 #navigation > ul > li > .aliga { padding: 10px 10px 5px 10px; font-size: 13px; color: #18150d; text-decoration: none; font-weight: 500; text-transform: uppercase; }
 #navbarM2 #navigation > ul > li:hover > a , #navbarM2 #navigation > ul > li:hover > .aliga { color: black; background-color: #eeeeee; border-radius: 100px }
-#navbarM2 #navigation > ul > li.has-sub > a , #navbarM2 #navigation > ul > li.has-sub > .aliga { padding-right: 32px; }
+/*#navbarM2 #navigation > ul > li.has-sub > a , #navbarM2 #navigation > ul > li.has-sub > .aliga { padding-right: 32px; }*/
 #navbarM2 #navigation > ul > li.has-sub > a:before ,#navbarM2 #navigation > ul > li.has-sub > .aliga:before { position: absolute; right: 14px; /*font-family: "Font Awesome 5 Free"; font-weight: 900;  content: "\f107";*/ -webkit-transition: all .25s ease; -moz-transition: all .25s ease; -ms-transition: all .25s ease; -o-transition: all .25s ease; transition: all .25s ease; }
 #navbarM2 #navigation ul ul { position: absolute; left: -9999px; }
 #navbarM2 #navigation.align-right ul ul { text-align: right; }
@@ -42,6 +48,7 @@
 #navbarM2 #navigation.small-screen ul li { width: 100%; border-top: 1px solid #474747; }
 #navbarM2 #navigation.small-screen ul ul li, #navigation.small-screen li:hover > ul > li { height: auto; }
 #navbarM2 #navigation.small-screen ul li a, #navigation.small-screen ul ul li a { width: 100%; border-bottom: 0; padding: 20px 15px; }
+#navbarM2 #navigation.small > ul > li > a, #navbarM2 #navigation.small-screen > ul > li > .aliga{ width: 100%; border-bottom: 0; padding: 20px 15px; }
 #navbarM2 #navigation.small-screen > ul > li { float: none; }
 #navbarM2 #navigation.small-screen ul ul li a { padding-left: 25px; }
 #navbarM2 #navigation.small-screen ul ul ul li a { padding-left: 35px; }
@@ -49,7 +56,7 @@
 #navbarM2 #navigation.small-screen ul ul li:hover > a, #navigation.small-screen ul ul li.active > a { color: #474747; }
 #navbarM2 #navigation.small-screen ul ul, #navigation.small-screen ul ul ul, #navigation.small-screen.align-right ul ul { position: relative; left: 0; width: 100%; margin: 0; text-align: left; }
 #navbarM2 #navigation.small-screen > ul > li.has-sub > a:after, #navigation.small-screen > ul > li.has-sub > a:before, #navigation.small-screen ul ul > li.has-sub > a:after, #navigation.small-screen ul ul > li.has-sub > a:before { display: none; }
-#navbarM2 #navigation.small-screen #menu-button {display: block; padding: 15px; color: #474747; cursor: pointer; font-size: 12px; text-transform: uppercase; font-weight: 700; }
+#navbarM2 #navigation.small-screen #menu-button {display: block; padding: 15px; padding-top: 30px; color: #474747; cursor: pointer; font-size: 12px; text-transform: uppercase; font-weight: 700; }
 #navbarM2 #navigation.small-screen #menu-button:after { position: absolute; top: 16px; right: 17px; display: block; height: 12px; width: 20px; border-top: 2px solid #474747; border-bottom: 2px solid #474747; content: ''; }
 #navbarM2 #navigation.small-screen #menu-button:before { position: absolute; top: 21px; right: 17px; display: block; height: 2px; width: 20px; background: #474747; content: ''; }
 #navbarM2 #navigation.small-screen #menu-button.menu-opened:after { top: 23px; border: 0; height: 2px; width: 15px; background: #474747; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); }
@@ -178,6 +185,28 @@
   margin-left: 20px;
   margin-right: 20px;
   
+}
+
+#myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 8px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #949090; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 10px; /* Some padding */
+  border-radius: 75px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+  color: white;
+
 }
 
 @media (min-width: 0px) and (max-width: 576px)   {

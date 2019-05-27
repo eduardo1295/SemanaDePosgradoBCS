@@ -1,4 +1,3 @@
-
 <section id="navbarM2">
     <div class="header">
         <div class="container-fluid pl-5 pr-5">
@@ -6,7 +5,7 @@
                 <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
                     <a href="/"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px"  alt=""></a>
                 </div>
-                <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 d-md-flex justify-content-md-end">
+                <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 d-md-flex justify-content-end align-items-end">
                     <div class="navigation float-none">
                         <div id="navigation">
                             <ul>
@@ -56,3 +55,4 @@
         </div>
   </div>
 </section>
+<div id="espacioBlanco">

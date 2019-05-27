@@ -7,7 +7,7 @@
                             alt=""></a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 pt-3 pt-md-0">
-                    <h1 class="text-center">Área Administrativa</h1>
+                    <h1 class="text-center">Gestor Administrativo</h1>
                 </div>
                 <div class="col-12 col-md-3 d-flex justify-content-end">
                     <div class="dropdown  aa">
