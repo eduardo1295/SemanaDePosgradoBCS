@@ -13,7 +13,7 @@
 @endsection
 
 @section('contenido')
-    <div class="container-fluid">
+    <div class="container-fluid "  >
         <div class="row">
             <div class="col-12 pr-0 pl-0">
                 <h1 id="Titulo" class="display-3 text-center font-weight-bold rounded p-auto">Noticias</h1> <br>

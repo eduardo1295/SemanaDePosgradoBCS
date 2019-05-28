@@ -2,11 +2,11 @@
     <div class="row" >
         <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-sm-between align-items-center">
-                <div class="col-12 col-sm-6 col-md-3 d-flex justify-content-center justify-content-sm-start">
+                <div class="col-12 col-sm-12 col-md-3 d-flex justify-content-center justify-content-md-start">
                     <a href="/admin"><img src="/img/logo.png" width="120px"
                             alt=""></a>
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 pt-3 pt-md-0">
+                <div class="col-12 col-sm-12 col-md-6 pt-3 pt-md-0">
                     <h1 class="text-center">Gestor Administrativo</h1>
                 </div>
                 <div class="col-12 col-md-3 d-flex justify-content-end">

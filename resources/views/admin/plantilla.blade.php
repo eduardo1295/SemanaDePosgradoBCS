@@ -46,7 +46,8 @@
     <main class="page-content">
         @include('admin.navbar')
         <div id="overlay" class="overlay"></div>
-    @yield('contenido')
+    
+      @yield('contenido')
     </main>
     
     @yield('extra')

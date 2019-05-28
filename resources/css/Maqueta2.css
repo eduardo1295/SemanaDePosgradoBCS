@@ -1,5 +1,5 @@
 @charset "UTF-8";
-#navbarM2 .header { background-color: #fff; z-index: 9999; position: relative; padding-top: 20px; padding-bottom: 20px; }
+#navbarM2 .header { background-color: #b9b9b966; z-index: 9999; position: relative; padding-top: 20px; padding-bottom: 20px; }
 #navbarM2 .top-text { text-align: right; }
 #navbarM2 .top-text .text-block { padding-left: 20px; color: #fff; line-height: 18px; }
 #navbarM2 .hero-section { padding-top: 135px; padding-bottom: 135px; background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)), rgba(36, 39, 38, 0.5) url(../images/hero-img.jpg) no-repeat center; background-size: cover; }
