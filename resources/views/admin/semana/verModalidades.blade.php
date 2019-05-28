@@ -9,7 +9,6 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
-
 </script>
 @endsection
 <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
@@ -29,7 +28,6 @@
         $i=0;
         $bandera = true;
         foreach ($modalidades as $modalidad){
-            
             if(isset($modalidad->niveles)){
                 foreach ($modalidad->niveles as $datos) {
                     $nueva_columna = $datos->grado .' ('. $datos->periodo.')';
@@ -39,14 +37,10 @@
                         if($columnas[$x] == $nueva_columna){
                             $bandera = false;
                         }
-                        
                     }
                     if($bandera){
                     echo '<th scope="col" class="text-center">'.$nueva_columna.'</th>';
                     array_push($columnas,$nueva_columna);
-                    }
-                    else {
-
                     }
                 }
                 $bandera = true;
@@ -57,57 +51,37 @@
         }
         for ($x=0; $x < $i ; $x++){
             for ($j=0; $j < count($columnas) ; $j++){
-                array_push($aux_per[$x],0);
-                
+                array_push($aux_per[$x],"<td></td>");
             }
         }
         echo '</tr></thead><tbody>';
-        //$array = Arr::add(['name' => 'Desk'], 'price', 100);
-        //$array = Arr::prepend($array,'aa',50);
-        //dd($columnas);
-        $bandera10 = false;
-        $columnaEncontrada = 0;
-        $columnaFaltantes = 0;
-        //dd($columnas);
-        foreach ($modalidades as $modalidad){
-            echo '<th scope="row">'.$modalidad->nombre.'</th>';
+        $j=0;
+        $nombreModalidaddes = [];
+        foreach ($modalidades as $modalidad) {
+            array_push($nombreModalidaddes,$modalidad->nombre);
             foreach ($modalidad->niveles as $datos) {
                 $nombre = $datos->grado .' ('. $datos->periodo.')';
-                //echo $nombre;
-                $bx =  $columnaFaltantes;
-                
-                while ($bx < count($columnas)) {
-                    if($nombre == $columnas[$bx]){
-                        //echo $bandera10 = $ax;
-                        //$aa = App\posgrado::find($a[0]->niveles[0]->id)->periodos()->get();
+                //dd($columnas);
+                for ($i=0; $i < count($columnas) ; $i++) { 
+                    if($columnas[$i] == $nombre){
                         $aa = App\posgrado::find($datos->id)->periodos()->get();
-                        echo '<td class="text-center">'.$aa[0]->periodo_min. ' a '.$aa[0]->periodo_max.'</td>';
-                        $columnaEncontrada++;
-                        $columnaFaltantes++;
-                        break;
+                        $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. ' a '.$aa[0]->periodo_max.'</td>' ;
                     }
-                    else{
-                        echo '<td></td>';
-                        $columnaFaltantes++;
-                    }
-                    $bx++;
                 }
             }
-            //echo 'aqui'.$columnaEncontrada.'aca'.count($columnas);
-            if($columnaFaltantes != count($columnas)){
-                while ($columnaFaltantes < count($columnas)) {
-                    echo '<td></td>';
-                    $columnaFaltantes++;
-                }
+            $j++;
+        }
+        for ($i=0; $i < count($aux_per) ; $i++) { 
+            echo '<tr>';
+            echo '<th scope="row">'.$nombreModalidaddes[$i].'</th>';
+            for ($x=0; $x < count($aux_per[$i]) ; $x++) { 
+                echo $aux_per[$i][$x];
             }
-            $columnaEncontrada = 0;
-            $columnaFaltantes=0;
             echo '</tr>';
         }
-        
         ?>
         </tbody>
-        </tbody>
+        
         </table>
         </div>
     </div>
