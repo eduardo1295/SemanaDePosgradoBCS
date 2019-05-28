@@ -42,7 +42,7 @@
                         
                     }
                     if($bandera){
-                    echo '<th scope="col">'.$nueva_columna.'</th>';
+                    echo '<th scope="col" class="text-center">'.$nueva_columna.'</th>';
                     array_push($columnas,$nueva_columna);
                     }
                     else {
@@ -79,7 +79,9 @@
                 while ($bx < count($columnas)) {
                     if($nombre == $columnas[$bx]){
                         //echo $bandera10 = $ax;
-                        echo '<td>'.$nombre.'</td>';
+                        //$aa = App\posgrado::find($a[0]->niveles[0]->id)->periodos()->get();
+                        $aa = App\posgrado::find($datos->id)->periodos()->get();
+                        echo '<td class="text-center">'.$aa[0]->periodo_min. ' a '.$aa[0]->periodo_max.'</td>';
                         $columnaEncontrada++;
                         $columnaFaltantes++;
                         break;
