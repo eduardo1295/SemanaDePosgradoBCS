@@ -23,46 +23,89 @@
             <tr>
             <th scope="col">Modalidad</th>
         <?php
+        //use Illuminate\Support\Arr;
         $columnas = [];
         $aux_per = array();
         $i=0;
         $bandera = true;
         foreach ($modalidades as $modalidad){
+            
             if(isset($modalidad->niveles)){
                 foreach ($modalidad->niveles as $datos) {
                     $nueva_columna = $datos->grado .' ('. $datos->periodo.')';
+                    //echo $nueva_columna.'+';
+                    $bandera = true;
                     for ($x=0; $x < count($columnas) ; $x++) { 
                         if($columnas[$x] == $nueva_columna){
                             $bandera = false;
                         }
+                        
                     }
                     if($bandera){
                     echo '<th scope="col">'.$nueva_columna.'</th>';
                     array_push($columnas,$nueva_columna);
-                    array_push($aux_per,[]);
+                    }
+                    else {
+
                     }
                 }
+                $bandera = true;
+                //$datata =array( 'holo' => [] );
+                array_push($aux_per, []);
             }
             $i++;
         }
-        $ww = 1;
-        for ($x=0; $x < count($aux_per) ; $x++){
+        for ($x=0; $x < $i ; $x++){
             for ($j=0; $j < count($columnas) ; $j++){
-                array_push($aux_per[$x],$ww);
-                $ww++;
+                array_push($aux_per[$x],0);
+                
             }
         }
-        dd($aux_per);
+        echo '</tr></thead><tbody>';
+        //$array = Arr::add(['name' => 'Desk'], 'price', 100);
+        //$array = Arr::prepend($array,'aa',50);
+        //dd($columnas);
+        $bandera10 = false;
+        $columnaEncontrada = 0;
+        $columnaFaltantes = 0;
+        //dd($columnas);
+        foreach ($modalidades as $modalidad){
+            echo '<th scope="row">'.$modalidad->nombre.'</th>';
+            foreach ($modalidad->niveles as $datos) {
+                $nombre = $datos->grado .' ('. $datos->periodo.')';
+                //echo $nombre;
+                $bx =  $columnaFaltantes;
+                
+                while ($bx < count($columnas)) {
+                    if($nombre == $columnas[$bx]){
+                        //echo $bandera10 = $ax;
+                        echo '<td>'.$nombre.'</td>';
+                        $columnaEncontrada++;
+                        $columnaFaltantes++;
+                        break;
+                    }
+                    else{
+                        echo '<td></td>';
+                        $columnaFaltantes++;
+                    }
+                    $bx++;
+                }
+            }
+            //echo 'aqui'.$columnaEncontrada.'aca'.count($columnas);
+            if($columnaFaltantes != count($columnas)){
+                while ($columnaFaltantes < count($columnas)) {
+                    echo '<td></td>';
+                    $columnaFaltantes++;
+                }
+            }
+            $columnaEncontrada = 0;
+            $columnaFaltantes=0;
+            echo '</tr>';
+        }
+        
         ?>
-        </tr>
-        </thead>
-            <tbody>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-            </tbody>
+        </tbody>
+        </tbody>
         </table>
         </div>
     </div>
