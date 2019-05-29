@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Coordinadores
+                Directores de tesis
             </h1>
         </div>
 

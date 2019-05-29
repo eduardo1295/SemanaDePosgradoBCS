@@ -8,7 +8,7 @@
 @section('contenido')
 	<div class="container" style="width: 100%;  height: 300px ;">
 		<div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
-			<form action="/login" method="post" class="col-6" style="background : white;  opacity: 0.9">
+			<form action="/login" method="post" class="col-10  col-sm-10 col-md-8 col-lg-6 " style="background : white;  opacity: 0.9">
 				@csrf
 				<div class="row">
 					<div class="col-12" style="background: #777777; color: white">
@@ -18,7 +18,7 @@
 				<div class="row">
 					<div class="form-group col-10 offset-1 pt-3">
 							<label for="email"><strong>Email:</strong></label>
-							<input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-describedby="c1" required>
+							<input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-describedby="c1" value="{{old('email')}}" required>
 							<small><span class="text-danger">{{$errors->first('email')}}</span></small>
 					</div>
 					<div class="form-group col-9 offset-1">
@@ -37,7 +37,7 @@
 					<small><span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span></small> 
 					<div class="col-12 pb-3 pt-3">
 							<input type="submit" value="Login" class="btn btn-primary mx-auto  w-100">
-							<small id="" class="text-muted"><a href="{{route('recuperarAdmin')}}">Olvidé mi contraseña</a></small>
+							<small id="" class="text-muted"><a href="{{route('password.request')}}">Olvidé mi contraseña</a></small>
 					</div>
 				</div>
 			</form>

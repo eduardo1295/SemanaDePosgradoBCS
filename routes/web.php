@@ -41,21 +41,21 @@ Route::post('semanas/vistaPrevia', 'SemanaController@vistaPrevia')->name('semana
 Route::get('admin/semana/listSemanas', 'SemanaController@listSemanas')->name('semana.listSemanas');
 Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.verConvocatoria');
 Route::get('/modalidades', 'SemanaController@verModalidades')->name('semana.verModalidades');
-Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
+//Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
 Route::resource('semana', 'SemanaController');
 
-Route::get('/', 'SemanaController@index');
+Route::get('/', 'SemanaController@index')->name('pag.inicio');
 Route::get('/home', 'SemanaController@index');
 
 
 
 
-
+/*
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin');
-
+Route::view('/login/admin/recuperar','admin.login.recuperarAdmin')->name('recuperarAdmin');
 Route::get('logout', 'Auth\LoginController@logout');
-
+*/
 
 
 
@@ -82,14 +82,14 @@ Route::resource('alumno', 'AlumnoController');
 
 Auth::routes();
 
-Route::view('/login/admin/recuperar','admin.login.recuperarAdmin')->name('recuperarAdmin');
 
-Route::get('admin/programa/VerPrograma', 'ProgramaController@programa')->name('programa.VerPrograma');
+
+Route::get('admin/programas', 'ProgramaController@programa')->name('programa.VerPrograma');
 Route::get('programa/listPrograma', 'ProgramaController@listPrograma')->name('programa.listPrograma');
 Route::put('admin/programa/reactivar/{programa}', 'ProgramaController@reactivar')->name('programa.reactivar');
 Route::resource('programa', 'ProgramaController');
 
-Route::get('admin/modalidad/VerModalidad', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
+Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
 Route::get('modalidad/listModalidad', 'ModalidadController@listModalidad')->name('modalidad.listModalidad');
 Route::put('admin/modalidad/reactivar/{modalidad}', 'ModalidadController@reactivar')->name('modalidad.reactivar');
 Route::resource('modalidad', 'ModalidadController');
@@ -168,3 +168,6 @@ Route::get('/Maqueta3',['as'=> 'b',function (){ return view('Maqueta3'); }]);
 
 Route::view('/crearNoticia','crearNoticia');
 */
+
+
+Route::get('/home', 'HomeController@index')->name('home');

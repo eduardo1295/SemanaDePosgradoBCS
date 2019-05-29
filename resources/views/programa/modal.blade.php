@@ -29,7 +29,7 @@
                             <small><span class="text-danger mensajeError" id="id_institucion_error"></span></small>
                         </div>
 
-                        <div class="form-group col-6">
+                        <div class="form-group col-12">
                             <strong><label for="nombre" class="control-label">Nombre</label></strong>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre"
                                value="" maxlength="100" required="">

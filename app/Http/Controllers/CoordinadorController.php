@@ -15,6 +15,10 @@ use Validator;
 
 class CoordinadorController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin.auth:admin')->only('coordinador');
+         //$this-> middleware('auth:admin')->only('noticias');
+     }
     /**
      * Display a listing of the resource.
      *

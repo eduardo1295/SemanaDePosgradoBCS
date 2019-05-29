@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras imagenes</legend>
-        <div class="col-12 col-md-4 col-lg-4">
+        <legend class="d-none col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras imagenes</legend>
+        <div class="d-none col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
                 <label class="form-check-label" for="inlineRadio1">Activas</label>
@@ -27,7 +27,7 @@
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-6">
+        <div class="col-12 col-md-12 col-lg-12">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-carrusel"><span><i
                             class="fas fa-plus"></i></span> Nueva imagen</a>
@@ -102,7 +102,7 @@
             responsive: true,
             autoWidth: false,
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                "url": "/js/datatableJS/es.json"
             },
             "processing": true,
             "serverSide": true,

@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <small id="passwordHelpBlock" class="form-text text-muted">
-                                    Su contraseña debe tener mínimo 6 caracteres, debe contener al menos 1 mayúscula, 1 minúscula, 1 numérica y 1 carácter especial(#?!@$^&-).
+                                    Su contraseña debe tener mínimo 6 caracteres, debe contener al menos 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial(#?!@$^&-).
                             </small>
                             <small><span class="mensajeError text-danger" id="password_error"></span></small>
                         </div>

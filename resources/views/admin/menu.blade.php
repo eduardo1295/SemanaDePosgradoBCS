@@ -23,7 +23,7 @@
         <div class="sidebar-menu">
             <ul>
                 <li>
-                    <a href="{{route('admin.indexadmin')}}">
+                    <a href="{{route('admin.index')}}">
                         <i class="fas fa-home"></i>
                         <span><strong>Inicio</strong></span>
                     </a>
@@ -52,7 +52,7 @@
                 <li>
                     <a href="{{route('programa.VerPrograma')}}">
                         <i class="fas fa-user-tie"></i>
-                        <span><strong>Programa</strong></span>
+                        <span><strong>Programas de estudio</strong></span>
                     </a>
                 </li>
                 <li>
@@ -62,6 +62,7 @@
                     </a>
                 </li>
 
+                {{-- comment 
 
                 <li>
                     <a href="{{route('coordinador.VerCoodinadores')}}">
@@ -69,21 +70,51 @@
                         <span><strong>Coordinadores</strong></span>
                     </a>
                 </li>
+                
+                <li>
+                    <a href="{{route('director.VerDirectores')}}">
+                        <i class="fas fa-user"></i>
+                        <span><strong>Directores de tesis</strong></span>
+                    </a>
+                </li>
 
                 <li>
-                        <a href="{{route('director.VerDirectores')}}">
-                                <i class="fas fa-user"></i>
-                            <span><strong>Directores de tesis</strong></span>
-                        </a>
-                    </li>
+                    <a href="{{route('alumnos.VerAlumnos')}}">
+                        <i class="fas fa-user-graduate"></i>
+                        <span><strong>Alumnos</strong></span>
+                    </a>
+                </li>
+                --}}
+                <li class="sidebar-dropdown">
+                    <a>
+                        <i class="fas fa-user"></i>
+                        <span><strong>Usuarios</strong></span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{route('coordinador.VerCoodinadores')}}">
+                                    
+                                    <span><strong>Coordinadores</strong></span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                    <a href="{{route('director.VerDirectores')}}">
+                                        
+                                        <span><strong>Directores de tesis</strong></span>
+                                    </a>
+                            </li>
 
-                    <li>
-                            <a href="{{route('alumnos.VerAlumnos')}}">
-                                    <i class="fas fa-user-graduate"></i>
-                                <span><strong>Alumnos</strong></span>
-                            </a>
-                        </li>
-
+                            <li>
+                                <a href="{{route('alumnos.VerAlumnos')}}">
+                                    
+                                    <span><strong>Alumnos</strong></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -104,10 +135,20 @@
         </div>
     -->
         <div>
-
-            <a href="/logout">Cerrar Sesión
+            @if(auth('admin')->user() || auth()->user())
+            @php
+            $ruta = auth('admin')->user() ? 'admin.logout' : 'logout';
+            @endphp
+            <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                href="{{route($ruta)}}">Cerrar Sesión
                 <i class="fas fa-power-off"></i>
             </a>
+
+            <form id="logout-form" action="{{route($ruta)}}" method="POST" style="display: none;">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </form>
+            @endif
+
         </div>
     </div>
 </nav>

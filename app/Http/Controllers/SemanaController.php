@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\semanas\StoreSemanaRequest;
+use App\Http\Requests\semanas\UpdateSemanaRequest;
 use App\Semana;
 use App\Noticia;
 use App\Institucion;
@@ -16,6 +17,7 @@ use Illuminate\Support\Str as Str;
 
 class SemanaController extends Controller
 {
+
     public function __construct(){
         $this-> middleware('auth:admin')->only('indexAdmin');
         $this-> middleware('auth:admin')->only('noticias');
@@ -167,7 +169,7 @@ class SemanaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSemanaRequest $request, $id)
     {
         $semana = Semana::where('id_semana', $id)->first();
         $dom = new \domdocument();

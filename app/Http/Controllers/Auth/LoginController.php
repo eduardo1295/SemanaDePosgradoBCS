@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReCaptchataTestFormRequest;
+
 
 class LoginController extends Controller
 {
@@ -28,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -38,70 +39,54 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('guest:admin')->except('logout');
-        $this->middleware('guest:writer')->except('logout');
-    }
-    public function showAdminLoginForm()
-    {
-        return view('admin.login.loginAdmin', ['url' => 'admin']);
-        //return 'Hola';
-        
-    }
-    
-    public function showWriterLoginForm()
-    {
-        return view('auth.writerlogin', ['url' => 'writer']);
-        
     }
 
-    public function adminLogin(ReCaptchataTestFormRequest $request)
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
     {
-        
-        $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:6'
-        ]);
-        
-        if(isset($_POST['recaptcha_response'])) {
-
-        // Build POST request:
-        $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-        $recaptcha_secret = '6Ldq9KAUAAAAAOGCaUJeeIo-kJhQWygX6ffgbrCl';
-        $recaptcha_response = $_POST['recaptcha_response'];
-
-        // Make and decode POST request:
-        $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
-        $recaptcha = json_decode($recaptcha);
-
-        // Take action based on the score returned:
-        if ($recaptcha->score >= 0.5) {
-        // Verified - send email
-        } else {
-        // Not verified - show form error
-        }
-
-        } 
-
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-
+        if(Auth::guard('admin')->user()){
             
-            return redirect()->intended('/admin');
+            return redirect()->route('admin.index');
+        }else{
+            return view('auth.login');
         }
-        return back()->withInput($request->only('email', 'remember'));
     }
-    
-    public function writerLogin(Request $request)
-    {
-        /*
-        $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:6'
-        ]);
-    */
-        if (Auth::guard('writer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
 
-            return redirect()->intended('/writer');
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(ReCaptchataTestFormRequest $request)
+    {
+        if(Auth::guard('admin')->user()){
+            
+            return redirect()->route('admin.index');
+        }else{
+            $this->validateLogin($request);
+            // If the class is using the ThrottlesLogins trait, we can automatically throttle
+            // the login attempts for this application. We'll key this by the username and
+            // the IP address of the client making these requests into this application.
+            if ($this->hasTooManyLoginAttempts($request)) {
+                $this->fireLockoutEvent($request);
+                return $this->sendLockoutResponse($request);
+            }
+            if ($this->attemptLogin($request)) {
+                return $this->sendLoginResponse($request);
+            }
+            // If the login attempt was unsuccessful we will increment the number of attempts
+            // to login and redirect the user back to the login form. Of course, when this
+            // user surpasses their maximum number of attempts they will get locked out.
+            $this->incrementLoginAttempts($request);
+            return $this->sendFailedLoginResponse($request);
         }
-        return back()->withInput($request->only('email', 'remember'));
+    
     }
 }

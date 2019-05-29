@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modalidad;
+use App\Semana;
 use App\Posgrado;
 use App\Periodo;
 use DataTables;
 use App\Http\Requests\modalidades\StoreModalidadRequest;
+use App\Http\Requests\modalidades\UpdateModalidadRequest;
 use DB;
 
 class modalidadController extends Controller
@@ -60,13 +62,13 @@ class modalidadController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/noticias/'. $image_name;
+                $path = public_path() .'/img/modalidades/'. $image_name;
     
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', '/img/noticias/'.$image_name);
-                $ultimaImagen = '/img/noticias/'.$image_name;
+                $img->setattribute('src', '/img/modalidades/'.$image_name);
+                $ultimaImagen = '/img/modalidades/'.$image_name;
             }
         }
  
@@ -143,7 +145,7 @@ class modalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateModalidadRequest $request, $id)
     {
         $dom = new \domdocument();
         $removerXML = str_replace('<!--?xml encoding="utf-8" ?-->','',$request->contenido);
@@ -159,13 +161,13 @@ class modalidadController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/noticias/'. $image_name;
+                $path = public_path() .'/img/modalidades/'. $image_name;
     
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', '/img/noticias/'.$image_name);
-                $ultimaImagen = '/img/noticias/'.$image_name;
+                $img->setattribute('src', '/img/modalidades/'.$image_name);
+                $ultimaImagen = '/img/modalidades/'.$image_name;
             }
         }
  
@@ -222,7 +224,8 @@ class modalidadController extends Controller
 
     }
     public function modalidad(){
-        return view('admin.modalidad.adminModalidades');
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
+        return view('admin.modalidad.adminModalidades',compact(['semana']));
         
     }
     public function listModalidad(Request $request ){

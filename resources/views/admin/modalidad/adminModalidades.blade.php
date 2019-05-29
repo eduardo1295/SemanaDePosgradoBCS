@@ -83,17 +83,6 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 
 
-<!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
-
-
-<script src="/js/summer/summernote-bs4.js"></script>
-<script src="/js/summer/summernote-es-ES.js"></script>
-<script src="/js/summer/summernote-text-findnreplace.js"></script>
-<script src="/js/summer/summernote-list-styles-bs4.js"></script>
-<script src="/js/summer/summernote-cleaner.js"></script>
-<script src="/js/imagenes/vistaprevia.js"></script>
--->
 <script src="/plugins/summernote/summernote-bs4.js"></script>
 <script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
 <script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
@@ -117,7 +106,7 @@
 
 
         $(function () {
-            registerSummernote('.summernote', 'Contenido de la modalidad', 1200, function (max) {
+            registerSummernote('.summernote', 'Contenido de la modalidad', 1500, function (max) {
                 $('#maxContentPost').text(max)
             });
         });
@@ -581,9 +570,6 @@
 <link href="/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
 <!--
-<link href="/css/summer/summernote-list-styles-bs4.css" rel="stylesheet">
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 
     Nuevo Rente
 -->

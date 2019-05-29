@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Institucion;
+use App\Semana;
 use DB;
 use DataTables;
 use App\Http\Requests\excelrequest\ExcelUploadRequest;
@@ -19,7 +20,7 @@ class InstitucionController extends Controller
      */
 
      public function __construct(){
-        $this-> middleware('auth:admin');
+        $this->middleware('admin.auth:admin')->only('instituciones');
 
      }
 
@@ -172,7 +173,8 @@ class InstitucionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function instituciones(){
-        return view('institucion.instituciones');
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
+        return view('institucion.instituciones',compact(['semana']));
         
     }
 

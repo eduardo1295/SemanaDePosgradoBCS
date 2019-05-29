@@ -68,10 +68,10 @@ var hola;
 
                     <div class="form-row mt-2">
                         <div class="form-group col-12">
-                            <strong>Contenido:</strong>
+                            <strong>Descripción:</strong>
                             <textarea class="summernote"  id="contenido" name="contenido"></textarea>
+                            <small><span class="text-danger mensajeError" id="contenido_error"></span></small>
                           </div>
-                          <span class="mensajeError" id="contenido_error"></span>
                     </div>
                 </form>
             </div>

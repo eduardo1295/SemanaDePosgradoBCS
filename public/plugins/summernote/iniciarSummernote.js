@@ -40,7 +40,6 @@ function registerSummernote(element, placeholder, max, callbackMax) {
 
             ['color', ['color']],
             ['style', ['style']],
-            ['fontname', ['fontname']],
             ['fontsize', ['fontsize']],
             ['font', ['bold', 'italic', 'underline', 'clear']],
             ['picture'],

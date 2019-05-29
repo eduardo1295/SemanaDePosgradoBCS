@@ -36,18 +36,16 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-        'writer' => [
+
+        'web' => [
             'driver' => 'session',
-            'provider' => 'writers',
+            'provider' => 'users',
         ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -72,17 +70,14 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
-        ],
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
         ],
-        'writers' => [
+
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Writer::class,
+            'model' => App\User::class,
         ],
 
         // 'users' => [
@@ -107,6 +102,12 @@ return [
     */
 
     'passwords' => [
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'admin_password_resets',
+            'expire' => 60,
+        ],
+
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',

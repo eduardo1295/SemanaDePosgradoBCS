@@ -29,9 +29,22 @@ class UpdateNoticiaRequest extends FormRequest
 
             'resumen' => 'required|string|max:100',
 
-            'contenido' => 'required|string',
+            'contenido' => 'required|string|not_in:<!--?xml encoding="utf-8" ?--><div><br></div>,<div><br></div>',
 
             'imgnoticia' => 'mimes:jpeg,jpg,png|max:2048',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'contenido' => 'contenido de la noticia',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'contenido.not_in' => 'Contenido de la noticia no válido',
         ];
     }
 }

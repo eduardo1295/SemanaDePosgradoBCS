@@ -26,8 +26,9 @@
                         <div class="form-group col-12">
                             <strong>Contenido:</strong>
                             <textarea class="summernote"  style=" word-wrap: break-word;"  id="contenido" name="contenido"></textarea>
-                          </div>
-                          <small><span class="mensajeError text-danger" id="contenido_error"></span></small>
+                        <small><span class="mensajeError text-danger" id="contenido_error"></span></small>  
+                        </div>
+                          
                     </div>
 
                     <div class="form-row mt-1">

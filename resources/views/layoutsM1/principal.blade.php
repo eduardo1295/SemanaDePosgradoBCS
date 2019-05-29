@@ -15,7 +15,7 @@
     <meta http-equiv="Expires" content="-1" >
     <meta http-equiv="Pragma" content="no-cache">
 
-    <title>19 Semana de Posgrado</title>
+    <title>Semana de Posgrado BCS</title>
     
     <link rel="stylesheet" href="{{ mix('css/bootstrap.css')}} ">
     <script  src="{{mix('js/app.js')}} "> </script>

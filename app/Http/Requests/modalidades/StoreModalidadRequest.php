@@ -27,7 +27,7 @@ class StoreModalidadRequest extends FormRequest
         return [
             //Validacion campos modalidad
             'nombres' => 'required|string|max:50',
-            'contenido' => 'required|string',
+            'contenido' => 'required|string|not_in:<!--?xml encoding="utf-8" ?--><div><br></div>,<div><br></div>',
             'posgrado' => 'required|array',
             'posgrado.*' => 'required',
             'periodo' => 'required|array',
@@ -38,6 +38,8 @@ class StoreModalidadRequest extends FormRequest
         return [
             'posgrado.*.required' => 'El campo es obligatorio',
             'periodo.*.required' => 'El campo es obligatorio',
+            'contenido.not_in' => 'Descripción no válida',
+            'contenido.required' => 'El campo descripción es obligatorio'
             
         ];
     }

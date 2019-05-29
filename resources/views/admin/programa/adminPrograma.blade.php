@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Programas
+                Programas de estudio
             </h1>
         </div>
 
@@ -45,7 +45,7 @@
                         <th>Nombre</th>
                         <th>Nivel</th>
                         <th>Periodo</th>
-                        <th>Institucion</th>
+                        <th>Institución</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
@@ -103,7 +103,7 @@
         });
 
         var table = $('#slidersC').DataTable({
-            "order":[[6,"desc"]],
+            "order":[[5,"asc"]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -154,7 +154,6 @@
 
         $("#close-sidebar").click(function () {
             $('.mensajeError').text("");
-            $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
         });
 
         $("#show-sidebar").click(function () {
@@ -165,11 +164,12 @@
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editar', function () {
+            $('.mensajeError').text("")
             var programa_id = $(this).data('id');
             var ruta = "{{url('programa')}}/" + programa_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
-                $('#programaCrudModal').html("Editar imagen");
+                $('#programaCrudModal').html("Editar Programa");
                 $('#btn-save').val("editar");
                 $('#programa-crud-modal').modal('show');
                 console.log(data);
@@ -182,9 +182,6 @@
                 $('#periodo').val(data.periodo);
                 $('#programa_id').val(data.id);
                 
-                $('#imgslide').prop('src', "{{url('img/programa')}}/" + data.url_imagen);
-                $('#imagenactualT').html('Imagen actual');
-                $('#imagenAnterior').removeClass('d-none');
 
             })
         });
@@ -195,7 +192,7 @@
             var programa_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: '¿Desea eliminar la imagen?',
+                title: '¿Desea eliminar el programa de estudios?',
                 content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
@@ -225,15 +222,7 @@
                                         var oTable = $('#slidersC').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    //$("#mensaje-acciones").text("imagen eliminada exitosamente.");
-                                    //$("#mensaje-acciones").fadeIn();
-                                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                                    //$('#mensaje-acciones').addClass('alert-warning');
-                                    //$('#mensaje-acciones').removeClass('alert-success');
-
-                                    //$('#slidersC').DataTable().ajax.reload(null, false);
-                                    //$('#slidersC').DataTable().ajax.reload();
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> imagen eliminada exitosamente.");
+                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Programa borrado exitosamente.");
                                     $("#snackbar").addClass("show");
                                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                                 },
@@ -257,7 +246,7 @@
             var programa_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
-                title: "¿Desea reactivar la imagen?",
+                title: "¿Desea reactivar el programa de estudios?",
                 content: 'This dialog will automatically trigger \'cancel\' in 8 seconds if you don\'t respond.',
                 autoClose: 'cancelAction|8000',
                 buttons: {
@@ -283,7 +272,7 @@
                                         var oTable = $('#slidersC').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen activada exitosamente.");
+                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Porgrama activado exitosamente.");
                                     $("#snackbar").addClass("show");
                                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                                 },
@@ -303,25 +292,16 @@
 
     /*Accion al presionar el boton crear-programa*/
     $('#crear-programa').click(function () {
-
+        $('.mensajeError').text("")
         $('#btn-save').val("crear-programa");
         $('#programa_id').val('');
         $('#programaForm').trigger("reset");
         $('#programaCrudModal').html("Agregar nuevo programa");
         $('#programa-crud-modal').modal({ backdrop: 'static', keyboard: false })
         $('#programa-crud-modal').modal('show');
-        $('#imgslide').prop('src', "");
-        $('#imagenactualT').html('');
-        $('#imagenactual').addClass('d-none');
 
     });
 
-    $('#btn-close').click(function () {
-        $('.mensajeError').text("");
-        $('#vistaPrevia').prop('src', "");
-        $('#nuevaImagen').addClass('d-none');
-        $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-    })
 
     $("input[name='verInsti']").change(function (e) {
         checkInsti = $(this).val();
@@ -365,15 +345,10 @@
                     $("#snackbar").addClass("show");
                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
 
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
+                    
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-                    $('#nuevaImagen').addClass('d-none');
-                    $('#vistaPrevia').prop('src', "");
+                    
                     console.log(data);
                 },
                 error: function (data) {
@@ -411,19 +386,11 @@
                     //recargar serverside
                     var oTable = $('#slidersC').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("imagen registrada exitosamente.");
-                    //$("#mensaje-acciones").fadeIn();
-                    //$('#mensaje-acciones').delay(3000).fadeOut();
-                    //$('#mensaje-acciones').addClass('alert-success');
-                    //$('#mensaje-acciones').removeClass('alert-warning');
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> imagen registrada exitosamente.");
+                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Pograma registrado exitosamente.");
                     $("#snackbar").addClass("show");
                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-                    $('#nuevaImagen').addClass('d-none');
-                    $('#vistaPrevia').prop('src', "");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -445,14 +412,6 @@
 
     })
 
-    $('.custom-file-input').on('change', function () {
-        let fileName = $(this).val().split('\\').pop();
-        if (!fileName.trim()) {
-            $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
-        } else {
-            $(this).next('.custom-file-label').addClass("selected").html(fileName);
-        }
-    })
     function mostrarModal(imagenMini){
         $('#img01').prop('src',imagenMini.src);
         $('#modalImagenes').css('display','block');

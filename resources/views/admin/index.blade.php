@@ -205,8 +205,8 @@
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 4 },
-                { width: 105, targets: 4 }
+                { responsivePriority: 2, targets: 7 },
+                { width: 105, targets: 7 }
             ]
         });
 
@@ -289,6 +289,9 @@
             var id = $('#semana_id').val();
             var ruta = "{{url('semana')}}/" + id + "";
             var datos = new FormData($("#semanaForm")[0]);
+            var rFechas = $('#fecha').val().split(' - ');
+            datos.append('fecha_inicio', rFechas[0]);
+            datos.append('fecha_fin', rFechas[1]);
             datos.append('_method', 'PUT');
             //console.log(Array.from(datos));
             $.ajax({
@@ -301,7 +304,8 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    //console.log(data);
+                    console.log(data);
+                    
                     $('#semanaForm').trigger("reset");
                     $('#semana-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
@@ -314,7 +318,9 @@
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-
+                    if(data.vigente==1){
+                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/'+data.url_logo);
+                    }
                 },
                 error: function (data) {
                     if (data.status == 422) {
@@ -347,6 +353,7 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
+                    console.log(Array.from(data));
                     $('#semanaForm').trigger("reset");
                     $('#semana-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
@@ -359,6 +366,9 @@
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
+                    if(data.vigente==1){
+                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/'+data.url_logo);
+                    }
                 },
                 error: function (data) {
                     if (data.status == 422) {

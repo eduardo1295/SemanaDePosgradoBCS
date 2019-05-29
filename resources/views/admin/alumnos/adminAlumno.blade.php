@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Coordinadores</legend>
+        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Alumnos participantes</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verCoor" value="activos">
@@ -30,7 +30,7 @@
         <div class="col-12 col-md-6 col-lg-6">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-coordinador"><span><i
-                            class="fas fa-plus"></i></span> Agregar coordinador</a>
+                            class="fas fa-plus"></i></span> Agregar alumno</a>
 
             </div>
         </div>

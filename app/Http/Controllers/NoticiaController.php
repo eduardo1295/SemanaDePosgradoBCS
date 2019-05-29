@@ -19,9 +19,8 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function __construct(){
-         $this-> middleware('auth:admin')->only('noticias');
-         
-
+        $this->middleware('admin.auth:admin')->only('noticias');
+         //$this-> middleware('auth:admin')->only('noticias');
      }
     public function index()
     {
@@ -236,7 +235,8 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function noticias(){
-        return view('noticias.adminNoticias');
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
+        return view('noticias.adminNoticias',compact(['semana']));
         
     }
 

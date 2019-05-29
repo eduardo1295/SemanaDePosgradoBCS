@@ -123,6 +123,9 @@
                     </div>
                 </div>
         </div>
+        @empty($instituciones)
+        {{dd($instituciones)}}    
+        
             <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
                 <div id="fondo">
                     <div class="container-fluid" id="contenido">
@@ -137,6 +140,7 @@
                     </div>
                 </div>
             </section>  
+            @endempty
             @if (isset($institucionSede))
             <section id="modales">
                 <div class="modal fade" id="cerrar" tabindex="-1" role="dialog" aria-label="modalLabel"

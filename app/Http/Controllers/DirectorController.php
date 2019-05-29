@@ -15,6 +15,10 @@ use Validator;
 
 class DirectorController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin.auth:admin')->only('director');
+         //$this-> middleware('auth:admin')->only('noticias');
+     }
     /**
      * Display a listing of the resource.
      *

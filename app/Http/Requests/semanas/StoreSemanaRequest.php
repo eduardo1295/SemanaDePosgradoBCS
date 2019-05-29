@@ -27,7 +27,7 @@ class StoreSemanaRequest extends FormRequest
             //Validacion campos semana
             'nombre' => 'required|string|max:100',
 
-            'contenido' =>'required',
+            'contenido' =>'required|string|not_in:<!--?xml encoding="utf-8" ?--><div><br></div>,<div><br></div>',
             
             'fecha_inicio' => 'required|date_format:Y-m-d',
 
@@ -42,12 +42,19 @@ class StoreSemanaRequest extends FormRequest
     }
 
     public function attributes()
-{
-    return [
-        'fecha_inicio' => 'Inicio del evento',
-        'fecha_fin' => 'final del evento',
-        'contenido' => 'información general',
-        'imagensemana' => 'logo del evento',
-    ];
-}
+    {
+        return [
+            'fecha_inicio' => 'Inicio del evento',
+            'fecha_fin' => 'final del evento',
+            'contenido' => 'información general',
+            'imagensemana' => 'logo del evento',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'contenido.not_in' => 'Información general no válida',
+            
+        ];
+    }
 }

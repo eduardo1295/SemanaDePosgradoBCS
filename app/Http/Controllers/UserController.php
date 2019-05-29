@@ -12,7 +12,6 @@ use File;
 use DB;
 use DataTables;
 use Validator, Input, Redirect; 
-
 use App\Alumno;
 use App\Programa;
 use App\Rol;
@@ -25,7 +24,6 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     function __construct(){
-        //$this->middleware(['auth','roles']);
         $this->middleware(['auth']);
         
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Carrusel;
+use App\Semana;
 use DataTables;
 use App\Http\Requests\carrusel\StoreCarruselRequest;
 use App\Http\Requests\carrusel\UpdateCarruselRequest;
@@ -11,7 +12,7 @@ use Validator;
 class CarruselController extends Controller
 {
     public function __construct(){
-         $this-> middleware('auth:admin');
+        $this->middleware('admin.auth:admin')->only('carrusel');
 
      }
 
@@ -179,7 +180,8 @@ class CarruselController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function carrusel(){
-        return view('admin.carrusel.adminCarrusel');   
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
+        return view('admin.carrusel.adminCarrusel',compact(['semana']));   
     }
 
     /**

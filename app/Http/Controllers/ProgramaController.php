@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Programa;
+use App\Semana;
 use App\Institucion;
 use DataTables;
 use App\Http\Requests\programas\StoreProgramaRequest;
@@ -103,7 +104,7 @@ class ProgramaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProgramaRequest $request, $id)
     {
         $programa = Programa::where('id',$id)->first();
         
@@ -171,8 +172,9 @@ class ProgramaController extends Controller
     }
 
     public function programa(){
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre')->get();
-        return view('admin.programa.adminPrograma',compact(['instituciones']));   
+        return view('admin.programa.adminPrograma',compact(['instituciones','semana']));   
     }
 
 

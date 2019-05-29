@@ -20,7 +20,7 @@ class ReCaptchataTestFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'g-recaptcha-response'=>'recaptcha'
+            'g-recaptcha-response' => 'required'
         ];
     }
 }
