@@ -7,7 +7,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col-sm-4 col-md-2">
                             @if ($row->url_imagen!='sin imagen')
-                            <img src="{{url('img/noticias')}}/{{ $row->url_imagen }}" alt="" class="img-fluid img-noti-pag">
+                            <img src="{{url($row->url_imagen)}}" alt="" class="img-fluid img-noti-pag">
                             @endif
                     </div>
                     <div class="col-sm-8 col-md-10">

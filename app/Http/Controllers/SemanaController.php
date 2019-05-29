@@ -33,7 +33,7 @@ class SemanaController extends Controller
     public function index()
     {
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
-        $noticias = Noticia::latest('fecha_creacion')->take(3)->get();
+        $noticias = Noticia::latest('fecha_actualizacion')->take(3)->get();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();

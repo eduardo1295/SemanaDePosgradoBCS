@@ -26,7 +26,7 @@ class NoticiaController extends Controller
     {
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
-        $data = Noticia::latest('fecha_creacion')->paginate(5);
+        $data = Noticia::latest('fecha_actualizacion')->paginate(5);
         return view('noticias.verNoticias', compact(['data','instituciones','semana']));
         //return view('noticias', compact('data'));
 
