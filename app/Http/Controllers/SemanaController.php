@@ -15,6 +15,8 @@ use DB;
 use App\Carrusel;
 use Auth;
 use Illuminate\Support\Str as Str;
+use Datetime;
+use Carbon\Carbon;
 
 class SemanaController extends Controller
 {
@@ -32,14 +34,31 @@ class SemanaController extends Controller
      */
     public function index()
     {
-        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio','fecha_fin')->where('vigente',1)->first();
+        $fInicio = $semana->fecha_inicio;
+        $fInicio = str_replace('-','',$fInicio);
+        
+        $fFin = $semana->fecha_fin;
+        $fFin = str_replace('-','',$fFin);
+        $datetimeI = DateTime::createFromFormat('Ymd', $fInicio );
+        $datetimeF = DateTime::createFromFormat('Ymd', $fFin);
+        
+        Carbon::setLocale('es');
+        
+        
+        $date = '2018-11-15';
+        $cadena    = new DateTime($date);
+        //dd($cadena->formatLocalized('l'));
+$cadena->format('l'); 
+
+        //$cadena = $datetimeI->format('l').$datetimeF->format('l');
         $noticias = Noticia::latest('fecha_actualizacion')->take(3)->get();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
         //dd(Auth::guard()->user());
         
-        return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel']));
+        return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel','cadena']));
     }
 
     public function indexAdmin()

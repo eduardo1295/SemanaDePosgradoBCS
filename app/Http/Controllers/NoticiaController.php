@@ -72,6 +72,7 @@ class NoticiaController extends Controller
             $imagennoticia->move(public_path('img/noticias'), $nuevo_nombre);
         }
         */
+        $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->firstOrFail();
         $dom = new \domdocument();
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
@@ -98,7 +99,9 @@ class NoticiaController extends Controller
                 $ultimaImagen = '/img/noticias/'.$image_name;
             }
         }
- 
+        if($ultimaImagen == ""){
+            $ultimaImagen = '/img/semanaLogo/'.$semana->url_logo;
+        }
         $detail = $dom->savehtml();
         
         $noticia = new Noticia;
@@ -121,7 +124,7 @@ class NoticiaController extends Controller
     {
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
-        $noticia  = Noticia::select('id_noticia','titulo','contenido','url_imagen','fecha_actualizacion')->where('id_noticia', $id)->first();
+        $noticia  = Noticia::select('id_noticia','titulo','contenido','url_imagen','fecha_actualizacion')->where('id_noticia', $id)->firstOrFail();
         return view('noticias.detalle', compact(['noticia','instituciones','semana']));
     }
 
@@ -160,7 +163,7 @@ class NoticiaController extends Controller
         }
         */
         
-        
+        $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->firstOrFail();
         $dom = new \domdocument();
         $removerXML = str_replace('<!--?xml encoding="utf-8" ?-->','',$request->contenido);
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$removerXML, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -172,7 +175,7 @@ class NoticiaController extends Controller
         foreach($images as $k => $img){
             $data = $img->getattribute('src');
             $ruta = explode('/',$data);
-            $ultimaImagen = $ruta[3];
+            $ultimaImagen = '/img/noticias/'.$ruta[3];
             
             if (substr($data, 0, 5) == 'data:') {
                 list($type, $data) = explode(';', $data);
@@ -188,6 +191,9 @@ class NoticiaController extends Controller
                 $img->setattribute('src', '/img/noticias/'.$image_name);
                 $ultimaImagen = '/img/noticias/'.$image_name;
             }
+        }
+        if($ultimaImagen == ""){
+            $ultimaImagen = '/img/semanaLogo/'.$semana->url_logo;
         }
  
         $detail = $dom->savehtml();
