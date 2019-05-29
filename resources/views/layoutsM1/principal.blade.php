@@ -29,7 +29,9 @@
 
     
     @yield('menu','')
+    <div style="min-height:100vh">
     @yield('contenido','')
+    </div>
     @yield('footer','')
     @yield('scripts','')
     

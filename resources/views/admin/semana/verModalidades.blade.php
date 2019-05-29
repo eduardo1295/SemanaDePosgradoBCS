@@ -9,71 +9,44 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
-
 </script>
 @endsection
-<div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
+<div class="container">
     <div class="row">
+        <div class="col-12">
+            <h1 id="Titulo" class="display-5  font-weight-bold rounded p-auto pt-3">Modalidades</h1> <br>
+        </div>
         <div class="col-12">
             <h5 class="mb-4">La modalidad de participación será de acuerdo al periodo y nivel cursado como se muestra a continuación:</h5>
         </div>
         <div class="col-12">
-        <table class="table">
+        <div class="table-responsive">
+            <table class="table table-striped">
             <thead>
             <tr>
             <th scope="col">Modalidad</th>
-        <?php
-        $columnas = [];
-        $aux_per = array();
-        $i=0;
-        $bandera = true;
-        foreach ($modalidades as $modalidad){
-            if(isset($modalidad->niveles)){
-                foreach ($modalidad->niveles as $datos) {
-                    $nueva_columna = $datos->grado .' ('. $datos->periodo.')';
-                    for ($x=0; $x < count($columnas) ; $x++) { 
-                        if($columnas[$x] == $nueva_columna){
-                            $bandera = false;
-                        }
-                    }
-                    if($bandera){
-                    echo '<th scope="col">'.$nueva_columna.'</th>';
-                    array_push($columnas,$nueva_columna);
-                    array_push($aux_per,[]);
-                    }
-                }
-            }
-            $i++;
-        }
-        $ww = 1;
-        for ($x=0; $x < count($aux_per) ; $x++){
-            for ($j=0; $j < count($columnas) ; $j++){
-                array_push($aux_per[$x],$ww);
-                $ww++;
-            }
-        }
-        dd($aux_per);
-        ?>
-        </tr>
-        </thead>
-            <tbody>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-            </tbody>
-        </table>
+            {!!$tabla!!}
+            {{-- Aqui iba el codigo php --}}
+       
+        
+            </table>
         </div>
+        </div>
+        <div class="col-12">
+             <p>La información proporcionada en cada una de las modalidades es responsabilidad de los autores 
+                y podrá ser utilizada para los fines académicos correspondientes y su distribución en línea.</p>
+            Los criterios de participación de cada modalidad son.
+        </div>
+
     </div>
 
 
 
 
     @foreach ($modalidades as $mol)
-            <div class="row">
-                <div class="col-12">
-                    <h3>{{$mol->nombre}}</h3> <hr>
+            <div class="row" >
+                <div class="col-12 text-justify">
+                    <h3 class="border-bottom-info"><strong class="text-info" id="{{$mol->nombre}}"> {{$mol->nombre}} </strong></h3> 
                     {!! $mol->descripcion !!}
                 </div>
             </div>
@@ -83,6 +56,7 @@
     
         
         
+
 
         
     </div> 

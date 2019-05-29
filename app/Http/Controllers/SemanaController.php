@@ -10,6 +10,7 @@ use App\Noticia;
 use App\Institucion;
 use App\User;
 use App\Modalidad;
+use App\Posgrado;
 use DB;
 use App\Carrusel;
 use Auth;
@@ -302,9 +303,76 @@ class SemanaController extends Controller
         //$modalidades = Modalidad::select('id_modalidad','nombre','descripcion')->get();
         $modalidades = Modalidad::with('niveles')->get();
         //$periodos = Posgrado::with('periodos')->get();
+        //use Illuminate\Support\Arr;
+        $tabla = "";
+        $columnas = [];
+        $aux_per = array();
+        $i=0;
+        $bandera = true;
+        foreach ($modalidades as $modalidad){
+            if(isset($modalidad->niveles)){
+                foreach ($modalidad->niveles as $datos) {
+                    $nueva_columna = $datos->grado .' ('. $datos->periodo.')';
+                    //echo $nueva_columna.'+';
+                    $bandera = true;
+                    for ($x=0; $x < count($columnas) ; $x++) { 
+                        if($columnas[$x] == $nueva_columna){
+                            $bandera = false;
+                        }
+                    }
+                    if($bandera){
+                    $tabla .= '<th scope="col" class="text-center">'.$nueva_columna.'</th>';
+                    array_push($columnas,$nueva_columna);
+                    }
+                }
+                $bandera = true;
+                //$datata =array( 'holo' => [] );
+                array_push($aux_per, []);
+            }
+            $i++;
+        }
+        for ($x=0; $x < $i ; $x++){
+            for ($j=0; $j < count($columnas) ; $j++){
+                array_push($aux_per[$x],"<td></td>");
+            }
+        }
+        $tabla .= '</tr></thead><tbody>';
+        $j=0;
+        $nombreModalidaddes = [];
+        foreach ($modalidades as $modalidad) {
+            array_push($nombreModalidaddes,$modalidad->nombre);
+            foreach ($modalidad->niveles as $datos) {
+                $nombre = $datos->grado .' ('. $datos->periodo.')';
+                //dd($columnas);
+                for ($i=0; $i < count($columnas) ; $i++) { 
+                    if($columnas[$i] == $nombre){
+                        $aa = Posgrado::find($datos->id)->periodos()->get();
+                        $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. '-'.$aa[0]->periodo_max.'</td>' ;
+                    }
+                }
+            }
+            $j++;
+        }
+        for ($i=0; $i < count($aux_per) ; $i++) { 
+            $tabla .= '<tr>';
+            $tabla .= '<th scope="row" class="aModalidad">'. $nombreModalidaddes[$i].'</th>';
+            for ($x=0; $x < count($aux_per[$i]) ; $x++) { 
+                $tabla .= $aux_per[$i][$x];
+            }
+            $tabla.= '</tr>';
+        }
+        $tabla .= '</tbody>';
         
         
-        return view('admin.semana.verModalidades', compact(['semana','instituciones','modalidades']));
+        
+        return view('admin.semana.verModalidades', compact(['semana','instituciones','modalidades','tabla']));
+    }
+
+    public function subirTrabajo(){
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        
+        return view('admin.semana.subirTrabajo', compact(['semana','instituciones']));
     }
      
 }
