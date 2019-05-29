@@ -33,18 +33,18 @@
                                     @php
                                       $ruta = auth('admin')->user() ? 'admin.logout' : 'logout';                                      
                                     @endphp
-                                    
+                                    {{-- comment 
                                     <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth()->user()->nombre}}</a> </li>
                                     --}}
-                                    <li class="has-sub"> <div class="aliga">{{auth()->user()->nombre}}</div> 
+                                    <li class="has-sub"> <div class="aliga">{{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</div> 
                                         <ul>
                                             <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión {{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</a> </li>
                                         </ul>
                                     </li>
-                                    
+                                    {{-- comment
                                     <li><a onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión {{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</a> </li>
-                                    
+                                    --}}
                                     <form id="logout-form" action="{{route($ruta)}}" method="POST" style="display: none;">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     </form>

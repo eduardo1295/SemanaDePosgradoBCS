@@ -27,7 +27,7 @@ class UpdateNoticiaRequest extends FormRequest
             //Validacion campos noticia
             'titulo' => 'required|string|max:100',
 
-            'resumen' => 'required|string|max:100',
+            'resumen' => 'required|string|max:200',
 
             'contenido' => 'required|string|not_in:<!--?xml encoding="utf-8" ?--><div><br></div>,<div><br></div>',
 
@@ -39,6 +39,7 @@ class UpdateNoticiaRequest extends FormRequest
     {
         return [
             'contenido' => 'contenido de la noticia',
+            'resumen' => 'Resumen de la noticia',
         ];
     }
 
