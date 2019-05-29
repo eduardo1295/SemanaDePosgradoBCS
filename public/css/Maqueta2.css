@@ -1,8 +1,6 @@
 
 @charset "UTF-8";
-body{
-  font-family: 'Open Sans', sans-serif;
-}
+/*body{font-family: 'Open Sans', sans-serif;}*/
 #espacioBlanco{padding-top: 90px;}
 #navbarM2{ position: fixed; z-index: 1000; width: 100%; }
 #navbarM2 .header { background-color: #f7f7f7; z-index: 9999; position: relative; padding-top: 20px; padding-bottom: 3px; }
@@ -211,12 +209,18 @@ body{
 .border-bottom-info {
   border-bottom: .25rem solid #36b9cc!important;
 }
+.aModalidad{ color: #36b9cc; text-decoration: none; }
+.loginUsuario{
+  right: 125px;
+}
+
 
 
 @media (min-width: 0px) and (max-width: 576px)   {
   .n4 {border-left: 0px ;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
   .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px}
   .n3 { border-bottom-left-radius: 15px !important; border-bottom-left-radius: 15px}
+  .loginUsuario{ right: 0px; }
   
   #logoSede{ width: 200px; height: 150px; } }
 @media (min-width: 576px) and (max-width: 768px) {

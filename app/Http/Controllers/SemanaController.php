@@ -345,7 +345,7 @@ class SemanaController extends Controller
                 for ($i=0; $i < count($columnas) ; $i++) { 
                     if($columnas[$i] == $nombre){
                         $aa = Posgrado::find($datos->id)->periodos()->get();
-                        $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. ' a '.$aa[0]->periodo_max.'</td>' ;
+                        $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. '-'.$aa[0]->periodo_max.'</td>' ;
                     }
                 }
             }
@@ -353,7 +353,7 @@ class SemanaController extends Controller
         }
         for ($i=0; $i < count($aux_per) ; $i++) { 
             $tabla .= '<tr>';
-            $tabla .= '<th scope="row">'.$nombreModalidaddes[$i].'</th>';
+            $tabla .= '<th scope="row" class="aModalidad">'. $nombreModalidaddes[$i].'</th>';
             for ($x=0; $x < count($aux_per[$i]) ; $x++) { 
                 $tabla .= $aux_per[$i][$x];
             }
@@ -364,6 +364,13 @@ class SemanaController extends Controller
         
         
         return view('admin.semana.verModalidades', compact(['semana','instituciones','modalidades','tabla']));
+    }
+
+    public function subirTrabajo(){
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        
+        return view('admin.semana.subirTrabajo', compact(['semana','instituciones']));
     }
      
 }

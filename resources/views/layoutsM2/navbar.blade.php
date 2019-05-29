@@ -26,8 +26,15 @@
                                     @if(auth()->user()->hasRoles(['alumno']))
                                         <li><a href="/login" title="Styleguide">Entro</a> </li>
                                     @endif
-                                    --}}
+                                    
                                     <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth()->user()->nombre}}</a> </li>
+                                    --}}
+                                    <li class="has-sub"> <div class="aliga">{{auth()->user()->nombre}}</div> 
+                                        <ul>
+                                            <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
+                                            <li><a href="/logout" class="loginUsuario" >Cerrar Sesión</a></li>
+                                        </ul>
+                                    </li>
                                     
                                 @elseif(Auth::guard('admin')->check())
                                     <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth('admin')->user()->nombre}}</a> </li>
