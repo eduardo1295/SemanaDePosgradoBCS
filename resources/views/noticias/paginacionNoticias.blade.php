@@ -17,7 +17,7 @@
                             <div class="d-flex justify-content-between ">
                                 <p class="card-text"><small class="text-muted">Ultima modiciacion
                                         {{ $row->fecha_creacion }}</small></p>
-                                <h4><a href="{{route('noticia.show',$row->id_noticia)}}" class="badge badge-primary">Ver Mas</a></h4>
+                                <h4><a href="{{route('noticias.show',$row->id_noticia)}}" class="badge badge-primary">Ver Mas</a></h4>
                             </div>
                         </div>
                     </div>

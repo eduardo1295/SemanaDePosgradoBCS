@@ -31,7 +31,7 @@
 <section class="endfooter">
     <div class="container-fluid">
         <div class="text-center pb-3 pt-3">
-            Copyright © 2019 Todos los derechos reservados.
+            Copyright © {{date("Y")}} {{__('All rights reserved.')}}
         </div>
     </div>
 </section>

@@ -203,7 +203,7 @@
     $('body').on('click', '.editar', function () {
         reiniciar();
         var noticia_id = $(this).data('id');
-        var ruta = "{{url('noticia')}}/" + noticia_id + "/editar";
+        var ruta = "{{url('noticias')}}/" + noticia_id + "/editar";
 
 
         $.get(ruta, function (data) {
@@ -249,7 +249,7 @@
         $('#btn-save').html('Guardando..');
         if (actionType == "editar") {
             var id = $('#noticia_id').val();
-            var ruta = "{{url('noticia')}}/" + id + "";
+            var ruta = "{{url('noticias')}}/" + id + "";
             var datos = new FormData($("#noticiaForm")[0]);
             datos.append('_method', 'PUT');
             //console.log(Array.from(datos));
@@ -298,7 +298,7 @@
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: new FormData($("#noticiaForm")[0]),
-                url: "{{route('noticia.store')}}",
+                url: "{{route('noticias.store')}}",
                 type: "POST",
                 dataType: 'json',
                 contentType: false,
@@ -361,7 +361,7 @@
                         $.ajax({
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             type: "DELETE",
-                            url: "{{ url('noticia')}}" + '/' + noticia_id,
+                            url: "{{ url('noticias')}}" + '/' + noticia_id,
                             success: function (data) {
                                 var oTable = $('#noticias').dataTable();
                                 if (table.data().count() == 1) {
@@ -408,7 +408,7 @@
                         $.ajax({
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             type: "PUT",
-                            url: "{{ url('admin/noticia/reactivar')}}" + '/' + noticia_id,
+                            url: "{{ url('admin/noticias/reactivar')}}" + '/' + noticia_id,
                             success: function (data) {
                                 var oTable = $('#noticias').dataTable();
                                 if (table.data().count() == 1) {

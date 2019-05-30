@@ -214,7 +214,8 @@
                   $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
               }
               else{
-                mostrarSnackError("<span style='color:red;'><i class='fas fa-times'></i></span> El texto que desea ingresar es mayor al límite establecido.");
+                if(text)
+                  mostrarSnackError("<span style='color:red;'><i class='fas fa-times'></i></span> El texto que desea ingresar es mayor al límite establecido.");
               }
             }
           }

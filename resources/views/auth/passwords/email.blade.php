@@ -23,7 +23,7 @@
     <div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
         <div class="col-md-8">
             <div class="card" style="background: white; color: white;opacity: 0.9">
-                <div class="card-header text-center pt-3" style="background: #777777;color: white;" ><h4>{{ __('Restablecer contraseña') }}</h4></div>
+                <div class="card-header text-center pt-3" style="background: #777777;color: white;" ><h4>{{ __('Reset Password') }}</h4></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -32,11 +32,11 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="{{ route('password.email') }}"aria-label="{{ __('Reset Password') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right" style="color:black"><strong>{{ __('Dirección email') }}</strong></label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right" style="color:black"><strong>{{ __('E-Mail Address') }}</strong></label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
@@ -52,7 +52,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Enviar enlace para restablecer contraseña') }}
+                                    {{ __('Send Password Reset Link') }}
                                 </button>
                             </div>
                         </div>

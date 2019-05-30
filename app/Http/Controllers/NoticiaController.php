@@ -100,7 +100,7 @@ class NoticiaController extends Controller
             }
         }
         if($ultimaImagen == ""){
-            $ultimaImagen = '/img/semanaLogo/'.$semana->url_logo;
+            $ultimaImagen = '/img/noticias/logo_noticias.png';
         }
         $detail = $dom->savehtml();
         
@@ -193,7 +193,7 @@ class NoticiaController extends Controller
             }
         }
         if($ultimaImagen == ""){
-            $ultimaImagen = '/img/semanaLogo/'.$semana->url_logo;
+            $ultimaImagen = '/img/noticias/logo_noticias.png';
         }
  
         $detail = $dom->savehtml();

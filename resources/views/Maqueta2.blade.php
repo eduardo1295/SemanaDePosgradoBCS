@@ -1,3 +1,4 @@
+
 {{-- SECCION BLADE--}}
 @extends('layoutsM1.principal')
 
@@ -49,7 +50,7 @@
             @if (count($noticias) > 0)
             <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
                 <h2 class="mb-0 rounded-left">Noticias.</h2>
-                <h4 class="mb-0"> <a href="/noticia" class="badge badge-primary mb-0 align-self-center">Ver todas
+                <h4 class="mb-0"> <a href="/noticias" class="badge badge-primary mb-0 align-self-center">Ver todas
                         <i class="fas fa-arrow-circle-right"></i></a> </h4>
             </div>
             <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
@@ -123,8 +124,11 @@
                     </div>
                 </div>
         </div>
-        @empty($instituciones)
-        {{dd($instituciones)}}    
+        
+        @isset($instituciones)
+            @if ($instituciones->count() > 0)
+                
+            
         
             <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
                 <div id="fondo">
@@ -140,7 +144,8 @@
                     </div>
                 </div>
             </section>  
-            @endempty
+            @endif
+            @endisset
             @if (isset($institucionSede))
             <section id="modales">
                 <div class="modal fade" id="cerrar" tabindex="-1" role="dialog" aria-label="modalLabel"

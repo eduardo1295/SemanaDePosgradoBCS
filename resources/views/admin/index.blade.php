@@ -196,7 +196,7 @@
                         if (data == "no_disponible")
                             return data.replace("_", " ");
                         else
-                            return "<a target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" + data + ">" + data + "<a/>";
+                            return "<a style='cursor:pointer' target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" + data + ">" + data + "<a/>";
                     },
                     orderable: false, searchable: false
                 },
@@ -539,5 +539,6 @@
     .custom-file-input~.custom-file-label::after {
         content: "Elegir";
     }
+    
 </style>
 @endsection

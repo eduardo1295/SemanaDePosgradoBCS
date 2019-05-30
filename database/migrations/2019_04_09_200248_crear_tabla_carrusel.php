@@ -15,7 +15,7 @@ class CrearTablaCarrusel extends Migration
     {
         Schema::create('carrusel', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('link_web', 60)->nullable();
+            $table->string('link_web', 60)->nullable()->default('Sin_url_asignada');
             $table->string('url_imagen', 100);
 
             $table->integer('creado_por')->unsigned();

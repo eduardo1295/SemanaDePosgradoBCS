@@ -16,9 +16,9 @@ jQuery(function ($) {
     var ww = document.body.clientWidth;
     if (ww < 992) {
       $('#menuAd').removeClass('toggled');
-    } /*else if (ww >= 768) {
+    } else if (ww >= 992) {
       $('#menuAd').addClass('toggled');
-    };*/
+    };
   };
   $(window).resize(function () {
     alterClass();
