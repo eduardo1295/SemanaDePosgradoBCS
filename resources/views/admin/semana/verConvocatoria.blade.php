@@ -18,14 +18,22 @@
 @endsection
 
 @section('contenido')
+
+    
     @if(isset($semana))
         @if ($semana->url_convocatoria=='no_disponible')
         <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5" style="height:100vh">
             <h1>Convocatoria no disponible</h1>
         </div>
         @else
-        <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
-            <embed class="embed-responsive-item" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}"
+        <div class="container">
+        <!--<div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">-->
+            <div class="row">
+                <div class="col-12">
+                    <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Convocatoria</h1> <br>
+                </div>
+            </div>
+            <embed class="embed-responsive-item pb-5" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}"
                 type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
         @endif

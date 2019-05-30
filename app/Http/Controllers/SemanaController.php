@@ -324,7 +324,9 @@ $cadena->format('l');
         //$periodos = Posgrado::with('periodos')->get();
         //use Illuminate\Support\Arr;
         $tabla = "";
+        $columnasPosbles =["Maestría (Trimestre)","Maestría (Cuatrimestre)","Maestría (Semestre)","Doctorado (Trimestre)","Doctorado (Cuatrimestre)","Doctorado (Semestre)"];
         $columnas = [];
+        $columasFinal = [];
         $aux_per = array();
         $i=0;
         $bandera = true;
@@ -340,7 +342,7 @@ $cadena->format('l');
                         }
                     }
                     if($bandera){
-                    $tabla .= '<th scope="col" class="text-center">'.$nueva_columna.'</th>';
+                    //
                     array_push($columnas,$nueva_columna);
                     }
                 }
@@ -350,11 +352,22 @@ $cadena->format('l');
             }
             $i++;
         }
+        for ($bx=0; $bx < count($columnasPosbles) ; $bx++) { 
+            for ($cx=0; $cx <count($columnas) ; $cx++) { 
+                if($columnas[$cx] ==$columnasPosbles[$bx]){
+                    array_push($columasFinal,$columnas[$cx]);
+                    $tabla .= '<th scope="col" class="text-center">'.$columnas[$cx].'</th>';
+                    break;
+                }
+            }
+        }
+        //dd($columasFinal);
         for ($x=0; $x < $i ; $x++){
-            for ($j=0; $j < count($columnas) ; $j++){
+            for ($j=0; $j < count($columasFinal) ; $j++){
                 array_push($aux_per[$x],"<td></td>");
             }
         }
+        
         $tabla .= '</tr></thead><tbody>';
         $j=0;
         $nombreModalidaddes = [];
@@ -363,8 +376,8 @@ $cadena->format('l');
             foreach ($modalidad->niveles as $datos) {
                 $nombre = $datos->grado .' ('. $datos->periodo.')';
                 //dd($columnas);
-                for ($i=0; $i < count($columnas) ; $i++) { 
-                    if($columnas[$i] == $nombre){
+                for ($i=0; $i < count($columasFinal) ; $i++) { 
+                    if($columasFinal[$i] == $nombre){
                         $aa = Posgrado::find($datos->id)->periodos()->get();
                         $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. '-'.$aa[0]->periodo_max.'</td>' ;
                     }

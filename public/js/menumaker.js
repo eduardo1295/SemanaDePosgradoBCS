@@ -6,8 +6,8 @@
         title: "",
         format: "dropdown",
         breakpoint: 1200,
-        sticky: false
-      }, options);
+        sticky: false,
+        }, options);
 
       return this.each(function() {
         cssmenu.find('li ul').parent().addClass('has-sub');
@@ -18,9 +18,11 @@
             var mainmenu = $(this).next('ul');
             if (mainmenu.hasClass('open')) { 
               mainmenu.hide().removeClass('open');
+              $('#navbarM2').css({"max-height" : "none", "overflow-y" : "hidden", "overflow-x" : "hidden"});
             }
             else {
               mainmenu.show().addClass('open');
+              $('#navbarM2').css({"max-height" : "50vh", "overflow-y" : "scroll", "overflow-x" : "hidden"});
               if (settings.format === "dropdown") {
                 mainmenu.find('ul').show();
               }

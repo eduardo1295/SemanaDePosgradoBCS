@@ -32,7 +32,7 @@
             </table>
         </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 pb-3">
              <p>La información proporcionada en cada una de las modalidades es responsabilidad de los autores 
                 y podrá ser utilizada para los fines académicos correspondientes y su distribución en línea.</p>
             Los criterios de participación de cada modalidad son.
@@ -73,3 +73,4 @@
 <script src="/js/menumaker.js"></script>
 @endsection
 @endsection
+

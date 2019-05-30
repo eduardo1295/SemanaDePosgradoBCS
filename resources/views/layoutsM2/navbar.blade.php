@@ -15,10 +15,10 @@
                                 <li><a href="{{route('semana.verModalidades')}}" class="">Modalidades</a> </li>
                                 <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
                                     <ul>
-                                        <li><a href="blog-default.html">General</a></li>
-                                        <li><a href="blog-single.html">Póster</a></li>
-                                        <li><a href="blog-single.html">Entrevista</a></li>
-                                        <li><a href="blog-single.html">Video</a></li>
+                                        <li><a href="#">General</a></li>
+                                        <li><a href="#">Póster</a></li>
+                                        <li><a href="#">Entrevista</a></li>
+                                        <li><a href="#">Video</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{{route('semana.verConvocatoria')}}" class="">Convocatoria</a> </li>
@@ -39,6 +39,7 @@
                                     <li class="has-sub"> <div class="aliga"><i class="fas fa-user"></i> {{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</div> 
                                         <ul>
                                             <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
+                                            <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Editar Perfil</a></li>
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión {{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</a> </li>
                                         </ul>
                                     </li>

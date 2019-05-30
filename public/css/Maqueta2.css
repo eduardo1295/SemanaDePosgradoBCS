@@ -22,6 +22,10 @@
 #navbarM2 #navigation.align-center ul ul { text-align: left; }
 #navbarM2 #navigation.align-right > ul > li { float: right; }
 #navbarM2 #navigation > ul > li > a , #navbarM2 #navigation > ul > li > .aliga { padding: 10px 10px 5px 10px; font-size: 13px; color: #18150d; text-decoration: none; font-weight: 500; text-transform: uppercase; }
+
+#navbarM2 #navigation > ul > .has-sub> .aliga { cursor: default; }
+
+
 #navbarM2 #navigation > ul > li:hover > a , #navbarM2 #navigation > ul > li:hover > .aliga { color: black; background-color: #eeeeee; border-radius: 100px }
 /*#navbarM2 #navigation > ul > li.has-sub > a , #navbarM2 #navigation > ul > li.has-sub > .aliga { padding-right: 32px; }*/
 #navbarM2 #navigation > ul > li.has-sub > a:before ,#navbarM2 #navigation > ul > li.has-sub > .aliga:before { position: absolute; right: 14px; /*font-family: "Font Awesome 5 Free"; font-weight: 900;  content: "\f107";*/ -webkit-transition: all .25s ease; -moz-transition: all .25s ease; -ms-transition: all .25s ease; -o-transition: all .25s ease; transition: all .25s ease; }
@@ -220,14 +224,15 @@
   .n4 {border-left: 0px ;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
   .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px}
   .n3 { border-bottom-left-radius: 15px !important; border-bottom-left-radius: 15px}
-  .loginUsuario{ right: 0px; }
-  
+  .loginUsuario{ right: 0px;}
+  #espacioBlanco{padding-top: 140px;}
   #logoSede{ width: 200px; height: 150px; } }
 @media (min-width: 576px) and (max-width: 768px) {
   .n4 {border-left: none;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
    #logoSede{ width: 200px; height: 150px; }
    .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px;}
    .n3 { border-bottom-left-radius: 15px !important; border-bottom-left-radius: 15px !important;}
+   #espacioBlanco{padding-top: 140px;}
    }
-@media (min-width: 768px) and (max-width: 992px) { #logoSede{ width: 115px; height: 95px;  } }
-@media (min-width: 992px) and (max-width: 1200px){#logoSede { width: 200px; height: 170px; } }
+@media (min-width: 768px) and (max-width: 992px) { #logoSede{ width: 115px; height: 95px;} #espacioBlanco{padding-top: 140px;} }
+@media (min-width: 992px) and (max-width: 1200px){#logoSede { width: 200px; height: 170px; } #espacioBlanco{padding-top: 140px;} }
