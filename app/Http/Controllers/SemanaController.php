@@ -42,18 +42,19 @@ class SemanaController extends Controller
         $fFin = str_replace('-','',$fFin);
         $datetimeI = DateTime::createFromFormat('Ymd', $fInicio );
         $datetimeF = DateTime::createFromFormat('Ymd', $fFin);
+        setlocale(LC_TIME,'es_ES.UTF-8');
+        $date = Carbon::now();
+
+        //dd(Carbon::parse("2018-03-20")->formatLocalized('%d %B %Y'));
         
-        Carbon::setLocale('es');
-        
-        
-        $date = '2018-11-15';
-        $cadena    = new DateTime($date);
         //dd($cadena->formatLocalized('l'));
-$cadena->format('l'); 
+        $cadena="";
+        //$cadena->format('l'); 
 
         //$cadena = $datetimeI->format('l').$datetimeF->format('l');
         $noticias = Noticia::latest('fecha_actualizacion')->take(3)->get();
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
         //dd(Auth::guard()->user());
@@ -110,10 +111,12 @@ $cadena->format('l');
             }
         }
  
-        $nuevo_nombre = 'no_logo.png';
+        $fechas = explode(" - ", $request->fecha);
+        $fechaArchivo = date("Y");
+        $nuevo_nombre = 'logo_evento.png';
         if($request->hasFile('imagensemana')){
             $imagenLogo = $request->file('imagensemana');
-            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
+            $nuevo_nombre = 'logo_' . $fechaArchivo . '.' . $imagenLogo->getClientOriginalExtension();
             $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
         }
 
@@ -123,7 +126,7 @@ $cadena->format('l');
             $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
             //$nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
             $nombreEvento = Str::slug($request->nombre);
-            $nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
+            $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.$fechaArchivo[0] .'.' . $convocactoriaA->getClientOriginalExtension();
             //$nuevo_convocatoria = $urlAmigable;
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
@@ -131,7 +134,7 @@ $cadena->format('l');
         $detail = $dom->savehtml();
         
         $semana = new Semana;
-        $fechas = explode(" - ", $request->fecha);
+        
         $semana->id_sede = $request->id_institucion;
         $semana->nombre = $request->nombre;
         $semana->desc_general = $detail;
@@ -218,11 +221,14 @@ $cadena->format('l');
                 $img->setattribute('src', '/img/semanaDesGe/'.$image_name);
             }
         }
- 
-        $nuevo_nombre = 'no_logo.png';
+        $fechas = explode(" - ", $request->fecha);
+        $fechaArchivo = date("Y");
+
+        $nuevo_nombre = 'logo_evento.png';
         if($request->hasFile('imagensemana')){
             $imagenLogo = $request->file('imagensemana');
-            $nuevo_nombre = date("m-d-Y_h-i-s"). $imagenLogo->getClientOriginalExtension();
+            //$nuevo_nombre = date("m-d-Y_h-i-s"). $imagenLogo->getClientOriginalExtension();
+            $nuevo_nombre = 'logo_' . $fechaArchivo . '.' . $imagenLogo->getClientOriginalExtension();
             $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
         }else{
             $nuevo_nombre = $semana->url_logo;
@@ -234,9 +240,9 @@ $cadena->format('l');
             $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
             //$nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
             //$nuevo_convocatoria = 'Convocatoria'.'_'. date("Y") .'.' . $convocactoriaA->getClientOriginalExtension();
-            $nombreEvento = Str::slug($request->nombre);
-            $nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
-            
+            //$nombreEvento = Str::slug($request->nombre);
+            //$nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
+            $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.'_'.$fechaArchivo[0] .'.' . $convocactoriaA->getClientOriginalExtension();
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
         else{
@@ -250,7 +256,7 @@ $cadena->format('l');
         }
         $detail = $dom->savehtml();
         
-        $fechas = explode(" - ", $request->fecha);
+        
         
         $semana->nombre = $request->nombre;
         $semana->desc_general = $detail;

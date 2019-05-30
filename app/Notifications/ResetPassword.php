@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\HtmlString;
+//use Illuminate\Support\HtmlString;
 //use Illuminate\Auth\Notificacions\ResetsPasswords as ResetPassswordNotificacion;
 
 class ResetPassword extends Notification

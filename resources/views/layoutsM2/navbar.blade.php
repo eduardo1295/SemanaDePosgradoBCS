@@ -36,10 +36,13 @@
                                     {{-- comment 
                                     <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth()->user()->nombre}}</a> </li>
                                     --}}
-                                    <li class="has-sub"> <div class="aliga"><i class="fas fa-user"></i> {{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</div> 
+                                    <li class="has-sub"> 
+                                        <div class="aliga">
+                                        <span><i class="fas fa-user"></i>{{' '}}</span>{{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}
+                                        </div> 
                                         <ul>
                                             <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
-                                            <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión {{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</a> </li>
+                                            <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
                                         </ul>
                                     </li>
                                     {{-- comment

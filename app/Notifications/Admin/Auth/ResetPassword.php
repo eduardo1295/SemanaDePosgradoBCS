@@ -4,7 +4,8 @@ namespace App\Notifications\Admin\Auth;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\HtmlString;
+//use Illuminate\Support\HtmlString;
+
 class ResetPassword extends Notification
 {
     /**

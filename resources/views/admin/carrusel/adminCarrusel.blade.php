@@ -128,7 +128,17 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
-                { data: 'link_web', searchable: true },
+                {
+                    data: 'link_web',
+                    name: 'link_web',
+                    render: function (data, type, full, meta) {
+                        if (data == null)
+                            return 'Sin url asignada';
+                        else
+                            return "<a style='cursor:pointer' target='_blank' href=" +data + ">" + data + "<a/>";
+                    },
+                    orderable: false, searchable: false
+                },
                 {
                     data: 'url_imagen',
                     name: 'url_imagen',
@@ -430,6 +440,10 @@
     function cerrarModal(){
         $('#modalImagenes').css('display','none');
     }
+
+    $('#modalImagenes').on('click',function(){
+        $('#modalImagenes').css('display','none');
+    })
 </script>
 @endsection
 

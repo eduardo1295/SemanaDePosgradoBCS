@@ -32,8 +32,8 @@ Route::post('noticias/vistaPrevia', 'NoticiaController@vistaPrevia')->name('noti
 Route::get('admin/noticias', 'NoticiaController@noticias')->name('noticia.VerNoticias');
 Route::get('admin/noticia/listNoticias', 'NoticiaController@listNoticias')->name('noticia.listNoticias');
 Route::get('noticia/fetch_data', 'NoticiaController@fetch_data');
-Route::put('admin/noticia/reactivar/{noticia}', 'NoticiaController@reactivar')->name('noticia.reactivar');
-Route::resource('noticia', 'NoticiaController');
+Route::put('admin/noticias/reactivar/{noticia}', 'NoticiaController@reactivar')->name('noticia.reactivar');
+Route::resource('noticias', 'NoticiaController');
 
 
 
