@@ -8,8 +8,9 @@ use App\Alumno;
 use App\Institucion;
 use App\Semana;
 use DataTables;
+use DB;
 //use App\Http\Requests\coodinador\StoreCoordinadorRequest;
-//use App\Http\Requests\coodinador\UpdateCoordinadorRequest;
+use App\Http\Requests\usuarios\UpdateAlumnoRequest;
 use Validator;
 
 class AlumnoController extends Controller
@@ -82,8 +83,15 @@ class AlumnoController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
-        return \Response::json($usuario);
+        if(auth()->user()){
+            $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+            $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
+            return view('alumno.editarAlumno',compact(['usuario','semana','instituciones']));
+        }else if (auth('admin')->user()) {
+            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
+            return \Response::json($usuario);
+        }
     }
 
     /**
@@ -93,25 +101,38 @@ class AlumnoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAlumnoRequest $request, $id)
     {
-        $user = User::find($id);
-        $user->nombre = $request->nombre;
-        $user->primer_apellido = $request->primer_apellido;
-        $user->segundo_apellido = $request->segundo_apellido;
-        $user->id_institucion = $request->id_institucion;
-        $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
-        
-        if(!empty($request->password))
-            $user->password = bcrypt($request->password);
 
-        $user->save();
-        
-        if($user){
-            $user->alumnos()->update(['num_control'=>$request->num_control,'semestre'=>$request->semestre,
-                                    'id_programa',$request->id_programa]);
-            $user->roles()->sync([$user->id => ['id_rol'=>'5', 'creada_por'=>'1']]);
+        if(auth()->user()){
+            $user = User::find($id);    
+            $user->nombre = $request->nombre;
+            $user->primer_apellido = $request->primer_apellido;
+            $user->segundo_apellido = $request->segundo_apellido;
+            if(!empty($request->password))
+                $user->password = bcrypt($request->password);
+            
+            $user->save();
+        }else if (auth('admin')->user()) {
+            $user = User::find($id);
+            $user->nombre = $request->nombre;
+            $user->primer_apellido = $request->primer_apellido;
+            $user->segundo_apellido = $request->segundo_apellido;
+            $user->id_institucion = $request->id_institucion;
+            $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+            
+            if(!empty($request->password))
+                $user->password = bcrypt($request->password);
+
+            $user->save();
+            
+            if($user){
+                $user->alumnos()->update(['num_control'=>$request->num_control,'semestre'=>$request->semestre,
+                                        'id_programa',$request->id_programa]);
+                $user->roles()->sync([$user->id => ['id_rol'=>'5', 'creada_por'=>'1']]);
+            }
         }
+        
         
         return \Response::json($user);
     }
@@ -174,4 +195,11 @@ class AlumnoController extends Controller
             ->toJson();   
         }
     }
+    /*
+    public function editarAlumno(){
+        dd(auth()->user()->nombre);
+        
+        return view('alumno.editarAlumno');
+    }
+    */
 }

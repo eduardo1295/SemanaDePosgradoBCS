@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 d-flex justify-content-center">
                     @isset($semana->url_logo)
-                        <a href="/"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px"  alt=""></a>    
+                        <a href="/"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px" height="65" alt=""></a>    
                     @endisset
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 d-flex justify-content-end align-items-end">
@@ -42,7 +42,7 @@
                                         </div> 
                                         <ul>
                                             <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
-                                            <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Editar Perfil</a></li>
+                                        <li><a href="{{route('alumno.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
                                         </ul>
                                     </li>

@@ -48,7 +48,7 @@
 
 @media screen and (max-width: 992px) {
   .dropdown-toggle::after { display: none !important; }
-  .aa{ position: fixed; top: 25px; right: 0px ; z-index: 10000}
+  .aa{ position: fixed; top: 25px; right: 0px ; z-index: 1040}
   .btnmenu{ width: 35px; border-radius: 4px 0  0px 4px; }
 }
 

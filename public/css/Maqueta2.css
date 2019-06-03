@@ -218,7 +218,12 @@
   right: 50px;
 }
 
+.pruebacolor{
+  background: pink;
+}
 
+#trabajo .formulario{ border: 5px solid black; border-radius: 10px; background: #f7f7f7; }
+.custom-file-input~.custom-file-label::after { content: "Elegir"; }
 
 @media (min-width: 0px) and (max-width: 576px)   {
   .n4 {border-left: 0px ;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
@@ -226,13 +231,30 @@
   .n3 { border-bottom-left-radius: 15px !important; border-bottom-left-radius: 15px}
   .loginUsuario{ right: 0px;}
   #espacioBlanco{padding-top: 140px;}
-  #logoSede{ width: 200px; height: 150px; } }
+  #logoSede{ width: 200px; height: 150px; }
+  
+ }
 @media (min-width: 576px) and (max-width: 768px) {
   .n4 {border-left: none;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;} 
    #logoSede{ width: 200px; height: 150px; }
    .n1 { border-bottom-left-radius: 0px !important ; border-bottom-right-radius: 0px;}
    .n3 { border-bottom-left-radius: 15px !important; border-bottom-left-radius: 15px !important;}
    #espacioBlanco{padding-top: 140px;}
+   /*#navbarM2{max-height : none !important; overflow-y: hidden !important ; overflow-x : hidden !important}*/
    }
-@media (min-width: 768px) and (max-width: 992px) { #logoSede{ width: 115px; height: 95px;} #espacioBlanco{padding-top: 140px;} }
-@media (min-width: 992px) and (max-width: 1200px){#logoSede { width: 200px; height: 170px; } #espacioBlanco{padding-top: 140px;} }
+@media (min-width: 768px) and (max-width: 992px) { 
+  #logoSede{ width: 115px; height: 95px;} 
+  #espacioBlanco{padding-top: 140px;}
+  #navbarM2{overflow: hidden;}
+  #navbarM2{overflow: hidden !important; } 
+ }
+@media (min-width: 992px) and (max-width: 1200px){
+  #logoSede { width: 200px; height: 170px; } 
+  #espacioBlanco{padding-top: 140px;} 
+  /*#navbarM2{overflow: hidden !important; } */
+}
+
+@media (min-width: 1200px){
+  /*#navbarM2{overflow: hidden !important; } */
+}
+

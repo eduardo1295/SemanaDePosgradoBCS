@@ -41,7 +41,7 @@ Route::post('semanas/vistaPrevia', 'SemanaController@vistaPrevia')->name('semana
 Route::get('admin/semana/listSemanas', 'SemanaController@listSemanas')->name('semana.listSemanas');
 Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.verConvocatoria');
 Route::get('/modalidades', 'SemanaController@verModalidades')->name('semana.verModalidades');
-Route::get('/subirTrabajo', 'SemanaController@subirTrabajo')->name('semana.subirTrabajo');
+
 //Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
 Route::resource('semana', 'SemanaController');
 
@@ -79,6 +79,7 @@ Route::resource('director', 'DirectorController');
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
 Route::get('alumno/listAlumno', 'AlumnoController@listAlumno')->name('alumno.listAlumno');
 Route::put('admin/alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
+Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
 Route::resource('alumno', 'AlumnoController');
 
 Auth::routes();
@@ -94,6 +95,9 @@ Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalida
 Route::get('modalidad/listModalidad', 'ModalidadController@listModalidad')->name('modalidad.listModalidad');
 Route::put('admin/modalidad/reactivar/{modalidad}', 'ModalidadController@reactivar')->name('modalidad.reactivar');
 Route::resource('modalidad', 'ModalidadController');
+
+Route::get('/subirTrabajo', 'TrabajoController@subirTrabajo')->name('semana.subirTrabajo');
+Route::resource('trabajo', 'TrabajoController');
 /*
 Route::get('/',['as'=> 'home',function (){
     return view('home',compact('hola'));

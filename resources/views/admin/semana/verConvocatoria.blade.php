@@ -2,7 +2,7 @@
 @extends('layoutsM1.principal')
 
 @section('links')
-<link rel="stylesheet" href="{{ mix('css/Maqueta2.css')}} ">
+<link rel="stylesheet" href="/css/Maqueta2.css ">
 <script src="/js/owl.carousel.min.js"> </script>
 <script>
     $(function () {

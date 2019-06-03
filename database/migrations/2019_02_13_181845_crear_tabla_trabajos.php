@@ -38,6 +38,9 @@ class CrearTablaTrabajos extends Migration
             $table->timestamp('fecha_autorizacion')->nullable();
             $table->string('url', 100);
 
+            $table->timestamp('fecha_creacion')->nullable();
+            $table->timestamp('fecha_actualizacion')->nullable();
+
             $table->engine = 'InnoDB';
             $table->collation = 'latin1_swedish_ci';
             $table->charset = 'latin1';

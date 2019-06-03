@@ -5,7 +5,7 @@
 @section('contenido')
 <button onclick="topFunction()" id="myBtn"><i  id="flecha" class="fas fa-arrow-up"></i></button>
 @section('links')
-<link rel="stylesheet" href="css/Maqueta2.css">
+<link rel="stylesheet" href="/css/Maqueta2.css">
 <link rel="stylesheet" href="/css/imagenes/imagenes.css">
 <script src="/js/owl.carousel.min.js"> </script>
 <script>

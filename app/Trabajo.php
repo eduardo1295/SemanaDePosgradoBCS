@@ -8,6 +8,9 @@ class Trabajo extends Model
 {
     protected $table = 'trabajos';
     protected $primaryKey = 'id_trabajo';
+    
+    const CREATED_AT = 'fecha_creacion';
+    const UPDATED_AT = 'fecha_actualizacion';
     /**
      * The attributes that are mass assignable.
      *
