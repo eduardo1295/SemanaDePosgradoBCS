@@ -60,7 +60,7 @@ class CoordinadorController extends Controller
         
         
         if($user){
-            $user->coordinadores()->create(['grado'=>$request->grado,'id_semana'=>1]);
+            $user->coordinadores()->create(['puesto'=> $request->puesto,'grado'=>$request->grado,'id_semana'=>1]);
             $user->roles()->attach([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         
@@ -86,7 +86,7 @@ class CoordinadorController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,grado','instituciones:id,nombre')->where('id',$id)->first();
+        $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,grado,puesto','instituciones:id,nombre')->where('id',$id)->first();
         return \Response::json($usuario);
     }
 
@@ -114,7 +114,7 @@ class CoordinadorController extends Controller
         $user->save();
         
         if($user){
-            $user->coordinadores()->update(['grado'=>$request->grado,'id_semana'=>1]);
+            $user->coordinadores()->update(['puesto'=> $request->puesto,'grado'=>$request->grado,'id_semana'=>1]);
             $user->roles()->sync([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         
@@ -164,14 +164,14 @@ class CoordinadorController extends Controller
     public function listCoordinador(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
+            $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,grado,puesto','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
             return datatables()->of($usuarios)
             ->addColumn('action', 'admin.acciones')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $usuarios = User::onlyTrashed()->select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
+            $usuarios = User::onlyTrashed()->select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,grado,puesto','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
             return datatables()->of($usuarios)
             ->addColumn('action', 'admin.reactivar')
             ->rawColumns(['action'])

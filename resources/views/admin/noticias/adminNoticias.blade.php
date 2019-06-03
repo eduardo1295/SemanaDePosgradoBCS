@@ -3,10 +3,11 @@
 
 
 <div class="container-fluid" id="#contenedor">
+
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Noticias registradas
+                Noticias
             </h1>
         </div>
 
@@ -15,7 +16,7 @@
             <strong> </strong>
         </div>
     </div>
-    <div class="row  space-xx-small">
+    <div class="row mb-3">
         <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras noticias</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
@@ -29,10 +30,11 @@
         </div>
         <div class="col-12 col-md-6 col-lg-6">
             <div class="d-flex justify-content-end">
-                <a href="{{route('noticia.create')}}" class="btn btn-info ml-3" id="crear-noticia"><span><i
+                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-noticia"><span><i
                             class="fas fa-plus"></i></span> Nueva Noticia</a>
 
             </div>
+
         </div>
     </div>
     <div class="row">
@@ -62,20 +64,51 @@
 
 </div>
 
-
+@endsection
+@section('extra')
+@include('admin.noticias.modal')
+<div id="snackbar"></div>
+<div id="snackbarError" style="z-index:1051;"></div>
 @endsection
 @section('scripts')
+
+<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!--
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+-->
+
+<script src="/js/imagenes/vistaprevia.js"></script>
+<script src="/plugins/summernote/summernote-bs4.js"></script>
+<script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
+
+<script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
+<script src="/plugins/summernote/iniciarSummernote.js"></script>
+<script src="/js/snack/snack.js"></script>
 <script>
 
     var checkInsti = 'activos';
     var titulo = "";
+    var table = "";
     $(document).ready(function () {
+        $('.note-statusbar').hide();
+
+        $("#show-sidebar").click(function () {
+            $('#noticias').DataTable().ajax.reload(null, false);
+        });
+
+        $(function () {
+            registerSummernote('.summernote', 'Contenido de la noticia', 500, function (max) {
+                $('#maxContentPost').text(max)
+            });
+        });
+
         $.extend($.fn.dataTableExt.oStdClasses, {
             "sFilterInput": "busqueda",
             "sLengthSelect": ""
@@ -86,7 +119,8 @@
             $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
         });
 
-        var table = $('#noticias').DataTable({
+        table = $('#noticias').DataTable({
+            "order": [[ 3, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -105,7 +139,7 @@
             },
             initComplete: function () {
                 var api = this.api();
-                api.columns([1,2]).every(function () {
+                api.columns(1).every(function () {
                     var that = this;
                     $('input', this.footer()).on('keyup change', function () {
                         if (that.search() !== this.value) {
@@ -117,9 +151,9 @@
                 })
             },
             "columns": [
-                { data: 'id', name: 'id', 'visible': false },
-                { data: 'titulo', searchable: true },
-                { data: 'resumen', searchable: true },
+                { data: 'id', name: 'id', 'visible': false,searchable: false },
+                { data: 'titulo',  orderable: false, searchable: true },
+                { data: 'resumen',  orderable: false, searchable: true },
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
@@ -130,18 +164,11 @@
             ]
         });
 
-        $("#show-sidebar").click(function () {
-            $('#noticias').DataTable().ajax.reload(null, false);
-        });
 
-        /*Al presionar el boton editar*/
-        $('body').on('click', '.editar', function () {
-            var noticia_id = $(this).data('id');
-            var ruta = "{{url('noticia')}}/" + noticia_id+"/editar";
-            //alert(ruta);
-            window.location = ruta;
+        $("input[name='verNoti']").change(function (e) {
+            checkInsti = $(this).val();
+            $('#noticias').DataTable().ajax.reload();
         });
-
 
         $('#noticias tbody').on('click', '.eliminar, .reactivar', function (e) {
             var tr = $(this).closest("tr");
@@ -150,150 +177,294 @@
 
         });
 
-        /*Accion al presionar el boton eliminar*/
-        $('body').on('click', '.eliminar', function () {
-            var noticia_id = $(this).data("id");
-            $.confirm({
-                columnClass: 'col-md-6',
-                title: '¿Desea eliminar la noticia titulada ' + titulo + '?',
-                content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
-                autoClose: 'cancelAction|8000',
-                buttons: {
-
-                    cancelAction: {
-                        text: 'Cancelar',
-                        btnClass: 'btn-red',
-                        action: function () {
-                        }
-                    },
-                    confirm: {
-                        text: 'Aceptar',
-                        icon: 'fas fa-warning',
-
-                        btnClass: 'btn-blue',
-                        action: function () {
-
-                            $.ajax({
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                                type: "DELETE",
-                                url: "{{ url('noticia')}}" + '/' + noticia_id,
-                                success: function (data) {
-
-                                    if (table.data().count() == 1) {
-                                        $('#noticias').DataTable().ajax.reload();
-                                    } else {
-                                        var oTable = $('#noticias').dataTable();
-                                        oTable.fnDraw(false);
-                                    }
-                                    $("#mensaje-acciones").text("Noticia eliminada exitosamente.");
-                                    $("#mensaje-acciones").fadeIn();
-                                    $('#mensaje-acciones').delay(3000).fadeOut();
-                                    $('#mensaje-acciones').addClass('alert-warning');
-                                    $('#mensaje-acciones').removeClass('alert-success');
-                                },
-                                error: function (data) {
-                                    console.log('Error:', data);
-                                }
-                            });
+    });
 
 
-                        }
+
+    /*Al presionar el boton editar*/
+    $('body').on('click', '.editar', function () {
+        reiniciar();
+        var noticia_id = $(this).data('id');
+        var ruta = "{{url('noticias')}}/" + noticia_id + "/editar";
+
+
+        $.get(ruta, function (data) {
+            $('#noticiaCrudModal').html("Editar noticia: " + data.titulo);
+            $('#btn-save').val("editar");
+            $('#noticia-crud-modal').modal('show');
+            $('#noticia_id').val(data.id_noticia);
+            $('#titulo').val(data.titulo);
+            $('#resumen').val(data.resumen);
+
+            $('#contenido').summernote('code', data.contenido);
+        })
+    });
+
+
+    /*Accion al presionar el boton crear-noticia*/
+    $('#crear-noticia').click(function () {
+        reiniciar();
+        $('#btn-save').val("crear-noticia");
+        $('#noticia_id').val('');
+        $('#noticiaForm').trigger("reset");
+        $('#noticiaCrudModal').html("Agregar nueva noticia");
+        $('#noticia-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#noticia-crud-modal').modal('show');
+    });
+
+    $('.modal-btn').click(function () {
+        $('#btn-save').val("crear-noticia");
+        $('#noticia_id').val('');
+        $('#noticiaForm').trigger("reset");
+        $('#noticiaCrudModal').html("Agregar nueva institución");
+        $('#noticia-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#noticia-crud-modal').modal('show');
+    });
+
+
+    /*Accion al presionar el boton save*/
+    $("#btn-save").click(function () {
+        $('.mensajeError').text("");
+        $("#btn-save").prop("disabled", true);
+        $("#btn-close").prop("disabled", true);
+        var actionType = $('#btn-save').val();
+        $('#btn-save').html('Guardando..');
+        if (actionType == "editar") {
+            var id = $('#noticia_id').val();
+            var ruta = "{{url('noticias')}}/" + id + "";
+            var datos = new FormData($("#noticiaForm")[0]);
+            datos.append('_method', 'PUT');
+            //console.log(Array.from(datos));
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: ruta,
+                type: "POST",
+                data: datos,
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    //console.log(data);
+                    $('#noticiaForm').trigger("reset");
+                    $('#noticia-crud-modal').modal('hide');
+                    $('#btn-save').html('Guardar');
+                    //recargar serverside
+                    var oTable = $('#noticias').dataTable();
+                    oTable.fnDraw(false);
+                    //recargar sin serverside
+                    
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+
+                },
+                error: function (data) {
+                    if (data.status == 422) {
+                        var errores = data.responseJSON['errors'];
+                        $.each(errores, function (key, value) {
+                            $('#' + key + "_error").text(value);
+                        });
                     }
-                }
+                    $('#btn-save').html('Guardar');
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                },
+
             });
-        });
+        } else if (actionType == "crear-noticia") {
+            $("#btn-save").prop("disabled", true);
+            $("#btn-close").prop("disabled", true);
 
-
-        /*Accion al presionar el boton reactivar*/
-        $('body').on('click', '.reactivar', function () {
-            var noticia_id = $(this).data("id");
-            $.confirm({
-                columnClass: 'col-md-6',
-                title: '¿Desea reactivar la noticia titulada ' + titulo + '?',
-                content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
-                autoClose: 'cancelAction|8000',
-                buttons: {
-                    cancelAction: {
-                        text: 'Cancelar',
-                        btnClass: 'btn-red',
-                        action: function () {
-                        }
-                    },
-                    confirm: {
-                        text: 'Aceptar',
-                        icon: 'fas fa-warning',
-                        btnClass: 'btn-blue',
-                        action: function () {
-                            $.ajax({
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                                type: "PUT",
-                                url: "{{ url('/noticia/reactivar')}}" + '/' + noticia_id,
-                                success: function (data) {
-                                    if (table.data().count() == 1) {
-                                        $('#noticias').DataTable().ajax.reload();
-                                    } else {
-                                        var oTable = $('#noticias').dataTable();
-                                        oTable.fnDraw(false);
-                                    }
-                                    $("#mensaje-acciones").text("Noticia activada exitosamente.");
-                                    $("#mensaje-acciones").fadeIn();
-                                    $('#mensaje-acciones').delay(3000).fadeOut();
-                                    $('#mensaje-acciones').addClass('alert-warning');
-                                    $('#mensaje-acciones').removeClass('alert-success');
-                                    //$('#instituciones').DataTable().ajax.reload(null, false);
-                                    //$('#instituciones').DataTable().ajax.reload();
-                                },
-                                error: function (data) {
-                                    console.log('Error:', data);
-                                }
-                            });
-
-
-                        }
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                data: new FormData($("#noticiaForm")[0]),
+                url: "{{route('noticias.store')}}",
+                type: "POST",
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    $('#noticiaForm').trigger("reset");
+                    $('#noticia-crud-modal').modal('hide');
+                    $('#btn-save').html('Guardar');
+                    //recargar serverside
+                    var oTable = $('#noticias').dataTable();
+                    oTable.fnDraw(false);
+                    //recargar sin serverside
+                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia guardada exitosamente.");;
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+                },
+                error: function (data) {
+                    if (data.status == 422) {
+                        var errores = data.responseJSON['errors'];
+                        $.each(errores, function (key, value) {
+                            $('#' + key + "_error").text(value);
+                        });
                     }
-                }
+                    $('#btn-save').html('Guardar');
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                },
+
+
             });
-        });
+        }
 
     });
-    $("input[name='verNoti']").change(function (e) {
-        checkInsti = $(this).val();
-        $('#noticias').DataTable().ajax.reload();
+
+    /*Accion al presionar el boton eliminar*/
+    $('body').on('click', '.eliminar', function () {
+        var noticia_id = $(this).data("id");
+        $.confirm({
+            columnClass: 'col-md-6',
+            title: '¿Desea eliminar la noticia titulada ' + titulo + '?',
+            content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
+            autoClose: 'cancelAction|8000',
+            buttons: {
+
+                cancelAction: {
+                    text: 'Cancelar',
+                    btnClass: 'btn-red',
+                    action: function () {
+                    }
+                },
+                confirm: {
+                    text: 'Aceptar',
+                    icon: 'fas fa-warning',
+
+                    btnClass: 'btn-blue',
+                    action: function () {
+
+                        $.ajax({
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            type: "DELETE",
+                            url: "{{ url('noticias')}}" + '/' + noticia_id,
+                            success: function (data) {
+                                var oTable = $('#noticias').dataTable();
+                                if (table.data().count() == 1) {
+                                    $('#noticias').DataTable().ajax.reload();
+                                } else {
+
+                                    oTable.fnDraw(false);
+                                }
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia eliminada exitosamente.");
+                            },
+                            error: function (data) {
+                                console.log('Error:', data);
+                            }
+                        });
+
+
+                    }
+                }
+            }
+        });
     });
+
+
+    /*Accion al presionar el boton reactivar*/
+    $('body').on('click', '.reactivar', function () {
+        var noticia_id = $(this).data("id");
+        $.confirm({
+            columnClass: 'col-md-6',
+            title: '¿Desea reactivar la noticia titulada ' + titulo + '?',
+            content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
+            autoClose: 'cancelAction|8000',
+            buttons: {
+                cancelAction: {
+                    text: 'Cancelar',
+                    btnClass: 'btn-red',
+                    action: function () {
+                    }
+                },
+                confirm: {
+                    text: 'Aceptar',
+                    icon: 'fas fa-warning',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        $.ajax({
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            type: "PUT",
+                            url: "{{ url('admin/noticias/reactivar')}}" + '/' + noticia_id,
+                            success: function (data) {
+                                var oTable = $('#noticias').dataTable();
+                                if (table.data().count() == 1) {
+                                    $('#noticias').DataTable().ajax.reload();
+                                } else {
+
+                                    oTable.fnDraw(false);
+                                }
+                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia activada exitosamente.");
+                            },
+                            error: function (data) {
+                                console.log('Error:', data);
+                            }
+                        });
+
+
+                    }
+                }
+            }
+        });
+    });
+
+    $('.preview-btn').on('click', function (e) {
+
+        e.preventDefault();
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            data: new FormData($("#noticiaForm")[0]),
+            url: "{{route('noticia.vistaPrevia')}}",
+            type: "POST",
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                win = window.open("", "_blank");
+                win.document.write(data);
+                win.document.close();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            },
+
+
+        });
+    });
+
+    function reiniciar() {
+        $('.mensajeError').text("");
+        $('#contenido').summernote("reset");
+        $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+    }
+
 </script>
+
+
+
 @endsection
 
 @section('estilos')
 
+<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+<!--
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
+-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<link rel="stylesheet" href="/css/datatable/colores.css">
+<link rel="stylesheet" href="/css/imagenes/imagenes.css">
+<link rel="stylesheet" href="/css/modales/modalresponsivo.css">
+<link rel="stylesheet" href="/css/modales/snackbar.css">
 
-    .busqueda {
-        border: 1px solid #ced4da;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-
-    }
-
-    .busqueda:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
-    }
-</style>
-
+<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
 @endsection

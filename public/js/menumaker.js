@@ -82,6 +82,7 @@
 
           if ($(window).width() <= settings.breakpoint && !cssmenu.hasClass("small-screen")) {
             cssmenu.find('ul').hide().removeClass('open');
+            cssmenu.find('span').removeClass('submenu-opened');
             cssmenu.addClass('small-screen');
             if (settings.format === 'select') {
               cssmenu.find('select').show();

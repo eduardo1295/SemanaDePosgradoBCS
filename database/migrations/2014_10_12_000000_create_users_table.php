@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->string('nombre', 40);
             $table->string('primer_apellido', 30);
-            $table->string('segundo_apellido', 30);
+            $table->string('segundo_apellido', 30)->nullable();
             $table->integer('id_semana')->unsigned()->default(0);
             
             

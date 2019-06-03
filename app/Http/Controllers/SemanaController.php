@@ -123,10 +123,10 @@ class SemanaController extends Controller
         $nuevo_convocatoria = 'no_disponible';
         if($request->hasFile('convocatoria')){
             $convocactoriaA = $request->file('convocatoria');
-            $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
+            //$fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
             //$nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
             $nombreEvento = Str::slug($request->nombre);
-            $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.$fechaArchivo[0] .'.' . $convocactoriaA->getClientOriginalExtension();
+            $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.$fechaArchivo .'.' . $convocactoriaA->getClientOriginalExtension();
             //$nuevo_convocatoria = $urlAmigable;
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
@@ -181,7 +181,7 @@ class SemanaController extends Controller
      */
     public function edit($id)
     {
-        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede',DB::raw("CONCAT(fecha_inicio,' - ',fecha_fin) AS fecha"))->with('instituciones:id,nombre')->where('id_semana',$id)->first();
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio','fecha_fin',DB::raw("CONCAT(fecha_inicio,' - ',fecha_fin) AS fecha"))->with('instituciones:id,nombre')->where('id_semana',$id)->first();
         return \Response::json($semana);
     }
 
@@ -242,7 +242,7 @@ class SemanaController extends Controller
             //$nuevo_convocatoria = 'Convocatoria'.'_'. date("Y") .'.' . $convocactoriaA->getClientOriginalExtension();
             //$nombreEvento = Str::slug($request->nombre);
             //$nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
-            $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.'_'.$fechaArchivo[0] .'.' . $convocactoriaA->getClientOriginalExtension();
+            $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.'_'.$fechaArchivo .'.' . $convocactoriaA->getClientOriginalExtension();
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
         }
         else{

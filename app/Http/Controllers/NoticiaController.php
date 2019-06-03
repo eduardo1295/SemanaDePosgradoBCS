@@ -10,6 +10,7 @@ use App\Semana;
 use DB;
 use App\Http\Requests\noticias\StoreNoticiaRequest;
 use App\Http\Requests\noticias\UpdateNoticiaRequest;
+use Illuminate\Support\Facades\File;
 
 class NoticiaController extends Controller
 {
@@ -73,11 +74,27 @@ class NoticiaController extends Controller
         }
         */
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->firstOrFail();
+        
+        $noticia = new Noticia;
+        $noticia->contenido = 'temporal';
+        $noticia->titulo = $request->titulo;
+        $noticia->url_imagen = 'temporal';
+        $noticia->resumen = $request->resumen;
+        $noticia->creada_por= 1;
+        $noticia->save();
+
         $dom = new \domdocument();
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
         $images = $dom->getelementsbytagname('img');
  
+        $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
+        //dd($pathDirectorio);
+        if(count($images)>0){
+            if(!File::isDirectory($pathDirectorio)){
+                File::makeDirectory($pathDirectorio, 0777, true, true);
+            }
+        }
         //loop over img elements, decode their base64 src and save them to public folder,
         //and then replace base64 src with stored image URL.
         $ultimaImagen ="";
@@ -90,27 +107,29 @@ class NoticiaController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/noticias/'. $image_name;
+                $path = public_path() .'/img/noticias/'.$noticia->id_noticia.'/'. $image_name;
     
+                //$path = $pathDirectorio. '/' . $image_name;
+                
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', '/img/noticias/'.$image_name);
-                $ultimaImagen = '/img/noticias/'.$image_name;
+                //$img->setattribute('src', '/img/noticias/'.$image_name);
+                //$ultimaImagen = '/img/noticias/'.$image_name;
+
+                $img->setattribute('src', '/img/noticias/'.$noticia->id_noticia.'/'.$image_name);
+                $ultimaImagen = $pathDirectorio.$image_name;
             }
         }
         if($ultimaImagen == ""){
             $ultimaImagen = '/img/noticias/logo_noticias.png';
         }
         $detail = $dom->savehtml();
-        
-        $noticia = new Noticia;
+
         $noticia->contenido = $detail;
-        $noticia->titulo = $request->titulo;
         $noticia->url_imagen = $ultimaImagen;
-        $noticia->resumen = $request->resumen;
-        $noticia->creada_por= 1;
         $noticia->save();
+        
         return \Response::json($noticia);
     }
 
@@ -136,7 +155,6 @@ class NoticiaController extends Controller
      */
     public function edit($id)
     {
-    
         $noticia  = Noticia::where('id_noticia', $id)->first();
         return \Response::json($noticia);
     }
@@ -219,7 +237,17 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
-        $noticia = Noticia::where('id_noticia',$id)->delete();
+        
+        $noticia = Noticia::where('id_noticia',$id)->first();
+        //dd($noticia->id_noticia);
+        $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
+        
+        if(File::isDirectory($pathDirectorio)){
+            File::deleteDirectory($pathDirectorio);
+        }
+
+        $noticia->delete();
+                
         return \Response::json($noticia);
     }
 
@@ -242,7 +270,7 @@ class NoticiaController extends Controller
      */
     public function noticias(){
         $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
-        return view('noticias.adminNoticias',compact(['semana']));
+        return view('admin.noticias.adminNoticias',compact(['semana']));
         
     }
 

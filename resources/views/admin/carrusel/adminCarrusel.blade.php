@@ -66,7 +66,7 @@
 
 @endsection
 @section('extra')
-@include('carrusel.modal')
+@include('admin.carrusel.modal')
 @include('admin.modalimagenes')
 @endsection
 @section('scripts')
@@ -97,6 +97,7 @@
         });
 
         var table = $('#slidersC').DataTable({
+            "order": [[ 3, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -364,12 +365,9 @@
                     $('#vistaPrevia').prop('src', "");
                     console.log(data);
                 },
-                error: function (data) {
-                    
-                    
-                    if (data.status == 422) {
-                        
-                        var errores = data.responseJSON['errors'];
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if (xhr.status == 422) {
+                        var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
                         });

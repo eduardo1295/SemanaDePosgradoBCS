@@ -53,7 +53,6 @@ class AlumnoController extends Controller
         ]);
         $user->save();
         
-        
         if($user){
             $user->alumnos()->create(['num_control'=>$request->num_control,'semestre'=>$request->semestre,
                                     'id_programa',$request->id_programa]);

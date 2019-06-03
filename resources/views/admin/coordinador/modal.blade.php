@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label for="grado" class="control-label">Grado</label>
                             <input type="text" class="form-control" id="grado" name="grado"
                                 placeholder="Grado del coordinador" value="" maxlength="30" required="">
@@ -55,27 +55,37 @@
 
                         </div>
 
-                        <div class="form-group col-md-9">
-                            <label for="nombre" class="control-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre"
-                                placeholder="Nombre del usuario" value="" maxlength="40" required="">
-                            <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
+                        <div class="form-group col-md-8">
+                            <label for="puesto" class="control-label">Puesto</label>
+                            <input type="text" class="form-control" id="puesto" name="puesto"
+                                placeholder="Puesto de trabajo" value="" maxlength="60" required="">
+                            <small><span class="mensajeError text-danger" id="puesto_error"></span></small>
 
                         </div>
+
+                        
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                            <div class="form-group col-md-6">
+                                    <label for="nombre" class="control-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                        placeholder="Nombre del coordinador" value="" maxlength="40" required="">
+                                    <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
+        
+                                </div>
+
+                        <div class="form-group col-md-3">
                             <label for="primer_apellido" class="control-label">Primer apellido</label>
                             <input type="text" class="form-control" id="primer_apellido" name="primer_apellido"
-                                placeholder="Primer apellido del usuario" value="" maxlength="30" required="">
+                                placeholder="Primer apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="primer_apellido_error"></span></small>
 
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label for="segundo_apellido" class="control-label">Segundo apellido</label>
                             <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido"
-                                placeholder="Segundo apellido del usuario" value="" maxlength="30" required="">
+                                placeholder="Segundo apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="segundo_apellido_error"></span></small>
 
                         </div>

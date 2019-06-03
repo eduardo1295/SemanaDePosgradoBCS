@@ -42,6 +42,7 @@
                     <tr>
                         <th>id</th>
                         <th>Grado</th>
+                        <th>Puesto</th>
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
@@ -53,6 +54,7 @@
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -76,13 +78,16 @@
 @include('admin.coordinador.modal')
 @endsection
 @section('scripts')
+
+<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<!--
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-
+-->
 
 <script>
 
@@ -135,6 +140,7 @@
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
                 { data: 'coordinadores.grado', searchable: false },
+                { data: 'coordinadores.puesto', searchable: false },
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
@@ -145,8 +151,8 @@
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 2 },
-                { responsivePriority: 2, targets: 8 },
-                { width: 105, targets: 8 }
+                { responsivePriority: 2, targets: 9 },
+                { width: 105, targets: 9 }
             ]
         });
 
@@ -176,6 +182,7 @@
                 $('#coordinador-crud-modal').modal('show');
                 console.log(data);
                 $('#coordinador_id').val(data.id);
+                $('#puesto').val(data.coordinadores.puesto);
                 $('#institucion').val(data.institucion);
                 $('#nombre').val(data.nombre);
                 $('#primer_apellido').val(data.primer_apellido);
@@ -445,11 +452,16 @@
 
 @section('estilos')
 
+<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+
+<!--
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="/css/datatable/colores.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+-->
+<link rel="stylesheet" href="/css/datatable/colores.css">
 <link href="/css/modales/modalresponsivo.css" rel="stylesheet">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
 

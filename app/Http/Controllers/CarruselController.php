@@ -9,6 +9,8 @@ use DataTables;
 use App\Http\Requests\carrusel\StoreCarruselRequest;
 use App\Http\Requests\carrusel\UpdateCarruselRequest;
 use Validator;
+use Illuminate\Support\Facades\File;
+
 class CarruselController extends Controller
 {
     public function __construct(){
@@ -57,7 +59,6 @@ class CarruselController extends Controller
         $carrusel->link_web = $request->link_web;
         $carrusel->url_imagen = $nuevo_nombre;
         $carrusel->creado_por= 1;
-        $carrusel->save();
         $carrusel->save();
         if($carrusel){
             //borrar imagen actual
@@ -158,7 +159,15 @@ class CarruselController extends Controller
      */
     public function destroy($id)
     {
-        $carrusel = Carrusel::where('id',$id)->delete();
+        $carrusel = Carrusel::where('id',$id)->first();
+
+        $pathDirectorio = public_path('img\\carrusel').'\\'.$carrusel->url_imagen;
+        
+        if(File::exists($pathDirectorio)){
+          File::delete($pathDirectorio);
+        }
+        $carrusel->delete();
+
         return \Response::json($carrusel);
     }
 
