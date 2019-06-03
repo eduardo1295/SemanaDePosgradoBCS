@@ -47,17 +47,39 @@ class InstitucionController extends Controller
      */
     public function store(StoreInstitucionRequest $request)
     {
-        
-       /* $user   =   User::updateOrCreate(['id' => $userId],
-                    ['name' => $request->name, 'email' => $request->email]);        */
-        
         $nuevo_nombre = 'no_logo.png';
+        
+        
+        $institucion = new Institucion;
+        $institucion->nombre = $request->nombre;
+        $institucion->id_institucion = date("Yhis");
+        $institucion->direccion_web = $request->direccion_web;
+        $institucion->telefono = $request->telefono;
+        $institucion->ciudad = $request->ciudad;
+        $institucion->calle = $request->calle;
+        $institucion->numero = $request->numero;
+        $institucion->colonia = $request->colonia;
+        $institucion->cp =  $request->cp;
+        $institucion->latitud = $request->lat;
+        $institucion->longitud = $request->lng;
+        $institucion->url_logo = $nuevo_nombre;
+        $institucion->creado_por = 1;
+        $institucion->save();
+
+
+        $fechaArchivo = date("Y");
         if($request->hasFile('logo')){
             $imagenLogo = $request->file('logo');
-            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
+            $nuevo_nombre = 'logo'.'_'. $institucion->id .'_'.$fechaArchivo. '.' . $imagenLogo->getClientOriginalExtension();
+            //$nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
             $imagenLogo->move(public_path('img/logo'), $nuevo_nombre);
         }
-        $userId = $request->user_id;
+
+        $institucion->url_logo = $nuevo_nombre;
+        $institucion->save();
+
+        //$userId = $request->user_id;
+        /*
         $institucion   =   Institucion::updateOrCreate(['id' => $userId],
                     ['nombre' => $request->nombre, 
                     'direccion_web' => $request->direccion_web,
@@ -70,6 +92,7 @@ class InstitucionController extends Controller
                     'latitud' => $request->lat,
                     'longitud' => $request->lng,
                     'url_logo'=> $nuevo_nombre ]);
+                    */
         return \Response::json($institucion);
     }
 
@@ -105,24 +128,21 @@ class InstitucionController extends Controller
      */
     public function update(UpdateInstitucionRequest $request, $id)
     {
-        //dd(json_encode(public_path()));
-        //dd(json_encode($request));
-        
-        //$image = $request->file('select_file');
-        //$request->file('logo')->store('public');
         $institucion  = Institucion::where('id', $id)->first();
+
         $nuevo_nombre = 'no_logo.png';
+        $fechaArchivo = date("Y");
+
         if($request->hasFile('logo')){
-            
             $imagenLogo = $request->file('logo');
-            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
+            $nuevo_nombre = 'logo'.'_'. $institucion->id .'_'.$fechaArchivo. '.' . $imagenLogo->getClientOriginalExtension();
+            //$nuevo_nombre = 'logo'.'_'. $fechaArchivo. '.' . $imagenLogo->getClientOriginalExtension();
+            //$nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
             $imagenLogo->move(public_path('img/logo'), $nuevo_nombre);
         }else{
             $nuevo_nombre = $institucion->url_logo;
         }
 
-        
-        
         $institucion->nombre = $request->nombre;
         $institucion->direccion_web = $request->direccion_web;
         $institucion->telefono = $request->telefono;
@@ -136,10 +156,8 @@ class InstitucionController extends Controller
         $institucion->url_logo= $nuevo_nombre;
         
         $institucion->save();
-        if($institucion){
-            //borrar imagen actual
-        }
-        //$institucion->update($request->all());
+   
+        
         return \Response::json($institucion);
     }
 
@@ -174,7 +192,7 @@ class InstitucionController extends Controller
      */
     public function instituciones(){
         $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
-        return view('institucion.instituciones',compact(['semana']));
+        return view('admin.instituciones.adminInstituciones',compact(['semana']));
         
     }
 

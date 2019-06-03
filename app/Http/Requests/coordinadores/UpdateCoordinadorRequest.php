@@ -28,13 +28,15 @@ class UpdateCoordinadorRequest extends FormRequest
             
             'email' => 'required|email|max:60|unique:users,email,'.$this->route('coordinador'),
 
+            'puesto' => 'required|string|max:60',
+
             'nombre' => 'required|string|max:40',
             
             'password' => 'string|nullable|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
             
             'primer_apellido'   => 'required|string|max:30',
             
-            'segundo_apellido'  => 'required|string|max:30',
+            'segundo_apellido'  => 'string|nullable|max:30',
 
             'id_institucion'    => 'required|exists:instituciones,id',
 

@@ -69,15 +69,19 @@
 @section('scripts')
 
 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<!--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+-->
 
 <script src="/js/imagenes/vistaprevia.js"></script>
+<script src="/js/snack/snack.js"></script>
+
 <script src="/plugins/summernote/summernote-bs4.js"></script>
 <script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
 <script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
@@ -85,68 +89,25 @@
 <script src="/plugins/summernote/plugin/list-styles-bs4/summernote-list-styles-bs4.js"></script>
 <script src="/plugins/summernote/iniciarSummernote.js"></script>
 
-<script src="/js/snack/snack.js"></script>
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script src="/plugins/daterangepicker/moment.min.js"></script>
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/plugins/daterangepicker/iniciardaterangepicker.js"></script>
 
 <script>
-    $(function () {
-        $('input[name="fecha"]').daterangepicker(
-            {
-                opens: 'left',
-                "locale": {
-                    "format": "YYYY-MM-DD",
-                    "separator": " - ",
-                    "applyLabel": "Aplicar",
-                    "cancelLabel": "Cancelar",
-                    "fromLabel": "De",
-                    "toLabel": "a",
-                    "customRangeLabel": "Custom",
-                    "daysOfWeek": [
-                        "do",
-                        "lu",
-                        "ma",
-                        "mi",
-                        "ju",
-                        "vi",
-                        "sá"
-                    ],
-                    "monthNames": [
-                        "énero",
-                        "febrero",
-                        "marzo",
-                        "abril",
-                        "mayo",
-                        "junio",
-                        "julio",
-                        "agusto",
-                        "septiembre",
-                        "octubre",
-                        "noviembre",
-                        "diciembre"
-                    ],
-                    "firstDay": 1
-                }
-            }
-        );
-    });
+    //aqupi tenia lo de rangepicker
 </script>
 <script>
-
-
 
     var checkSemana = 'activos';
     var titulo = "";
     var table = "";
     $(document).ready(function () {
         $('.note-statusbar').hide();
+
         $("#show-sidebar").click(function () {
             $('#semanas').DataTable().ajax.reload(null, false);
         });
-
-
-
-
 
         $(function () {
             registerSummernote('.summernote', 'Descripción general del evento', 1000, function (max) {
@@ -186,7 +147,7 @@
             "columns": [
                 { data: 'id', name: 'id', 'visible': false, searchable: false },
                 { data: 'nombre', orderable: false, searchable: true },
-                { data: 'instituciones[0].nombre', orderable: false, searchable: true },
+                { data: 'instituciones[0].nombre', orderable: true, searchable: true },
                 { data: 'fecha_inicio', orderable: false, searchable: false },
                 { data: 'fecha_fin', orderable: false, searchable: false },
                 {
@@ -210,17 +171,11 @@
             ]
         });
 
-
-
         $('#semanas tbody').on('click', '.eliminar, .reactivar', function (e) {
             var tr = $(this).closest("tr");
             var data = $("#semanas").DataTable().row(tr).data();
             titulo = data.titulo;
-
         });
-
-
-
     });
 
 
@@ -240,12 +195,14 @@
             $('#semana_id').val(data.id_semana);
             $('#nombre').val(data.nombre);
             $('#contenido').summernote('code', data.desc_general);
-            $('#fecha').val(data.fecha)
+            $('#fecha').val(data.fecha);
             $("#institucionSelect").val(data.instituciones[0].id);
             $('#contenido').summernote('code', data.contenido);
             $('#imglogo').prop('src', "{{url('img/semanaLogo')}}/" + data.url_logo);
             $('#logoactual').html('Logo actual');
             $('#logoAnterior').removeClass('d-none');
+            $('#fecha').data('daterangepicker').setStartDate(data.fecha_inicio);
+            $('#fecha').data('daterangepicker').setEndDate(data.fecha_fin);
             if (data.url_convocatoria == 'no_disponible')
                 $('#ligaConvo').html('No se ha cargado convocatoria')
             else
@@ -266,6 +223,8 @@
         $('#semanaCrudModal').html("Nueva Evento Semana de Posgrado");
         $('#semana-crud-modal').modal({ backdrop: 'static', keyboard: false })
         $('#semana-crud-modal').modal('show');
+        $('#fecha').data('daterangepicker').setStartDate(moment().format('YYYY-MM-DD'));
+        $('#fecha').data('daterangepicker').setEndDate(moment().add(4, 'days').format('YYYY-MM-DD'));
     });
 
     $('.modal-btn').click(function () {
@@ -397,7 +356,6 @@
             content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
             autoClose: 'cancelAction|8000',
             buttons: {
-
                 cancelAction: {
                     text: 'Cancelar',
                     btnClass: 'btn-red',
@@ -407,10 +365,8 @@
                 confirm: {
                     text: 'Aceptar',
                     icon: 'fas fa-warning',
-
                     btnClass: 'btn-blue',
                     action: function () {
-
                         $.ajax({
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             type: "DELETE",
@@ -420,7 +376,6 @@
                                 if (table.data().count() == 1) {
                                     $('#semanas').DataTable().ajax.reload();
                                 } else {
-
                                     oTable.fnDraw(false);
                                 }
                                 mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento eliminado exitosamente.");
@@ -467,7 +422,6 @@
                                 if (table.data().count() == 1) {
                                     $('#semanas').DataTable().ajax.reload();
                                 } else {
-
                                     oTable.fnDraw(false);
                                 }
                                 mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento activado exitosamente.");
@@ -491,6 +445,7 @@
         $('#nuevoLogo').addClass('d-none');
         $('#ligaConvo').html('Convocatoria');
     }
+
     $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
         if (!fileName.trim()) {
@@ -507,38 +462,25 @@
 @endsection
 
 @section('estilos')
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+
+<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+<!--
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-
+-->
 <link rel="stylesheet" href="/css/datatable/colores.css">
 <link rel="stylesheet" href="/css/imagenes/imagenes.css">
 <link rel="stylesheet" href="/css/modales/modalresponsivo.css">
-<link href="/plugins/summernote/summernote-bs4.css" rel="stylesheet">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="/plugins/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
+<link rel="stylesheet" href="/css/modales/snackbar.css">
 
 <style>
-    .modal100 {
-        max-width: 100% !important;
-        margin: 0;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 100vh !important;
-        display: flex;
-    }
-
-    .modal {
-        overflow-y: auto;
-    }
-
     .custom-file-input~.custom-file-label::after {
         content: "Elegir";
     }
-    
 </style>
 @endsection

@@ -1,21 +1,35 @@
 .fullscreen-modal .modal-dialog {
-  
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .fullscreen-modal .modal-dialog {
+    max-width: 1200px;
   }
-  @media (min-width: 768px) {
-    .fullscreen-modal .modal-dialog {
-      max-width: 1200px;
-    }
+}
+@media (min-width: 992px) {
+  .fullscreen-modal .modal-dialog {
+    max-width: 90%;
   }
-  @media (min-width: 992px) {
-    .fullscreen-modal .modal-dialog {
-      max-width: 90%;
-    }
+}
+@media (min-width: 1200px) {
+  .fullscreen-modal .modal-dialog {
+    max-width: 90%;
   }
-  @media (min-width: 1200px) {
-    .fullscreen-modal .modal-dialog {
-      max-width: 90%;
-    }
-  }
+}
+
+.modal100 {
+  max-width: 100% !important;
+  margin: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh !important;
+  display: flex;
+}
+
+.modal {
+    overflow-y: auto;
+}
