@@ -80,7 +80,7 @@
                             @endif
                             <div class="media-with-text  mt-4">
                                 <h2 class="h5 mb-2">
-                                    <a href="/noticia/{{$noticia->id_noticia}}"
+                                    <a href="/noticias/{{$noticia->id_noticia}}"
                                         id="tituloNoticia">{{$noticia->titulo}}</a>
                                 </h2>
                                 <small><span class="mb-2 d-block post-date">

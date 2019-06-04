@@ -26,10 +26,9 @@
                             <strong><label for="posgrado" class="control-label">Modalidad</label></strong>
                                 <select class="form-control posgrado" id="posgrado" name="posgrado">
                                     <option selected value="">Seleccione modalidad</option>
-                                    <option value="Póster">Póster</option>
-                                    <option value="Entrevista">Entrevista</option>
-                                    <option value="Video">Video</option>
-                                    <option value="Ponencia Oral">Ponencia Oral</option>
+                                    @foreach ($modalidades as $modalidadP)
+                                        <option value={{$modalidadP->id_modalidad}}>{{$modalidadP->nombre}}</option>
+                                    @endforeach
                                 </select>
                             <small><span class="text-danger mensajeError errorposgrado" id="modalidad_error"></span></small>
                         </div>

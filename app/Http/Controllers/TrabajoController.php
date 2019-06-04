@@ -116,11 +116,20 @@ class TrabajoController extends Controller
     public function subirTrabajo(){
         //$usuario = User::find(auth()->user()->id);        
         $alumno = auth()->user()->alumnos()->first();
-        $programa = Programa::select('id_programa','nombre')->where('id',$alumno->id)->first();
-
+        $programa = Programa::select('id_programa','nombre','nivel','periodo')->where('id',$alumno->id_programa)->first();
+        //$modalidades = DB::select(DB::raw("SELECT modalidad_posgrado.id_modalidad, modalidad_posgrado.grado, modalidad_posgrado.periodo FROM modalidad_posgrado WHERE modalidad_posgrado.grado='".$programa->nivel ."' AND modalidad_posgrado.periodo='".$programa->periodo."'"));
+        $modalidades = DB::select(DB::raw('SELECT modalidades.id_modalidad,modalidades.nombre '.
+        'FROM modalidad_posgrado, modalidad_periodo, modalidades '.
+        'WHERE modalidad_posgrado.grado="'. $programa->nivel .'" '.
+        'AND modalidad_posgrado.periodo="'. $programa->periodo .'" '.
+        'AND modalidad_posgrado.id = modalidad_periodo.id_posgrado '.
+        'AND modalidad_posgrado.id_modalidad = modalidades.id_modalidad '.
+        'AND ISNULL(modalidades.deleted_at)'.
+        'AND modalidad_periodo.periodo_min <=' . $alumno->semestre .' '.
+        'AND modalidad_periodo.periodo_max >=' . $alumno->semestre));
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
-        return view('trabajo.subirTrabajo', compact(['semana','instituciones','programa']));
+        return view('trabajo.subirTrabajo', compact(['semana','instituciones','programa','modalidades']));
     }
 }

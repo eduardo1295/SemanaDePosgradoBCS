@@ -29,5 +29,10 @@ class Alumno extends Model
     {
         return $this->hasMany(Trabajo::class, 'id_usuario', 'id_usuario');
     }
+
+    public function programas()
+    {
+        return $this->hasMany(Programa::class, 'id', 'id_programa');
+    }
     
 }

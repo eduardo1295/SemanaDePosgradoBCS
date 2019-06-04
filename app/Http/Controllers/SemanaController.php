@@ -15,7 +15,7 @@ use DB;
 use App\Carrusel;
 use Auth;
 use Illuminate\Support\Str as Str;
-use Datetime;
+use Jenssegers\Date\Date;
 use Carbon\Carbon;
 
 class SemanaController extends Controller
@@ -40,15 +40,19 @@ class SemanaController extends Controller
         
         $fFin = $semana->fecha_fin;
         $fFin = str_replace('-','',$fFin);
-        $datetimeI = DateTime::createFromFormat('Ymd', $fInicio );
+        /*$datetimeI = DateTime::createFromFormat('Ymd', $fInicio );
         $datetimeF = DateTime::createFromFormat('Ymd', $fFin);
         setlocale(LC_TIME,'es_ES.UTF-8');
         $date = Carbon::now();
-
+        */
         //dd(Carbon::parse("2018-03-20")->formatLocalized('%d %B %Y'));
-        
+        //dd(Date::now()->format( ' lj FYH: i: s ' ));
         //dd($cadena->formatLocalized('l'));
-        $cadena="";
+        $fInicio = new Date($semana->fecha_inicio);
+        $fFin = new Date($semana->fecha_fin);
+        $fInicio = $fInicio->format('l d').' de '.$fInicio->format('F');
+        $fFin = $fFin->format('l, d').' de '.$fFin->format('F').' del '.$fFin->format('Y');
+        
         //$cadena->format('l'); 
 
         //$cadena = $datetimeI->format('l').$datetimeF->format('l');
@@ -59,7 +63,7 @@ class SemanaController extends Controller
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
         //dd(Auth::guard()->user());
         
-        return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel','cadena']));
+        return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel','cadena','fInicio','fFin']));
     }
 
     public function indexAdmin()

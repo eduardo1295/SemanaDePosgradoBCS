@@ -9,7 +9,7 @@
                 <form id="alumnoForm" name="alumnoForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="alumno_id" id="alumno_id">
                     <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-lg-6">
                         <label for="institucionSelect">Institución</label>
                         <select class="form-control" id="institucionSelect" name="id_institucion">
                             <option selected value="">Seleccione una institución</option>
@@ -20,19 +20,30 @@
                         <small><span class="mensajeError text-danger" id="id_institucion_error"></span></small>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-lg-6">
                             <label for="programaSelect">Programa de posgrado</label>
-                            <select class="form-control" id="programaSelect" name="id_programa">
-                                <option selected value="">Seleccione un programa de estudio</option>
-                                @foreach ($instituciones as $institucion)
-                                <option value={{$institucion->id}}>{{$institucion->nombre}}</option>
-                                @endforeach
+                            <select class="form-control" id="programaSelect" name="programaSelect">
+                                
+                                
                             </select>
-                            <small><span class="mensajeError text-danger" id="id_institucion_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="programaSelect_error"></span></small>
                         </div>
                     </div>
+
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-12">
+                    <label for="institucionSelect">Director de tesis</label>
+                    <select class="form-control" id="directorSelect" name="directorSelect">
+                        
+                        
+                    </select>
+                    <small><span class="mensajeError text-danger" id="directorSelect_error"></span></small>
+                </div>
+
+                </div>
+                    <div class="form-row">
+                            
+                        <div class="form-group col-lg-6">
                             <label for="email" class="control-label">Email</label>
                             <input type="text" class="form-control" id="email" name="email"
                                 placeholder="Email del usuario" value="" maxlength="60" required="">
@@ -40,7 +51,7 @@
 
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-lg-6">
                             <label for="password" class="control-label">Contraseña</label>
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control" id="password" name="password"
@@ -61,7 +72,15 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-3">
+                            <div class="form-group col-lg-3">
+                                    <label for="email" class="control-label">Número de control</label>
+                                    <input type="text" class="form-control" id="num_control" name="num_control"
+                                        placeholder="Número de control" value="" maxlength="60" required="">
+                                    <small><span class="mensajeError text-danger" id="num_control_error"></span></small>
+        
+                                </div>
+
+                        <div class="form-group col-lg-2">
                             <label for="semestre" class="control-label">Semestre</label>
                             <input type="text" class="form-control" id="semestre" name="semestre"
                                 placeholder="Semestre del alumno" value="" maxlength="30" required="">
@@ -69,7 +88,7 @@
 
                         </div>
 
-                        <div class="form-group col-md-9">
+                        <div class="form-group col-lg-7">
                             <label for="nombre" class="control-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre"
                                 placeholder="Nombre del alumno" value="" maxlength="40" required="">
@@ -78,7 +97,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-lg-6">
                             <label for="primer_apellido" class="control-label">Primer apellido</label>
                             <input type="text" class="form-control" id="primer_apellido" name="primer_apellido"
                                 placeholder="Primer apellido" value="" maxlength="30" required="">
@@ -86,7 +105,7 @@
 
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-lg-6">
                             <label for="segundo_apellido" class="control-label">Segundo apellido</label>
                             <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido"
                                 placeholder="Segundo apellido" value="" maxlength="30" required="">

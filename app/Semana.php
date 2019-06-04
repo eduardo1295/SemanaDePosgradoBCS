@@ -20,6 +20,11 @@ class Semana extends Model
         'nombre', 'url_logo','url_convocatoria', 'fecha_inicio', 'fecha_fin', 'creado_por', 'actualizado_por', 'vigente',
     ];
 
+    protected $dates = [
+        'fecha_inicio',
+        'fecha_fin',
+    ];
+
     public function users()
     {
         return $this->hasMany(User::class, 'id_semana', 'id_semana');

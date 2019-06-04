@@ -77,9 +77,10 @@ Route::put('admin/director/reactivar/{director}', 'DirectorController@reactivar'
 Route::resource('director', 'DirectorController');
 
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
-Route::get('alumno/listAlumno', 'AlumnoController@listAlumno')->name('alumno.listAlumno');
+Route::get('alumno/listAlumnos', 'AlumnoController@listAlumnos')->name('alumno.listAlumnos');
 Route::put('admin/alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
 Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
+Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
 Route::resource('alumno', 'AlumnoController');
 
 Auth::routes();
