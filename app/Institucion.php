@@ -31,7 +31,7 @@ class Institucion extends Model
 
     public function programas()
     {
-        return $this->hasMany(Programa::class, 'id_institucion', 'id_programa');
+        return $this->hasMany(Programa::class, 'id_institucion', 'id');
     }
 
     public function locaciones()

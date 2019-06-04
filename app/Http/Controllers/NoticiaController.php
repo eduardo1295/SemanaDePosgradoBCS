@@ -114,7 +114,7 @@ class NoticiaController extends Controller
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                //$img->setattribute('src', '/img/noticias/'.$image_name);
+                
                 //$ultimaImagen = '/img/noticias/'.$image_name;
 
                 $img->setattribute('src', '/img/noticias/'.$noticia->id_noticia.'/'.$image_name);
@@ -188,6 +188,15 @@ class NoticiaController extends Controller
         
         $images = $dom->getelementsbytagname('img');
         $ultimaImagen ="";
+
+        $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
+        //dd($pathDirectorio);
+        if(count($images)>0){
+            if(!File::isDirectory($pathDirectorio)){
+                File::makeDirectory($pathDirectorio, 0777, true, true);
+            }
+        }
+
         //loop over img elements, decode their base64 src and save them to public folder,
         //and then replace base64 src with stored image URL.
         foreach($images as $k => $img){
@@ -201,13 +210,16 @@ class NoticiaController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/noticias/'. $image_name;
+                $path = public_path() .'/img/noticias/'.$noticia->id_noticia.'/'. $image_name;
     
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', '/img/noticias/'.$image_name);
-                $ultimaImagen = '/img/noticias/'.$image_name;
+                
+                //$ultimaImagen = '/img/noticias/'.$image_name;
+
+                $img->setattribute('src', '/img/noticias/'.$noticia->id_noticia.'/'.$image_name);
+                $ultimaImagen = '/img/noticias/'.$noticia->id_noticia.'/'.$image_name;
             }
         }
         if($ultimaImagen == ""){

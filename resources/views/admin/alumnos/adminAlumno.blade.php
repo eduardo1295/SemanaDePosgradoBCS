@@ -41,18 +41,21 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Grado</th>
+                        <th>No. Control</th>
+                        <th>Institución</th>
+                        <th>Programa de estudios</th>
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
                         <th>Email</th>
-                        <th>Institución</th>
+                        
                         
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
+                            <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -135,12 +138,14 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
-                { data: 'alumnos.grado', searchable: false },
+                { data: 'alumnos.num_control', searchable: false },
+                { data: 'instituciones.nombre', searchable: true },
+                { data: 'programas[0].nombre', searchable: false },
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
                 { data: 'email', searchable: true },
-                { data: 'instituciones.nombre', searchable: true },
+                
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
@@ -169,20 +174,24 @@
             var ruta = "{{url('alumno')}}/" + alumno_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
-                $('#alumnoCrudModal').html("Editar alumno:" + data.nombre);
+                $('#alumnoCrudModal').html("Editar alumno: " + data[0].nombre + ' ' + data[0].primer_apellido + ' ' + data[0].segundo_apellido);
                 $('#btn-save').val("editar");
                 $('#alumno-crud-modal').modal('show');
                 console.log(data);
-                $('#alumno_id').val(data.id);
+                $('#alumno_id').val(data[0].id);
                 $('#institucion').val(data.institucion);
-                $('#nombre').val(data.nombre);
-                $('#primer_apellido').val(data.primer_apellido);
-                $('#segundo_apellido').val(data.segundo_apellido);
-                $('#email').val(data.email);
-                $('#grado').val(data.alumnos.grado);
-                $("#institucionSelect").val(data.instituciones.id);
-                
-
+                $('#nombre').val(data[0].nombre);
+                $('#primer_apellido').val(data[0].primer_apellido);
+                $('#segundo_apellido').val(data[0].segundo_apellido);
+                $('#email').val(data[0].email);
+                $('#semestre').val(data[0].alumnos.semestre);
+                $('#num_control').val(data[0].alumnos.num_control);
+                $("#institucionSelect").val(data[0].instituciones.id);
+                buscarProgramas();
+                setTimeout(function(){ 
+                    $("#programaSelect").val(data[0].alumnos.id_programa);
+                    $("#directorSelect").val(data[0].alumnos.id_director);
+                }, 3000);
             })
         });
 
@@ -298,6 +307,7 @@
         $('#alumnoForm').trigger("reset");
         $('#alumnoCrudModal').html("Agregar nueva cuenta de alumno");
         $('#alumno-crud-modal').modal('show');
+        reiniciarselect();
 
     });
 
@@ -412,31 +422,43 @@
     })
     
     $('#institucionSelect').change(function () {
-        //selectIDIns = $(this).find("option:selected").val();
-        var ruta = "{{url('programasLista')}}/" + id + "";
+        buscarProgramas();
+    });
+
+    function buscarProgramas(){
+        selectIDIns = $('#institucionSelect').val();
+        var ruta = "{{url('alumno/programasLista')}}/" + selectIDIns + "";
+        
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,
                 type: "GET",
-                data: datos,
                 dataType: 'JSON',
                 contentType: false,
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
                     $('#programaSelect').html('');
                     $('#programaSelect').append('<option selected value="">Seleccione un programa de estudio</option>');
-                    /*$.each(data, function(key, val) {
-                        $('#programaSelect').append('<option value="' + val.id + '">'+val.nombre+'</option>');
-                    })*/
                     
+                    $.each(data[0], function(key, val) {
+                        $('#programaSelect').append('<option value="' + val.id + '">'+val.id_programa + ' - ' +val.nombre+'</option>');
+                    })
+
+                    $('#directorSelect').html('');
+                    $('#directorSelect').append('<option selected value="">Seleccione un director de tesis</option>');
+                    
+                    $.each(data[1], function(key, val) {
+                        $('#directorSelect').append('<option value="' + val.id + '">'+val.directortesis.grado + '. ' +val.nombre+ ' ' +val.primer_apellido+ ' ' +val.segundo_apellido+ '</option>');
+                    })
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
                 },
                 error: function (data) {
+                    reiniciarselect();
                     if (data.status == 422) {
-                        
                         var errores = data.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
@@ -448,8 +470,14 @@
                 },
 
             });
-    });
+    }
 
+    function reiniciarselect(){
+        $('#programaSelect').html('');
+        $('#programaSelect').append('<option selected value="">Seleccione una institución</option>');
+        $('#directorSelect').html('');
+        $('#directorSelect').append('<option selected value="">Seleccione una institución</option>');
+    }
     var showPass = 0;
     $('.btn-show-pass').on('click', function(){
         if(showPass == 0) {

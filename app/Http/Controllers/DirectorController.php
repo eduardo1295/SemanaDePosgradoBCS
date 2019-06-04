@@ -49,11 +49,11 @@ class DirectorController extends Controller
     public function store(StoreDirectorRequest $request)
     {
         $user = new User([
-            'nombre'     => $request->nombre,
+            'nombre'     => ucfirst($request->nombre),
             'email'     => $request->email,
             'password' => bcrypt($request->password),
-            'primer_apellido'   => $request->primer_apellido, 
-            'segundo_apellido'  => $request->segundo_apellido, 
+            'primer_apellido'   => ucfirst($request->primer_apellido), 
+            'segundo_apellido'  => ucfirst($request->segundo_apellido), 
             'id_institucion'    => $request->id_institucion,
             'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
         ]);
@@ -61,7 +61,7 @@ class DirectorController extends Controller
         
         
         if($user){
-            $user->directortesis()->create(['grado'=>$request->grado,'id_semana'=>1]);
+            $user->directortesis()->create(['grado'=>ucfirst($request->grado),'id_semana'=>1]);
             $user->roles()->attach([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
         }
         
@@ -101,9 +101,9 @@ class DirectorController extends Controller
     public function update(UpdateDirectorRequest $request, $id)
     {
         $user = User::find($id);
-        $user->nombre = $request->nombre;
-        $user->primer_apellido = $request->primer_apellido;
-        $user->segundo_apellido = $request->segundo_apellido;
+        $user->nombre = ucfirst($request->nombre);
+        $user->primer_apellido = ucfirst($request->primer_apellido);
+        $user->segundo_apellido = ucfirst($request->segundo_apellido);
         $user->id_institucion = $request->id_institucion;
         $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         
@@ -113,7 +113,7 @@ class DirectorController extends Controller
         $user->save();
         
         if($user){
-            $user->directortesis()->update(['grado'=>$request->grado]);
+            $user->directortesis()->update(['grado'=>ucfirst($request->grado)]);
             $user->roles()->sync([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
         }
         

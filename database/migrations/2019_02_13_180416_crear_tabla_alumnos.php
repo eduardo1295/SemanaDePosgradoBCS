@@ -19,6 +19,9 @@ class CrearTablaAlumnos extends Migration
             $table->integer('id_programa')->unsigned();
             //$table->foreign('id_programa')->references('id')->on('programas');
 
+            $table->integer('id_director')->unsigned();
+            $table->foreign('id_director')->references('id')->on('directores_tesis');
+
             $table->string('num_control', 15)->unique();
             $table->decimal('semestre',10,0);
             $table->boolean('constancia_generada')->default(false);

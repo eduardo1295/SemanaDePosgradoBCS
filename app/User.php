@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function directortesis()
     {
-        return $this->hasOne(DirectorTesis::class, 'id', 'id')->withDefault(['grado'=>'']);
+        return $this->hasOne(DirectorTesis::class, 'id', 'id');
     }
 
     public function alumnos()
@@ -106,6 +106,11 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    public function programas()
+    {
+        return $this->hasManyThrough(Programa::class, Alumno::class, 'id', 'id','id','id_programa');
     }
 
 }

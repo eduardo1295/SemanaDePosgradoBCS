@@ -32,9 +32,7 @@
                                   $ruta = auth('admin')->user() ? 'admin.logout' : 'logout';                                      
                                 @endphp
                                 <a class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar Sesión</a>
-                                <form id="logout-form" action="{{route($ruta)}}" method="POST" style="display: none;">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                </form>
+                                
                             @endif
                         </div>
                     </div>

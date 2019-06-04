@@ -48,11 +48,11 @@ class CoordinadorController extends Controller
     public function store(StoreCoordinadorRequest $request)
     {
         $user = new User([
-            'nombre'     => $request->nombre,
+            'nombre'     => ucfirst($request->nombre),
             'email'     => $request->email,
             'password' => bcrypt($request->password),
-            'primer_apellido'   => $request->primer_apellido, 
-            'segundo_apellido'  => $request->segundo_apellido, 
+            'primer_apellido'   => ucfirst($request->primer_apellido), 
+            'segundo_apellido'  => ucfirst($request->segundo_apellido), 
             'id_institucion'    => $request->id_institucion,
             'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
         ]);
@@ -60,7 +60,7 @@ class CoordinadorController extends Controller
         
         
         if($user){
-            $user->coordinadores()->create(['puesto'=> $request->puesto,'grado'=>$request->grado,'id_semana'=>1]);
+            $user->coordinadores()->create(['puesto'=> $request->puesto,'grado'=>ucfirst($request->grado),'id_semana'=>1]);
             $user->roles()->attach([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         
@@ -101,9 +101,9 @@ class CoordinadorController extends Controller
     {
         $user = User::find($id);
         $user->email = $request->email;
-        $user->nombre = $request->nombre;
-        $user->primer_apellido = $request->primer_apellido;
-        $user->segundo_apellido = $request->segundo_apellido;
+        $user->nombre = ucfirst($request->nombre);
+        $user->primer_apellido = ucfirst($request->primer_apellido);
+        $user->segundo_apellido = ucfirst($request->segundo_apellido);
         $user->id_institucion = $request->id_institucion;
         $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         
@@ -114,7 +114,7 @@ class CoordinadorController extends Controller
         $user->save();
         
         if($user){
-            $user->coordinadores()->update(['puesto'=> $request->puesto,'grado'=>$request->grado,'id_semana'=>1]);
+            $user->coordinadores()->update(['puesto'=> $request->puesto,'grado'=>ucfirst($request->grado),'id_semana'=>1]);
             $user->roles()->sync([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         
