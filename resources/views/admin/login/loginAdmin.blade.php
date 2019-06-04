@@ -1,10 +1,4 @@
-@extends('Plantilla.principal')
-@section('links')
-	<script src='https://www.google.com/recaptcha/api.js'></script>
-	<style>
-	body{ background-image: url('/img/nature.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
-	</style>
-@endsection
+@extends('Plantilla.plantillaLogin')
 @section('contenido')
 	<div class="container" style="width: 100%;  height: 300px ;">
 		<div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
@@ -44,8 +38,5 @@
 		</div>
 	</div>
 @endsection
-@section('scripts')
-	<script src="/js/Login/main2.js"></script>
-	<script src="/js/popper.min.js"></script>
-@endsection
+
 	

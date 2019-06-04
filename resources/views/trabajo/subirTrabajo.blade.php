@@ -1,6 +1,5 @@
 {{-- SECCION BLADE--}}
 @extends('Plantilla.principal')
-
 @section('contenido')
 @section('links')
 <link rel="stylesheet" href="/css/Maqueta2.css">
@@ -36,7 +35,6 @@
                         <div class="form-group col-12">
                             <strong><label for="titulo" class="control-label">Titulo</label></strong>
                         <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Titulo del trabajo" value="@isset($trabajo){{$trabajo->titulo}}@endisset">
-                        
                             <small><span class="text-danger mensajeError errorposgrado" id="titulo_error"></span></small>
                         </div>
                         <div class="form-group col-12">
@@ -47,7 +45,7 @@
                         <div class="form-group col-12">
                             <strong><label for="customFileLang" class="control-label">Trabajo: </label></strong>
                             @isset($trabajo)
-                            <a href='{{ URL::to("/") }}/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >{{' '.$trabajo->url}}</a>
+                            <a href='{{ URL::to("/") }}/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >Trabajo Subido</a>
                             <input type="hidden" name="auxUrl" value="{{$trabajo->url}}">
                             @endisset
                             <div class="custom-file">
@@ -70,7 +68,6 @@
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><input type="text" name="pal_clv5"  id="pal_clv5" class="form-control" placeholder="clave 5" value="@isset($trabajo){{$trabajo->pal_clv5}}@endisset"></div>
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0 d-md-none"><small><span class="text-danger mensajeError errorposgrado pal_clv5_error" id=""></span></small></div>
                     </div>
-                    
                     <div class="form-group row pl-5 pr-5 d-none d-md-flex">
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv1_error" id=""></span></small></div>
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv2_error" id=""></span></small></div>
@@ -78,11 +75,7 @@
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv4_error" id=""></span></small></div>
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv5_error" id=""></span></small></div>
                     </div>
-                    
-
-
                     <div class="form-row pl-5 pr-5 pb-3 ">
-
                         <div class="form-group col-12">
                             <strong><label for="directortesis" class="control-label">Director de tesis</label></strong>
                             <input type="text" class="form-control" id="directortesis" name="directortesis" placeholder="director de tesis">
@@ -91,15 +84,11 @@
                             <strong><label for="area" class="control-label">Área</label></strong>
                             <input type="text" class="form-control" id="area" name="area" placeholder="director de tesis" value="@isset($programa){{$programa->nombre}}@endisset" readonly>
                         </div>
-                        
                         <div class="col-12 d-flex justify-content-end pt-3">
                             <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar
                             </button>
                         </div>        
                     </div>
-                    
-                    
-                    
                 </form>
             </div>
             <div id="snackbar"></div>
@@ -114,7 +103,6 @@ $('.custom-file-input').on('change', function () {
         }
     })
 </script>
-
 @section('menu')
 @include('layoutsM2.navbar')
 @endsection
@@ -122,7 +110,6 @@ $('.custom-file-input').on('change', function () {
 @include('layoutsM2.footer')
 @endsection
 {{-- END SECCION BLADE--}}
-
 @section('scripts')
 <script src="/js/menumaker.js"></script>
 <script src="/js/trabajo/subirtrabajo.js"></script>

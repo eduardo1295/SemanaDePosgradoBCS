@@ -115,6 +115,12 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="{{route('modalidad.VerModalidad')}}">
+                        <i class="fas fa-paint-brush"></i>
+                        <span><strong>Vista Login</strong></span>
+                    </a>
+                </li>
             </ul>
         </div>
 
