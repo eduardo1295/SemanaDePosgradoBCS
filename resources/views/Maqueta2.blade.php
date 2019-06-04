@@ -1,6 +1,6 @@
 
 {{-- SECCION BLADE--}}
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 
 @section('contenido')
 <button onclick="topFunction()" id="myBtn"><i  id="flecha" class="fas fa-arrow-up"></i></button>

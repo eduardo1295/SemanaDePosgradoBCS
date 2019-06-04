@@ -13,6 +13,7 @@ use App\Alumno;
 use App\Programa;
 use App\Trabajo;
 use DB;
+use App\Http\Requests\trabajos\StoreTrabajoRequest;
 
 class TrabajoController extends Controller
 {
@@ -42,16 +43,21 @@ class TrabajoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $nuevo_nombre = 'sin imagen';
+    public function store(StoreTrabajoRequest $request)
+    {   
+
+        $nuevo_nombre = 'sin Trabajo';
         if($request->hasFile('url')){
             
-            $imagencarrusel = $request->file('url');
+            $trabajoAlumno = $request->url;
             //agregar id de usuarios a nombre
-            $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->url . '.' . $imagencarrusel->getClientOriginalExtension();
-            $imagencarrusel->move(public_path('documentos/trabajos'), $nuevo_nombre);
+            $nuevo_nombre = auth()->user()->nombre . '.' . $trabajoAlumno->getClientOriginalExtension();
+            $trabajoAlumno->move(public_path('documentos/trabajos'), $nuevo_nombre);
         }
+        elseif (isset($request->auxUrl)) {
+            $nuevo_nombre = $request->auxUrl;
+        }
+        /*
         $trabajo = new Trabajo();
         $trabajo->id_alumno   = auth()->user()->id   ;
         $trabajo->id_director = $request->id_director;
@@ -59,14 +65,37 @@ class TrabajoController extends Controller
         $trabajo->titulo      = $request->titulo     ;
         $trabajo->resumen     = $request->resumen    ;
         $trabajo->area        = $request->area       ;
-        $trabajo->pal_clv1    = $request->clave1     ;
-        $trabajo->pal_clv2    = $request->clave2     ;
-        $trabajo->pal_clv3    = $request->clave3     ;
-        $trabajo->pal_clv4    = $request->clave4     ;
-        $trabajo->pal_clv5    = $request->clave5     ;
-        $trabajo->url         = $nuevo_nombre        ;
+        $trabajo->pal_clv1    = $request->pal_clv1   ;
+        $trabajo->pal_clv2    = $request->pal_clv2   ;
+        $trabajo->pal_clv3    = $request->pal_clv3   ;
+        $trabajo->pal_clv4    = $request->pal_clv4   ;
+        $trabajo->pal_clv5    = $request->pal_clv5   ;
+        $trabajo->url         = $trabajoAlumno       ;
     
         $trabajo->save();
+        
+        */
+        $semana = Semana::all()->last(); 
+        $trabajo = Trabajo::updateOrCreate(
+            ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
+            [
+             'id_alumno' => auth()->user()->id,
+             'id_director' => $request->id_director,
+             'id_semana' => $request->id_semana  ,
+             'titulo' => $request->titulo     ,
+             'resumen' => $request->resumen    ,
+             'area' => $request->area       ,
+             'pal_clv1' => $request->pal_clv1   ,
+             'pal_clv2' => $request->pal_clv2   ,
+             'pal_clv3' => $request->pal_clv3   ,
+             'pal_clv4' => $request->pal_clv4   ,
+             'pal_clv5' => $request->pal_clv5   ,
+             'url' => $nuevo_nombre       
+            ]
+        );
+        
+    
+        return \Response::json($trabajo);
     }
 
     /**
@@ -114,13 +143,15 @@ class TrabajoController extends Controller
         //
     }
     public function subirTrabajo(){
-        //$usuario = User::find(auth()->user()->id);        
+        //$usuario = User::find(auth()->user()->id); 
+        //dd(auth()->user()->roles());       
         $alumno = auth()->user()->alumnos()->first();
         $programa = Programa::select('id_programa','nombre')->where('id',$alumno->id)->first();
 
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
-        return view('trabajo.subirTrabajo', compact(['semana','instituciones','programa']));
+        $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->first();
+        return view('trabajo.subirTrabajo', compact(['semana','instituciones','programa','trabajo']));
     }
 }

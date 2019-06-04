@@ -40,10 +40,16 @@
                                         <div class="aliga">
                                         <span><i class="fas fa-user"></i>{{' '}}</span>{{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}
                                         </div> 
-                                        <ul>
-                                            <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
-                                        <li><a href="{{route('alumno.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
-                                            <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
+                                        <ul class="loginUsuario">
+                                            @if(auth()->user()->roles()->first()->nombre == 'alumno')
+                                                <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
+                                                <li><a href="{{route('alumno.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
+                                                <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
+                                            
+                                            @elseif(auth()->user()->roles()->first()->nombre == 'director')
+                                                <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>
+                                                <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
+                                            @endif
                                         </ul>
                                     </li>
                                     {{-- comment

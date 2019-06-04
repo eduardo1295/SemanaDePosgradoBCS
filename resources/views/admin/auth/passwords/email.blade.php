@@ -1,4 +1,4 @@
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 @section('links')
 	<style>
 	body{ background-image: url('/img/nature.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }

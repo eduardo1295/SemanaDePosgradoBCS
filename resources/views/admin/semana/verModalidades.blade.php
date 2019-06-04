@@ -1,5 +1,5 @@
 {{-- SECCION BLADE--}}
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 
 @section('contenido')
 @section('links')

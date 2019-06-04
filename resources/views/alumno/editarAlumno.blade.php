@@ -1,5 +1,5 @@
 {{-- SECCION BLADE--}}
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 
 @section('contenido')
 @section('links')
@@ -43,10 +43,23 @@
                                 <input type="text" name="email" id="email" value="{{$usuario->email}}" class="form-control" max="60">
                                 <small><span class="text-danger mensajeError errorposgrado" id="primer_apellido_error"></span></small>
                         </div>
-                        <div class="form-group col-6">
-                            <strong><label for="password" class="control-label">Contaseña</label></strong>
-                            <input type="password" name="password" id="password" value="" class="form-control">
-                            <small><span class="text-danger mensajeError errorposgrado" id="password_error"></span></small>
+                        <div class="form-group col-md-6">
+                            <label for="password" class="control-label">Contraseña</label>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Contraseña para la cuenta" value="" maxlength="60" required=""
+                                    aria-describedby="passwordHelpBlock">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary btn-show-pass" type="button"><span>
+                                            <i class="fas fa-eye"></i>
+                                        </span></button>
+                                </div>
+                            </div>
+                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                Su contraseña debe tener mínimo 6 caracteres, debe contener al menos 1 letra mayúscula,
+                                1 letra minúscula, 1 número y 1 carácter especial(#?!@$^&-).
+                            </small>
+                            <small><span class="mensajeError text-danger" id="password_error"></span></small>
                         </div>
                         <div class="col-12 d-flex justify-content-end pb-3">
                             <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar

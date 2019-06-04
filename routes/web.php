@@ -74,7 +74,9 @@ Route::resource('coordinador', 'CoordinadorController');
 Route::get('admin/directores', 'DirectorController@director')->name('director.VerDirectores');
 Route::get('director/listDirector', 'DirectorController@listDirector')->name('director.listDirector');
 Route::put('admin/director/reactivar/{director}', 'DirectorController@reactivar')->name('director.reactivar');
+Route::get('director/verAlumnos', 'DirectorController@revisarAlumnos')->name('director.revisarAlumnos');
 Route::resource('director', 'DirectorController');
+
 
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
 Route::get('alumno/listAlumno', 'AlumnoController@listAlumno')->name('alumno.listAlumno');

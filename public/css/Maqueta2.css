@@ -33,6 +33,7 @@
 #navbarM2 #navigation.align-right ul ul { text-align: right; }
 #navbarM2 #navigation ul ul li { height: 0; -webkit-transition: all .25s ease; -moz-transition: all .25s ease; -ms-transition: all .25s ease; -o-transition: all .25s ease; transition: all .25s ease; }
 #navbarM2 #navigation li:hover > ul { left: auto; }
+.loginUsuario {right: 0px; }
 #navbarM2 #navigation.align-right li:hover > ul { left: auto; right: 0; }
 #navbarM2 #navigation li:hover > ul > li { height: 46px; }
 #navbarM2 #navigation ul ul ul { margin-left: 100%; top: 0; }
@@ -214,9 +215,7 @@
   border-bottom: .25rem solid #36b9cc!important;
 }
 .aModalidad{ color: #36b9cc; text-decoration: none; }
-.loginUsuario{
-  right: 50px;
-}
+
 
 .pruebacolor{
   background: pink;
@@ -246,15 +245,16 @@
   #logoSede{ width: 115px; height: 95px;} 
   #espacioBlanco{padding-top: 140px;}
   #navbarM2{overflow: hidden;}
-  #navbarM2{overflow: hidden !important; } 
+  
  }
 @media (min-width: 992px) and (max-width: 1200px){
   #logoSede { width: 200px; height: 170px; } 
   #espacioBlanco{padding-top: 140px;} 
   /*#navbarM2{overflow: hidden !important; } */
+  
 }
 
 @media (min-width: 1200px){
-  /*#navbarM2{overflow: hidden !important; } */
+  #navbarM2{overflow: visible !important; } 
 }
 

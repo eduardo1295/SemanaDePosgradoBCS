@@ -1,9 +1,10 @@
 {{-- SECCION BLADE--}}
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 
 @section('contenido')
 @section('links')
 <link rel="stylesheet" href="/css/Maqueta2.css">
+<link href="/css/modales/snackbar.css" rel="stylesheet">
 <script src="/js/owl.carousel.min.js"> </script>
 <script>
     $(function () {
@@ -35,29 +36,52 @@
                         </div>
                         <div class="form-group col-12">
                             <strong><label for="titulo" class="control-label">Titulo</label></strong>
-                                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Titulo del trabajo">
+                        <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Titulo del trabajo" value="@isset($trabajo){{$trabajo->titulo}}@endisset">
+                        
                             <small><span class="text-danger mensajeError errorposgrado" id="titulo_error"></span></small>
                         </div>
                         <div class="form-group col-12">
                             <strong><label for="resumen" class="control-label">Resumen</label></strong>
-                            <textarea class="form-control" id="resumen" name="resumen" rows="5" placeholder="Resumen del programa"></textarea>
+                            <textarea class="form-control" id="resumen" name="resumen" rows="5" placeholder="Resumen del programa">@isset($trabajo){{$trabajo->resumen}}@endisset</textarea>
+                            <small><span class="text-danger mensajeError errorposgrado" id="resumen_error"></span></small>
                         </div>
                         <div class="form-group col-12">
-                            <strong><label for="customFileLang" class="control-label">Archivo</label></strong>
+                            <strong><label for="customFileLang" class="control-label">Trabajo: </label></strong>
+                            @isset($trabajo)
+                            <a href='{{ URL::to("/") }}/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >{{' '.$trabajo->url}}</a>
+                            <input type="hidden" name="auxUrl" value="{{$trabajo->url}}">
+                            @endisset
                             <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFileLang" lang="es" name="url">
+                                    <input type="file" class="custom-file-input" id="customFileLang" lang="es" name="url" accept="application/pdf" >
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                             </div>
+                            <small><span class="text-danger mensajeError errorposgrado" id="url_error"></span></small>
                         </div>
                     </div>
-                    <strong><label for="clave" class="control-label pl-5">Palabra clave</label></strong> <br>
-                    <div class="form-group row pl-5 pr-5">
-                            <div class="col-12 col-sm pt-2 pt-sm-0"><input type="text" name="clave1"  id="clave1" class="form-control" placeholder="clave 1"></div>
-                            <div class="col-12 col-sm pt-2 pt-sm-0"><input type="text" name="clave2"  id="clave2" class="form-control" placeholder="clave 2"></div>
-                            <div class="col-12 col-sm pt-2 pt-sm-0"><input type="text" name="clave3"  id="clave3" class="form-control" placeholder="clave 3"></div>
-                            <div class="col-12 col-sm pt-2 pt-sm-0"><input type="text" name="clave4"  id="clave4" class="form-control" placeholder="clave 4"></div>
-                            <div class="col-12 col-sm pt-2 pt-sm-0"><input type="text" name="clave5"  id="clave5" class="form-control" placeholder="clave 5"></div>
+                    <strong><label for="clave" class="control-label pl-5">Palabra clave</label></strong><br>
+                    <div class="form-group row pl-5 pr-5" >
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><input type="text" name="pal_clv1"  id="pal_clv1" class="form-control" placeholder="clave 1" value="@isset($trabajo){{$trabajo->pal_clv1}}@endisset"></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0 d-md-none"><small><span class="text-danger mensajeError errorposgrado pal_clv1_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><input type="text" name="pal_clv2"  id="pal_clv2" class="form-control" placeholder="clave 2" value="@isset($trabajo){{$trabajo->pal_clv2}}@endisset"></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0 d-md-none"><small><span class="text-danger mensajeError errorposgrado pal_clv2_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><input type="text" name="pal_clv3"  id="pal_clv3" class="form-control" placeholder="clave 3" value="@isset($trabajo){{$trabajo->pal_clv3}}@endisset"></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0 d-md-none"><small><span class="text-danger mensajeError errorposgrado pal_clv3_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><input type="text" name="pal_clv4"  id="pal_clv4" class="form-control" placeholder="clave 4" value="@isset($trabajo){{$trabajo->pal_clv4}}@endisset"></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0 d-md-none"><small><span class="text-danger mensajeError errorposgrado pal_cv4_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><input type="text" name="pal_clv5"  id="pal_clv5" class="form-control" placeholder="clave 5" value="@isset($trabajo){{$trabajo->pal_clv5}}@endisset"></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0 d-md-none"><small><span class="text-danger mensajeError errorposgrado pal_clv5_error" id=""></span></small></div>
                     </div>
+                    
+                    <div class="form-group row pl-5 pr-5 d-none d-md-flex">
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv1_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv2_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv3_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv4_error" id=""></span></small></div>
+                        <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><small><span class="text-danger mensajeError errorposgrado pal_clv5_error" id=""></span></small></div>
+                    </div>
+                    
+
+
                     <div class="form-row pl-5 pr-5 pb-3 ">
 
                         <div class="form-group col-12">
@@ -66,8 +90,9 @@
                         </div>
                         <div class="form-group col-12">
                             <strong><label for="area" class="control-label">Área</label></strong>
-                            <input type="text" class="form-control" id="area" name="area" placeholder="director de tesis" value="{{$programa->nombre}}" readonly>
+                            <input type="text" class="form-control" id="area" name="area" placeholder="director de tesis" value="@isset($programa){{$programa->nombre}}@endisset" readonly>
                         </div>
+                        
                         <div class="col-12 d-flex justify-content-end pt-3">
                             <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar
                             </button>
@@ -78,6 +103,7 @@
                     
                 </form>
             </div>
+            <div id="snackbar"></div>
 </section>
 <script>
 $('.custom-file-input').on('change', function () {

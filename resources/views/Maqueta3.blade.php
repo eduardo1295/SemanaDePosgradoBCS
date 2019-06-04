@@ -1,5 +1,5 @@
 {{-- SECCION BLADE--}}
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 
 @section('menu')
          @include('layoutsM3.navbar')

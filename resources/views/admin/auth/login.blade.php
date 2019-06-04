@@ -1,4 +1,4 @@
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 @section('links')
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<style>

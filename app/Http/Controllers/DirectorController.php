@@ -8,6 +8,7 @@ use App\DirectorTesis;
 use App\Institucion;
 use App\Semana;
 use DataTables;
+use DB;
 use App\Http\Requests\directores\StoreDirectorRequest;
 use App\Http\Requests\directores\UpdateDirectorRequest;
 use Validator;
@@ -176,5 +177,32 @@ class DirectorController extends Controller
             ->addIndexColumn()
             ->toJson();   
         }
+    }
+    /*Pendiente Rente
+    public function listAlumnos(Request $request ){
+        $busqueda = $request->busqueda;
+        if($busqueda == 'activos'){
+            $trabajos = Trabajo::all()->where('id_director',auth()->user()->id);
+            
+            $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
+            return datatables()->of($usuarios)
+            ->addColumn('action', 'admin.acciones')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->toJson();
+        }else if($busqueda == 'eliminados'){
+            $usuarios = User::onlyTrashed()->select('id','nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:id,nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
+            return datatables()->of($usuarios)
+            ->addColumn('action', 'admin.reactivar')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->toJson();   
+        }
+    }
+    */
+    public function revisarAlumnos(){
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        return view('director.revisarAlumnos',compact(['instituciones','semana']));
     }
 }

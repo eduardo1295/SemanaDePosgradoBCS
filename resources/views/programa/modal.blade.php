@@ -40,7 +40,7 @@
                             <strong><label for="nivel" class="control-label">Nivel</label></strong>
                             <select class="form-control" id="nivel" name="nivel">
                                 <option selected value="">Seleccione nivel</option>
-                                <option value="Mestría">Maestría</option>
+                                <option value="Maestría">Maestría</option>
                                 <option value="Doctorado">Doctorado</option>
                             </select>
                             <small> <span class="text-danger mensajeError" id="nivel_error"></span> </small>

@@ -1,10 +1,10 @@
 {{-- SECCION BLADE--}}
 
-@extends('layoutsM1.principal')
+@extends('Plantilla.principal')
 @section('contenido')
-@include('layoutsM1.carrusel')
-@include('layoutsM1.noticias')
-@include('layoutsM1.comite')
+@include('Plantilla.carrusel')
+@include('Plantilla.noticias')
+@include('Plantilla.comite')
 
 @section('links')
     <link rel="stylesheet" href="{{ mix('css/Maqueta1.css')}} "> 
@@ -12,11 +12,11 @@
 @endsection
 
 @section('menu')
-     @include('layoutsM1.menu')
+     @include('Plantilla.menu')
 @endsection
 
 @section('footer')
-    @include('layoutsM1.footer')
+    @include('Plantilla.footer')
 @endsection
 
 {{-- END SECCION BLADE--}}

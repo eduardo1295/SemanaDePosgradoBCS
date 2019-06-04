@@ -13,7 +13,7 @@ class StoreTrabajoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -41,7 +41,18 @@ class StoreTrabajoRequest extends FormRequest
 
             'pal_clv5'   => 'required|string|max:15',
 
-            'comentario'  => 'required|string|max:100',
+            'comentario'  => 'nullable|string|max:100',
+            
+            'url' => 'file|mimes:pdf'
+        ];
+    }
+
+    public function messages(){
+        return [
+            '*.required' => 'El campo es obligatorio',
+            '*.max' => 'No debe contener maximo :max caracteres',
+            '*.min' => 'Debe contener minimo :min caracteres',
+            'url.mimes' => 'Debe ser un archivo con formato .Pdf',
         ];
     }
 }

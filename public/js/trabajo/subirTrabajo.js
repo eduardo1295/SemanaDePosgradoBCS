@@ -21,10 +21,11 @@ $(document).ready(function() {
             processData: false,
             success: function(data) {
                 console.log(data);
-                $("#trabajoForm").trigger("reset");
-                $("#trabajoForm-crud-modal").modal("hide");
+                console.log('Aqui');
                 $("#btn-save").html("Guardar");
-                $(window).scrollTop(0);
+                $('#link').html(data.url);
+                
+                $('#link').prop('href','/documentos/trabajos/'+ data.url );
 
                 $("#btn-save").prop("disabled", false);
                 $("#btn-close").prop("disabled", false);
@@ -42,16 +43,17 @@ $(document).ready(function() {
                     var errores = data.responseJSON["errors"];
                     $.each(errores, function(key, value) {
                         $("#" + key + "_error").text(value);
+                        $("." + key + "_error").text(value);
                     });
                 }
                 $("#snackbar").html(
-                    "<span style='color: red;'><i class='fas fa-times-circle'></i></span> Error al editar."
+                    "<span style='color: red;'><i class='fas fa-times-circle'></i></span> Error al guardar los cambios."
                 );
                 $("#snackbar").addClass("show");
                 setTimeout(function() {
                     $("#snackbar").removeClass("show");
                 }, 5000);
-                $(window).scrollTop(0);
+                
                 $("#btn-save").html("Guardar");
                 $("#btn-save").prop("disabled", false);
                 $("#btn-close").prop("disabled", false);

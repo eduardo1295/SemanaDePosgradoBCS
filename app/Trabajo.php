@@ -35,6 +35,6 @@ class Trabajo extends Model
     }
 
     public function alumnos(){
-        return $this->belongsTo(Alumno::class,'id_usuario');
+        return $this->belongsTo(Alumno::class,'id_alumno','id');
     }
 }
