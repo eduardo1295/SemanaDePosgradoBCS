@@ -47,9 +47,8 @@
                                             @elseif(auth()->user() && auth()->user()->hasRoles(['director']))
                                                 <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>
                                             @endif
-                                        <ul>
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
-                                        </ul>
+                                        <ul>
                                     </li>
                                     {{-- comment
                                     <li><a onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión {{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}</a> </li>
