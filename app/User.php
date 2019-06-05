@@ -76,6 +76,8 @@ class User extends Authenticatable
         return $this->hasMany(Noticia::class, 'creada_por', 'id');
     }
 
+    
+
     /*
     public function trabajos()
     {

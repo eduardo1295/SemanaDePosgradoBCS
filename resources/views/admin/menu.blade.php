@@ -116,7 +116,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{route('modalidad.VerModalidad')}}">
+                    <a href="{{route('vistaLogin.VerVistaLogin')}}">
                         <i class="fas fa-paint-brush"></i>
                         <span><strong>Vista Login</strong></span>
                     </a>

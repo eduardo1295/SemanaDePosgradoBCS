@@ -75,6 +75,7 @@ Route::get('admin/directores', 'DirectorController@director')->name('director.Ve
 Route::get('director/listDirector', 'DirectorController@listDirector')->name('director.listDirector');
 Route::put('admin/director/reactivar/{director}', 'DirectorController@reactivar')->name('director.reactivar');
 Route::get('director/verAlumnos', 'DirectorController@revisarAlumnos')->name('director.revisarAlumnos');
+Route::get('director/listAlumnos', 'DirectorController@listAlumnos')->name('director.listAlumnos');
 Route::resource('director', 'DirectorController');
 
 
@@ -101,6 +102,10 @@ Route::resource('modalidad', 'ModalidadController');
 
 Route::get('/subirTrabajo', 'TrabajoController@subirTrabajo')->name('semana.subirTrabajo');
 Route::resource('trabajo', 'TrabajoController');
+
+
+Route::get('admin/VistaLogin', 'VistaLoginController@vistaLogin')->name('vistaLogin.VerVistaLogin');
+Route::resource('VistaLogin', 'VistaLoginController');
 /*
 Route::get('/',['as'=> 'home',function (){
     return view('home',compact('hola'));

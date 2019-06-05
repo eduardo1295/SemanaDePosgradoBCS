@@ -14,14 +14,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     
 	<style>
-		body{ background-image: url('/img/nature.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
+		body{ background-image: url('/img/fondo/defecto.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
     </style>
     <script src="/js/Login/main2.js"></script>
     <script src="/js/popper.min.js"></script>
     
     @yield('links')
 </head>
-<body>
+<body @if(isset($imagen)  && !Empty($imagen->url_imagen))style="background-image: url('/img/fondo/{{$imagen->url_imagen}}')"@endif>
     <div style="min-height:100vh">
     @yield('contenido','')
     </div>

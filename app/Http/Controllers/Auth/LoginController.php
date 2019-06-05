@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReCaptchataTestFormRequest;
-
+use App\VistaLogin;
 
 class LoginController extends Controller
 {
@@ -52,7 +52,8 @@ class LoginController extends Controller
             
             return redirect()->route('admin.index');
         }else{
-            return view('auth.login');
+            $imagen= VistaLogin::find(1);
+            return view('auth.login',compact(['imagen']));   
         }
     }
 

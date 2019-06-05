@@ -20,29 +20,32 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="col-12">
-                            <table class="display" cellspacing="0" style="width:100%" id="slidersC">
-                                <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>Link</th>
-                                        <th>Imagen</th>
-                                        <th>Última actualización</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                </div>
+        <div class="col-12">
+            <table class="display" cellspacing="0" style="width:100%" id="alumnosdt">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Apello paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
                 
             </div>
             <div id="snackbar"></div>
@@ -68,21 +71,13 @@ $('.custom-file-input').on('change', function () {
 
 @section('scripts')
 <script src="/js/menumaker.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script src="/js/director/script.js"></script>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link href="/css/modales/modalresponsivo.css" rel="stylesheet">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
-<link href="/css/modales/modalimagen.css" rel="stylesheet">
 @endsection
 @endsection
