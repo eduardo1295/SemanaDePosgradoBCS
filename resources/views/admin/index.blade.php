@@ -189,6 +189,7 @@
 
         $.get(ruta, function (data) {
 
+            var unique = $.now();
             $('#semanaCrudModal').html("Editar semana: " + data.nombre);
             $('#btn-save').val("editar");
             $('#semana-crud-modal').modal('show');
@@ -198,7 +199,7 @@
             $('#fecha').val(data.fecha);
             $("#institucionSelect").val(data.instituciones[0].id);
             $('#contenido').summernote('code', data.contenido);
-            $('#imglogo').prop('src', "{{url('img/semanaLogo')}}/" + data.url_logo);
+            $('#imglogo').prop('src', "{{url('img/semanaLogo')}}/" + data.url_logo+'/?'+unique);
             $('#logoactual').html('Logo actual');
             $('#logoAnterior').removeClass('d-none');
             $('#fecha').data('daterangepicker').setStartDate(data.fecha_inicio);
@@ -277,9 +278,7 @@
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-                    if(data.vigente==1){
-                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/'+data.url_logo);
-                    }
+                    
                 },
                 error: function (data) {
                     if (data.status == 422) {
@@ -292,6 +291,12 @@
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
+                complete: function (data) {
+                    var unique = $.now();
+                    if(data.responseJSON['vigente']==1){
+                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/'+data.responseJSON['url_logo']+'/?'+unique);
+                    }
+                }
 
             });
         } else if (actionType == "crear-semana") {

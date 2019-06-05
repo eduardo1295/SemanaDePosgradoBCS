@@ -41,6 +41,7 @@ class VerifyEmail extends Notification
         }
 
         return (new MailMessage)
+            ->from('semanaposgrado.bcs@gmail.com', 'SemanaDePosgradoBCS')
             ->subject(Lang::getFromJson('Verify Email Address'))
             ->line(Lang::getFromJson('Please click the button below to verify your email address.'))
             ->action(
