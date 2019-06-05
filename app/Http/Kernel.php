@@ -53,7 +53,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'admin.auth' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'admin.guest' => \App\Http\Middleware\RedirectIfAdmin::class,
-        // 'admin.verified' => \App\Http\Middleware\EnsureAdminEmailIsVerified::class,
+        'admin.verified' => \App\Http\Middleware\EnsureAdminEmailIsVerified::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -64,6 +64,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'roles' => \App\Http\Middleware\verificarRoles::class,
+        'verificarcontrasena' => \App\Http\Middleware\VerificarContrasena::class,
+        'nuevacontrasena' => \App\Http\Middleware\NuevaContrasena::class,
     ];
 
     /**

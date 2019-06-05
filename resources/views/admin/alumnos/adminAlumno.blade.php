@@ -94,6 +94,7 @@
     var SITEURL = "{{URL::to('/')}}";
     var checkCoord = 'activos';
     var selectIDIns= "";
+    
     $(document).ready(function () {
         
         $.extend($.fn.dataTableExt.oStdClasses, {
@@ -172,6 +173,7 @@
         $('body').on('click', '.editar', function () {
             var alumno_id = $(this).data('id');
             var ruta = "{{url('alumno')}}/" + alumno_id + "/editar";
+            
             $.get(ruta, function (data) {
                 //ocultar errores
                 $('#alumnoCrudModal').html("Editar alumno: " + data[0].nombre + ' ' + data[0].primer_apellido + ' ' + data[0].segundo_apellido);
@@ -187,11 +189,13 @@
                 $('#semestre').val(data[0].alumnos.semestre);
                 $('#num_control').val(data[0].alumnos.num_control);
                 $("#institucionSelect").val(data[0].instituciones.id);
-                buscarProgramas();
-                setTimeout(function(){ 
-                    $("#programaSelect").val(data[0].alumnos.id_programa);
-                    $("#directorSelect").val(data[0].alumnos.id_director);
-                }, 3000);
+                
+                buscarProgramas(data[0].alumnos.id_programa,data[0].alumnos.id_director,true);
+                
+                //setTimeout(function(){ 
+                    //$("#programaSelect").val(data[0].alumnos.id_programa);
+                    //$("#directorSelect").val(data[0].alumnos.id_director);
+                //}, 3000);
             })
         });
 
@@ -301,7 +305,7 @@
 
     /*Accion al presionar el boton crear-alumno*/
     $('#crear-alumno').click(function () {
-
+        
         $('#btn-save').val("crear-alumno");
         $('#alumno_id').val('');
         $('#alumnoForm').trigger("reset");
@@ -422,10 +426,10 @@
     })
     
     $('#institucionSelect').change(function () {
-        buscarProgramas();
+        buscarProgramas('n','n',false);
     });
 
-    function buscarProgramas(){
+    function buscarProgramas(bPrograma, bDirector,edicion){
         selectIDIns = $('#institucionSelect').val();
         var ruta = "{{url('alumno/programasLista')}}/" + selectIDIns + "";
         
@@ -468,6 +472,12 @@
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
+                complete: function (data) {
+                    if(edicion){
+                        $("#programaSelect").val(bPrograma);
+                        $("#directorSelect").val(bDirector);
+                    }
+                }
 
             });
     }

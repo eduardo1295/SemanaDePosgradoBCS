@@ -27,6 +27,7 @@ class CreateAdminsTable extends Migration
             $table->integer('creado_por')->nullable();
             $table->timestamp('fecha_actualizacion')->nullable();
             $table->integer('actualizado_por')->nullable();
+            $table->timestamp('primerContrasena')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

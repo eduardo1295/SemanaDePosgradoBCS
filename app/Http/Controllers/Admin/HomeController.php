@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
+use App\Http\Requests\usuarios\UpdateContrasenaRequest;
 use App\Http\Controllers\Controller;
 use App\Institucion;
 use App\Semana;
+use App\Admin;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -18,7 +22,9 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth:admin');
+        $this->middleware(['admin.auth:admin', 'admin.verified']);
+        $this->middleware('verificarcontrasena', ['except' => ['cambiarContrasena','guardarContrasena']]);
+        $this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
     }
 
     /**
@@ -33,6 +39,22 @@ class HomeController extends Controller
         return view('admin.home');
         $instituciones = Institucion::select('id','nombre')->get();
         return view('admin.dashboard',compact(['instituciones','semana'])); 
+    }
+
+    public function cambiarContrasena(){
+        return view('admin.auth.passwords.contrasenaAdmin');
+    }
+
+    public function guardarContrasena(UpdateContrasenaRequest $request){
+        
+        $admin = Admin::find(auth('admin')->user()->id);
+        //$admin->password = bcrypt($request->password);
+        $admin->primerContrasena = Carbon::now();
+        $admin->save();
+        
+        if($admin){
+            return redirect()->route('admin.index');
+        }
     }
 
 }

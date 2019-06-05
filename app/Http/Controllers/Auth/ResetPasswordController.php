@@ -4,9 +4,24 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+/**
+ * Reglas para ResetsPasswords
+ */
+trait CustomResetsPasswords
+{
+    use ResetsPasswords;
+    public function rules() {
+        return [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+        ];
+    }
+}
 
 class ResetPasswordController extends Controller
 {
+    use CustomResetsPasswords;
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -18,7 +33,7 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords;
+    //use ResetsPasswords;
 
     /**
      * Where to redirect users after resetting their password.

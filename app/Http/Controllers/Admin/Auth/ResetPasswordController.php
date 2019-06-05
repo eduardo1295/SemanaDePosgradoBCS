@@ -8,8 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
+/**
+ * Reglas para ResetsPasswords
+ */
+trait CustomResetsPasswords
+{
+    use ResetsPasswords;
+    public function rules() {
+        return [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+        ];
+    }
+}
+
 class ResetPasswordController extends Controller
 {
+    use CustomResetsPasswords;
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -21,7 +37,6 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords;
 
     /**
      * Where to redirect users after resetting their password.
@@ -75,4 +90,7 @@ class ResetPasswordController extends Controller
     {
         return Auth::guard('admin');
     }
+
+    
+    
 }

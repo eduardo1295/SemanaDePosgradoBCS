@@ -20,8 +20,11 @@ Route::group(['namespace' => 'Admin'], function() {
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('admin.password.reset');
 
     // Verify
-    // Route::get('email/resend', 'Auth\VerificationController@resend')->name('admin.verification.resend');
-    // Route::get('email/verify', 'Auth\VerificationController@show')->name('admin.verification.notice');
-    // Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('admin.verification.verify');
+    Route::get('email/resend', 'Auth\VerificationController@resend')->name('admin.verification.resend');
+    Route::get('email/verify', 'Auth\VerificationController@show')->name('admin.verification.notice');
+    Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('admin.verification.verify');
 
+    // Contraseña primer cambio
+    Route::get('contrasena', 'HomeController@cambiarContrasena')->name('admin.contrasena');
+    Route::post('contrasenaGuardar', 'HomeController@guardarContrasena')->name('admin.guardarContrasena');
 });

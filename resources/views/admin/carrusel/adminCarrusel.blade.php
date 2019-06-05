@@ -337,6 +337,7 @@
             var ruta = "{{url('carrusel')}}/" + id + "";
             var datos = new FormData($("#carruselForm")[0]);
             datos.append('_method', 'PUT');
+            console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,
