@@ -1,4 +1,24 @@
 @extends('Plantilla.plantillaLoginAdmin')
+@section('links')
+<style>
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .card-header:first-child {
+        border-radius: 0;
+    }
+
+</style>
+@endsection
 @section('contenido')
 <div class="container" style="width: 100%;  height: 300px ;">
     <div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
@@ -19,10 +39,24 @@
                         {{__('If you did not receive the email')}}, <a href="{{ route('admin.verification.resend') }}">{{__('click here to request another')}}</a>.
                     </div>
                 </div>
+
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary" type="button"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar Sesión
+                                    <span>
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </span></button>
+                           
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<form id="logout-form" action="{{route('admin.logout')}}" method="POST" style="display: none;">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
 @endsection
 
 	
