@@ -19,7 +19,12 @@ class DirectorController extends Controller
 {
     public function __construct(){
         $this->middleware('admin.auth:admin')->only('director');
-         //$this-> middleware('auth:admin')->only('noticias');
+        //$this->middleware('auth')->only('director');
+        
+        
+        $this->middleware(['auth','verified','verificarcontrasena'], ['only' => ['revisarAlumnos']]);
+        
+        
      }
     /**
      * Display a listing of the resource.

@@ -15,10 +15,11 @@ class VerificarContrasena
      */
     public function handle($request, Closure $next)
     {
+        
         if (auth('admin')->user() && auth('admin')->user()->primerContrasena === NULL) {
             return redirect()->route('admin.contrasena');
         } elseif (auth()->user() && auth()->user()->primerContrasena === NULL) {
-            return redirect()->route('semana.index');
+            return redirect()->route('usuario.contrasena');
         }
         return $next($request);
     }

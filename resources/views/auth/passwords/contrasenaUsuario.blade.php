@@ -1,6 +1,14 @@
-@extends('Plantilla.plantillaLoginAdmin')
+@extends('Plantilla.principal')
 @section('links')
 <style>
+    body {
+        background-image: url('/img/nature.jpg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
     .card {
         position: relative;
         display: flex;
@@ -12,9 +20,11 @@
         border: 0;
         border-radius: 0;
     }
+
     .card-header:first-child {
         border-radius: 0;
     }
+
 </style>
 @endsection
 @section('contenido')
@@ -30,7 +40,7 @@
                     <div class="mb-2" style="color:black">
                         Antes de continuar es necesario que ingreses una nueva contraseña para tu cuenta.
                     </div>
-                    <form method="POST" action="{{ route('admin.guardarContrasena') }}"
+                    <form method="POST" action="{{ route('usuario.guardarContrasena') }}"
                         aria-label="{{ __('Reset Password') }}">
                         @csrf
 
@@ -46,7 +56,7 @@
 
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button"
-                                            onclick="mostrarContra('password',this)"><span>
+                                            onclick="mostrarContra('password', this)"><span>
                                                 <i class="fas fa-eye"></i>
                                             </span></button>
                                     </div>
@@ -76,7 +86,7 @@
                                         name="password_confirmation" required>
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button"
-                                            onclick="mostrarContra('password-confirm',this)"><span>
+                                            onclick="mostrarContra('password-confirm', this)"><span>
                                                 <i class="fas fa-eye"></i>
                                             </span></button>
                                     </div>

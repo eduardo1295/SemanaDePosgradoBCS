@@ -9,19 +9,21 @@ use Illuminate\DataBase\Eloquent\SoftDeletes;
 //use Illuminate\Foundation\Auth\ResetsPasswords;
 use App\Notifications\ResetPassword;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use SoftDeletes;
     const CREATED_AT = 'fecha_creacion';
     const UPDATED_AT = 'fecha_actualizacion';
+    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'email', 'nombre', 'primer_apellido', 'segundo_apellido', 'password', 'id_institucion', 'id_semana', 'creado_por', 'actualizado_por',
+        'email', 'nombre', 'primer_apellido', 'segundo_apellido', 'password', 'id_institucion', 'id_semana', 'creado_por', 'actualizado_por','primerContrasena',
     ];
 
     /**
@@ -42,7 +44,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $dates = ['deleted_at'];
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at', 'deleted_at','primerContrasena'];
 
     public function roles()
     {

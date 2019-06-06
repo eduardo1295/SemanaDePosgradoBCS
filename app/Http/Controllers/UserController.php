@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\excelrequest\ExcelUploadRequest;
+use App\Http\Requests\usuarios\UpdateContrasenaRequest;
 use App\Imports\UsersImport;
 use App\Imports\usercollec;
 use App\User;
@@ -24,7 +25,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     function __construct(){
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'verified']);
+        $this->middleware(['verificarcontrasena'], ['except' => ['cambiarContrasena','guardarContrasena']]);
+        //$this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
         
 
     }
@@ -258,4 +261,22 @@ class UserController extends Controller
         ->make(true);
         
     }
+
+
+    public function cambiarContrasena(){
+        return view('auth.passwords.contrasenaUsuario');
+    }
+
+    public function guardarContrasena(UpdateContrasenaRequest $request){
+        
+        $user = Admin::find(auth()->user()->id);
+        //$admin->password = bcrypt($request->password);
+        $user->primerContrasena = Carbon::now();
+        $user->save();
+        
+        if($user){
+            return redirect()->route('pag.Inicio');
+        }
+    }
+
 }
