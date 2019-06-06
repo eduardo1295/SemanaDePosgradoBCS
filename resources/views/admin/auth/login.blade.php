@@ -1,4 +1,4 @@
-@extends('Plantilla.plantillaLogin')
+@extends('Plantilla.plantillaLoginAdmin')
 @section('contenido')
 	<div class="container" style="width: 100%;  height: 300px ;">
 		<div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">

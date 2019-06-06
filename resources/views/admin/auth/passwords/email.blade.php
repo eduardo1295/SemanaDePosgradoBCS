@@ -1,7 +1,6 @@
-@extends('Plantilla.principal')
+@extends('Plantilla.plantillaLoginAdmin')
 @section('links')
 	<style>
-	body{ background-image: url('/img/nature.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
     .card {
         position: relative;
         display: flex;
@@ -16,10 +15,30 @@
     .card-header:first-child {
      border-radius:0;
     }
+    .alert-warning{
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        margin-left: -350px;
+        /* margin: 0 auto; */
+        width: 700px;
+        z-index: 9999;
+    }
 	</style>
 @endsection
 @section('contenido')
 <div class="container" style="width: 100%;  height: 300px ;">
+    @if (session('status'))
+                        <div class="alert alert-warning pb-3 text-justify alert-dismissible fade show" role="alert">
+                            <h4 class="alert-heading">Mensaje</h4>
+                            <strong>
+                            El Correo electrónico Tiene una duración de 60 minutos, despues del plazo tendra que volver a solicitar otro correo para recuperar su contraseña.
+                            </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+    @endif
     <div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
         <div class="col-md-8">
             <div class="card" style="background: white; color: white;opacity: 0.9">
@@ -30,6 +49,7 @@
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
+                        
                     @endif
 
                     <form method="POST" action="{{ route('admin.password.email') }}" aria-label="{{ __('Reset Password') }}">
@@ -56,6 +76,7 @@
                                 </button>
                             </div>
                         </div>
+                        
                     </form>
                 </div>
             </div>

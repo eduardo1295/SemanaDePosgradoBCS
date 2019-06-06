@@ -1,14 +1,6 @@
-@extends('Plantilla.principal')
+@extends('Plantilla.plantillaLogin')
 @section('links')
 <style>
-    body {
-        background-image: url('/img/nature.jpg');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-    }
-
     .card {
         position: relative;
         display: flex;

@@ -15,7 +15,8 @@ class CreateTablaVistaLogin extends Migration
     {
         Schema::create('vistaLogin', function (Blueprint $table) {
             $table->integer('id');
-            $table->string('url_imagen',100)->nullable();
+            $table->string('url_imagen',100)->default('defecto.jpg');
+            $table->primary('id');
 
             $table->engine = 'InnoDB';
             $table->collation = 'latin1_swedish_ci';

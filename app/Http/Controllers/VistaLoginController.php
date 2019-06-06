@@ -38,17 +38,48 @@ class VistaLoginController extends Controller
     public function store(Request $request)
     {
         $nuevo_nombre = 'sin imagen';
+        $nuevo_nombre_admin = 'sin imagen';
         
         if($request->hasFile('imagenUsuario')){
+            $usuario = VistaLogin::find(1);
+            if($usuario != null){
+                $usuario->url_imagen = 'fondo.jpg';
+                $usuario->save();
+            }
+            else {
+                $usuario = new VistaLogin();
+                $usuario->id = 1;
+                $usuario->url_imagen = 'fondo.jpg';
+                $usuario->save();
+            }
             
             $imagenUsuario = $request->file('imagenUsuario');
             //agregar id de usuarios a nombre
             $nuevo_nombre = 'fondo.'.$imagenUsuario->getClientOriginalExtension();
             $imagenUsuario->move(public_path('img/fondo'), $nuevo_nombre);
         }
+        if($request->hasFile('imagenAdmin')){
+
+            $admin = VistaLogin::find(2);
+            if($admin != null){
+                $admin->url_imagen = 'fondoAdmin.jpg';
+                $admin->save();
+            }
+            else {
+                $admin = new VistaLogin();
+                $admin->id = 2;
+                $admin->url_imagen = 'fondoAdmin.jpg';
+                $admin->save();
+            }
+
+            $imagenAdmin = $request->file('imagenAdmin');
+            //agregar id de usuarios a nombre
+            $nuevo_nombre_admin = 'fondoAdmin.'.$imagenAdmin->getClientOriginalExtension();
+            $imagenAdmin->move(public_path('img/fondo'), $nuevo_nombre_admin);
+        }
         
         
-        return \Response::json(['nombre' => $nuevo_nombre ],201);
+        return \Response::json(['nombre' => $nuevo_nombre, 'nombreAdmin' => $nuevo_nombre_admin],201);
     }
 
     /**

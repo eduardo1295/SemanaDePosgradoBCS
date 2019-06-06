@@ -4,7 +4,26 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\VistaLogin;
+/**
+ * Reglas para SendsPasswordResetEmails
+ */
+ trait CustomSendsPasswordResetEmails
+{
+    use SendsPasswordResetEmails;
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function showLinkRequestForm()
+    {
+        $imagen= VistaLogin::find(1);
+        return view('auth.passwords.email',compact(['imagen']));   
+    }
 
+    
+}
 class ForgotPasswordController extends Controller
 {
     /*
@@ -18,7 +37,8 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
+    //use SendsPasswordResetEmails;
+    use CustomSendsPasswordResetEmails;
 
     /**
      * Create a new controller instance.

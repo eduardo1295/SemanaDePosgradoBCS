@@ -1,7 +1,6 @@
-@extends('Plantilla.principal')
+@extends('Plantilla.plantillaLogin')
 @section('links')
-	<style>
-	body{ background-image: url('/img/nature.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
+<style>
     .card {
         position: relative;
         display: flex;
@@ -11,14 +10,17 @@
         background-color: #fff;
         background-clip: border-box;
         border: 0;
-        border-radius:0;
+        border-radius: 0;
     }
+
     .card-header:first-child {
-     border-radius:0;
+        border-radius: 0;
     }
-	</style>
+
+</style>
 @endsection
 @section('contenido')
+
 <div class="container" style="width: 100%;  height: 300px ;">
     <div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
         <div class="col-md-8">
@@ -62,8 +64,4 @@
         </div>
     </div>
 </div>
-@endsection
-@section('scripts')
-	<script src="/js/Login/main2.js"></script>
-	<script src="/js/popper.min.js"></script>
 @endsection

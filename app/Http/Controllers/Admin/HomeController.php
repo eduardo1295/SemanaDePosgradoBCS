@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Institucion;
 use App\Semana;
 use App\Admin;
+use App\VistaLogin;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -42,7 +43,8 @@ class HomeController extends Controller
     }
 
     public function cambiarContrasena(){
-        return view('admin.auth.passwords.contrasenaAdmin');
+        $imagen= VistaLogin::find(2);
+        return view('admin.auth.passwords.contrasenaAdmin',compact(['imagen']));
     }
 
     public function guardarContrasena(UpdateContrasenaRequest $request){

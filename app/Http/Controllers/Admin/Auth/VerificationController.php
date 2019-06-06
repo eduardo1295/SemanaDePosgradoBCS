@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
-
+use App\VistaLogin;
 class VerificationController extends Controller
 {
     /*
@@ -48,9 +48,10 @@ class VerificationController extends Controller
      */
     public function show(Request $request)
     {
+        $imagen= VistaLogin::find(2);
         return $request->user('admin')->hasVerifiedEmail()
             ? redirect($this->redirectPath())
-            : view('admin.auth.verify');
+            : view('admin.auth.verify',compact(['imagen']));
     }
 
     /**

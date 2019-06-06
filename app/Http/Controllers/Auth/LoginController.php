@@ -49,7 +49,6 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if(Auth::guard('admin')->user()){
-            
             return redirect()->route('admin.index');
         }else{
             $imagen= VistaLogin::find(1);

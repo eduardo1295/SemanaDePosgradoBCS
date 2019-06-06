@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-sm-between align-items-center">
                 <div class="col-12 col-sm-12 col-md-3 d-flex justify-content-center justify-content-md-start">
-                    <a href="/admin"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px"
+                    <a href="/admin"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px" height="65px"
                             alt="" id="logoMenu"></a>
                 </div>
                 <div class="col-12 col-sm-12 col-md-6 pt-3 pt-md-0">

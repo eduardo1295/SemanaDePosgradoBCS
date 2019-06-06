@@ -7,6 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Semana de Posgrado BCS</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="-1" >
+  <meta http-equiv="Pragma" content="no-cache">
 
   {{-- comment
   

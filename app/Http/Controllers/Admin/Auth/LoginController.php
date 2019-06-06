@@ -61,7 +61,7 @@ class LoginController extends Controller
         if(Auth::user()){
             return redirect()->route('pag.inicio'); 
         }
-        $imagen= VistaLogin::find(1);
+        $imagen= VistaLogin::find(2);
         return view('admin.auth.login',compact(['imagen']));   
     }
 
