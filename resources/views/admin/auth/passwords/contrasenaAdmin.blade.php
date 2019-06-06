@@ -56,7 +56,7 @@
 
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button"
-                                            onclick="mostrarContra('password')"><span>
+                                            onclick="mostrarContra('password',this)"><span>
                                                 <i class="fas fa-eye"></i>
                                             </span></button>
                                     </div>
@@ -86,7 +86,7 @@
                                         name="password_confirmation" required>
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button"
-                                            onclick="mostrarContra('password-confirm')"><span>
+                                            onclick="mostrarContra('password-confirm',this)"><span>
                                                 <i class="fas fa-eye"></i>
                                             </span></button>
                                     </div>

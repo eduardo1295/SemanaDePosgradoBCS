@@ -27,8 +27,6 @@ class StoreAlumnoRequest extends FormRequest
             //Validacion campos usuario
             'email' => 'unique:users|required|email|max:60',
 
-            'puesto' => 'required|string|max:60',
-
             'nombre' => 'required|string|max:40',
             
             'password' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',

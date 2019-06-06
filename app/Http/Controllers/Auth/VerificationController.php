@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use App\Institucion;
+use App\Semana;
+use DB;
 
 class VerificationController extends Controller
 {
@@ -25,7 +28,7 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/usuario/contrasena';
 
     /**
      * Create a new controller instance.
@@ -38,4 +41,13 @@ class VerificationController extends Controller
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
+/*
+    protected function redirectTo(){
+        //return '/usuario/contrasena';
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        return \Redirect::route('usuario.contrasena')->with('instituciones', $instituciones);
+        return redirect()->route('director.revisarAlumnos',compact(['instituciones','semana']));
+    }
+    */
 }

@@ -1,12 +1,12 @@
-function mostrarContra(idInput){
+function mostrarContra(idInput,btnPass){
     if($('#'+idInput).attr('type') === 'password') {
         $('#'+idInput).attr('type','text');
-        $(this).find('i').removeClass('fa-eye');
-        $(this).find('i').addClass('fa-eye-slash');
+        $(btnPass).find('i').removeClass('fa-eye');
+        $(btnPass).find('i').addClass('fa-eye-slash');
     }
     else if($('#'+idInput).attr('type') === 'text') {
         $('#'+idInput).attr('type','password');
-        $(this).find('i').addClass('fa-eye');
-        $(this).find('i').removeClass('fa-eye-slash');
+        $(btnPass).find('i').addClass('fa-eye');
+        $(btnPass).find('i').removeClass('fa-eye-slash');
     }
 }

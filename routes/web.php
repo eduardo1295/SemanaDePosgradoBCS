@@ -20,6 +20,10 @@ Route::get('admin/VerUsuarios', 'UserController@usuarios')->name('admin.usuarios
 Route::get('admin/listUsuarios', 'UserController@listUsuarios')->name('admin.listUsuarios');
 Route::get('excel', 'UserController@cargaExcel')->name('excel');
 
+// Contraseña primer cambio
+Route::get('/usuario/contrasena', 'UserController@cambiarContrasena')->name('usuario.contrasena');
+Route::post('/usuario/contrasenaGuardar', 'UserController@guardarContrasena')->name('usuario.guardarContrasena');
+
 Route::resource('usuario', 'UserController')->middleware('auth:admin');
 
 Route::get('admin/instituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
@@ -49,17 +53,6 @@ Route::get('/', 'SemanaController@index')->name('pag.inicio');
 Route::get('/home', 'SemanaController@index');
 
 
-
-
-/*
-Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
-Route::post('/login/admin', 'Auth\LoginController@adminLogin');
-Route::view('/login/admin/recuperar','admin.login.recuperarAdmin')->name('recuperarAdmin');
-Route::get('logout', 'Auth\LoginController@logout');
-*/
-
-
-
 Route::get('admin/carruselImagenes', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
 Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('carrusel.listCarrusel');
 Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
@@ -86,7 +79,7 @@ Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
 Route::resource('alumno', 'AlumnoController');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 
@@ -106,81 +99,6 @@ Route::resource('trabajo', 'TrabajoController');
 
 Route::get('admin/VistaLogin', 'VistaLoginController@vistaLogin')->name('vistaLogin.VerVistaLogin');
 Route::resource('VistaLogin', 'VistaLoginController');
-/*
-Route::get('/',['as'=> 'home',function (){
-    return view('home',compact('hola'));
-}]);
-
-Route::get('/modalidades',['as'=> 'modalidades',function (){
-    return view('modalidades');
-}]);
-
-Route::get('/programa',['as'=> 'programa',function ($id){
-    return view('programa');
-}]);
-Route::get('/convocatoria',['as'=> 'convocatoria',function (){
-    return view('convocatoria');
-}]);
-
-Route::get('/acceso',['as'=> 'manage',function (){
-    return view('manage',compact('hola'));
-}]);
-
-Route::get('/soporte',['as'=> 'soporte',function (){
-    //return view('soporte');
-}]);
-
-Route::get('/plantilla/{id?}',['as'=> 'hola',function($id = null){
-    switch ($id) {
-        case 1:
-            return view('formularios.trabajo');    
-            break;
-        case 2:
-            return view('formularios.programa');
-            break;
-        case 3:
-            return view('formularios.modalidades');
-            break;
-        case 4:
-            return view('formularios.noticia');
-            break;
-        case 5:
-            return view('formularios.institucion');
-            break;
-        case 6:
-            return view('formularios.usuario');       
-            break;
-        default:
-            return abort(404);
-            break;
-
-    }
-}]);
-/*
-Route::get('manage', function () {
-    $hola = 1;
-    return view('manage',compact('hola'));
-});
-*/
-/*
-Route::view('/login','login');
-Route::view('/login2','login2');
-Route::view('/registro2','registro2');
-Route::view('/registro','registro');
-Route::view('/modal','modal');
-Route::view('/noticias','noticias');
-Route::view('/unaNota','UnaNoticia');
-
-Route::get('/',['as'=> 'home',function (){ return view('Maqueta1'); }]);
-
-Route::get('/Maqueta1',['as'=> 'home',function (){ return view('Maqueta1'); }]);
-
-Route::get('/Maqueta2',['as'=> 'a',function (){ return view('Maqueta2'); }]);
-
-Route::get('/Maqueta3',['as'=> 'b',function (){ return view('Maqueta3'); }]);
-
-Route::view('/crearNoticia','crearNoticia');
-*/
 
 
 Route::get('/home', 'HomeController@index')->name('home');
