@@ -29,6 +29,13 @@
 						<div class="g-recaptcha mb-3 d-flex justify-content-center" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
 					</div>
 					<small><span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span></small> 
+
+					<div class="col-12">
+							<div class="form-check">
+								<input type="checkbox" name="remember" id="remember" class="form-check-input">
+								<label for="remember" class="form-check-label">Mantener la sesión iniciada</label>
+							</div>
+					</div>
 					<div class="col-12 pb-3 pt-3">
 							<input type="submit" value="Login" class="btn btn-primary mx-auto  w-100">
 							<small id="" class="text-muted"><a href="{{route('password.request')}}">Olvidé mi contraseña</a></small>

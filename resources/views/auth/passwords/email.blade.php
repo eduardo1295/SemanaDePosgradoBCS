@@ -16,12 +16,32 @@
     .card-header:first-child {
         border-radius: 0;
     }
+    .alert-warning{
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        margin-left: -350px;
+        /* margin: 0 auto; */
+        width: 700px;
+        z-index: 9999;
+    }
 
 </style>
 @endsection
 @section('contenido')
 
 <div class="container" style="width: 100%;  height: 300px ;">
+        @if (session('status'))
+        <div class="alert alert-warning pb-3 text-justify alert-dismissible fade show" role="alert">
+            <h3 class="alert-heading">¡Aviso importante!</h3>
+            <strong>
+                ¡Te hemos enviado por correo el enlace para restablecer tu contraseña con una duración de 60 minutos!, después del plazo tendrá que volver a solicitar otro enlace para restablecer su contraseña.
+            </strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
     <div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
         <div class="col-md-8">
             <div class="card" style="background: white; color: white;opacity: 0.9">

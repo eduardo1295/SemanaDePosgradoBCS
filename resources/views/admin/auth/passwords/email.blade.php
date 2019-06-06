@@ -30,9 +30,9 @@
 <div class="container" style="width: 100%;  height: 300px ;">
     @if (session('status'))
                         <div class="alert alert-warning pb-3 text-justify alert-dismissible fade show" role="alert">
-                            <h4 class="alert-heading">Mensaje</h4>
+                            <h3 class="alert-heading">¡Aviso importante!</h3>
                             <strong>
-                            El Correo electrónico Tiene una duración de 60 minutos, despues del plazo tendra que volver a solicitar otro correo para recuperar su contraseña.
+                                ¡Te hemos enviado por correo el enlace para restablecer tu contraseña con una duración de 60 minutos!, después del plazo tendrá que volver a solicitar otro enlace para restablecer su contraseña.
                             </strong>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>

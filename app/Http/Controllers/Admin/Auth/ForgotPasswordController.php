@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
+use App\VistaLogin;
 
 class ForgotPasswordController extends Controller
 {
@@ -38,7 +39,8 @@ class ForgotPasswordController extends Controller
      */
     public function showLinkRequestForm()
     {
-        return view('admin.auth.passwords.email');
+        $imagen= VistaLogin::find(2);
+        return view('admin.auth.passwords.email',compact(['imagen']));   
     }
 
     /**
