@@ -1,14 +1,6 @@
-@extends('Plantilla.principal')
+@extends('Plantilla.plantillaLogin')
 @section('links')
 <style>
-    body {
-        background-image: url('/img/nature.jpg');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-    }
-
     .card {
         position: relative;
         display: flex;
@@ -95,18 +87,32 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                            <div class="col-md-6 offset-md-4 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-info">
                                     Guardar Contraseña
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
+
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary" type="button"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar Sesión
+                                    <span>
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </span></button>
+                           
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
 @endsection
 @section('scripts')
 <script src="/js/admin/mostrarPassword.js"></script>
