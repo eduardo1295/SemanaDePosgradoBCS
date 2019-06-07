@@ -16,6 +16,7 @@ use Validator, Input, Redirect;
 use App\Alumno;
 use App\Programa;
 use App\Rol;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -269,13 +270,14 @@ class UserController extends Controller
 
     public function guardarContrasena(UpdateContrasenaRequest $request){
         
-        $user = Admin::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
         //$admin->password = bcrypt($request->password);
         $user->primerContrasena = Carbon::now();
         $user->save();
         
         if($user){
-            return redirect()->route('pag.Inicio');
+            return redirect('/');
+            //return redirect()->route('pag.Inicio');
         }
     }
 

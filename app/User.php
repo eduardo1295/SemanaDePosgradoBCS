@@ -84,13 +84,10 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     
-
-    /*
     public function trabajos()
     {
-        return $this->hasManyThrough('App\Trabajo', 'App\Alumno', 'id','id');
+        return $this->hasOne(Trabajo::class,'id_alumno','id');
     }
-    */
 
     public function hasRoles(array $roles){
 

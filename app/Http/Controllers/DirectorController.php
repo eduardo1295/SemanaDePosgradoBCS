@@ -189,12 +189,10 @@ class DirectorController extends Controller
         $listAlumnos = Alumno::all()->where('id_director',auth()->user()->id);
         $c = collect();
         foreach ($listAlumnos as $alum) {
-            $c->prepend(User::select('id','nombre','primer_apellido','segundo_apellido','email')->where('id',$alum->id)->first());
+            $c->push(User::select('id','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,num_control','trabajos:id_alumno,url,revisado')->where('id',$alum->id)->first());
         }
         
         return datatables()->of($c)
-        ->addColumn('action', 'admin.acciones')
-        ->rawColumns(['action'])
         ->addIndexColumn()
         ->toJson();
     }

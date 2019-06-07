@@ -14,8 +14,10 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js').version()
    .js('resources/js/Maqueta3.js',"public/js/Maqueta3.js").version()
    .sass('resources/sass/bootstrap.scss', 'public/css/bootstrap.css').version()
-   .sass('resources/sass/Maqueta1.scss', 'public/css/Maqueta1.css').version();
-   //.copy('resources/css/Maqueta2.css','public/css/Maqueta2.css').version();  
+   .sass('resources/sass/Maqueta1.scss', 'public/css/Maqueta1.css').version()
+   .copy('node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css','public/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css')
+   .copy('node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js','public/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js');
+   //.copy('resources/css/Maqueta2.css','public/css/Maqueta2.css').version();
 
 
 

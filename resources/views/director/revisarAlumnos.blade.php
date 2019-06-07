@@ -25,11 +25,13 @@
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th>Numero Control</th>
                         <th>Nombre</th>
                         <th>Apello paterno</th>
                         <th>Apellido Materno</th>
                         <th>Email</th>
-                        <th>Acciones</th>
+                        <th>Trabajos</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -40,7 +42,8 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        
+                        <th></th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>

@@ -15,16 +15,21 @@
 							<input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-describedby="c1" value="{{old('email')}}" required>
 							<small><span class="text-danger">{{$errors->first('email')}}</span></small>
 					</div>
-					<div class="form-group col-9 offset-1">
-							<label for="password"><strong>Contraseña:</strong></label>
-							<input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" aria-describedby="c2" required>
-							<small><span class="text-danger">{{$errors->first('password')}}</span></small>
+					<div class="col-md-10 offset-1">
+						<label for="password"><strong>Contraseña:</strong></label>
+						<div class="input-group mb-3">
+							<input id="password" type="password" class="form-control"
+								name="password" required placeholder="Contraseña">
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button"
+									onclick="mostrarContra('password',this)"><span>
+										<i class="fas fa-eye"></i>
+									</span></button>
+							</div>
+						</div>
+						<small><span class="text-danger">{{$errors->first('password')}}</span></small>
 					</div>
-					<div class="col-1 d-flex align-items-center align-items-center">
-							<span class="btn-show-pass">
-								<i class="fas fa-eye"></i>
-							</span>
-					</div>
+					
 					<div class="form-group col-10 offset-1">
 						<div class="g-recaptcha mb-3 d-flex justify-content-center" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
 					</div>
@@ -44,6 +49,7 @@
 			</form>
 		</div>
 	</div>
+	
 @endsection
 	
 	

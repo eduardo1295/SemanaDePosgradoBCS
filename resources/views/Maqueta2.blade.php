@@ -3,27 +3,13 @@
 @extends('Plantilla.principal')
 
 @section('contenido')
-<button onclick="topFunction()" id="myBtn"><i  id="flecha" class="fas fa-arrow-up"></i></button>
+
 @section('links')
 <link rel="stylesheet" href="/css/Maqueta2.css">
 <link rel="stylesheet" href="/css/imagenes/imagenes.css">
 <script src="/js/owl.carousel.min.js"> </script>
 <script>
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("myBtn").style.display = "block";
-      } else {
-        document.getElementById("myBtn").style.display = "none";
-      }
-    }
-
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    }
+   
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -39,7 +25,7 @@
 
 @include('layoutsM2.carrusel')
 
-<div class="container-fluid mt-5 mb-4 pl-1 pr-1 pl-md-5 pr-md-5">
+<div class="container-fluid mt-4 mb-4 pl-1 pr-1 pl-md-5 pr-md-5">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 contenidoPrincipal">
         @include('layoutsM2.informacion')
     </div>

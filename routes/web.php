@@ -47,10 +47,11 @@ Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.ve
 Route::get('/modalidades', 'SemanaController@verModalidades')->name('semana.verModalidades');
 
 //Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
-Route::resource('semana', 'SemanaController');
+
 
 Route::get('/', 'SemanaController@index')->name('pag.inicio');
 Route::get('/home', 'SemanaController@index');
+Route::resource('semana', 'SemanaController');
 
 
 Route::get('admin/carruselImagenes', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');

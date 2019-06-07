@@ -43,17 +43,42 @@ $(document).ready(function () {
                 });
             })
         },
+        
         "columns": [
             { data: 'id', name: 'id', 'visible': false,searchable: false },
+            {data: 'alumnos.num_control', name: 'alumnos.num_control', searchable: false},
             { data: 'nombre', searchable: true },
             { data: 'primer_apellido', searchable: true },
             { data: 'segundo_apellido', searchable: true },
             { data: 'email', searchable: true },
-            { data: 'action', name: 'action', orderable: false, searchable: false },
+            {
+                data: 'trabajos.url',
+                name: 'trabajos.url',
+                render: function (data, type, full, meta) {
+                    if (data == null)
+                        return 'Sin entregar';
+                    else
+                        return "<a style='cursor:pointer' target='_blank' href=/documentos/trabajos/"+data + "> Ver Trabajo <a/>";
+                },
+                orderable: false, searchable: false
+            },
+            {
+                data: 'trabajos.revisado',
+                name: 'trabajos.revisado',
+                render: function (data, type, full, meta) {
+                    if (data == 0)
+                        return '<strong><label class="btn btn-danger btn-small w-100">No aprobado</label></strong';
+                    else if( data == 1 )
+                        return '<strong><label class="btn btn-success btn-small w-100">Aprobado</label><strong>';
+                    else
+                        return '<strong><label class="btn btn-warning btn-small w-100">Sin entregar</label></strong>';
+                },
+                orderable: false, searchable: false
+            }
         ],
         columnDefs: [
             { responsivePriority: 1, targets: 2 },
-            { responsivePriority: 2, targets: 5 },
+            { responsivePriority: 2, targets: 7 },
             { width: 105, targets: 5 }
         ]
     });

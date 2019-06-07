@@ -35,6 +35,9 @@ class CrearTablaTrabajos extends Migration
             $table->datetime('fecha_entrega')->nullable();
             $table->string('comentario', 100)->nullable();
             $table->boolean('autorizado')->default(false);
+            $table->boolean('revisado')->default(false);
+            $table->boolean('constancia')->default(false);
+
             $table->timestamp('fecha_autorizacion')->nullable();
             $table->string('url', 100);
 

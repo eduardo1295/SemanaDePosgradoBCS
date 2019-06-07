@@ -115,11 +115,22 @@
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <a href="{{route('vistaLogin.VerVistaLogin')}}">
-                        <i class="fas fa-paint-brush"></i>
-                        <span><strong>Vista Login</strong></span>
+                <!---->
+                <li class="sidebar-dropdown">
+                    <a>
+                        <i class="fas fa-cogs"></i>
+                        <span><strong>Diseño General</strong></span>
                     </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{route('vistaLogin.VerVistaLogin')}}">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span><strong>Vista Login</strong></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>

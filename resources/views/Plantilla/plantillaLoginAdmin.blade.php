@@ -16,7 +16,7 @@
 	<style>
 		body{ background-image: url('/img/fondo/defecto.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
     </style>
-    <script src="/js/Login/main2.js"></script>
+    
     <script src="/js/popper.min.js"></script>
     
     @yield('links')
@@ -26,5 +26,6 @@
     @yield('contenido','')
     </div>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="/js/admin/mostrarPassword.js"></script>
 </body>
 </html>

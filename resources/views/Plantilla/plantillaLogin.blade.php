@@ -20,8 +20,6 @@
     </style>
     
     
-    
-    <script src="/js/Login/main2.js"></script>
     <script src="/js/popper.min.js"></script>
     
     
@@ -31,5 +29,7 @@
     @yield('contenido','')
     </div>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="/js/admin/mostrarPassword.js"></script>
+    
 </body>
 </html>

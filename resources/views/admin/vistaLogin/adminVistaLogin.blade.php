@@ -11,9 +11,6 @@
      $x++;    
     @endphp
 @endforeach
-@php
-var_dump($datos);    
-@endphp
 <div class="container-fluid" id="#contenedor">
     <div class="row">
         <div class="col-12 mx-auto">
@@ -57,7 +54,7 @@ var_dump($datos);
         </div>
         <!---->
         <div class="col-12 d-flex justify-content-between align-items-center ">
-                <h3>Imagen de fondo login usuario</h3>
+                <h3>Imagen de fondo login Administrador</h3>
                 <button class="btn btn-primary btn-guardar"  id="" type="button">Guardar</button>
             </div>
             <div class="form-row col-12">
