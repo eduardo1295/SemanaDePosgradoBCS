@@ -68,8 +68,6 @@
 
                     </div>
                     
-                    
-                    
                 </form>
             </div>
             <div id="snackbar"></div>

@@ -21,7 +21,8 @@ class ProgramaController extends Controller
      */
 
      public function __construct(){
-        $this-> middleware('auth:admin');
+        //$this-> middleware('auth:admin');
+        $this->middleware('admin.auth:admin')->only('programa');
      }
 
     public function index()
@@ -59,13 +60,21 @@ class ProgramaController extends Controller
         */
         
         $programa = new Programa;
-        $programa->id_programa = $request->id_programa;
-        $programa->nombre = $request->nombre;
-        $programa->nivel = $request->nivel;
-        $programa->periodo = $request->periodo;
-        $programa->id_institucion = $request->id_institucion;
-        $programa->creado_por= auth('admin')->user()->id;
-        $programa->save();
+        
+        if(auth('admin')->user()){
+            $programa->id_institucion = $request->id_institucion_pro;
+            $programa->creado_por= auth('admin')->user()->id;
+        }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+            $programa->id_institucion = auth()->user()->id_institucion;
+            $programa->creado_por= auth()->user()->id;
+        }
+
+        $programa->id_programa = $request->id_programa_pro;
+        $programa->nombre = ucfirst($request->nombre_pro);
+        $programa->nivel = $request->nivel_pro;
+        $programa->periodo = $request->periodo_pro;
+        //$programa->id_institucion = $request->id_institucion_pro;
+        
         $programa->save();
         if($programa){
             //borrar imagen actual
@@ -136,13 +145,22 @@ class ProgramaController extends Controller
             $nuevo_nombre = $carrusel->url_imagen;
         }
         */
+
+        if(auth('admin')->user()){
+            $programa->id_institucion = $request->id_institucion_pro;
+            $programa->actualizado_por= auth('admin')->user()->id;
+        }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+            $programa->id_institucion = auth()->user()->id_institucion;
+            $programa->creado_por= auth()->user()->id;
+        }
         
-            $programa->id_programa = $request->id_programa;
-            $programa->nombre = $request->nombre;
-            $programa->nivel = $request->nivel;
-            $programa->periodo = $request->periodo;
-            $programa->id_institucion = $request->id_institucion;
-            $programa->actualizado_por= auth('admin')->user()->id ;
+        
+            $programa->id_programa = $request->id_programa_pro;
+            $programa->nombre = ucfirst($request->nombre_pro);
+            $programa->nivel = $request->nivel_pro;
+            $programa->periodo = $request->periodo_pro;
+            //$programa->id_institucion = $request->id_institucion_pro;
+            
             $programa->save();
             /*
             if($carrusel){
@@ -181,17 +199,47 @@ class ProgramaController extends Controller
     public function listPrograma(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
+            if(auth('admin')->user()){
+                $selectProgramas =  Programa::select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                $selectProgramas =  Programa::select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre')->where('programas.id_institucion',auth()->user()->id_institucion);
+            }
+            return datatables()->of($selectProgramas)
+            ->addColumn('action', 
+            '<div style="text-align:center;width:100px" class="mx-auto">
+
+            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $id }}" data-original-title="Editar"
+                style="height:40px" class="edit btn btn-xs btn-primary editarPrograma">
+                <span><i class="fas fa-edit"></i>
+                </span></a>
+        
+        
+            <a href="javascript:void(0);" id="eliminar" data-toggle="tooltip" data-original-title="Eliminar"
+                data-id="{{ $id }}" class="delete btn btn-xs btn-danger eliminarPrograma" style="height:40px">
+                <span><i class="fas fa-trash-alt"></i>
+                </span></a>
+            </div>'
             
-            $selectcarrusel =  Programa::select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
-            return datatables()->of($selectcarrusel)
-            ->addColumn('action', 'admin.acciones')
+            )
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $selectcarrusel = Programa::onlyTrashed()->select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
-            return datatables()->of($selectcarrusel)
-            ->addColumn('action', 'admin.reactivar')
+            if(auth('admin')->user()){
+                $selectProgramas = Programa::onlyTrashed()->select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                $selectProgramas = Programa::onlyTrashed()->select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre')->where('programas.id_institucion',auth()->user()->id_institucion);
+            }
+            return datatables()->of($selectProgramas)
+            ->addColumn('action', 
+            '<div style="text-align:center;width:100px" class="mx-auto">
+
+            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $id }}" data-original-title="Activar"
+                style="height:40px" class="btn btn-xs btn-warning reactivarPrograma">
+                <span><i class="fas fa-redo"></i>
+                </span></a>
+            </div>
+            ')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();   

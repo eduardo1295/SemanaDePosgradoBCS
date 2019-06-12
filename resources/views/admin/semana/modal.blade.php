@@ -77,8 +77,8 @@
                                 <div id="imagenAnterior" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <label for="imglogo" id="imagenactualT" class="control-label"></label>
 
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <img src="" alt="" id="imglogo" class="img-fluid mx-auto">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
+                                        <img style="height:240px" src="" alt="imagen_no_disponible" id="imglogo" class="img-fluid mx-auto">
                                     </div>
                                 </div>
                             </div>
@@ -87,8 +87,8 @@
                             <div id="nuevoLogo" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-none">
                                 <label for="imgN" id="textVP" class="control-label">Nuevo logo</label>
 
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <img src="" alt="" id="vistaPrevia" class="img-fluid mx-auto">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
+                                    <img style="height:240px" src="" alt="imagen_no_disponible" id="vistaPrevia" class="img-fluid mx-auto">
                                 </div>
                             </div>
                         </div>

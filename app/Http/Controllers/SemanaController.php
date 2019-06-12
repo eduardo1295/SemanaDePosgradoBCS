@@ -34,10 +34,11 @@ class SemanaController extends Controller
      */
     public function index()
     {
-        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio','fecha_fin')->where('vigente',1)->first();
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio',DB::raw("(DATE_FORMAT(fecha_inicio,'%Y-%m-%d'))as n") ,'fecha_fin')->where('vigente',1)->first();
+        //dd($semana->n);
         $fInicio = $semana->fecha_inicio;
         $fInicio = str_replace('-','',$fInicio);
-        
+        //dd($semana->fecha_fin);
         $fFin = $semana->fecha_fin;
         $fFin = str_replace('-','',$fFin);
         /*$datetimeI = DateTime::createFromFormat('Ymd', $fInicio );
@@ -306,9 +307,15 @@ class SemanaController extends Controller
      */
     public function listSemanas(Request $request ){
         $busqueda = $request->busqueda;
-        $selectsemanas = Semana::select('id_semana as id','id_sede','nombre','url_convocatoria','fecha_inicio','fecha_fin','creado_por','actualizado_por','fecha_actualizacion')->with('instituciones:id,nombre');
-    
-        return datatables()->of($selectsemanas)
+        $semanas = DB::select(DB::raw('SELECT id_semana AS id, id_sede, semanas.nombre AS semana_nombre, url_convocatoria,'.
+            ' fecha_inicio, fecha_fin, semanas.creado_por, semanas.actualizado_por, semanas.fecha_actualizacion, '.
+            ' instituciones.nombre AS institucion_nombre'.
+            ' FROM semanas, instituciones'.
+            ' WHERE semanas.id_sede = instituciones.id'));
+
+        $selectsemanas = Semana::select('id_semana as id','id_sede','nombre','url_convocatoria',DB::raw("(DATE_FORMAT(fecha_inicio,'%Y-%m-%d'))as fecha_inici"),DB::raw("(DATE_FORMAT(fecha_fin,'%Y-%m-%d'))as fecha_fi"),'creado_por','actualizado_por','fecha_actualizacion')->with('instituciones:instituciones.id,instituciones.nombre');
+        
+        return datatables()->of($semanas)
         ->addColumn('action', 'admin.acciones')
         ->rawColumns(['action'])
         ->addIndexColumn()

@@ -29,6 +29,8 @@ class StoreInstitucionRequest extends FormRequest
             //'id_institucion' => 'unique:instituciones|required|max:15',
 
             'nombre' => 'required|string|max:100',
+
+            'siglas' => 'required|string|max:100',
             
             'telefono' => 'string|max:20|nullable',
             
@@ -42,7 +44,7 @@ class StoreInstitucionRequest extends FormRequest
 
             'cp' => 'string|max:10|nullable',
 
-            'direccion_web' => 'string|max:100',
+            'direccion_web' => 'string|max:100|nullable',
 
             'latitud' => 'numeric|nullable',
 

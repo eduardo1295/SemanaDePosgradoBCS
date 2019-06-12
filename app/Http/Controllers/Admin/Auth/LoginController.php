@@ -91,7 +91,7 @@ class LoginController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function login(ReCaptchataTestFormRequest $request)
+    public function login(Request $request)
     {
         if(Auth::user()){
             return redirect()->route('pag.inicio');

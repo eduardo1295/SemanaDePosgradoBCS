@@ -7,58 +7,58 @@
             </div>
             <div class="modal-body">
                 <form id="alumnoForm" name="alumnoForm" class="form-horizontal" enctype="multipart/form-data">
-                    <input type="hidden" name="alumno_id" id="alumno_id">
+                    <input type="hidden" name="alumno_id_al" id="alumno_id_al">
                     <div class="form-row">
                             <div class="form-group col-lg-6">
-                        <label for="institucionSelect">Institución</label>
-                        <select class="form-control" id="institucionSelect" name="id_institucion">
+                        <label for="institucionSelect_al">Institución</label>
+                        <select class="form-control" id="institucionSelect_al" name="id_institucion_al">
                             <option selected value="">Seleccione una institución</option>
                             @foreach ($instituciones as $institucion)
                             <option value={{$institucion->id}}>{{$institucion->nombre}}</option>
                             @endforeach
                         </select>
-                        <small><span class="mensajeError text-danger" id="id_institucion_error"></span></small>
+                        <small><span class="mensajeError text-danger" id="id_institucion_al_error"></span></small>
                     </div>
 
                     <div class="form-group col-lg-6">
-                            <label for="programaSelect">Programa de posgrado</label>
-                            <select class="form-control" id="programaSelect" name="programaSelect">
+                            <label for="programaSelect_al">Programa de posgrado</label>
+                            <select class="form-control" id="programaSelect_al" name="programaSelect_al">
                                 
                                 
                             </select>
-                            <small><span class="mensajeError text-danger" id="programaSelect_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="programaSelect_al_error"></span></small>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-12">
-                    <label for="institucionSelect">Director de tesis</label>
-                    <select class="form-control" id="directorSelect" name="directorSelect">
+                    <label for="institucionSelect_al">Director de tesis</label>
+                    <select class="form-control" id="directorSelect_al" name="directorSelect_al">
                         
                         
                     </select>
-                    <small><span class="mensajeError text-danger" id="directorSelect_error"></span></small>
+                    <small><span class="mensajeError text-danger" id="directorSelect_al_error"></span></small>
                 </div>
 
                 </div>
                     <div class="form-row">
                             
                         <div class="form-group col-lg-6">
-                            <label for="email" class="control-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email"
+                            <label for="email_al" class="control-label">Email</label>
+                            <input type="text" class="form-control" id="email_al" name="email_al"
                                 placeholder="Email del usuario" value="" maxlength="60" required="">
-                            <small><span class="mensajeError text-danger" id="email_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="email_al_error"></span></small>
 
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <label for="password" class="control-label">Contraseña</label>
+                            <label for="password_al" class="control-label">Contraseña</label>
                             <div class="input-group mb-3">
-                                <input type="password" class="form-control" id="password" name="password"
+                                <input type="password" class="form-control" id="password_al" name="password_al"
                                     placeholder="Contraseña para la cuenta" value="" maxlength="60" required=""
                                     aria-describedby="passwordHelpBlock">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary btn-show-pass" type="button"><span>
+                                    <button class="btn btn-outline-secondary btn-show-pass" onclick="mostrarContra('password_al',this)" type="button"><span>
                                             <i class="fas fa-eye"></i>
                                         </span></button>
                                 </div>
@@ -67,49 +67,49 @@
                                 Su contraseña debe tener mínimo 6 caracteres, debe contener al menos 1 letra mayúscula,
                                 1 letra minúscula, 1 número y 1 carácter especial(#?!@$^&-).
                             </small>
-                            <small><span class="mensajeError text-danger" id="password_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="password_al_error"></span></small>
                         </div>
                     </div>
 
                     <div class="form-row">
                             <div class="form-group col-lg-3">
-                                    <label for="email" class="control-label">Número de control</label>
-                                    <input type="text" class="form-control" id="num_control" name="num_control"
+                                    <label for="num_control_al" class="control-label">Número de control</label>
+                                    <input type="text" class="form-control" id="num_control_al" name="num_control_al"
                                         placeholder="Número de control" value="" maxlength="60" required="">
-                                    <small><span class="mensajeError text-danger" id="num_control_error"></span></small>
+                                    <small><span class="mensajeError text-danger" id="num_control_al_error"></span></small>
         
                                 </div>
 
                         <div class="form-group col-lg-2">
-                            <label for="semestre" class="control-label">Semestre</label>
-                            <input type="text" class="form-control" id="semestre" name="semestre"
+                            <label for="semestre_al" class="control-label">Semestre</label>
+                            <input type="text" class="form-control" id="semestre_al" name="semestre_al"
                                 placeholder="Semestre del alumno" value="" maxlength="30" required="">
-                            <small><span class="mensajeError text-danger" id="semestre_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="semestre_al_error"></span></small>
 
                         </div>
 
                         <div class="form-group col-lg-7">
-                            <label for="nombre" class="control-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre"
+                            <label for="nombre_al" class="control-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre_al" name="nombre_al"
                                 placeholder="Nombre del alumno" value="" maxlength="40" required="">
-                            <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="nombre_al_error"></span></small>
 
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-lg-6">
-                            <label for="primer_apellido" class="control-label">Primer apellido</label>
-                            <input type="text" class="form-control" id="primer_apellido" name="primer_apellido"
+                            <label for="primer_apellido_al" class="control-label">Primer apellido</label>
+                            <input type="text" class="form-control" id="primer_apellido_al" name="primer_apellido_al"
                                 placeholder="Primer apellido" value="" maxlength="30" required="">
-                            <small><span class="mensajeError text-danger" id="primer_apellido_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="primer_apellido_al_error"></span></small>
 
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <label for="segundo_apellido" class="control-label">Segundo apellido</label>
-                            <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido"
+                            <label for="segundo_apellido_al" class="control-label">Segundo apellido</label>
+                            <input type="text" class="form-control" id="segundo_apellido_al" name="segundo_apellido_al"
                                 placeholder="Segundo apellido" value="" maxlength="30" required="">
-                            <small><span class="mensajeError text-danger" id="segundo_apellido_error"></span></small>
+                            <small><span class="mensajeError text-danger" id="segundo_apellido_al_error"></span></small>
 
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"
                     value="cerrar">Cancelar
                 </button>
-                <button type="button" class="btn btn-primary" id="btn-save" value="create">Guardar
+                <button type="button" class="btn btn-primary" id="btn-save-alumno" value="create">Guardar
                 </button>
             </div>
         </div>

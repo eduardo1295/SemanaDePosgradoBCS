@@ -20,6 +20,7 @@ class CrearTablaInstituciones extends Migration
             //$table->integer('id_semana')->unsigned()->default(0);
 
             $table->string('nombre', 100);
+            $table->string('siglas', 100);
             $table->string('telefono', 20)->nullable();
             $table->string('ciudad', 30)->nullable();
             $table->string('calle', 30)->nullable();

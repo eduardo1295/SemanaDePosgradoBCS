@@ -16,18 +16,18 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras Programas</legend>
-        <div class="col-12 col-md-4 col-lg-4">
+        <legend class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostras Programas</legend>
+        <div class="col-12 col-md-4 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
+                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verPrograma" value="activos">
                 <label class="form-check-label" for="inlineRadio1">Activas</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" name="verInsti" value="eliminados">
+                <input class="form-check-input" type="radio" id="inlineRadio2" name="verPrograma" value="eliminados">
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-6">
+        <div class="col-12 col-md-5 col-lg-6 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-programa"><span><i
                             class="fas fa-plus"></i></span> Nuevo Programa</a>
@@ -37,12 +37,12 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="display" cellspacing="0" style="width:100%" id="slidersC">
+            <table class="display" cellspacing="0" style="width:100%" id="programasDT">
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th class="all">Nombre</th>
                         <th>Clave Programa</th>
-                        <th>Nombre</th>
                         <th>Nivel</th>
                         <th>Periodo</th>
                         <th>Institución</th>
@@ -60,7 +60,6 @@
                         <th></th>
                         <th></th>
                         <th></th>
-
                     </tr>
                 </tfoot>
             </table>
@@ -72,7 +71,7 @@
 
 @endsection
 @section('extra')
-@include('programa.modal')
+@include('admin.programa.modal')
 @include('admin.modalimagenes')
 @endsection
 @section('scripts')
@@ -97,13 +96,13 @@
             "sLengthSelect": ""
         });
 
-        $('#slidersC tfoot  th.text-input').each(function (i) {
+        $('#programasDT tfoot  th.text-input').each(function (i) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
         });
 
-        var table = $('#slidersC').DataTable({
-            "order":[[5,"asc"]],
+        var table = $('#programasDT').DataTable({
+            "order":[[6,"desc"]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -135,8 +134,8 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
-                { data: 'id_programa', searchable: true },
                 { data: 'nombre', searchable: true },
+                { data: 'id_programa', searchable: true },
                 { data: 'nivel', searchable: true },
                 { data: 'periodo', searchable: true },
                 { data: 'institucion.nombre', searchable: true },
@@ -157,30 +156,30 @@
         });
 
         $("#show-sidebar").click(function () {
-            $('#slidersC').DataTable().ajax.reload(null, false);
+            $('#programasDT').DataTable().ajax.reload(null, false);
         });
 
 
 
         /*Al presionar el boton editar*/
-        $('body').on('click', '.editar', function () {
+        $('body').on('click', '.editarPrograma', function () {
             $('.mensajeError').text("")
             var programa_id = $(this).data('id');
             var ruta = "{{url('programa')}}/" + programa_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
                 $('#programaCrudModal').html("Editar Programa");
-                $('#btn-save').val("editar");
+                $('#btn-save-pro').val("editar");
                 $('#programa-crud-modal').modal('show');
-                console.log(data);
                 
-                $('#id_institucion').val(data.id_institucion);
-                $('#id_programa').val(data.id_programa);
-                $('#nombre').val(data.nombre);
-                $('#nivel').val(data.nivel);
-                $('#nivel').val(data.nivel);
-                $('#periodo').val(data.periodo);
-                $('#programa_id').val(data.id);
+                
+                $('#id_institucion_pro').val(data.id_institucion);
+                $('#id_programa_pro').val(data.id_programa);
+                $('#nombre_pro').val(data.nombre);
+                $('#nivel_pro').val(data.nivel);
+                $('#nivel_pro').val(data.nivel);
+                $('#periodo_pro').val(data.periodo);
+                $('#programa_id_pro').val(data.id);
                 
 
             })
@@ -188,7 +187,7 @@
 
         //var info = table.page.info();
         /*Accion al presionar el boton eliminar*/
-        $('body').on('click', '.eliminar', function () {
+        $('body').on('click', '.eliminarPrograma', function () {
             var programa_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
@@ -217,9 +216,9 @@
                                 success: function (data) {
 
                                     if (table.data().count() == 1) {
-                                        $('#slidersC').DataTable().ajax.reload();
+                                        $('#programasDT').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#slidersC').dataTable();
+                                        var oTable = $('#programasDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
                                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Programa borrado exitosamente.");
@@ -242,7 +241,7 @@
         });
 
         /*Accion al presionar el boton reactivar*/
-        $('body').on('click', '.reactivar', function () {
+        $('body').on('click', '.reactivarPrograma', function () {
             var programa_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
@@ -267,9 +266,9 @@
                                 url: "{{ url('admin/programa/reactivar')}}" + '/' + programa_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
-                                        $('#slidersC').DataTable().ajax.reload();
+                                        $('#programasDT').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#slidersC').dataTable();
+                                        var oTable = $('#programasDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
                                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Porgrama activado exitosamente.");
@@ -293,7 +292,7 @@
     /*Accion al presionar el boton crear-programa*/
     $('#crear-programa').click(function () {
         $('.mensajeError').text("")
-        $('#btn-save').val("crear-programa");
+        $('#btn-save-pro').val("crear-programa");
         $('#programa_id').val('');
         $('#programaForm').trigger("reset");
         $('#programaCrudModal').html("Agregar nuevo programa");
@@ -303,20 +302,20 @@
     });
 
 
-    $("input[name='verInsti']").change(function (e) {
+    $("input[name='verPrograma']").change(function (e) {
         checkInsti = $(this).val();
-        $('#slidersC').DataTable().ajax.reload();
+        $('#programasDT').DataTable().ajax.reload();
     });
 
     /*Accion al presionar el boton save*/
-    $("#btn-save").click(function () {
+    $("#btn-save-pro").click(function () {
         $('.mensajeError').text("");
-        $("#btn-save").prop("disabled", true);
+        $("#btn-save-pro").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
-        var actionType = $('#btn-save').val();
-        $('#btn-save').html('Guardando..');
+        var actionType = $('#btn-save-pro').val();
+        $('#btn-save-pro').html('Guardando..');
         if (actionType == "editar") {
-            var id = $('#programa_id').val();
+            var id = $('#programa_id_pro').val();
             var ruta = "{{url('programa')}}/" + id + "";
             var datos = new FormData($("#programaForm")[0]);
             datos.append('_method', 'PUT');
@@ -333,20 +332,16 @@
                 success: function (data) {
                     $('#programaForm').trigger("reset");
                     $('#programa-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
+                    $('#btn-save-pro').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#slidersC').dataTable();
+                    var oTable = $('#programasDT').dataTable();
                     oTable.fnDraw(false);
-                    //$("#mensaje-acciones").text("Actualización exitosa.");
-                    //var x = document.getElementById("snackbar");
-                    //x.html("Actualización exitosa.");
-                    //x.className = "show";
                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
                     $("#snackbar").addClass("show");
                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
 
                     
-                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save-pro").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     
                     console.log(data);
@@ -358,14 +353,14 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
-                    $('#btn-save').html('Guardar');
-                    $("#btn-save").prop("disabled", false);
+                    $('#btn-save-pro').html('Guardar');
+                    $("#btn-save-pro").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
 
             });
         } else if (actionType == "crear-programa") {
-            $("#btn-save").prop("disabled", true);
+            $("#btn-save-pro").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
 
 
@@ -382,14 +377,14 @@
                 success: function (data) {
                     $('#programaForm').trigger("reset");
                     $('#programa-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
+                    $('#btn-save-pro').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#slidersC').dataTable();
+                    var oTable = $('#programasDT').dataTable();
                     oTable.fnDraw(false);
                     $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Pograma registrado exitosamente.");
                     $("#snackbar").addClass("show");
                     setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
-                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save-pro").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -400,8 +395,8 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
-                    $('#btn-save').html('Guardar');
-                    $("#btn-save").prop("disabled", false);
+                    $('#btn-save-pro').html('Guardar');
+                    $("#btn-save-pro").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     
                 },

@@ -28,6 +28,8 @@ class UpdateInstitucionRequest extends FormRequest
 
             'nombre' => 'required|string|max:100',
 
+            'siglas' => 'required|string|max:100',
+
             'logo' => 'mimes:jpeg,jpg,png|max:2048',
 
             'telefono' => 'string|max:20|nullable',
@@ -42,7 +44,7 @@ class UpdateInstitucionRequest extends FormRequest
 
             'cp' => 'string|max:10|nullable',
 
-            'direccion_web' => 'string|max:100',
+            'direccion_web' => 'string|max:100|nullable',
 
             'latitud' => 'numeric|nullable',
 

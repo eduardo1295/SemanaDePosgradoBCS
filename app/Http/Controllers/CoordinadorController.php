@@ -10,6 +10,7 @@ use App\Coordinador;
 use App\Institucion;
 use App\Semana;
 use DataTables;
+use DB;
 
 use Validator;
 
@@ -26,6 +27,9 @@ class CoordinadorController extends Controller
      */
     public function index()
     {
+        $semana = Semana::select('id_semana','vigente','url_logo')->where('vigente',1)->first();
+        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        return view('coordinador.administrarInstitucion',compact(['instituciones','semana']));  
     }
 
 
@@ -47,6 +51,7 @@ class CoordinadorController extends Controller
      */
     public function store(StoreCoordinadorRequest $request)
     {
+        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         $user = new User([
             'nombre'     => ucfirst($request->nombre),
             'email'     => $request->email,
@@ -54,13 +59,31 @@ class CoordinadorController extends Controller
             'primer_apellido'   => ucfirst($request->primer_apellido), 
             'segundo_apellido'  => ucfirst($request->segundo_apellido), 
             'id_institucion'    => $request->id_institucion,
-            'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
+            'id_semana' => $idSemana,
         ]);
+        
+        
+        
+        
         $user->save();
         
         
         if($user){
-            $user->coordinadores()->create(['puesto'=> $request->puesto,'grado'=>ucfirst($request->grado),'id_semana'=>1]);
+            $coordActual = DB::select('SELECT coordinadores.id, coordinadores.grado FROM coordinadores WHERE '.
+                'coordinadores.id IN (SELECT users.id FROM users WHERE users.id_institucion = ?)',[$request->id_institucion]);
+            $dataSet = [];
+            foreach ($coordActual as $coordinador) {
+                $dataSet[] = [
+                    'id'  => $coordinador->id,
+                    'grado'    => $coordinador-> grado,
+                ];
+            }
+
+            $insertar =  DB::table('directores_tesis')->insert($dataSet);
+            
+            $actualizar = DB::update('UPDATE rol_usuario SET rol_usuario.id_rol = 4 WHERE rol_usuario.id_rol=3 AND id_usuario'. 
+            ' IN (SELECT users.id FROM users WHERE users.id_institucion = ?)',[$request->id_institucion]);
+            $user->coordinadores()->create(['puesto'=> ucfirst($request->puesto),'grado'=>ucfirst($request->grado),'id_semana'=>$idSemana]);
             $user->roles()->attach([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         
@@ -99,13 +122,15 @@ class CoordinadorController extends Controller
      */
     public function update(UpdateCoordinadorRequest $request, $id)
     {
+        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+
         $user = User::find($id);
         $user->email = $request->email;
         $user->nombre = ucfirst($request->nombre);
         $user->primer_apellido = ucfirst($request->primer_apellido);
         $user->segundo_apellido = ucfirst($request->segundo_apellido);
         $user->id_institucion = $request->id_institucion;
-        $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+        $user->id_semana = $idSemana;
         
 
         if(!empty($request->password))
@@ -114,7 +139,7 @@ class CoordinadorController extends Controller
         $user->save();
         
         if($user){
-            $user->coordinadores()->update(['puesto'=> $request->puesto,'grado'=>ucfirst($request->grado),'id_semana'=>1]);
+            $user->coordinadores()->update(['puesto'=> ucfirst($request->puesto),'grado'=>ucfirst($request->grado),'id_semana'=>$idSemana]);
             $user->roles()->sync([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         

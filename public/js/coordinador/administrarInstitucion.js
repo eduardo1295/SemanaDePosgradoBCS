@@ -1,108 +1,84 @@
-@extends('admin.plantilla')
-@section('contenido')
+var lati = 24.141474;
+var longi = -110.31314; 
 
+var posInicial = new google.maps.LatLng(lati,longi);
 
-<div class="container-fluid" id="#contenedor">
-    <div class="row">
-        <div class="col-12 mx-auto">
-            <h1>
-                Directores de tesis
-            </h1>
-        </div>
+ function iniciarMapa(posicion){
+    mapProp = {
+        center: posicion,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMA
+    };
+    map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    marker = new google.maps.Marker({
+        position: posicion,
+        map: map,
+        draggable: true
+    });
+    google.maps.event.addListener(marker, 'drag', function (event) {
+        $('#lat').val(event.latLng.lat());
+        $('#lng').val(event.latLng.lng());
+    })
+    //marker drag event end
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+        $('#lat').val(event.latLng.lat());
+        $('#lng').val(event.latLng.lng());
+    });
+}
+google.maps.event.addDomListener(window, 'load', iniciarMapa(posInicial));    
+    
+function cargarInstitucion(){
+    //var ruta = "{{url('institucion')}}/" + "{{ auth()->user()->id_institucion }}" + "/editar";
+    $.ajax({
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+        url: rutaEditarInstitucion,
+        type: "GET",
+        dataType: 'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function(){
+            $(".loader").show();
+        },
+        success: function (data) {
+            $('#nombre').val(data.nombre);
+            $('#direccion_web').val(data.direccion_web);
+            $('#telefono').val(data.telefono);
+            $('#ciudad').val(data.ciudad);
+            $('#calle').val(data.calle);
+            $('#numero').val(data.numero);
+            $('#colonia').val(data.colonia);
+            $('#siglas').val(data.siglas);
+            $('#cp').val(data.cp);
+            $('#imglogo').prop('src', imagenRuta +'/'+ data.url_logo);
+            $('#logoactual').html('Logo actual');
+            lati = data.latitud;
+            longi = data.longitud;
+            $('#lat').val(data.latitud);
+            $('#lng').val(data.longitud);
+            var Latlng = new google.maps.LatLng(parseFloat(lati), parseFloat(longi));
+            iniciarMapa(Latlng);
+            $('#logoAnterior').removeClass('d-none');
+        },
+        error: function (data) {
+            
+        },
+        complete: function (data) {
+            $(".loader").hide();
+        }
 
-        <div id="mensaje-acciones" class="col-12 alert alert-success alert-dismissible" role="alert"
-            style="display:none">
-            <strong> </strong>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-3 col-lg-3 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostras Directores de tesis</legend>
-        <div class="col-12 col-md-4 col-lg-3 d-flex d-md-block justify-content-center justify-content-md-start">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verCoor" value="activos">
-                <label class="form-check-label" for="inlineRadio1">Activos</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" name="verCoor" value="eliminados">
-                <label class="form-check-label" for="inlineRadio2">Eliminados</label>
-            </div>
-        </div>
-        <div class="col-12 col-md-5 col-lg-6 d-flex d-md-block justify-content-center justify-content-md-start">
-            <div class="d-flex justify-content-end">
-                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-director"><span><i
-                            class="fas fa-plus"></i></span> Agregar director</a>
+    });
 
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <table class="display" cellspacing="0" style="width:100%" id="directoresdt">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Nombre</th>
-                        <th>Primer apellido</th>
-                        <th>Segundo apellido</th>
-                        <th>Grado</th>
-                        <th>Email</th>
-                        <th>Institución</th>
-                        <th>Última Actualización</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-            </table>
-        </div>
-    </div>
-    <div id="snackbar"></div>
-</div>
+}
 
+$(document).ready(function () {
+    
+});
 
-@endsection
-@section('extra')
-@include('admin.directores.modal')
-@endsection
-@section('scripts')
-<script src="/js/admin/mostrarPassword.js"></script>
-<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<!--
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
--->
-
-<script>
-
-    var SITEURL = "{{URL::to('/')}}";
-    var checkCoord = 'activos';
-    var selectIDIns= "";
-    $(document).ready(function () {
-        
-        $.extend($.fn.dataTableExt.oStdClasses, {
-            "sFilterInput": "busqueda",
-            "sLengthSelect": ""
-        });
-
-        var table = $('#directoresdt').DataTable({
-            "order": [[ 7, "desc" ]],
+function cargarDataTableDirectores(){
+    if(!table){
+        table = $('#directoresdt').DataTable({
+            "order": [[ 6, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -114,7 +90,7 @@
             "serverSide": true,
             "search": true,
             "ajax": {
-                "url": '{{ route("director.listDirector")}}',
+                "url": rutaBaseDirector + '/' + 'listDirector',
                 "data": function (d) {
                     d.busqueda = checkCoord
                 }
@@ -134,43 +110,43 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
+                
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
                 { data: 'grado', searchable: false },
                 { data: 'email', searchable: true },
-                { data: 'institucion_nombre', searchable: true },
                 { data: 'fecha_usuario', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
-                { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 8 },
-                { width: 105, targets: 8 }
+                { responsivePriority: 1, targets: 2 },
+                { responsivePriority: 2, targets: 7 },
+                { width: 105, targets: 7 }
             ]
         });
+    }else{
+        $('#directoresdt').DataTable().ajax.reload();
+    }
+    
+}
 
 
-
-        $("#close-sidebar").click(function () {
-            $('.mensajeError').text("");
-            
-        });
-
-        $("#show-sidebar").click(function () {
-            $('#directoresdt').DataTable().ajax.reload(null, false);
-        });
-
-
+$("input[name='verCoor']").change(function (e) {
+    checkCoord = $(this).val();
+    $('#directoresdt').DataTable().ajax.reload();
+});
 
         /*Al presionar el boton editar*/
         $('body').on('click', '.editarDirector', function () {
-            reiniciar();
+            reiniciarDirector();
             var director_id = $(this).data('id');
-            var ruta = "{{url('director')}}/" + director_id + "/editar";
+            var ruta = rutaBaseDirector + '/' + director_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
-                $('#password_di').attr("placeholder", "Nueva contraseña");
+                
+                $('#password_di').val("");
+                $('#password').attr("placeholder", "Nueva contraseña");
                 $('#directorCrudModal').html("Editar director:" + data.nombre);
                 $('#btn-save-director').val("editar");
                 $('#director-crud-modal').modal('show');
@@ -187,7 +163,7 @@
             })
         });
 
-        //var info = table.page.info();
+        
         /*Accion al presionar el boton eliminar*/
         $('body').on('click', '.eliminarDirector', function () {
             var director_id = $(this).data("id");
@@ -214,7 +190,7 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "DELETE",
-                                url: "{{ url('director')}}" + '/' + director_id,
+                                url: rutaBaseDirector + '/' + director_id,
                                 success: function (data) {
 
                                     if (table.data().count() == 1) {
@@ -265,7 +241,7 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "PUT",
-                                url: "{{ url('admin/director/reactivar')}}" + '/' + director_id,
+                                url: rutaBaseDirector + '/reactivar/' + director_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
                                         $('#directoresdt').DataTable().ajax.reload();
@@ -289,36 +265,20 @@
             });
         });
 
-    });
-
-    /*Accion al presionar el boton crear-director*/
-    $('#crear-director').click(function () {
-        reiniciar();
-        $('#btn-save-director').val("crear-director");
-        $('#director_id').val('');
-        $('#password_di').attr("placeholder", "Contraseña para el usuario");
-        $('#directorForm').trigger("reset");
-        $('#directorCrudModal').html("Agregar nueva cuenta de director");
-        $('#director-crud-modal').modal({ backdrop: 'static', keyboard: false })
-        $('#director-crud-modal').modal('show');
-
-    });
-
-    $("input[name='verCoor']").change(function (e) {
-        checkCoord = $(this).val();
-        $('#directoresdt').DataTable().ajax.reload();
-    });
+        function reiniciarDirector() {
+            $('.mensajeError').text("");
+        }
 
     /*Accion al presionar el boton save*/
     $("#btn-save-director").click(function () {
-        reiniciar();
+        reiniciarDirector();
         $("#btn-save-director").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var actionType = $('#btn-save-director').val();
         $('#btn-save-director').html('Guardando..');
         if (actionType == "editar") {
             var id = $('#director_id').val();
-            var ruta = "{{url('director')}}/" + id + "";
+            var ruta = rutaBaseDirector+'/' + id;
             var datos = new FormData($("#directorForm")[0]);
             datos.append('_method', 'PUT');
             $.ajax({
@@ -370,7 +330,7 @@
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,
-                url: "{{route('director.store')}}",
+                url: rutaBaseDirector,
                 type: "POST",
                 dataType: 'json',
                 contentType: false,
@@ -408,33 +368,66 @@
         }
 
     })
-    
-    $('#institucionSelect').change(function () {
-        selectIDIns = $(this).find("option:selected").val();
+
+    /*Accion al presionar el boton crear-director*/
+    $('#crear-director').click(function () {
+        
+        $('#password_di').val("");
+        reiniciarDirector();
+        $('#btn-save-director').val("crear-director");
+        $('#director_id').val('');
+        $('#password').attr("placeholder", "Contraseña para el usuario");
+        $('#directorForm').trigger("reset");
+        $('#directorCrudModal').html("Agregar nueva cuenta de director");
+        $('#director-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#director-crud-modal').modal('show');
+
     });
 
-    function reiniciar() {
-        $('.mensajeError').text("");
-        $('#password_di').val("");
-    }
-</script>
-@endsection
-
-@section('estilos')
-<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-
-<!--
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
--->
-
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link href="/css/modales/modalresponsivo.css" rel="stylesheet">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
 
 
-@endsection
+    /*Al presionar el boton editar*/
+    $('body').on('click', '.guardarInstitucion', function () {
+            var id = $('#institucion_id').val();
+            var ruta = rutaBaseInstitucion;
+            var datos = new FormData($("#institucionForm")[0]);
+            datos.append('_method', 'PUT');
+            console.log(Array.from(datos));
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: ruta + '/' + id,
+                type: "POST",
+                data: datos,
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    $('#guardarInstitucion').html('Guardar');
+                    mostrarSnack(
+                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa."
+                        );
+                    $("#guardarInstitucion").prop("disabled", false);
+                    
+                    $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+                    $('#nuevoLogo').addClass('d-none');
+                    var unique = $.now();
+                    $('#imglogo').prop('src', imagenRuta + '/' + data.url_logo + '/?' + unique);
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if (xhr.status == 422) {
+                        var errores = xhr.responseJSON['errors'];
+                        $.each(errores, function (key, value) {
+                            $('#' + key + "_error").text(value);
+                        });
+                    }
+                    $('#guardarInstitucion').html('Guardar');
+                    $("#guardarInstitucion").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                },
+
+            });
+    });

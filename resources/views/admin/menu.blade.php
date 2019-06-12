@@ -158,7 +158,7 @@
             @endphp
             <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                 href="{{route($ruta)}}">Cerrar Sesión
-                <i class="fas fa-power-off"></i>
+                <i class="fas fa-sign-out-alt"></i>
             </a>
 
             <form id="logout-form" action="{{route($ruta)}}" method="POST" style="display: none;">
