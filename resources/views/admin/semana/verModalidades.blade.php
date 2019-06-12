@@ -60,15 +60,6 @@
 
         
     </div> 
-
-@section('menu')
-@include('layoutsM2.navbar')
-@endsection
-@section('footer')
-@include('layoutsM2.footer')
-@endsection
-{{-- END SECCION BLADE--}}
-
 @section('scripts')
 <script src="/js/menumaker.js"></script>
 @endsection

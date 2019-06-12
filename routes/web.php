@@ -95,10 +95,14 @@ Route::put('admin/modalidad/reactivar/{modalidad}', 'ModalidadController@reactiv
 Route::resource('modalidad', 'ModalidadController');
 
 Route::get('/subirTrabajo', 'TrabajoController@subirTrabajo')->name('semana.subirTrabajo');
+Route::post('/revisionTrabajo', 'TrabajoController@revisionTrabajo')->name('semana.revisionTrabajo');
+
 Route::resource('trabajo', 'TrabajoController');
 
 
 Route::get('admin/VistaLogin', 'VistaLoginController@vistaLogin')->name('vistaLogin.VerVistaLogin');
+Route::get('admin/disenoColores', 'VistaLoginController@disenoColores')->name('vistaLogin.disenoColores');
+Route::post('admin/cambiarColores', 'VistaLoginController@cambiarColores')->name('vistaLogin.cambiarColores');
 Route::resource('VistaLogin', 'VistaLoginController');
 
 

@@ -132,4 +132,32 @@ class VistaLoginController extends Controller
         return view('admin.vistaLogin.adminVistaLogin',compact(['semana','vistas']));
         
     }
+    public function disenoColores(){
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
+        $vistas = VistaLogin::All();
+        return view('admin.vistaLogin.adminColor',compact(['semana','vistas']));
+        
+    }
+
+    public function cambiarColores(Request $request){
+            $auxiliar = $request->toArray();
+            //dd($auxiliar);
+            $j=3;
+            foreach ($auxiliar as $key => $row) {
+                //dd($key);
+                $colores = VistaLogin::find($j);
+                if($colores != null){
+                    //dd($row);
+                    $colores->url_imagen = $row;
+                }
+                else {
+                    $colores = new VistaLogin();
+                    $colores->id = $j;
+                    $colores->url_imagen = $row;
+                }
+                $colores->save();
+                $j++;
+            }
+        return \Response::json(['nombre' => 'Listo'],201);
+    }
 }

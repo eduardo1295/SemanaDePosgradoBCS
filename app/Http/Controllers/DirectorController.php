@@ -15,6 +15,7 @@ use App\Http\Requests\directores\UpdateDirectorRequest;
 use Validator;
 
 
+
 class DirectorController extends Controller
 {
     public function __construct(){
@@ -189,7 +190,7 @@ class DirectorController extends Controller
         $listAlumnos = Alumno::all()->where('id_director',auth()->user()->id);
         $c = collect();
         foreach ($listAlumnos as $alum) {
-            $c->push(User::select('id','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,num_control','trabajos:id_alumno,url,revisado')->where('id',$alum->id)->first());
+            $c->push(User::select('id','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,num_control','trabajos:id_alumno,url,revisado,autorizado')->where('id',$alum->id)->first());
         }
         
         return datatables()->of($c)
@@ -200,9 +201,15 @@ class DirectorController extends Controller
 
 
 
-    public function revisarAlumnos(){
+    public function revisarAlumnos(Request $request){
+        if (session()->has('mensaje')) {
+            $mensaje = session('mensaje');
+            session()->forget('mensaje');
+        }
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
-        return view('director.revisarAlumnos',compact(['instituciones','semana']));
+        return view('director.revisarAlumnos',compact(['instituciones','semana','mensaje']));
     }
+
+    
 }

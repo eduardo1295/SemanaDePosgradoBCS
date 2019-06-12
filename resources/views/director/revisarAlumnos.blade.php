@@ -1,7 +1,6 @@
 {{-- SECCION BLADE--}}
 @extends('Plantilla.principal')
 
-@section('contenido')
 @section('links')
 <link rel="stylesheet" href="/css/Maqueta2.css">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
@@ -12,6 +11,8 @@
     });
 </script>
 @endsection
+
+@section('contenido')
 <section id="trabajo">
         <div class="container">
                 <div class="row">
@@ -25,17 +26,19 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Numero Control</th>
+                        <th style="color:black !important">Numero Control</th>
                         <th>Nombre</th>
                         <th>Apello paterno</th>
                         <th>Apellido Materno</th>
-                        <th>Email</th>
+                        <!--<th>Email</th>-->
                         <th>Trabajos</th>
                         <th>Estado</th>
+                        <th>Revisado</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
+                        <!--<th></th>-->
                         <th></th>
                         <th></th>
                         <th></th>
@@ -48,10 +51,23 @@
                 </tfoot>
             </table>
         </div>
+        <div class="col-12 mt-3">
+            @isset($mensaje)
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>¡Listo!</strong> Se le ha enviado un correo al estudiante.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            @endisset
+        </div>
+        
     </div>
                 
             </div>
             <div id="snackbar"></div>
+            
+            
 </section>
 <script>
 $('.custom-file-input').on('change', function () {
@@ -63,24 +79,16 @@ $('.custom-file-input').on('change', function () {
         }
     })
 </script>
-
-@section('menu')
-@include('layoutsM2.navbar')
 @endsection
-@section('footer')
-@include('layoutsM2.footer')
-@endsection
-{{-- END SECCION BLADE--}}
 
 @section('scripts')
-<script src="/js/menumaker.js"></script>
-<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+    <script src="/js/menumaker.js"></script>
+    <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="/css/datatable/colores.css">
+    <script src="/js/director/script.js"></script>
 
-<script src="/js/director/script.js"></script>
-
-<link href="/css/modales/snackbar.css" rel="stylesheet">
-@endsection
+    <link href="/css/modales/snackbar.css" rel="stylesheet">
 @endsection

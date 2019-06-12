@@ -3,12 +3,6 @@
     <link rel="stylesheet" href="/css/Maqueta2.css ">
     <link rel="stylesheet" href="/css/imagenes/imagenes.css">
 @endsection
-@section('menu')
-    @include('layoutsM2.navbar')
-@endsection
-@section('footer')
-    @include('layoutsM2.footer')
-@endsection    
 @section('scripts')
         <script src="/js/menumaker.js"></script>
 @endsection

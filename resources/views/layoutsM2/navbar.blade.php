@@ -39,16 +39,20 @@
                                     <li class="has-sub"> 
                                         <div class="aliga">
                                         <span><i class="fas fa-user"></i>{{' '}}</span>{{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}
+                
                                         </div> 
                                         <ul class="loginUsuario">
                                             @if(auth()->user() && auth()->user()->hasRoles(['alumno']))
                                                 <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
                                                 <li><a href="{{route('alumno.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @elseif(auth()->user() && auth()->user()->hasRoles(['director']))
-                                                <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>
+                                                <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>    
+                                            @elseif(auth('admin')->user())
+                                                <li><a href="{{route('alumno.edit',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @endif
                                         
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
+                                            
                                         <ul>
                                     </li>
                                     {{-- comment

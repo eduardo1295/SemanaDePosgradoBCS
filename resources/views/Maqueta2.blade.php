@@ -1,41 +1,59 @@
-
 {{-- SECCION BLADE--}}
 @extends('Plantilla.principal')
-
-@section('contenido')
-
 @section('links')
-<link rel="stylesheet" href="/css/Maqueta2.css">
-<link rel="stylesheet" href="/css/imagenes/imagenes.css">
-<script src="/js/owl.carousel.min.js"> </script>
-<script>
-   
 
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-
-</script>
 <style>
-    .holo {
-        border-left: 10px solid white;
+    @if(count($vistas) > 2)
+    .contenidoSubPrincipal,#titulo1,#titulo2,#carruselInstituciones .cantidadParticipantes{
+        background: {{$vistas[2]->url_imagen}} !important ; 
+        color: {{$vistas[3]->url_imagen}} !important;
     }
+    .contenidoTexto{
+        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; background: {{$vistas[4]->url_imagen}} !important ;
+        color: {{$vistas[5]->url_imagen}} !important;}
+    .contenidoTexto a{
+        color: {{$vistas[5]->url_imagen}} !important;
+    }
+    .contenidoCarrusel, .contenidoCarrusel a,.contenidoCarrusel .row div {
+        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; background: {{$vistas[4]->url_imagen}} !important ;
+        color: {{$vistas[5]->url_imagen}} !important;}
+    .nota{
+        background: {{$vistas[4]->url_imagen}} !important ;
+        color: {{$vistas[5]->url_imagen}} !important; }
+    .nota a{
+        color: {{$vistas[5]->url_imagen}} !important; }
+    .nota:before{
+        background: -webkit-linear-gradient(top, white, {{$vistas[4]->url_imagen}}) !important; }
+    .contenidoCarrusel button{
+        color: {{$vistas[5]->url_imagen}} !important; }
+    }
+    @endif
+
 </style>
+    <link rel="stylesheet" href="/css/Maqueta2.css">
+    <link rel="stylesheet" href="/css/imagenes/imagenes.css">
+    <script src="/js/owl.carousel.min.js"> </script>
+    <script>
+        $(function () { $('[data-toggle="tooltip"]').tooltip() })
+    </script>
+    <style>
+        .holo { border-left: 10px solid white; }
+    </style>
 @endsection
-
+@section('contenido')
 @include('layoutsM2.carrusel')
-
 <div class="container-fluid mt-4 mb-4 pl-1 pr-1 pl-md-5 pr-md-5">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 contenidoPrincipal">
         @include('layoutsM2.informacion')
     </div>
 </div>
 <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
+        
     <div class="col-12  mb-4" id="noticias">
         <div class="row">
             @if (count($noticias) > 0)
-            <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
-                <h2 class="mb-0 rounded-left">Noticias.</h2>
+        <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
+                <h2 class="mb-0 rounded-left">Noticias</h2>
                 <h4 class="mb-0"> <a href="/noticias" class="badge badge-primary mb-0 align-self-center">Ver todas
                         <i class="fas fa-arrow-circle-right"></i></a> </h4>
             </div>
@@ -47,18 +65,16 @@
                 <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
             </div>
             @endif
-
             @php
             $cont=0;
             @endphp
         </div>
-
         <div class="row">
             @foreach ($noticias as $noticia)
             @if ($cont == 0 && count($noticias) == ($cont+1) )
             <div class=" nota n3 n1 col-12 col-md mb-lg-0 " id="contenido">
                 @elseif($cont == 0)
-                <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido">
+                <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido" >
                     @elseif(count($noticias) == ($cont+1))
                     <div class=" nota n3 col-12 col-md mb-lg-0 " id="contenido">
                         @else
@@ -67,7 +83,9 @@
                             <div class="media-with-text  mt-4">
                                 <h2 class="h5 mb-2">
                                     <a href="/noticias/{{$noticia->id_noticia}}"
-                                        id="tituloNoticia">{{$noticia->titulo}}</a>
+                                        id="tituloNoticia">
+                                        {{$noticia->titulo}}
+                                    </a>
                                 </h2>
                                 <small><span class="mb-2 d-block post-date">
                                         {{$noticia->fecha_actualizacion}}</span></small>
@@ -82,7 +100,7 @@
                             <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
                         </div>
                         @if (count($noticias) > 0)
-                        <div class=" col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">
+                        <div class=" nota col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">
                             @else
                             <div class="col-12  mx-auto ubicacionSede" id="contenido">
                                 @endif
@@ -99,7 +117,7 @@
                                         </div>
                                         <a class="nav-link active lead text-md-right" data-toggle="modal"
                                             href="#cerrar">
-                                            <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
+                                        <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
                                         @endif
                                     </div>
 
@@ -109,27 +127,27 @@
                         </div>
                     </div>
                 </div>
-        </div>
-        
-        @isset($instituciones)
+            </div>
+
+            @isset($instituciones)
             @if ($instituciones->count() > 0)
-                
-            
-        
+
+
+
             <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
                 <div id="fondo">
                     <div class="container-fluid" id="contenido">
-                        <div class="row">
-                            <h2 id="titulo" class="w-100">Instituciones Participantes</h2>
+                        <div class="row cantidadParticipantes" id="titulo">
+                            <h2 class="w-100">Instituciones Participantes</h2>
                         </div>
-                        <div class="row">
+                        <div class="row contenidoCarrusel">
                             <div class=" col-12 pb-4 pt-4">
                                 @include('layoutsM2.carrusel2')
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>  
+            </section>
             @endif
             @endisset
             @if (isset($institucionSede))
@@ -170,11 +188,4 @@
             @section('scripts')
             <script src="/js/menumaker.js"></script>
             @endsection
-            @endsection
-
-            @section('menu')
-            @include('layoutsM2.navbar')
-            @endsection
-            @section('footer')
-            @include('layoutsM2.footer')
             @endsection

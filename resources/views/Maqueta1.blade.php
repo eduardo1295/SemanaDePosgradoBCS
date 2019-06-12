@@ -11,13 +11,7 @@
     <script  src="/js/owl.carousel.min.js"> </script> 
 @endsection
 
-@section('menu')
-     @include('Plantilla.menu')
-@endsection
 
-@section('footer')
-    @include('Plantilla.footer')
-@endsection
 
 {{-- END SECCION BLADE--}}
 <div class="space-small bg-default">

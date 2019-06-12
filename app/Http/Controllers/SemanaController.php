@@ -14,6 +14,7 @@ use App\Posgrado;
 use DB;
 use App\Carrusel;
 use Auth;
+use App\VistaLogin;
 use Illuminate\Support\Str as Str;
 use Jenssegers\Date\Date;
 use Carbon\Carbon;
@@ -62,8 +63,8 @@ class SemanaController extends Controller
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
         //dd(Auth::guard()->user());
-        
-        return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel','cadena','fInicio','fFin']));
+        $vistas = VistaLogin::All();
+        return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel','cadena','fInicio','fFin','vistas']));
     }
 
     public function indexAdmin()

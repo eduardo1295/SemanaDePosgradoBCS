@@ -50,34 +50,51 @@ $(document).ready(function () {
             { data: 'nombre', searchable: true },
             { data: 'primer_apellido', searchable: true },
             { data: 'segundo_apellido', searchable: true },
-            { data: 'email', searchable: true },
+            //{ data: 'email', searchable: true },
             {
                 data: 'trabajos.url',
                 name: 'trabajos.url',
+                
                 render: function (data, type, full, meta) {
+                    
                     if (data == null)
-                        return 'Sin entregar';
+                        return 'Sin entrega';
                     else
-                        return "<a style='cursor:pointer' target='_blank' href=/documentos/trabajos/"+data + "> Ver Trabajo <a/>";
+                        //return "<a style='cursor:pointer' target='_blank' href=/documentos/trabajos/"+data + "> Ver Trabajo <a/>";
+                        return "<a style='cursor:pointer' class='btn btn-outline-info btn-sm'  href=/trabajo/"+full.id+"> Ver Trabajo <a/>";
                 },
                 orderable: false, searchable: false
+            },
+            {
+                data: 'trabajos.autorizado',
+                name: 'trabajos.autorizado',
+                render: function (data, type, full, meta) {
+                    if (data == 0)
+                        return '<label class="btn btn-danger btn-sm w-100">No aprobado</label>';
+                    else if( data == 1 )
+                        return '<label class="btn btn-success btn-sm w-100">Aprobado</label>';
+                    else
+                        return '<label class="btn btn-warning btn-sm w-100">Sin entregar</label>';
+                },
+                searchable: true 
             },
             {
                 data: 'trabajos.revisado',
                 name: 'trabajos.revisado',
                 render: function (data, type, full, meta) {
                     if (data == 0)
-                        return '<strong><label class="btn btn-danger btn-small w-100">No aprobado</label></strong';
+                        return '<label class="btn btn-danger btn-sm w-100">No Revisado</label>';
                     else if( data == 1 )
-                        return '<strong><label class="btn btn-success btn-small w-100">Aprobado</label><strong>';
+                        return '<label class="btn btn-success btn-sm w-100">Revisado</label>';
                     else
-                        return '<strong><label class="btn btn-warning btn-small w-100">Sin entregar</label></strong>';
+                        return '<label class="btn btn-warning btn-sm w-100">Sin entregar</label>';
                 },
-                orderable: false, searchable: false
-            }
+                searchable: true
+            },
         ],
         columnDefs: [
             { responsivePriority: 1, targets: 2 },
+            { className: "font-weight-bold text-info", targets: 1 },
             { responsivePriority: 2, targets: 7 },
             { width: 105, targets: 5 }
         ]

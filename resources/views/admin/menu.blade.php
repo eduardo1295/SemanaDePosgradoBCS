@@ -125,8 +125,10 @@
                         <ul>
                             <li>
                                 <a href="{{route('vistaLogin.VerVistaLogin')}}">
-                                    <i class="fas fa-paint-brush"></i>
                                     <span><strong>Vista Login</strong></span>
+                                </a>
+                                <a href="{{route('vistaLogin.disenoColores')}}">
+                                    <span><strong>Diseño Colores</strong></span>
                                 </a>
                             </li>
                         </ul>

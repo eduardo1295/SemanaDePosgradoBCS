@@ -10,7 +10,7 @@
         }, options);
 
       return this.each(function() {
-        cssmenu.find('li ul').parent().addClass('has-sub');
+        //cssmenu.find('li ul').parent().addClass('has-sub');
         if (settings.format != 'select') {
           cssmenu.prepend('<div id="menu-button">' + settings.title + '</div>');
           $(this).find("#menu-button").on('click', function(){
@@ -34,12 +34,17 @@
           multiTg = function() {
             cssmenu.find(".has-sub").prepend('<span class="submenu-button"></span>');
             cssmenu.find('.submenu-button').on('click', function() {
-              $(this).toggleClass('submenu-opened');
+              //$(this).toggleClass('submenu-opened');
+              cssmenu.find(".has-sub span").removeClass('submenu-opened');
               if ($(this).siblings('ul').hasClass('open')) {
                 $(this).siblings('ul').removeClass('open').hide();
+                $(this).removeClass('submenu-opened');
               }
               else {
+                cssmenu.find(".has-sub ul").removeClass('open').hide();
                 $(this).siblings('ul').addClass('open').show();
+                $(this).addClass('submenu-opened');
+                $('#navbarM2').scrollTop($(this).offset().top);
               }
             });
           };

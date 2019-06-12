@@ -4,7 +4,6 @@
           <div class="carousel-inner" role="listbox">
             @php
             $x = 0 
-               
             @endphp
             @foreach ($instituciones as $institucion)
             @if ($x==0)

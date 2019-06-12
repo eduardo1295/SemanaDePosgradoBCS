@@ -33,7 +33,7 @@
                     <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Convocatoria</h1> <br>
                 </div>
             </div>
-            <embed class="embed-responsive-item pb-5" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}"
+            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}"
                 type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
         @endif
@@ -43,15 +43,6 @@
         </div>
     @endif
 @endsection
-
-@section('menu')
-    @include('layoutsM2.navbar')
-@endsection
-
-@section('footer')
-    @include('layoutsM2.footer')
-@endsection
-{{-- END SECCION BLADE--}}
 
 @section('scripts')
     <script src="/js/menumaker.js"></script>

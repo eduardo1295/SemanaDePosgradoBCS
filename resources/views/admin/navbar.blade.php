@@ -1,3 +1,8 @@
+<style>
+.dropdown-menu{
+    transform: translate3d(-40px,36px,0px) !important;
+}    
+</style>
 <div class="container-fluid" id="#contenedor" style="z-index:0 ; background:#ececec;" >
     <div class="row" >
         <div class="col-12">
