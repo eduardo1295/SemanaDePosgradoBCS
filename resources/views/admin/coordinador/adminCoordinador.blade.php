@@ -16,8 +16,9 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Coordinadores</legend>
-        <div class="col-12 col-md-4 col-lg-4">
+        <!--
+        <legend class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostras coordinadores</legend>
+        <div class="col-12 col-md-4 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verCoor" value="activos">
                 <label class="form-check-label" for="inlineRadio1">Activos</label>
@@ -27,7 +28,8 @@
                 <label class="form-check-label" for="inlineRadio2">Eliminados</label>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-6">
+    -->
+        <div class="col-12 col-md-12 col-lg-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-coordinador"><span><i
                             class="fas fa-plus"></i></span> Agregar coordinador</a>
@@ -41,11 +43,11 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Grado</th>
-                        <th>Puesto</th>
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
+                        <th>Grado</th>
+                        <th>Puesto</th>
                         <th>Email</th>
                         <th>Institución</th>
                         <th>Última Actualización</th>
@@ -81,11 +83,12 @@
 
 <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <!--
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 -->
 
@@ -107,7 +110,7 @@
         });
 
         var table = $('#coordinadoresdt').DataTable({
-            "order": [[ 7, "desc" ]],
+            "order": [[ 8, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -139,18 +142,18 @@
             },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
-                { data: 'coordinadores.grado', searchable: false },
-                { data: 'coordinadores.puesto', searchable: false },
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
+                { data: 'coordinadores.grado', searchable: false },
+                { data: 'coordinadores.puesto', searchable: false },
                 { data: 'email', searchable: true },
                 { data: 'instituciones.nombre', searchable: true },
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
-                { responsivePriority: 1, targets: 2 },
+                { responsivePriority: 1, targets: 1 },
                 { responsivePriority: 2, targets: 9 },
                 { width: 105, targets: 9 }
             ]
@@ -454,6 +457,7 @@
 
 <link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
 <!--
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">

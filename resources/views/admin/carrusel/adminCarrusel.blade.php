@@ -16,6 +16,7 @@
         </div>
     </div>
     <div class="row mb-2">
+        <!--
         <legend class="d-none col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras imagenes</legend>
         <div class="d-none col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
@@ -27,11 +28,11 @@
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-12">
+        -->
+        <div class="col-12 col-md-12 col-lg-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
-                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-carrusel"><span><i
-                            class="fas fa-plus"></i></span> Nueva imagen</a>
-
+                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-carrusel"><span>
+                    <i class="fas fa-plus"></i></span> Nueva imagen</a>
             </div>
         </div>
     </div>
@@ -41,8 +42,8 @@
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th class="all">Imagen</th>
                         <th>Link</th>
-                        <th>Imagen</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
@@ -54,7 +55,6 @@
                         <th></th>
                         <th></th>
                         <th></th>
-
                     </tr>
                 </tfoot>
             </table>
@@ -91,10 +91,6 @@
             "sLengthSelect": ""
         });
 
-        $('#slidersC tfoot  th.text-input').each(function (i) {
-            var title = $(this).text();
-            $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
-        });
 
         var table = $('#slidersC').DataTable({
             "order": [[ 3, "desc" ]],
@@ -114,21 +110,16 @@
                     d.busqueda = checkInsti
                 }
             },
-            initComplete: function () {
-                var api = this.api();
-                api.columns(2).every(function () {
-                    var that = this;
-                    $('input', this.footer()).on('keyup change', function () {
-                        if (that.search() !== this.value) {
-                            that
-                                .search(this.value)
-                                .draw();
-                        }
-                    });
-                })
-            },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
+                {
+                    data: 'url_imagen',
+                    name: 'url_imagen',
+                    render: function (data, type, full, meta) {
+                        return "<img src={{ URL::to('/') }}/img/carrusel/" + data + " width='250px' class='img-thumbnail imgmodal' onclick='mostrarModal(this);' />";
+                    },
+                    orderable: false, searchable: false
+                },
                 {
                     data: 'link_web',
                     name: 'link_web',
@@ -137,14 +128,6 @@
                             return 'Sin url asignada';
                         else
                             return "<a style='cursor:pointer' target='_blank' href=" +data + ">" + data + "<a/>";
-                    },
-                    orderable: false, searchable: false
-                },
-                {
-                    data: 'url_imagen',
-                    name: 'url_imagen',
-                    render: function (data, type, full, meta) {
-                        return "<img src={{ URL::to('/') }}/img/carrusel/" + data + " width='250px' class='img-thumbnail imgmodal' onclick='mostrarModal(this);' />";
                     },
                     orderable: false, searchable: false
                 },

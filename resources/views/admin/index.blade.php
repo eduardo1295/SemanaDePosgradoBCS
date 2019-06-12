@@ -3,7 +3,6 @@
 
 
 <div class="container-fluid" id="#contenedor">
-
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
@@ -16,15 +15,13 @@
             <strong> </strong>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mb-2">
 
-        <div class="col-12 col-md-12 col-lg-12">
+        <div class="col-12 col-md-12 col-lg-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-semana"><span><i
                             class="fas fa-plus"></i></span> Nuevo evento</a>
-
             </div>
-
         </div>
     </div>
     <div class="row">
@@ -57,7 +54,6 @@
             </table>
         </div>
     </div>
-
 </div>
 
 @endsection
@@ -95,11 +91,6 @@
 <script src="/plugins/daterangepicker/iniciardaterangepicker.js"></script>
 
 <script>
-    //aqupi tenia lo de rangepicker
-</script>
-<script>
-
-    var checkSemana = 'activos';
     var titulo = "";
     var table = "";
     $(document).ready(function () {
@@ -127,9 +118,14 @@
         });
 
         table = $('#semanas').DataTable({
-            "order": [[6, "desc"]],
+            "order": [
+                [6, "desc"]
+            ],
             pageLength: 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+            lengthMenu: [
+                [5, 10, 20, -1],
+                [5, 10, 20, 'Todos']
+            ],
             responsive: true,
             autoWidth: false,
             "language": {
@@ -140,16 +136,36 @@
             "search": true,
             "ajax": {
                 "url": '{{ route("semana.listSemanas")}}',
-                "data": function (d) {
+                /*"data": function (d) {
                     d.busqueda = checkSemana
-                }
+                }*/
             },
-            "columns": [
-                { data: 'id', name: 'id', 'visible': false, searchable: false },
-                { data: 'nombre', orderable: false, searchable: true },
-                { data: 'instituciones[0].nombre', orderable: true, searchable: true },
-                { data: 'fecha_inicio', orderable: false, searchable: false },
-                { data: 'fecha_fin', orderable: false, searchable: false },
+            "columns": [{
+                    data: 'id',
+                    name: 'id',
+                    'visible': false,
+                    searchable: false
+                },
+                {
+                    data: 'semana_nombre',
+                    orderable: false,
+                    searchable: true
+                },
+                {
+                    data: 'institucion_nombre',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'fecha_inicio',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'fecha_fin',
+                    orderable: false,
+                    searchable: false
+                },
                 {
                     data: 'url_convocatoria',
                     name: 'url_convocatoria',
@@ -157,17 +173,35 @@
                         if (data == "no_disponible")
                             return data.replace("_", " ");
                         else
-                            return "<a style='cursor:pointer' target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" + data + ">" + data + "<a/>";
+                            return "<a style='cursor:pointer' target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" +
+                                data + ">" + data + "<a/>";
                     },
-                    orderable: false, searchable: false
+                    orderable: false,
+                    searchable: false
                 },
-                { data: 'fecha_actualizacion', searchable: false },
-                { data: 'action', name: 'action', orderable: false, searchable: false },
+                {
+                    data: 'fecha_actualizacion',
+                    searchable: false
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                },
             ],
-            columnDefs: [
-                { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 7 },
-                { width: 105, targets: 7 }
+            columnDefs: [{
+                    responsivePriority: 1,
+                    targets: 1
+                },
+                {
+                    responsivePriority: 2,
+                    targets: 7
+                },
+                {
+                    width: 105,
+                    targets: 7
+                }
             ]
         });
 
@@ -199,7 +233,7 @@
             $('#fecha').val(data.fecha);
             $("#institucionSelect").val(data.instituciones[0].id);
             $('#contenido').summernote('code', data.contenido);
-            $('#imglogo').prop('src', "{{url('img/semanaLogo')}}/" + data.url_logo+'/?'+unique);
+            $('#imglogo').prop('src', "{{url('img/semanaLogo')}}/" + data.url_logo + '/?' + unique);
             $('#logoactual').html('Logo actual');
             $('#logoAnterior').removeClass('d-none');
             $('#fecha').data('daterangepicker').setStartDate(data.fecha_inicio);
@@ -207,7 +241,9 @@
             if (data.url_convocatoria == 'no_disponible')
                 $('#ligaConvo').html('No se ha cargado convocatoria')
             else
-                $('#ligaConvo').html('Convocatoria <a target="_blank" href={{ URL::to("/") }}/pdf/convocatoria/' + data.url_convocatoria + '>' + data.url_convocatoria + '<a/>');
+                $('#ligaConvo').html(
+                    'Convocatoria <a target="_blank" href={{ URL::to("/") }}/pdf/convocatoria/' + data
+                    .url_convocatoria + '>' + data.url_convocatoria + '<a/>');
 
         })
     });
@@ -222,7 +258,10 @@
         $('#imglogo').prop('src', "");
         $('#logoactual').html('');
         $('#semanaCrudModal').html("Nueva Evento Semana de Posgrado");
-        $('#semana-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#semana-crud-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
         $('#semana-crud-modal').modal('show');
         $('#fecha').data('daterangepicker').setStartDate(moment().format('YYYY-MM-DD'));
         $('#fecha').data('daterangepicker').setEndDate(moment().add(4, 'days').format('YYYY-MM-DD'));
@@ -233,7 +272,10 @@
         $('#semana_id').val('');
         $('#semanaForm').trigger("reset");
         $('#semanaCrudModal').html("Agregar nueva institución");
-        $('#semana-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#semana-crud-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
         $('#semana-crud-modal').modal('show');
     });
 
@@ -255,7 +297,9 @@
             datos.append('_method', 'PUT');
             //console.log(Array.from(datos));
             $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 url: ruta,
                 type: "POST",
                 data: datos,
@@ -265,7 +309,7 @@
                 processData: false,
                 success: function (data) {
                     console.log(data);
-                    
+
                     $('#semanaForm').trigger("reset");
                     $('#semana-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
@@ -274,11 +318,13 @@
                     oTable.fnDraw(false);
                     //recargar sin serverside
 
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
+                    mostrarSnack(
+                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa."
+                        );
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-                    
+
                 },
                 error: function (data) {
                     if (data.status == 422) {
@@ -293,8 +339,9 @@
                 },
                 complete: function (data) {
                     var unique = $.now();
-                    if(data.responseJSON['vigente']==1){
-                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/'+data.responseJSON['url_logo']+'/?'+unique);
+                    if (data.responseJSON['vigente'] == 1) {
+                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/' + data
+                            .responseJSON['url_logo'] + '/?' + unique);
                     }
                 }
 
@@ -308,7 +355,9 @@
             datos.append('fecha_fin', rFechas[1]);
             console.log(Array.from(datos));
             $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 data: datos,
                 url: "{{route('semana.store')}}",
                 type: "POST",
@@ -325,13 +374,16 @@
                     var oTable = $('#semanas').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana guardada exitosamente.");;
+                    mostrarSnack(
+                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana guardada exitosamente."
+                        );;
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
-                    if(data.vigente==1){
-                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/'+data.url_logo);
+                    if (data.vigente == 1) {
+                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/' + data
+                            .url_logo);
                     }
                 },
                 error: function (data) {
@@ -364,8 +416,7 @@
                 cancelAction: {
                     text: 'Cancelar',
                     btnClass: 'btn-red',
-                    action: function () {
-                    }
+                    action: function () {}
                 },
                 confirm: {
                     text: 'Aceptar',
@@ -373,7 +424,9 @@
                     btnClass: 'btn-blue',
                     action: function () {
                         $.ajax({
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             type: "DELETE",
                             url: "{{ url('semana')}}" + '/' + semana_id,
                             success: function (data) {
@@ -383,7 +436,9 @@
                                 } else {
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento eliminado exitosamente.");
+                                mostrarSnack(
+                                    "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento eliminado exitosamente."
+                                    );
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -410,8 +465,7 @@
                 cancelAction: {
                     text: 'Cancelar',
                     btnClass: 'btn-red',
-                    action: function () {
-                    }
+                    action: function () {}
                 },
                 confirm: {
                     text: 'Aceptar',
@@ -419,7 +473,9 @@
                     btnClass: 'btn-blue',
                     action: function () {
                         $.ajax({
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             type: "PUT",
                             url: "{{ url('admin/semana/reactivar')}}" + '/' + semana_id,
                             success: function (data) {
@@ -429,7 +485,9 @@
                                 } else {
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento activado exitosamente.");
+                                mostrarSnack(
+                                    "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento activado exitosamente."
+                                    );
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -487,5 +545,6 @@
     .custom-file-input~.custom-file-label::after {
         content: "Elegir";
     }
+
 </style>
 @endsection

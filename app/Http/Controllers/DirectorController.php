@@ -55,20 +55,34 @@ class DirectorController extends Controller
      */
     public function store(StoreDirectorRequest $request)
     {
-        $user = new User([
-            'nombre'     => ucfirst($request->nombre),
-            'email'     => $request->email,
-            'password' => bcrypt($request->password),
-            'primer_apellido'   => ucfirst($request->primer_apellido), 
-            'segundo_apellido'  => ucfirst($request->segundo_apellido), 
-            'id_institucion'    => $request->id_institucion,
-            'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
-        ]);
-        $user->save();
+        $user = new User();
+        if(auth('admin')->user()){
+            $user = new User([
+                'nombre'     => ucfirst($request->nombre_di),
+                'email'     => $request->email_di,
+                'password' => bcrypt($request->password_di),
+                'primer_apellido'   => ucfirst($request->primer_apellido_di), 
+                'segundo_apellido'  => ucfirst($request->segundo_apellido_di), 
+                'id_institucion'    => $request->id_institucion_di,
+                'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
+            ]);
+            $user->save();
+        }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+            $user = new User([
+                'nombre'     => ucfirst($request->nombre_di),
+                'email'     => $request->email_di,
+                'password' => bcrypt($request->password_di),
+                'primer_apellido'   => ucfirst($request->primer_apellido_di), 
+                'segundo_apellido'  => ucfirst($request->segundo_apellido_di), 
+                'id_institucion'    => auth()->user()->id_institucion,
+                'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
+            ]);
+            $user->save();
+        }
         
         
         if($user){
-            $user->directortesis()->create(['grado'=>ucfirst($request->grado),'id_semana'=>1]);
+            $user->directortesis()->create(['grado'=>ucfirst($request->grado_di),'id_semana'=>1]);
             $user->roles()->attach([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
         }
         
@@ -108,19 +122,23 @@ class DirectorController extends Controller
     public function update(UpdateDirectorRequest $request, $id)
     {
         $user = User::find($id);
-        $user->nombre = ucfirst($request->nombre);
-        $user->primer_apellido = ucfirst($request->primer_apellido);
-        $user->segundo_apellido = ucfirst($request->segundo_apellido);
-        $user->id_institucion = $request->id_institucion;
+        $user->nombre = ucfirst($request->nombre_di);
+        $user->primer_apellido = ucfirst($request->primer_apellido_di);
+        $user->segundo_apellido = ucfirst($request->segundo_apellido_di);
+        if(auth('admin')->user()){
+            $user->id_institucion = $request->id_institucion_di;
+        }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+            $user->id_institucion = auth()->user()->id_institucion;
+        }
         $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         
-        if(!empty($request->password))
-            $user->password = bcrypt($request->password);
+        if(!empty($request->password_di))
+            $user->password = bcrypt($request->password_di);
 
         $user->save();
         
         if($user){
-            $user->directortesis()->update(['grado'=>ucfirst($request->grado)]);
+            $user->directortesis()->update(['grado'=>ucfirst($request->grado_di)]);
             $user->roles()->sync([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
         }
         
@@ -169,17 +187,77 @@ class DirectorController extends Controller
      */
     public function listDirector(Request $request ){
         $busqueda = $request->busqueda;
+        $usuarios = "";
         if($busqueda == 'activos'){
-            $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
+            if(auth('admin')->user()){
+                $usuarios = DB::select(DB::raw('SELECT directores_tesis.grado, directores_tesis.id,'.
+                ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
+                ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
+                ' FROM directores_tesis, users, instituciones'.
+                ' WHERE directores_tesis.id=users.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NULL'));
+
+                //$usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                $usuarios = DB::select('SELECT directores_tesis.grado, directores_tesis.id,'.
+                ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
+                ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
+                ' FROM directores_tesis, users, instituciones'.
+                ' WHERE directores_tesis.id=users.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NULL AND users.id_institucion = ?',[auth()->user()->id_institucion]);
+            }
+                //$usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
+            $editar = 'editarDirector';
+            $eliminar = 'eliminarDirector';
             return datatables()->of($usuarios)
-            ->addColumn('action', 'admin.acciones')
+            ->addColumn('action', 
+            '<div style="text-align:center;width:100px" class="mx-auto">
+
+            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $id }}" data-original-title="Editar"
+                style="height:40px" class="edit btn btn-xs btn-primary editarDirector">
+                <span><i class="fas fa-edit"></i>
+                </span></a>
+        
+        
+            <a href="javascript:void(0);" id="eliminar" data-toggle="tooltip" data-original-title="Eliminar"
+                data-id="{{ $id }}" class="delete btn btn-xs btn-danger eliminarDirector" style="height:40px">
+                <span><i class="fas fa-trash-alt"></i>
+                </span></a>
+            </div>'
+            
+            )
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $usuarios = User::onlyTrashed()->select('id','nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:id,nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
+            
+            if(auth('admin')->user()){
+                
+                $usuarios = DB::select(DB::raw('SELECT directores_tesis.grado, directores_tesis.id,'.
+                ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
+                ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
+                ' FROM directores_tesis, users, instituciones'.
+                ' WHERE directores_tesis.id=users.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NOT NULL'));
+                
+                //$usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                
+                $usuarios = DB::select('SELECT directores_tesis.grado, directores_tesis.id,'.
+                ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
+                ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
+                ' FROM directores_tesis, users, instituciones'.
+                ' WHERE directores_tesis.id=users.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NOT NULL AND users.id_institucion = ?',[auth()->user()->id_institucion]);
+            }
+
+            //$usuarios = User::onlyTrashed()->select('id','nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:id,nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
             return datatables()->of($usuarios)
-            ->addColumn('action', 'admin.reactivar')
+            ->addColumn('action', 
+            '<div style="text-align:center;width:100px" class="mx-auto">
+
+            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $id }}" data-original-title="Activar"
+                style="height:40px" class="btn btn-xs btn-warning reactivarDirector">
+                <span><i class="fas fa-redo"></i>
+                </span></a>
+            </div>
+            ')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();   

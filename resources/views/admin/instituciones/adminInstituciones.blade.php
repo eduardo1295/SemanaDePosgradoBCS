@@ -9,15 +9,12 @@
                 Instituciones participantes
             </h1>
         </div>
-
-        <div id="mensaje-acciones" class="col-12 alert alert-success alert-dismissible" role="alert"
-            style="display:none">
-            <strong> </strong>
-        </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras instituciones</legend>
-        <div class="col-12 col-md-4 col-lg-4">
+        <legend
+            class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">
+            Mostras Instituciones</legend>
+        <div class="col-12 col-md-4 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
                 <label class="form-check-label" for="inlineRadio1">Activas</label>
@@ -27,11 +24,10 @@
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-6">
+        <div class="col-12 col-md-5 col-lg-6 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-institucion"><span><i
                             class="fas fa-plus"></i></span> Nueva Institución</a>
-
             </div>
         </div>
     </div>
@@ -41,10 +37,10 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Nombre</th>
+                        <th class="all">Nombre</th>
                         <th>Direccion Web</th>
                         <th>Telefono</th>
-                        <th id="lad">Última actualización</th>
+                        <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -52,17 +48,15 @@
                     <tr>
                         <th></th>
                         <th></th>
-                        <th class="text-input">Direccion Web</th>
                         <th></th>
                         <th></th>
                         <th></th>
-
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
-    
 </div>
 
 
@@ -90,10 +84,10 @@
 
 <script>
     var lati = 24.141474;
-    var longi = -110.31314; 
-    var posInicial = new google.maps.LatLng(lati,longi);
+    var longi = -110.31314;
+    var posInicial = new google.maps.LatLng(lati, longi);
 
-    function iniciarMapa(posicion){
+    function iniciarMapa(posicion) {
         mapProp = {
             center: posicion,
             zoom: 15,
@@ -115,12 +109,12 @@
             $('#lng').val(event.latLng.lng());
         });
     }
-    google.maps.event.addDomListener(window, 'load', iniciarMapa(posInicial));    
+    google.maps.event.addDomListener(window, 'load', iniciarMapa(posInicial));
 
 
     var SITEURL = "{{URL::to('/')}}";
     var checkInsti = 'activos';
-    
+
     $(document).ready(function () {
 
         $.extend($.fn.dataTableExt.oStdClasses, {
@@ -134,9 +128,14 @@
         });
 
         var table = $('#instituciones').DataTable({
-            "order": [[ 4, "desc" ]],
+            "order": [
+                [4, "desc"]
+            ],
             pageLength: 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+            lengthMenu: [
+                [5, 10, 20, -1],
+                [5, 10, 20, 'Todos']
+            ],
             responsive: true,
             autoWidth: false,
             "language": {
@@ -151,22 +150,16 @@
                     d.busqueda = checkInsti
                 }
             },
-            initComplete: function () {
-                var api = this.api();
-                api.columns(2).every(function () {
-                    var that = this;
-                    $('input', this.footer()).on('keyup change', function () {
-                        if (that.search() !== this.value) {
-                            that
-                                .search(this.value)
-                                .draw();
-                        }
-                    });
-                })
-            },
-            "columns": [
-                { data: 'id', name: 'id', 'visible': false,searchable: false },
-                { data: 'nombre', searchable: true },
+            "columns": [{
+                    data: 'id',
+                    name: 'id',
+                    'visible': false,
+                    searchable: false
+                },
+                {
+                    data: 'nombre',
+                    searchable: true
+                },
                 {
                     data: 'direccion_web',
                     name: 'direccion_web',
@@ -174,18 +167,39 @@
                         if (data == null)
                             return 'Sin url asignada';
                         else
-                            return "<a style='cursor:pointer' target='_blank' href=" +data + ">" + data + "<a/>";
+                            return "<a style='cursor:pointer' target='_blank' href=" + data +
+                                ">" + data + "<a/>";
                     },
-                    orderable: false, searchable: false
+                    orderable: false,
+                    searchable: false
                 },
-                { data: 'telefono', searchable: true },
-                { data: 'direccion', searchable: false },
-                { data: 'action', name: 'action', orderable: false, searchable: false },
+                {
+                    data: 'telefono',
+                    searchable: true
+                },
+                {
+                    data: 'direccion',
+                    searchable: false
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                },
             ],
-            columnDefs: [
-                { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 5 },
-                { width: 105, targets: 5 }
+            columnDefs: [{
+                    responsivePriority: 1,
+                    targets: 1
+                },
+                {
+                    responsivePriority: 2,
+                    targets: 5
+                },
+                {
+                    width: 105,
+                    targets: 5
+                }
             ]
         });
 
@@ -220,6 +234,7 @@
                 $('#calle').val(data.calle);
                 $('#numero').val(data.numero);
                 $('#colonia').val(data.colonia);
+                $('#siglas').val(data.siglas);
                 $('#cp').val(data.cp);
                 $('#imglogo').prop('src', "{{url('img/logo')}}/" + data.url_logo);
                 $('#logoactual').html('Logo actual');
@@ -248,8 +263,7 @@
                     cancelAction: {
                         text: 'Cancelar',
                         btnClass: 'btn-red',
-                        action: function () {
-                        }
+                        action: function () {}
                     },
                     confirm: {
                         text: 'Aceptar',
@@ -259,19 +273,27 @@
                         action: function () {
 
                             $.ajax({
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
                                 type: "DELETE",
-                                url: "{{ url('institucion')}}" + '/' + institucion_id,
+                                url: "{{ url('institucion')}}" + '/' +
+                                    institucion_id,
                                 success: function (data) {
 
                                     if (table.data().count() == 1) {
-                                        $('#instituciones').DataTable().ajax.reload();
+                                        $('#instituciones').DataTable().ajax
+                                            .reload();
                                     } else {
-                                        var oTable = $('#instituciones').dataTable();
+                                        var oTable = $('#instituciones')
+                                            .dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución eliminada exitosamente.");
-                                    
+                                    mostrarSnack(
+                                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución eliminada exitosamente."
+                                        );
+
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -300,8 +322,7 @@
                     cancelAction: {
                         text: 'Cancelar',
                         btnClass: 'btn-red',
-                        action: function () {
-                        }
+                        action: function () {}
                     },
                     confirm: {
                         text: 'Aceptar',
@@ -309,18 +330,26 @@
                         btnClass: 'btn-blue',
                         action: function () {
                             $.ajax({
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
                                 type: "PUT",
-                                url: "{{ url('admin/institucion/reactivar')}}" + '/' + institucion_id,
+                                url: "{{ url('admin/institucion/reactivar')}}" +
+                                    '/' + institucion_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
-                                        $('#instituciones').DataTable().ajax.reload();
+                                        $('#instituciones').DataTable().ajax
+                                            .reload();
                                     } else {
-                                        var oTable = $('#instituciones').dataTable();
+                                        var oTable = $('#instituciones')
+                                            .dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución activada exitosamente.");
-                                 },
+                                    mostrarSnack(
+                                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución activada exitosamente."
+                                        );
+                                },
                                 error: function (data) {
                                     console.log('Error:', data);
                                 }
@@ -342,7 +371,10 @@
         $('#institucion_id').val('');
         $('#institucionForm').trigger("reset");
         $('#institucionCrudModal').html("Agregar nueva institución");
-        $('#institucion-crud-modal').modal({ backdrop: 'static', keyboard: false })
+        $('#institucion-crud-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
         $('#institucion-crud-modal').modal('show');
         $('#imglogo').prop('src', "");
         $('#logoactual').html('');
@@ -358,10 +390,10 @@
         checkInsti = $(this).val();
         $('#instituciones').DataTable().ajax.reload();
     });
-    
+
     /*Accion al presionar el boton save*/
     $("#btn-save").click(function () {
-        
+        $('.mensajeError').text("");
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var actionType = $('#btn-save').val();
@@ -373,7 +405,9 @@
             datos.append('_method', 'PUT');
             console.log(Array.from(datos));
             $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 url: ruta,
                 type: "POST",
                 data: datos,
@@ -388,8 +422,10 @@
                     //recargar serverside
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
-                    
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
+
+                    mostrarSnack(
+                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa."
+                        );
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -416,7 +452,9 @@
 
 
             $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 data: new FormData($("#institucionForm")[0]),
                 url: "{{route('institucion.store')}}",
                 type: "POST",
@@ -431,7 +469,9 @@
                     //recargar serverside
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución registrada exitosamente.");
+                    mostrarSnack(
+                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución registrada exitosamente."
+                        );
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -464,7 +504,7 @@
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         }
     });
-    
+
     /*
     function iniciarMapa(posicion){
         mapProp = {
@@ -492,6 +532,7 @@
         $('#nuevoLogo').addClass('d-none');
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
     }
+
 </script>
 @endsection
 
@@ -515,6 +556,7 @@
     .custom-file-input~.custom-file-label::after {
         content: "Elegir";
     }
+
 </style>
 
 @endsection

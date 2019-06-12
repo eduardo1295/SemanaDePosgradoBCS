@@ -17,7 +17,7 @@ class Alumno extends Model
      * @var array
      */
     protected $fillable = [
-        'id_programa', 'num_control', 'semestre', 'constancia_generada', 'fecha_constancia', 'gafete_generado', 'fecha_gafete',
+        'id_programa','id_director', 'num_control', 'semestre', 'constancia_generada', 'fecha_constancia', 'gafete_generado', 'fecha_gafete',
     ];
 
     protected $dates = [

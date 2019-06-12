@@ -16,7 +16,8 @@
             <strong> </strong>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mb-2">
+        <!--
         <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras noticias</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
@@ -28,7 +29,8 @@
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-6">
+    -->
+    <div class="col-12 col-md-12 col-lg-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-noticia"><span><i
                             class="fas fa-plus"></i></span> Nueva Noticia</a>

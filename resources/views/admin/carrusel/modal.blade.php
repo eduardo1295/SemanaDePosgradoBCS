@@ -36,8 +36,8 @@
                                 <div id="imagenAnterior" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <label for="imgslide" id="imagenactualT" class="control-label"></label>
 
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <img src="" alt="" id="imgslide" class="img-fluid mx-auto">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
+                                        <img style="height:240px" src="" alt="" id="imgslide" class="img-fluid mx-auto">
                                     </div>
                                 </div>
                             </div>
@@ -46,8 +46,8 @@
                             <div id="nuevaImagen" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-none">
                                 <label for="imgni" id="textVP" class="control-label">Nueva imagen</label>
 
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <img src="" alt="" id="vistaPrevia" class="img-fluid mx-auto">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
+                                    <img style="height:240px" src="" alt="" id="vistaPrevia" class="img-fluid mx-auto">
                                 </div>
                             </div>
                         </div>

@@ -67,7 +67,7 @@ Route::resource('coordinador', 'CoordinadorController');
 
 Route::get('admin/directores', 'DirectorController@director')->name('director.VerDirectores');
 Route::get('director/listDirector', 'DirectorController@listDirector')->name('director.listDirector');
-Route::put('admin/director/reactivar/{director}', 'DirectorController@reactivar')->name('director.reactivar');
+Route::put('director/reactivar/{director}', 'DirectorController@reactivar')->name('director.reactivar');
 Route::get('director/verAlumnos', 'DirectorController@revisarAlumnos')->name('director.revisarAlumnos');
 Route::get('director/listAlumnos', 'DirectorController@listAlumnos')->name('director.listAlumnos');
 Route::resource('director', 'DirectorController');
@@ -86,7 +86,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('admin/programas', 'ProgramaController@programa')->name('programa.VerPrograma');
 Route::get('programa/listPrograma', 'ProgramaController@listPrograma')->name('programa.listPrograma');
-Route::put('admin/programa/reactivar/{programa}', 'ProgramaController@reactivar')->name('programa.reactivar');
+Route::put('programa/reactivar/{programa}', 'ProgramaController@reactivar')->name('programa.reactivar');
 Route::resource('programa', 'ProgramaController');
 
 Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');

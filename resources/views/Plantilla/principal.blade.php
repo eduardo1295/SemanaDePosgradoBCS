@@ -47,10 +47,11 @@
 
     <!--Botton que se usa para el desplazamiento-->
     <button onclick="topFunction()" id="myBtn"><i  id="flecha" class="fas fa-arrow-up"></i></button>
-    @include('layoutsM2.navbar')  
+    @include('layoutsM2.navbar')
     <div style="min-height:100vh">
     @yield('contenido','')
     </div>
+    @yield('extra')
     @include('layoutsM2.footer')
     @yield('scripts','')
     

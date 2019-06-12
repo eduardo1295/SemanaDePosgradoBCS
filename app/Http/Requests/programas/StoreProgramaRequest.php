@@ -25,28 +25,43 @@ class StoreProgramaRequest extends FormRequest
     {
         return [
             //Validacion campos programa
-            'id_programa' => 'unique:programas|required|max:15',
+            'id_programa_pro' => 'unique:programas,id_programa|required|max:15',
 
-            'nombre' => 'required|string|max:100',
+            'nombre_pro' => 'required|string|max:100',
             
-            'nivel' => 'required|string|max:30|in:maestria,doctorado',
+            'nivel_pro' => 'required|string|max:30|in:Maestría,Doctorado',
             
-            'periodo' => 'required|string|max:30|in:semestre,trimestre,cuatrimestre',
+            'periodo_pro' => 'required|string|max:30|in:Semestre,Trimestre,Cuatrimestre',
             
-            'id_institucion' => 'required|max:10' 
+            'id_institucion_pro' => 'required|max:10' 
         ];
 
     }
     
     public function messages(){
         return [
-            'id_programa.required' => 'El campo es obligatorio',
+            //'id_programa_pro.required' => 'El campo es obligatorio',
             
-            'id_institucion.required' => 'El campo es obligatorio' ,
+            //'id_institucion_pro.required' => 'El campo es obligatorio' ,
             
-            'periodo.in' =>'Periodo no válido',
+            'periodo_pro.in' =>'Periodo no válido',
             
-            'nivel.in' =>'Nivel no válido',
+            'nivel_pro.in' =>'Nivel no válido',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'id_programa_pro' => 'clave del programa',
+
+            'nombre_pro' => 'nombre',
+            
+            'nivel_pro' => 'nivel',
+            
+            'periodo_pro' => 'periodo',
+            
+            'id_institucion_pro' => 'institucion' 
         ];
     }
 }
