@@ -13,6 +13,8 @@ use DB;
 //use App\Http\Requests\usuarios\UpdateAlumnoRequest;
 use App\Http\Requests\alumno\StoreAlumnoRequest;
 use App\Http\Requests\alumno\UpdateAlumnoRequest;
+
+use App\Http\Requests\usuarios\UpdateEditarPerfilRequest;
 use Validator;
 
 class AlumnoController extends Controller
@@ -118,6 +120,7 @@ class AlumnoController extends Controller
             
             $user->save();
         }else if (auth('admin')->user()) {
+            
             $user = User::find($id);
             $user->nombre = ucfirst($request->nombre_al);
             $user->primer_apellido = ucfirst($request->primer_apellido_al);

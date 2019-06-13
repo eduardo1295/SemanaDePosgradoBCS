@@ -108,8 +108,15 @@ class DirectorController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado','instituciones:id,nombre')->where('id',$id)->first();
-        return \Response::json($usuario);
+        if(auth()->user()){
+            $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+            $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+            $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado')->where('id',$id)->first();
+            return view('director.editarDirector',compact(['usuario','semana','instituciones']));
+        }else if (auth('admin')->user()) {
+            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado','instituciones:id,nombre')->where('id',$id)->first();
+            return \Response::json($usuario);
+        }
     }
 
     /**
@@ -287,6 +294,20 @@ class DirectorController extends Controller
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         return view('director.revisarAlumnos',compact(['instituciones','semana','mensaje']));
+    }
+
+    public function editarPerfil(Request $request,$id){
+            $user = User::find($id);    
+            $user->nombre = ucfirst($request->nombre);
+            $user->primer_apellido = ucfirst($request->primer_apellido);
+            $user->segundo_apellido = ucfirst($request->segundo_apellido);
+            if(!empty($request->password))
+                $user->password = bcrypt($request->password);
+            
+            $user->save();
+
+            return \Response::json($user);
+        
     }
 
     

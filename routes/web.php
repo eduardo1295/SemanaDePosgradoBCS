@@ -24,6 +24,8 @@ Route::get('excel', 'UserController@cargaExcel')->name('excel');
 Route::get('/usuario/contrasena', 'UserController@cambiarContrasena')->name('usuario.contrasena');
 Route::post('/usuario/contrasenaGuardar', 'UserController@guardarContrasena')->name('usuario.guardarContrasena');
 
+Route::post('usuario/editarPerfil/{id}', 'UserController@editarPerfil')->name('alumno.editarPerfil');
+
 Route::resource('usuario', 'UserController')->middleware('auth:admin');
 
 Route::get('admin/instituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
@@ -76,8 +78,10 @@ Route::resource('director', 'DirectorController');
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
 Route::get('alumno/listAlumnos', 'AlumnoController@listAlumnos')->name('alumno.listAlumnos');
 Route::put('admin/alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
-Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
+//Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
+//Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarAlumno');
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
+
 Route::resource('alumno', 'AlumnoController');
 
 Auth::routes(['verify' => true]);

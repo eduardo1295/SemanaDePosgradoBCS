@@ -17,6 +17,7 @@ use App\Alumno;
 use App\Programa;
 use App\Rol;
 use Carbon\Carbon;
+use App\Http\Requests\usuarios\UpdateEditarPerfilRequest;
 
 class UserController extends Controller
 {
@@ -26,8 +27,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     function __construct(){
-        $this->middleware(['auth', 'verified']);
-        $this->middleware(['verificarcontrasena'], ['except' => ['cambiarContrasena','guardarContrasena']]);
+        $this->middleware(['auth', 'verified'], ['except' => ['editarPerfil']]);
+        $this->middleware(['verificarcontrasena'], ['except' => ['cambiarContrasena','guardarContrasena','editarPerfil']]);
         //$this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
         
 
@@ -279,6 +280,21 @@ class UserController extends Controller
             return redirect('/');
             //return redirect()->route('pag.Inicio');
         }
+    }
+
+    public function editarPerfil(UpdateEditarPerfilRequest $request,$id){
+            $user = User::find($id);    
+            $user->nombre = ucfirst($request->nombre);
+            $user->primer_apellido = ucfirst($request->primer_apellido);
+            $user->segundo_apellido = ucfirst($request->segundo_apellido);
+            $user->email = ucfirst($request->email);
+            if(!empty($request->password))
+                $user->password = bcrypt($request->password);
+            
+            $user->save();
+
+            return \Response::json($user);
+        
     }
 
 }

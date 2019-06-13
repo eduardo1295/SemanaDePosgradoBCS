@@ -195,7 +195,7 @@ class TrabajoController extends Controller
         $value = session('mensaje');
         //dd($trabajo->usuarios()->first()->email);
         
-        Mail::to($trabajo->usuarios()->first()->email)->send(new MensajesTrabajo);
+        Mail::to($trabajo->usuarios()->first()->email)->send(new MensajesTrabajo($request));
         return redirect()->route('director.revisarAlumnos');
     }
 }

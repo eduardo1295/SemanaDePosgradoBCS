@@ -46,7 +46,8 @@
                                                 <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
                                                 <li><a href="{{route('alumno.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @elseif(auth()->user() && auth()->user()->hasRoles(['director']))
-                                                <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>    
+                                                <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>
+                                                <li><a href="{{route('director.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
                                             @elseif(auth('admin')->user())
                                                 <li><a href="{{route('alumno.edit',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @endif

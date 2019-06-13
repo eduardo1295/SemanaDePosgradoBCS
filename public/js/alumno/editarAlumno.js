@@ -22,12 +22,10 @@ $(document).ready(function(){
         $("#btn-save").prop("disabled", true);
         var actionType = $('#btn-save').val();
         $('#btn-save').html('Guardando..');
-        if (actionType == "editar") {
             var id = $('#alumno_id').val();
-            var ruta = "/alumno/"+ id;
+            var ruta = "/usuario/editarPerfil/"+ id;
             //var ruta = "{{url('programa')}}/" + id + "";
             var datos = new FormData($("#alumnoForm")[0]);
-            datos.append('_method', 'PUT');
             console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -72,7 +70,7 @@ $(document).ready(function(){
                 },
 
             });
-        }
+        
 
     })
 });
