@@ -12,7 +12,7 @@
                         <div id="navigation" style="float:right">
                             <ul>
                                 <li class="active"><a href="/">Incio</a></li>
-                                <li><a href="{{route('semana.verModalidades')}}" class="">Modalidades</a> </li>
+                                <li><a href="{{route('modalidad.index')}}" class="">Modalidades</a> </li>
                                 <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
                                     <ul>
                                         <li><a href="#">General</a></li>

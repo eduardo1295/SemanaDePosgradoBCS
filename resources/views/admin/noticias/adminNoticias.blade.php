@@ -256,7 +256,7 @@
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
+                    mostrarSnack("Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -296,7 +296,7 @@
                     var oTable = $('#noticias').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia guardada exitosamente.");;
+                    mostrarSnack("Noticia guardada exitosamente.");;
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -354,7 +354,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia eliminada exitosamente.");
+                                mostrarSnack("Noticia eliminada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -401,7 +401,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Noticia activada exitosamente.");
+                                mostrarSnack("Noticia activada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);

@@ -37,16 +37,16 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="display" cellspacing="0" style="width:100%" id="alumnosdt">
+            <table class="display" cellspacing="0" style="width:100%" id="alumnosDT">
                 <thead>
                     <tr>
                         <th>id</th>
                         <th class="all">No. Control</th>
                         <th class="all">Institución</th>
-                        <th>Programa de estudios</th>
+                        <th class="none">Programa de estudios</th>
                         <th>Nombre</th>
                         <th>Primer apellido</th>
-                        <th class="none">Segundo apellido</th>
+                        <th>Segundo apellido</th>
                         <th>Email</th>
                         <th>Última Actualización</th>
                         <th class="all">Acciones</th>
@@ -75,16 +75,18 @@
 
 @endsection
 @section('extra')
-<div id="snackbar"></div>
+    <div id="snackbar"></div>
     <div id="loader" class="loader"></div>
 @include('admin.alumnos.modal')
 @endsection
 @section('scripts')
 <script src="/js/admin/mostrarPassword.js"></script>
+
+
 <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-
+<script src="/js/snack/snack.js"></script>
 <!--
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -114,12 +116,12 @@
             "sLengthSelect": ""
         });
 
-        $('#alumnosdt tfoot  th.text-input').each(function (i) {
+        $('#alumnosDT tfoot  th.text-input').each(function (i) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="' + title + '" name="' + i + '" />');
         });
 
-        var table = $('#alumnosdt').DataTable({
+        var table = $('#alumnosDT').DataTable({
             "order": [[ 8, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
@@ -177,7 +179,7 @@
         });
 
         $("#show-sidebar").click(function () {
-            //$('#alumnosdt').DataTable().ajax.reload(null, false);
+            //$('#alumnosDT').DataTable().ajax.reload(null, false);
         });
 
 
@@ -243,14 +245,12 @@
                                 success: function (data) {
 
                                     if (table.data().count() == 1) {
-                                        $('#alumnosdt').DataTable().ajax.reload();
+                                        $('#alumnosDT').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#alumnosdt').dataTable();
+                                        var oTable = $('#alumnosDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Alumno borrado exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("Alumno borrado exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -293,14 +293,12 @@
                                 url: "{{ url('admin/alumno/reactivar')}}" + '/' + alumno_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
-                                        $('#alumnosdt').DataTable().ajax.reload();
+                                        $('#alumnosDT').DataTable().ajax.reload();
                                     } else {
-                                        var oTable = $('#alumnosdt').dataTable();
+                                        var oTable = $('#alumnosDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Cuenta activada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("Cuenta activada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -334,7 +332,7 @@
 
     $("input[name='verAlumno']").change(function (e) {
         checkAlumno = $(this).val();
-        $('#alumnosdt').DataTable().ajax.reload();
+        $('#alumnosDT').DataTable().ajax.reload();
     });
 
     /*Accion al presionar el boton save*/
@@ -363,12 +361,10 @@
                     $('#alumno-crud-modal').modal('hide');
                     $('#btn-save-alumno').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#alumnosdt').dataTable();
+                    var oTable = $('#alumnosDT').dataTable();
                     oTable.fnDraw(false);
                     
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    mostrarSnack("Actualización exitosa.");
 
                     $("#btn-save-alumno").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
@@ -410,11 +406,11 @@
                     $('#alumno-crud-modal').modal('hide');
                     $('#btn-save-alumno').html('Guardar');
                     //recargar serverside
-                    var oTable = $('#alumnosdt').dataTable();
+                    var oTable = $('#alumnosDT').dataTable();
                     oTable.fnDraw(false);
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Coordinador registrado exitosamente.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    
+                    mostrarSnack("Alumno registrado exitosamente.");
+                    
                     $("#btn-save-alumno").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
@@ -460,8 +456,9 @@
                     $(".loader").show();
                 },
                 success: function (data) {
+                    console.log(data);
                     $('#programaSelect_al').html('');
-                    $('#programaSelect_al').append('<option selected value="">Seleccione un programa de estudio</option>');
+                    $('#programaSelect_al').append('<option selected value="">Seleccione un programa de estudios</option>');
                     
                     $.each(data[0], function(key, val) {
                         $('#programaSelect_al').append('<option value="' + val.id + '">'+val.id_programa + ' - ' +val.nombre+'</option>');
@@ -520,7 +517,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 -->
-
+<link href="/css/modales/snackbar.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/datatable/colores.css">
 <link href="/css/modales/modalresponsivo.css" rel="stylesheet">
 <link href="/css/modales/snackbar.css" rel="stylesheet">

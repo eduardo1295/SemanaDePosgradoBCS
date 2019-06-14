@@ -92,7 +92,7 @@ function cargarDataTableDirectores(){
             "ajax": {
                 "url": rutaBaseDirector + '/' + 'listDirector',
                 "data": function (d) {
-                    d.busqueda = checkCoord
+                    d.busqueda = checkDir
                 }
             },
             initComplete: function () {
@@ -132,8 +132,8 @@ function cargarDataTableDirectores(){
 }
 
 
-$("input[name='verCoor']").change(function (e) {
-    checkCoord = $(this).val();
+$("input[name='verDir']").change(function (e) {
+    checkDir = $(this).val();
     $('#directoresdt').DataTable().ajax.reload();
 });
 
@@ -199,9 +199,9 @@ $("input[name='verCoor']").change(function (e) {
                                         var oTable = $('#directoresdt').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Cuenta eliminada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    
+                                    
+                                    mostrarSnack("Cuenta eliminada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -249,9 +249,7 @@ $("input[name='verCoor']").change(function (e) {
                                         var oTable = $('#directoresdt').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Cuenta activada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("Cuenta activada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -298,10 +296,9 @@ $("input[name='verCoor']").change(function (e) {
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
                     
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
-
+                    
+                    
+                    mostrarSnack("Actualización exitosa.");
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     console.log(data);
@@ -343,9 +340,7 @@ $("input[name='verCoor']").change(function (e) {
                     //recargar serverside
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> director registrado exitosamente.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    mostrarSnack("Director de tesis registrado exitosamente.");
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
@@ -388,11 +383,14 @@ $("input[name='verCoor']").change(function (e) {
 
     /*Al presionar el boton editar*/
     $('body').on('click', '.guardarInstitucion', function () {
+            $('.mensajeError').text("");
             var id = $('#institucion_id').val();
             var ruta = rutaBaseInstitucion;
             var datos = new FormData($("#institucionForm")[0]);
             datos.append('_method', 'PUT');
             console.log(Array.from(datos));
+            $("#guardarInstitucion").prop("disabled", true);
+            $('#guardarInstitucion').html('Guardando..');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -404,18 +402,15 @@ $("input[name='verCoor']").change(function (e) {
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
-                    $('#guardarInstitucion').html('Guardar');
-                    mostrarSnack(
-                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa."
-                        );
-                    $("#guardarInstitucion").prop("disabled", false);
-                    
+                    mostrarSnack("Actualización exitosa.");
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
                     var unique = $.now();
                     $('#imglogo').prop('src', imagenRuta + '/' + data.url_logo + '/?' + unique);
-
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     if (xhr.status == 422) {
@@ -424,10 +419,23 @@ $("input[name='verCoor']").change(function (e) {
                             $('#' + key + "_error").text(value);
                         });
                     }
-                    $('#guardarInstitucion').html('Guardar');
-                    $("#guardarInstitucion").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
-
+                complete: function (data) {
+                    $(".loader").hide();
+                    $('#guardarInstitucion').html('Guardar');
+                    $('#guardarInstitucion').prop("disabled", false);
+                }
             });
     });
+
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        if (!fileName.trim()) {
+            $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
+        } else {
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        }
+    })
+
+
+    

@@ -141,7 +141,7 @@
                   $editor.find('.cleanerLimit').removeClass('text-danger');
                   return true;
                 } else {
-                  mostrarSnackError("<span style='color:red;'><i class='fas fa-times'></i></span> Límite de caracteres alcanzado.");
+                  mostrarSnackError("Límite de caracteres alcanzado.");
                   $editor.find('.cleanerLimit').addClass('text-danger');
                   e.preventDefault();
                   e.stopPropagation();
@@ -215,7 +215,7 @@
               }
               else{
                 if(text)
-                  mostrarSnackError("<span style='color:red;'><i class='fas fa-times'></i></span> El texto que desea ingresar es mayor al límite establecido.");
+                  mostrarSnackError("El texto que desea ingresar es mayor al límite establecido.");
               }
             }
           }

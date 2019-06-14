@@ -7,6 +7,7 @@ use App\Modalidad;
 use App\Semana;
 use App\Posgrado;
 use App\Periodo;
+use App\Institucion;
 use DataTables;
 use App\Http\Requests\modalidades\StoreModalidadRequest;
 use App\Http\Requests\modalidades\UpdateModalidadRequest;
@@ -21,11 +22,103 @@ class modalidadController extends Controller
      */
 
     public function __construct(){
-        $this-> middleware('auth:admin');
+        //$this-> middleware('auth:admin');
     }
     public function index()
     {
-        //
+        
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+		' AND rol_usuario.id_rol = 3;'));
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        //$modalidades = Modalidad::select('id_modalidad','nombre','descripcion')->get();
+        $modalidades = Modalidad::with('niveles')->get();
+        //$periodos = Posgrado::with('periodos')->get();
+        //use Illuminate\Support\Arr;
+        $tabla = "";
+        $columnasPosbles =["Maestría (Trimestre)","Maestría (Cuatrimestre)","Maestría (Semestre)","Doctorado (Trimestre)","Doctorado (Cuatrimestre)","Doctorado (Semestre)"];
+        $columnas = [];
+        $columasFinal = [];
+        $aux_per = array();
+        $i=0;
+        $bandera = true;
+        foreach ($modalidades as $modalidad){
+            if(isset($modalidad->niveles)){
+                foreach ($modalidad->niveles as $datos) {
+                    $nueva_columna = $datos->grado .' ('. $datos->periodo.')';
+                    //echo $nueva_columna.'+';
+                    $bandera = true;
+                    for ($x=0; $x < count($columnas) ; $x++) { 
+                        if($columnas[$x] == $nueva_columna){
+                            $bandera = false;
+                        }
+                    }
+                    if($bandera){
+                    //
+                    array_push($columnas,$nueva_columna);
+                    }
+                }
+                $bandera = true;
+                //$datata =array( 'holo' => [] );
+                array_push($aux_per, []);
+            }
+            $i++;
+        }
+        for ($bx=0; $bx < count($columnasPosbles) ; $bx++) { 
+            for ($cx=0; $cx <count($columnas) ; $cx++) { 
+                if($columnas[$cx] ==$columnasPosbles[$bx]){
+                    array_push($columasFinal,$columnas[$cx]);
+                    $tabla .= '<th scope="col" class="text-center">'.$columnas[$cx].'</th>';
+                    break;
+                }
+            }
+        }
+        //dd($columasFinal);
+        for ($x=0; $x < $i ; $x++){
+            for ($j=0; $j < count($columasFinal) ; $j++){
+                array_push($aux_per[$x],"<td></td>");
+            }
+        }
+        
+        $tabla .= '</tr></thead><tbody>';
+        $j=0;
+        $nombreModalidaddes = [];
+        foreach ($modalidades as $modalidad) {
+            array_push($nombreModalidaddes,$modalidad->nombre);
+            foreach ($modalidad->niveles as $datos) {
+                $nombre = $datos->grado .' ('. $datos->periodo.')';
+                //dd($columnas);
+                for ($i=0; $i < count($columasFinal) ; $i++) { 
+                    if($columasFinal[$i] == $nombre){
+                        $aa = Posgrado::find($datos->id)->periodos()->get();
+                        $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. '-'.$aa[0]->periodo_max.'</td>' ;
+                    }
+                }
+            }
+            $j++;
+        }
+        for ($i=0; $i < count($aux_per) ; $i++) { 
+            $tabla .= '<tr>';
+            $tabla .= '<th scope="row" class="aModalidad">'. $nombreModalidaddes[$i].'</th>';
+            for ($x=0; $x < count($aux_per[$i]) ; $x++) { 
+                $tabla .= $aux_per[$i][$x];
+            }
+            $tabla.= '</tr>';
+        }
+        $tabla .= '</tbody>';
+        
+        
+        
+        return view('admin.semana.verModalidades', compact(['semana','instituciones','modalidades','tabla']));
     }
 
     /**

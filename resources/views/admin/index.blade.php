@@ -174,7 +174,7 @@
                             return data.replace("_", " ");
                         else
                             return "<a style='cursor:pointer' target='_blank' href={{ URL::to('/') }}/pdf/convocatoria/" +
-                                data + ">" + data + "<a/>";
+                                data + '/?'+ $.now() + ">" + data + "<a/>";
                     },
                     orderable: false,
                     searchable: false
@@ -243,7 +243,7 @@
             else
                 $('#ligaConvo').html(
                     'Convocatoria <a target="_blank" href={{ URL::to("/") }}/pdf/convocatoria/' + data
-                    .url_convocatoria + '>' + data.url_convocatoria + '<a/>');
+                    .url_convocatoria + '/?'+ $.now() + '>' + data.url_convocatoria + '<a/>');
 
         })
     });
@@ -318,9 +318,7 @@
                     oTable.fnDraw(false);
                     //recargar sin serverside
 
-                    mostrarSnack(
-                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa."
-                        );
+                    mostrarSnack("Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -374,9 +372,7 @@
                     var oTable = $('#semanas').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
-                    mostrarSnack(
-                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> semana guardada exitosamente."
-                        );;
+                    mostrarSnack("Evento registrado exitosamente.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -436,9 +432,7 @@
                                 } else {
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack(
-                                    "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento eliminado exitosamente."
-                                    );
+                                mostrarSnack("Evento eliminado exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -485,9 +479,7 @@
                                 } else {
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack(
-                                    "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Evento activado exitosamente."
-                                    );
+                                mostrarSnack("Evento activado exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);

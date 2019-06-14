@@ -45,18 +45,27 @@ class AlumnoController extends Controller
      */
     public function store(StoreAlumnoRequest $request)
     {
+        
+        $auxInstitucion = "";
+        if (auth('admin')->user()){
+            $auxInstitucion = $request->id_institucion_al;
+        }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+            $auxInstitucion = auth()->user()->id_institucion;
+        }
+
         $user = new User([
             'nombre'     => $request->nombre_al,
             'email'     => $request->email_al,
             'password' => bcrypt($request->password_al),
             'primer_apellido'   => $request->primer_apellido_al, 
             'segundo_apellido'  => $request->segundo_apellido_al, 
-            'id_institucion'    => $request->id_institucion_al,
+            'id_institucion'    => $auxInstitucion,
             'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
         ]);
         $user->save();
         
         if($user){
+            
             $user->alumnos()->create(['num_control'=>$request->num_control_al,
                                     'semestre'=>$request->semestre_al,
                                     'id_director'=>$request->directorSelect_al,
@@ -87,16 +96,17 @@ class AlumnoController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()){
+        if(auth()->user() && auth()->user()->hasRoles(['alumno'])){
             $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
             $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
             return view('alumno.editarAlumno',compact(['usuario','semana','instituciones']));
-        }else if (auth('admin')->user()) {
+        }else if (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) ) {
             $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:alumnos.id,alumnos.id_programa,semestre,num_control,alumnos.id_director','instituciones:id,nombre','programas:programas.id,programas.id_programa,programas.nombre')->where('id',$id)->first();
             //$director = User::select('users.id')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');})->where('id',$usuario->alumnos->id_director)->first();
             return \Response::json([$usuario]);
         }
+        
     }
 
     /**
@@ -108,7 +118,8 @@ class AlumnoController extends Controller
      */
     public function update(UpdateAlumnoRequest $request, $id)
     {
-        if(auth()->user()){
+        
+        if(auth()->user() && auth()->user()->hasRoles(['alumno'])){
             $user = User::find($id);    
             $user->nombre = ucfirst($request->nombre_al);
             $user->primer_apellido = ucfirst($request->primer_apellido_al);
@@ -117,12 +128,16 @@ class AlumnoController extends Controller
                 $user->password = bcrypt($request->password_al);
             
             $user->save();
-        }else if (auth('admin')->user()) {
+        }else if (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) ) {
             $user = User::find($id);
             $user->nombre = ucfirst($request->nombre_al);
             $user->primer_apellido = ucfirst($request->primer_apellido_al);
             $user->segundo_apellido = ucfirst($request->segundo_apellido_al);
-            $user->id_institucion = $request->id_institucion_al;
+            if (auth('admin')->user()){
+                $user->id_institucion = $request->id_institucion_al;
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                $user->id_institucion = auth()->user()->id_institucion;
+            }
             $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
             
             if(!empty($request->password_al))
@@ -187,14 +202,49 @@ class AlumnoController extends Controller
     public function listAlumnos(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $alumnos = DB::select(DB::raw('SELECT alumnos.num_control,alumnos.id,'.
+            //AND users.id_institucion = ?'
+            $finalConsulta="";
+            if (auth('admin')->user()){
+                $finalConsulta = ' users.id_institucion = instituciones.id';
+                
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                $finalConsulta = ' programas.id_institucion = instituciones.id AND users.id_institucion = ?';
+                
+            }
+            
+            $consulta = 'SELECT * FROM (SELECT alumnos.id, alumnos.num_control,alumnos.id_director,'.
+            ' users.nombre,users.primer_apellido,users.segundo_apellido,users.email,'.
+            ' users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,'.
+            ' programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones'.
+            ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND'. $finalConsulta .' AND users.deleted_at IS NULL) t1'.
+            ' inner JOIN (SELECT users.id AS id_dir, users.nombre AS director_nombre, users.primer_apellido AS director_pa, users.segundo_apellido AS director_sa,directores_tesis.grado FROM users,directores_tesis WHERE users.id = directores_tesis.id) t2 ON t1.id_director = t2.id_dir;';
+
+            /*
+            $consulta = 'SELECT alumnos.num_control,alumnos.id,'.
             ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
             ' users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,'.
             ' programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones'.
-            ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NULL'));
+            ' WHERE alumnos.id=users.id AND users.id_institucion = instituciones.id AND alumnos.id_programa=programas.id AND users.deleted_at IS NULL';
+            */
+            $alumnos ="";
+            if (auth('admin')->user()){
+                $alumnos = DB::select(DB::raw($consulta));
+                
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                
+                
+                $alumnos = DB::select($consulta,[auth()->user()->id_institucion]);
+                
+            }
+            
 
             $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('alumnos:alumnos.id,alumnos.id_programa,num_control,semestre,constancia_generada,fecha_constancia,gafete_generado,fecha_gafete','instituciones:instituciones.id,instituciones.nombre','programas:programas.id,programas.id_programa,programas.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'alumno');});
             return datatables()->of($alumnos)
+            ->addColumn('director', function($alumnos){
+                return $alumnos->grado . ' ' .$alumnos->director_nombre .' '. $alumnos->director_pa .' '. $alumnos->director_sa;
+            }
+            
+            )
             ->addColumn('action', 
             '<div style="text-align:center;width:100px" class="mx-auto">
 
@@ -215,12 +265,21 @@ class AlumnoController extends Controller
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $alumnos = DB::select(DB::raw('SELECT alumnos.num_control,alumnos.id,'.
+            $consulta = 'SELECT alumnos.num_control,alumnos.id,'.
             ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
             ' users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,'.
             ' programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones'.
-            ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NOT NULL'));
-
+            ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NOT NULL';
+            $alumnos = new User();
+            if (auth('admin')->user()){
+                $alumnos = DB::select(DB::raw($consulta. ' AND users.id_institucion = instituciones.id'));
+                
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                $consultaF = $consulta.' AND users.id_institucion = ?';
+                
+                $alumnos = DB::select($consultaF,[auth()->user()->id_institucion]);
+                
+            }
             $usuarios = User::onlyTrashed()->select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('alumnos:alumnos.id,alumnos.id_programa,num_control,semestre,constancia_generada,fecha_constancia,gafete_generado,fecha_gafete','instituciones:instituciones.id,instituciones.nombre','programas:programas.id,programas.id_programa,programas.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'alumno');});
             return datatables()->of($alumnos)
             ->addColumn('action', 
@@ -251,9 +310,16 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function programasLista($id){
-        $programas = Institucion::select('instituciones.id')->with('programas:programas.id_institucion,programas.id,programas.id_programa,programas.nombre')->where('id',$id)->first();
-        $directores = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:directores_tesis.id,directores_tesis.grado')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');})->where('id_institucion',$id)->get();
-        $busquedas = collect([$programas->programas, $directores]);
+        $auxInstitucion = "";
+        if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+            $auxInstitucion = auth()->user()->id_institucion;
+        }else{
+            $auxInstitucion = $id;
+        }
+        $programas = Institucion::select('instituciones.id')->with('programas:programas.id_institucion,programas.id,programas.id_programa,programas.nombre')->where('id',$auxInstitucion)->get();
+        $directores = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:directores_tesis.id,directores_tesis.grado')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');})->where('id_institucion',$auxInstitucion)->get();
+        
+        $busquedas = collect([$programas[0]->programas, $directores]);
         return $busquedas;
         
     }

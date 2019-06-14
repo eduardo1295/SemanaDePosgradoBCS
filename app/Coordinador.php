@@ -17,7 +17,7 @@ class Coordinador extends Model
      * @var array
      */
     protected $fillable = [
-        'puesto','grado','id_semana'
+        'puesto','id_semana'
     ];
 
     public function user(){

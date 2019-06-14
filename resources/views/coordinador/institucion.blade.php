@@ -133,9 +133,7 @@
     <div class="form-row">
     <div class="col-12" style="text-align:end">
             <div class="">
-            <a href="javascript:void(0)" class="btn btn-primary ml-3 guardarInstitucion" id="guardarInstitucion"><span><i
-                        class="fas fa-plus"></i></span> Guardar</a>
-
+                    <button type="button" class="btn btn-primary guardarInstitucion" id="guardarInstitucion">Guardar</button>
         </div>
     </div>
 </div>

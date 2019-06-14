@@ -3,6 +3,8 @@
 namespace App\Http\Requests\alumno;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class StoreAlumnoRequest extends FormRequest
 {
@@ -36,7 +38,7 @@ class StoreAlumnoRequest extends FormRequest
             
             'segundo_apellido_al'  => 'string|nullable|max:30',
 
-            'id_institucion_al'    => 'required|exists:instituciones,id',
+            'id_institucion_al'    => Rule::requiredIf(Auth::guard("admin")->user()).'|exists:instituciones,id',
 
             //Validacion campos extra para coordinador
             'num_control_al'  => 'unique:alumnos,num_control|required|max:15',

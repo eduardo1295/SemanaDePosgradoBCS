@@ -18,7 +18,7 @@ class CoordinadorController extends Controller
 {
     public function __construct(){
         $this->middleware('admin.auth:admin')->only('coordinador');
-         //$this-> middleware('auth:admin')->only('noticias');
+        $this-> middleware('auth')->only('index');
      }
     /**
      * Display a listing of the resource.
@@ -28,7 +28,19 @@ class CoordinadorController extends Controller
     public function index()
     {
         $semana = Semana::select('id_semana','vigente','url_logo')->where('vigente',1)->first();
-        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+        ' AND rol_usuario.id_rol = 3;'));
+        
         return view('coordinador.administrarInstitucion',compact(['instituciones','semana']));  
     }
 

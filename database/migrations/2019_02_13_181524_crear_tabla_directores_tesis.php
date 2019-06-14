@@ -17,7 +17,7 @@ class CrearTablaDirectoresTesis extends Migration
             $table->integer('id')->unsigned();
             $table->foreign('id')->references('id')->on('users');
 
-            $table->string('grado', 30);
+            //$table->string('grado', 30);
 
             $table->engine = 'InnoDB';
             $table->collation = 'latin1_swedish_ci';

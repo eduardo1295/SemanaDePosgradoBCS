@@ -59,7 +59,20 @@ class SemanaController extends Controller
 
         //$cadena = $datetimeI->format('l').$datetimeF->format('l');
         $noticias = Noticia::latest('fecha_actualizacion')->take(3)->get();
-        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        //$instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+		' AND rol_usuario.id_rol = 3;'));
+
         
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
         $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
@@ -242,6 +255,7 @@ class SemanaController extends Controller
 
         $nuevo_convocatoria = 'no_disponible';
         if($request->hasFile('convocatoria')){
+            
             $convocactoriaA = $request->file('convocatoria');
             $fileName = pathinfo($convocactoriaA->getClientOriginalName(),PATHINFO_FILENAME);
             //$nuevo_convocatoria = Str::slug($fileName."_". date("m-d-Y_h-i-s") .'.'. $convocactoriaA->getClientOriginalExtension());
@@ -250,6 +264,7 @@ class SemanaController extends Controller
             //$nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
             $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.'_'.$fechaArchivo .'.' . $convocactoriaA->getClientOriginalExtension();
             $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
+            
         }
         else{
             $nuevo_convocatoria = $semana->url_convocatoria;
@@ -328,7 +343,18 @@ class SemanaController extends Controller
     }
 
     public function verConvocatoria(){
-        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+		' AND rol_usuario.id_rol = 3;'));
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
         return view('admin.semana.verConvocatoria', compact(['semana','instituciones']));
