@@ -130,7 +130,7 @@
             </div>
 
             @isset($instituciones)
-            @if ($instituciones->count() > 0)
+            @if (count($instituciones) > 0)
 
 
 

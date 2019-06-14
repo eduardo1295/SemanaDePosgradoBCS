@@ -20,7 +20,7 @@ class CrearTablaCoordinadores extends Migration
             $table->foreign('id_semana')->references('id_semana')->on('semanas');
 
             $table->string('puesto', 60);
-            $table->string('grado', 30);
+            //$table->string('grado', 30);
 
             $table->engine = 'InnoDB';
             $table->collation = 'latin1_swedish_ci';

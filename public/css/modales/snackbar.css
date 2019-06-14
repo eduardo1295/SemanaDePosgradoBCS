@@ -1,17 +1,37 @@
-#snackbar, #snackbarError {
+#snackbar {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
-    background-color: #333;
+    background-color: #51A351;
     color: #fff;
     text-align: center;
-    border-radius: 2px;
+    border-radius: 5px;
     padding: 16px;
     position: fixed;
     z-index: 1;
     left: 50%;
     bottom: 30px;
-    font-size: 17px;
+    font-size: 18px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  #snackbarError {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #BD362F;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 18px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
   
   #snackbar.show, #snackbarError.show {
@@ -38,4 +58,22 @@
   @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
+  }
+
+
+   /* The Close Button */
+   .closeSnack {
+    position: absolute;
+    margin-left: 10px;
+    top: -4px;
+    right: 6px;
+    color: #fff;
+    font-size: 24px;
+  }
+  
+  .closeSnack:hover,
+  .closeSnack:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
   }

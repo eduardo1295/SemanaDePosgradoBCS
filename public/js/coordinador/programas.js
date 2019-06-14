@@ -73,7 +73,6 @@ function cargarDataTableProgramas(){
                 { width: 105, targets: 6 }
             ]
         });
-        console.log(tablePrograma);
     }else{
         $('#programasDT').DataTable().ajax.reload();
     }

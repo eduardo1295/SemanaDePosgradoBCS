@@ -17,7 +17,7 @@ class DirectorTesis extends Model
      * @var array
      */
     protected $fillable = [
-        'grado',
+        
     ];
 
     public function user(){

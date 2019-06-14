@@ -19,7 +19,7 @@
         border-left: 1px solid #dee2e6;
     }
     .dropdown-menu{
-        transform: translate3d(-184px, 27px, 0px) !important;
+        -webkit-filter: blur(0.000001px);
     }
 </style>
 @endsection
@@ -48,7 +48,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Alumnos participantes</a>
+                    <a class="nav-link" href="#references" role="tab" data-toggle="tab" onclick="cargarDataTableAlumnos()">Alumnos participantes</a>
                   </li>
               </ul>
               
@@ -57,13 +57,14 @@
                 <div role="tabpanel" class="container tab-pane fade show active pt-3" id="profile">@include('coordinador.institucion')</div>
                 <div role="tabpanel" class="container tab-pane fade pt-3" id="programas_estudio">@include('coordinador.programasInstitucion')</div>
                 <div role="tabpanel" class="container tab-pane fade pt-3" id="direc_tesis">@include('coordinador.directores')</div>
-                <div role="tabpanel" class="container tab-pane fade pt-3" id="references">Alumnos</div>
+                <div role="tabpanel" class="container tab-pane fade pt-3" id="references">@include('coordinador.alumnos')</div>
               </div>
         </div>
     </div>
                 
             </div>
             <div id="snackbar"></div>
+            <div id="snackbarError" style="z-index:1051;"></div>
             <div id="loader" class="loader"></div>
 </section>
 
@@ -74,16 +75,6 @@
 @endsection
 
 @section('scripts')
-<script>
-    $('.custom-file-input').on('change', function () {
-            let fileName = $(this).val().split('\\').pop();
-            if (!fileName.trim()) {
-                $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
-            } else {
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
-            }
-        })
-</script>
 <script src="/js/admin/mostrarPassword.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
 <script src="/js/menumaker.js"></script>
@@ -119,18 +110,22 @@
 <script src="/js/coordinador/administrarInstitucion.js"></script>
 
 <script src="/js/coordinador/programas.js"></script>
+<script src="/js/coordinador/alumnos.js"></script>
 <script src="/plugins/responsive-tabs/jquery.responsivetabs.js"></script>
 
 <script>
-var checkCoord = 'activos';
+var checkDir = 'activos';
 var checkPro = 'activos';
+var checkAlumno = 'activos';
 var table;
 var tablePrograma;
+var tableAlumno;
 var imagenRuta = "{{url('img/logo')}}";
 var rutaBaseInstitucion = "{{ route('institucion.index')}}";
 var rutaEditarInstitucion = "{{ route('institucion.index')}}/{{ auth()->user()->id_institucion }}/editar";
-var rutaBaseDirector = "{{ route('director.index')}}";
 var rutaBasePrograma = "{{ route('programa.index')}}";
+var rutaBaseDirector = "{{ route('director.index')}}";
+var rutaBaseAlumno = "{{ route('alumno.index')}}";
 $(document).ready(function () {
     cargarInstitucion();
 });
@@ -146,4 +141,5 @@ $(document).ready(function () {
 @section('extra')
     @include('admin.directores.modal')
     @include('admin.programa.modal')
+    @include('admin.alumnos.modal')
 @endsection

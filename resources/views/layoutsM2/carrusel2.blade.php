@@ -6,6 +6,7 @@
             $x = 0 
             @endphp
             @foreach ($instituciones as $institucion)
+            
             @if ($x==0)
             <div class="carousel-item active">
             @php
@@ -39,19 +40,19 @@
                                 <i class="fa  fa-envelope"> </i> 
                             </div>
                             <div class="col-11 pl-0">
-                                    <span>Email: </span><a href="mailto:lfcota@itlp.edu.mx">pendiente</a> 
+                                    <span>Email: </span><a href="mailto:{{ $institucion->email }}">{{$institucion->email}}</a> 
                             </div> 
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center"> 
                                 <i class="fas fa-globe"></i> 
                             </div>
                             <div class="col-11 pl-0 text-left">
-                                    <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}" > {{$institucion->direccion_web}}</a> 
+                                    <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}" > {{$institucion->siglas}}</a> 
                             </div>  
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="far fa-address-card"></i> 
                             </div>
                             <div class="col-11 pl-0">
-                                <span>Coordinador: </span>pendiente 
+                                <span>Coordinador: </span>{{ $institucion->coordinador_nombre }} 
                            </div>
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="fas fa-location-arrow"></i>
@@ -74,7 +75,7 @@
                       <div class="modal-content">
                           <div class="modal-header">
                               <h4 class="modal-title" id="modalLabel">
-                                  Ubicación sede
+                                  Ubicación
                               </h4>
                               <button type="button" class="close modalP" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
@@ -114,6 +115,7 @@
     var mostrarMapa = function (latitud, longitud){
       console.log(latitud);
       $('#mapa12').prop('src','http://maps.google.com/maps?q='+latitud +','+ longitud+'&z=15&output=embed');
+      
       $('#exampleModal').modal('show');
     }
     $('.modalP').click(function (){

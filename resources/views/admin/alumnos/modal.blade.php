@@ -8,8 +8,9 @@
             <div class="modal-body">
                 <form id="alumnoForm" name="alumnoForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="alumno_id_al" id="alumno_id_al">
-                    <div class="form-row">
-                            <div class="form-group col-lg-6">
+                    
+                            @if (auth('admin')->user())
+                            <div class="form-group">
                         <label for="institucionSelect_al">Institución</label>
                         <select class="form-control" id="institucionSelect_al" name="id_institucion_al">
                             <option selected value="">Seleccione una institución</option>
@@ -19,8 +20,9 @@
                         </select>
                         <small><span class="mensajeError text-danger" id="id_institucion_al_error"></span></small>
                     </div>
-
-                    <div class="form-group col-lg-6">
+                    @endif
+                    <div class="form-row">
+                    <div class="form-group col-lg-8">
                             <label for="programaSelect_al">Programa de posgrado</label>
                             <select class="form-control" id="programaSelect_al" name="programaSelect_al">
                                 
@@ -28,10 +30,8 @@
                             </select>
                             <small><span class="mensajeError text-danger" id="programaSelect_al_error"></span></small>
                         </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-12">
+                        <div class="form-group col-lg-4">
                     <label for="institucionSelect_al">Director de tesis</label>
                     <select class="form-control" id="directorSelect_al" name="directorSelect_al">
                         
@@ -82,8 +82,8 @@
 
                         <div class="form-group col-lg-2">
                             <label for="semestre_al" class="control-label">Semestre</label>
-                            <input type="text" class="form-control" id="semestre_al" name="semestre_al"
-                                placeholder="Semestre del alumno" value="" maxlength="30" required="">
+                            <input type="number" value="1" min="1" max="10" step="1" class="form-control" id="semestre_al" name="semestre_al"
+                                required>
                             <small><span class="mensajeError text-danger" id="semestre_al_error"></span></small>
 
                         </div>

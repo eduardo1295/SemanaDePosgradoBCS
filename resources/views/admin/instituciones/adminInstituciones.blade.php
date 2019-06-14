@@ -290,9 +290,7 @@
                                             .dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    mostrarSnack(
-                                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución eliminada exitosamente."
-                                        );
+                                    mostrarSnack("Institución eliminada exitosamente.");
 
                                 },
                                 error: function (data) {
@@ -346,9 +344,7 @@
                                             .dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    mostrarSnack(
-                                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución activada exitosamente."
-                                        );
+                                    mostrarSnack("Institución activada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -423,9 +419,7 @@
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
 
-                    mostrarSnack(
-                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa."
-                        );
+                    mostrarSnack("Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
@@ -469,9 +463,7 @@
                     //recargar serverside
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
-                    mostrarSnack(
-                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Institución registrada exitosamente."
-                        );
+                    mostrarSnack("Institución registrada exitosamente.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');

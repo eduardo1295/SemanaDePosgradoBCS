@@ -198,6 +198,7 @@ class ProgramaController extends Controller
 
     public function listPrograma(Request $request ){
         $busqueda = $request->busqueda;
+        $selectProgramas = "";
         if($busqueda == 'activos'){
             if(auth('admin')->user()){
                 $selectProgramas =  Programa::select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');

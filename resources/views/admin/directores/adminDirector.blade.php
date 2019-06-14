@@ -265,7 +265,7 @@
                             $.ajax({
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                                 type: "PUT",
-                                url: "{{ url('admin/director/reactivar')}}" + '/' + director_id,
+                                url: "{{ url('director/reactivar')}}" + '/' + director_id,
                                 success: function (data) {
                                     if (table.data().count() == 1) {
                                         $('#directoresdt').DataTable().ajax.reload();

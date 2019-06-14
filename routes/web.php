@@ -46,7 +46,7 @@ Route::resource('noticias', 'NoticiaController');
 Route::post('semanas/vistaPrevia', 'SemanaController@vistaPrevia')->name('semana.vistaPrevia');
 Route::get('admin/semana/listSemanas', 'SemanaController@listSemanas')->name('semana.listSemanas');
 Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.verConvocatoria');
-Route::get('/modalidades', 'SemanaController@verModalidades')->name('semana.verModalidades');
+//Route::get('/modalidades', 'SemanaController@verModalidades')->name('semana.verModalidades');
 
 //Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
 
@@ -77,9 +77,10 @@ Route::resource('director', 'DirectorController');
 
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
 Route::get('alumno/listAlumnos', 'AlumnoController@listAlumnos')->name('alumno.listAlumnos');
-Route::put('admin/alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
 //Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
 //Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarAlumno');
+Route::put('alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
+Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
 
 Route::resource('alumno', 'AlumnoController');

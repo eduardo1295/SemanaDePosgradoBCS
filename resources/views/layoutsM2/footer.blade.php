@@ -15,11 +15,11 @@
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fa  fa-phone"></i> </div>
                             <div class="col-11 pr-0"> <span>Tel&eacute;fono:</span> {{$institucion->telefono}}</div>
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fa  fa-envelope"> </i> </div>
-                                <div class="col-11 pr-0"> <span>Email: </span><a href="mailto:lfcota@itlp.edu.mx">Pendiente</a></div>
+                                <div class="col-11 pr-0"> <span>Email: </span><a href="mailto:{{ $institucion->email }}">{{ $institucion->email }}</a></div>
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fas fa-globe"></i> </div>
-                                <div class="col-11 pr-0 text-left"> <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}">{{$institucion->nombre}}</a></div>
+                                <div class="col-11 pr-0 text-left"> <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}">{{$institucion->siglas}}</a></div>
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="far fa-address-card"></i> </div>
-                                <div class="col-11 pr-0"> </i><span>Coordinador: </span>Pendiente</div>
+                                <div class="col-11 pr-0"> </i><span>Coordinador: </span>{{ $institucion->coordinador_nombre }}</div>
                             </div>
                     </div>
                 </div>

@@ -322,7 +322,7 @@
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     //$('#instituciones').DataTable().ajax.reload(null, false);
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
+                    mostrarSnack("Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
 
@@ -381,7 +381,7 @@
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     //$('#instituciones').DataTable().ajax.reload();
-                    mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Modalidad agregada exitosamente.");
+                    mostrarSnack("Modalidad agregada exitosamente.");
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
@@ -440,7 +440,7 @@
 
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Modalidad eliminada exitosamente.");
+                                mostrarSnack("Modalidad eliminada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -490,7 +490,7 @@
                                 
                                 //$('#instituciones').DataTable().ajax.reload(null, false);
                                 //$('#instituciones').DataTable().ajax.reload();
-                                mostrarSnack("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Modalidad activada exitosamente.");
+                                mostrarSnack("Modalidad activada exitosamente.");
                             },
                             error: function (data) {
                                 console.log('Error:', data);

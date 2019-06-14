@@ -56,7 +56,22 @@
                         storeTabs($thisTab, $destination);
                     }
                     storeTabs($previousTab, $destination);
-                            
+                    console.log(firstTabPos.left);
+                    console.log($destination.width());
+                    var dropleft = $dropdown.offset();
+                    var rt = ($(window).width() - ($destination.offset().left + $destination.outerWidth()));
+                    console.log($dropdown.offset().left);
+                    console.log($destination.outerWidth());
+                    //console.log($(window).width());
+
+                    //console.log(rt);
+                    var wscreen = $(window).width();
+                    var desw = $destination.width();
+                    console.log($destination.outerWidth());
+                    var dropl = $dropdown.offset().left; 
+                    if(( dropl + desw)> wscreen){
+                        //$destination.removeClass('dropdown-menu-right').addClass('dropdown-menu');
+                    }
                     return;
 
                 }

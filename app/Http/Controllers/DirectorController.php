@@ -205,11 +205,13 @@ class DirectorController extends Controller
 
                 //$usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                
                 $usuarios = DB::select('SELECT directores_tesis.grado, directores_tesis.id,'.
                 ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
                 ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
                 ' FROM directores_tesis, users, instituciones'.
                 ' WHERE directores_tesis.id=users.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NULL AND users.id_institucion = ?',[auth()->user()->id_institucion]);
+                
             }
                 //$usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
             $editar = 'editarDirector';

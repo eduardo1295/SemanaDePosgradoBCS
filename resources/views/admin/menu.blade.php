@@ -127,6 +127,8 @@
                                 <a href="{{route('vistaLogin.VerVistaLogin')}}">
                                     <span><strong>Vista Login</strong></span>
                                 </a>
+                            </li>
+                            <li>
                                 <a href="{{route('vistaLogin.disenoColores')}}">
                                     <span><strong>Diseño Colores</strong></span>
                                 </a>
