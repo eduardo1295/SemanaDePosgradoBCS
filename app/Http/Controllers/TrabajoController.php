@@ -14,12 +14,23 @@ use App\Programa;
 use App\Trabajo;
 use DB;
 use App\Http\Requests\trabajos\StoreTrabajoRequest;
+use Notification;
+use App\Notifications\RevisionTrabajo;
+use App\Notifications\EntregaTrabajo;
+
 
 use App\Mail\MensajesTrabajo;
 use Illuminate\Support\Facades\Mail;
 
 class TrabajoController extends Controller
 {
+    function __construct(){
+        $this->middleware(['auth'], ['only' => ['show']]);
+        //$this->middleware(['verificarcontrasena'], ['except' => ['cambiarContrasena','guardarContrasena','editarPerfil']]);
+        //$this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
+        
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -48,10 +59,8 @@ class TrabajoController extends Controller
      */
     public function store(StoreTrabajoRequest $request)
     {   
-
         $nuevo_nombre = 'sin Trabajo';
         if($request->hasFile('url')){
-            
             $trabajoAlumno = $request->url;
             //agregar id de usuarios a nombre
             $nuevo_nombre = auth()->user()->nombre.'_'.auth()->user()->primer_apellido.'_'.auth()->user()->segundo_apellido . '.' . $trabajoAlumno->getClientOriginalExtension();
@@ -74,17 +83,13 @@ class TrabajoController extends Controller
         $trabajo->pal_clv4    = $request->pal_clv4   ;
         $trabajo->pal_clv5    = $request->pal_clv5   ;
         $trabajo->url         = $trabajoAlumno       ;
-    
         $trabajo->save();
-        
         */
-        
         $semana = Semana::all()->last(); 
         
         $trabajo = Trabajo::updateOrCreate(
             ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
             [
-             
              'id_director' => $request->id_director,
              'id_semana' => $request->id_semana  ,
              'titulo' => $request->titulo     ,
@@ -97,10 +102,12 @@ class TrabajoController extends Controller
              'pal_clv5' => $request->pal_clv5   ,
              'url' => $nuevo_nombre,
              'id_alumno' => $request->id_alumno,
+             'comentario' => null,
+             'revisado' => 0,
             ]
         );
-        
-    
+        //dd($trabajo->directores()->first()->email);
+        Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
         return \Response::json($trabajo);
     }
 
@@ -112,11 +119,9 @@ class TrabajoController extends Controller
      */
     public function show($id)
     {
-        
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->first();
         $trabajo = Trabajo::select('id_trabajo','url','comentario','autorizado')->where('id_alumno',$id)->where('id_semana',$semana->id_semana)->first();
-        
         return view('director.revisarTrabajo',compact(['instituciones','trabajo','semana']));
     }
 
@@ -191,11 +196,11 @@ class TrabajoController extends Controller
             $request->session()->put('mensaje', '0');
         }
         $trabajo->save();
-        
         $value = session('mensaje');
         //dd($trabajo->usuarios()->first()->email);
         
-        Mail::to($trabajo->usuarios()->first()->email)->send(new MensajesTrabajo($request));
+        //Mail::to($trabajo->usuarios()->first()->email)->send(new MensajesTrabajo($request));
+        Notification::send($trabajo->usuarios()->first(), new RevisionTrabajo($request,$trabajo->id_alumno));
         return redirect()->route('director.revisarAlumnos');
     }
 }

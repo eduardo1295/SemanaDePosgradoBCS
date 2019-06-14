@@ -35,7 +35,7 @@
 #navbarM2 #navigation li:hover > ul { left: auto; }
 .loginUsuario {right: 0px; }
 #navbarM2 #navigation.align-right li:hover > ul { left: auto; right: 0; }
-#navbarM2 #navigation li:hover > ul > li { height: 46px; }
+#navbarM2 #navigation li:hover > ul > li { height: auto; }
 #navbarM2 #navigation ul ul ul { margin-left: 100%; top: 0; }
 #navbarM2 #navigation.align-right ul ul ul { margin-left: 0; margin-right: 100%; }
 #navbarM2 #navigation ul ul li a { padding: 16px; width: 170px; font-size: 13px; text-decoration: none; color: black; font-weight: 500; background: white; border-radius: 100px; text-transform: uppercase; border-bottom: 1px solid black; }

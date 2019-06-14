@@ -20,7 +20,7 @@
                 </div>
                 <form id="trabajoForm" name="trabajoForm" class="formulario form-horizontal mb-5" enctype="multipart/form-data">
                     <input type="hidden" name="id_semana" id="id_semana" value="{{$semana->id}}">
-                    <input type="hidden" name="id_director" id="id_director" value="1">
+                    <input type="hidden" name="id_director" id="id_director" value="2">
                     <input type="hidden" name="id_alumno" id="id_alumno" value="{{auth()->user()->id}}">
                     <div class="form-row pl-5 pr-5 pt-3">
                         <div class="form-group col-12">
