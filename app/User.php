@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function coordinadores()
     {
-        return $this->hasOne(Coordinador::class, 'id', 'id'));
+        return $this->hasOne(Coordinador::class, 'id', 'id');
     }
 
     public function directortesis()

@@ -39,8 +39,6 @@ class StoreCoordinadorRequest extends FormRequest
 
             'id_institucion'    => 'required|exists:instituciones,id',
 
-            //Validacion campos extra para coordinador
-            'grado'  => 'required|max:30',
         ];
     }
 

@@ -47,7 +47,8 @@ class UpdateAlumnoRequest extends FormRequest
 
             'programaSelect_al'  => Rule::requiredIf(Auth::guard("admin")->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador']))).'|exists:programas,id',
 
-            'directorSelect_al'  => Rule::requiredIf(Auth::guard("admin")->user()).'|exists:directores_tesis,id',
+            'directorSelect_al'  => 'required|exists:directores_tesis,id',
+            //'directorSelect_al'  => Rule::requiredIf(Auth::guard("admin")->user()).'|exists:directores_tesis,id',
         ];
     }
 

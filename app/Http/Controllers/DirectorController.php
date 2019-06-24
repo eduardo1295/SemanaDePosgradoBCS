@@ -56,6 +56,7 @@ class DirectorController extends Controller
     public function store(StoreDirectorRequest $request)
     {
         $user = new User();
+        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         if(auth('admin')->user()){
             $user = new User([
                 'nombre'     => ucfirst($request->nombre_di),
@@ -64,7 +65,7 @@ class DirectorController extends Controller
                 'primer_apellido'   => ucfirst($request->primer_apellido_di), 
                 'segundo_apellido'  => ucfirst($request->segundo_apellido_di), 
                 'id_institucion'    => $request->id_institucion_di,
-                'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
+                'id_semana' => $idSemana,
             ]);
             $user->save();
         }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
@@ -75,14 +76,14 @@ class DirectorController extends Controller
                 'primer_apellido'   => ucfirst($request->primer_apellido_di), 
                 'segundo_apellido'  => ucfirst($request->segundo_apellido_di), 
                 'id_institucion'    => auth()->user()->id_institucion,
-                'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
+                'id_semana' => $idSemana,
             ]);
             $user->save();
         }
         
         
         if($user){
-            $user->directortesis()->create(['grado'=>ucfirst($request->grado_di),'id_semana'=>1]);
+            $user->directortesis()->create();
             $user->roles()->attach([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
         }
         
@@ -108,13 +109,13 @@ class DirectorController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()){
+        if(auth()->user() && auth()->user()->hasRoles(['director'])){
             $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
-            $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado')->where('id',$id)->first();
+            $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();
             return view('director.editarDirector',compact(['usuario','semana','instituciones']));
-        }else if (auth('admin')->user()) {
-            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado','instituciones:id,nombre')->where('id',$id)->first();
+        }else if (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) ) {
+            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id','instituciones:id,nombre')->where('id',$id)->first();
             return \Response::json($usuario);
         }
     }
@@ -128,6 +129,7 @@ class DirectorController extends Controller
      */
     public function update(UpdateDirectorRequest $request, $id)
     {
+        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         $user = User::find($id);
         $user->nombre = ucfirst($request->nombre_di);
         $user->primer_apellido = ucfirst($request->primer_apellido_di);
@@ -145,7 +147,7 @@ class DirectorController extends Controller
         $user->save();
         
         if($user){
-            $user->directortesis()->update(['grado'=>ucfirst($request->grado_di)]);
+            //$user->directortesis()->update([]);
             $user->roles()->sync([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
         }
         
@@ -197,7 +199,7 @@ class DirectorController extends Controller
         $usuarios = "";
         if($busqueda == 'activos'){
             if(auth('admin')->user()){
-                $usuarios = DB::select(DB::raw('SELECT directores_tesis.grado, directores_tesis.id,'.
+                $usuarios = DB::select(DB::raw('SELECT directores_tesis.id,'.
                 ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
                 ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
                 ' FROM directores_tesis, users, instituciones'.
@@ -206,7 +208,7 @@ class DirectorController extends Controller
                 //$usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
                 
-                $usuarios = DB::select('SELECT directores_tesis.grado, directores_tesis.id,'.
+                $usuarios = DB::select('SELECT directores_tesis.id,'.
                 ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
                 ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
                 ' FROM directores_tesis, users, instituciones'.
@@ -240,7 +242,7 @@ class DirectorController extends Controller
             
             if(auth('admin')->user()){
                 
-                $usuarios = DB::select(DB::raw('SELECT directores_tesis.grado, directores_tesis.id,'.
+                $usuarios = DB::select(DB::raw('SELECT  directores_tesis.id,'.
                 ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
                 ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
                 ' FROM directores_tesis, users, instituciones'.
@@ -249,7 +251,7 @@ class DirectorController extends Controller
                 //$usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:id,grado','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');});
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
                 
-                $usuarios = DB::select('SELECT directores_tesis.grado, directores_tesis.id,'.
+                $usuarios = DB::select('SELECT directores_tesis.id,'.
                 ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
                 ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.
                 ' FROM directores_tesis, users, instituciones'.
