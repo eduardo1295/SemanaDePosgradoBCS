@@ -24,7 +24,7 @@ Route::get('excel', 'UserController@cargaExcel')->name('excel');
 Route::get('/usuario/contrasena', 'UserController@cambiarContrasena')->name('usuario.contrasena');
 Route::post('/usuario/contrasenaGuardar', 'UserController@guardarContrasena')->name('usuario.guardarContrasena');
 
-Route::post('usuario/editarPerfil/{id}', 'UserController@editarPerfil')->name('alumno.editarPerfil');
+Route::post('usuario/editarPerfil/{id}', 'UserController@editarPerfil')->name('usuario.editarPerfil');
 
 Route::resource('usuario', 'UserController')->middleware('auth:admin');
 
@@ -97,7 +97,21 @@ Route::resource('programa', 'ProgramaController');
 Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
 Route::get('modalidad/listModalidad', 'ModalidadController@listModalidad')->name('modalidad.listModalidad');
 Route::put('admin/modalidad/reactivar/{modalidad}', 'ModalidadController@reactivar')->name('modalidad.reactivar');
+Route::get('/modalidad/mostrarModalidad/{opcion}', 'ModalidadController@mostrarModalidad')->name('modalidad.mostrarModalidad');
 Route::resource('modalidad', 'ModalidadController');
+
+
+Route::get('/sesion/verPdf/{opcion}', 'SesionController@verPdf')->name('sesion.verPdf');
+//Route::get('sesion/listModalidad', 'SesionController@listModalidad')->name('sesion.listModalidad');
+Route::get('admin/sesiones', 'SesionController@sesiones')->name('sesion.VerSesiones');
+Route::get('sesion/listSesiones', 'SesionController@listSesiones')->name('sesion.listSesiones');
+Route::post('sesion/alumnosSeleccionados/{opcion}/{idSesion}', 'SesionController@alumnosSeleccionados')->name('sesion.alumnosSeleccionados');
+Route::resource('sesion', 'SesionController');
+
+
+
+
+
 
 Route::get('/subirTrabajo', 'TrabajoController@subirTrabajo')->name('semana.subirTrabajo');
 Route::post('/revisionTrabajo', 'TrabajoController@revisionTrabajo')->name('semana.revisionTrabajo');
@@ -112,3 +126,13 @@ Route::resource('VistaLogin', 'VistaLoginController');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/prueba', function(){
+    /*
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML('<h1>Test</h1>');
+    return $pdf->stream();*/
+    return view('prueba');
+});
+
+

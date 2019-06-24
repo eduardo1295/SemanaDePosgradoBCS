@@ -112,7 +112,7 @@ class DirectorController extends Controller
             $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
             $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado')->where('id',$id)->first();
-            return view('director.editarDirector',compact(['usuario','semana','instituciones']));
+            return view('coordinador.editarCoordinador',compact(['usuario','semana','instituciones']));
         }else if (auth('admin')->user()) {
             $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado','instituciones:id,nombre')->where('id',$id)->first();
             return \Response::json($usuario);

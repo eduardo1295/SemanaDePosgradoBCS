@@ -104,10 +104,11 @@ class TrabajoController extends Controller
              'id_alumno' => $request->id_alumno,
              'comentario' => null,
              'revisado' => 0,
+             'modalidad' => $request->modalidad,
             ]
         );
         //dd($trabajo->directores()->first()->email);
-        Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
+        //Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
         return \Response::json($trabajo);
     }
 

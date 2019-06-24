@@ -24,11 +24,19 @@
                     <input type="hidden" name="id_alumno" id="id_alumno" value="{{auth()->user()->id}}">
                     <div class="form-row pl-5 pr-5 pt-3">
                         <div class="form-group col-12">
-                            <strong><label for="posgrado" class="control-label">Modalidad</label></strong>
-                                <select class="form-control posgrado" id="posgrado" name="posgrado">
+                            <strong><label for="modalidad" class="control-label">Modalidad</label></strong>
+                                <select class="form-control modalidad" id="modalidad" name="modalidad">
                                     <option selected value="">Seleccione modalidad</option>
                                     @foreach ($modalidades as $modalidadP)
-                                        <option value={{$modalidadP->id_modalidad}}>{{$modalidadP->nombre}}</option>
+                                        @if(isset($trabajo))
+                                            @if($modalidadP->id_modalidad == $trabajo->modalidad)
+                                            <option value="{{$modalidadP->id_modalidad}}" selected>{{$modalidadP->nombre}} </option>
+                                            @else
+                                            <option value="{{$modalidadP->id_modalidad}}">{{$modalidadP->nombre}} </option>
+                                            @endif
+                                        @else
+                                        <option value="{{$modalidadP->id_modalidad}}">{{$modalidadP->nombre}} </option>
+                                        @endif
                                     @endforeach
                                 </select>
                             <small><span class="text-danger mensajeError errorposgrado" id="modalidad_error"></span></small>

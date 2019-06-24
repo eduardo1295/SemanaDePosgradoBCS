@@ -11,6 +11,7 @@ use App\Admin;
 use App\VistaLogin;
 use Carbon\Carbon;
 
+
 class HomeController extends Controller
 {
 
@@ -58,5 +59,7 @@ class HomeController extends Controller
             return redirect()->route('admin.index');
         }
     }
+
+    
 
 }

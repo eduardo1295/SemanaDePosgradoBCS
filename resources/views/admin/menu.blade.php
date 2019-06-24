@@ -62,6 +62,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{route('sesion.VerSesiones')}}">
+                        <i class="far fa-id-card"></i>
+                        <span><strong>Sesiones</strong></span>
+                    </a>
+                </li>
+
                 {{-- comment 
 
                 <li>

@@ -8,10 +8,16 @@ use App\Semana;
 use App\Posgrado;
 use App\Periodo;
 use App\Institucion;
+use App\Trabajo;
+use App\Sesion;
 use DataTables;
 use App\Http\Requests\modalidades\StoreModalidadRequest;
 use App\Http\Requests\modalidades\UpdateModalidadRequest;
 use DB;
+use App;
+use File;
+use Jenssegers\Date\Date;
+use Dompdf\Dompdf;
 
 class modalidadController extends Controller
 {
@@ -339,4 +345,23 @@ class modalidadController extends Controller
             ->toJson();   
         }
     }
+    public function mostrarModalidad($nombre){
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+        ' AND rol_usuario.id_rol = 3;'));
+
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        return view('modalidad.mostrarModalidad',compact(['semana','instituciones','nombre']));
+    }
+
+    
 }

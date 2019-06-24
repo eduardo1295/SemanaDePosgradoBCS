@@ -16,9 +16,9 @@
                                 <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
                                     <ul>
                                         <li><a href="#">General</a></li>
-                                        <li><a href="#">Póster</a></li>
-                                        <li><a href="#">Entrevista</a></li>
-                                        <li><a href="#">Video</a></li>
+                                        <li><a href="{{route('modalidad.mostrarModalidad','poster')}}">Póster</a></li>
+                                        <li><a href="{{route('modalidad.mostrarModalidad','entrevista')}}">Entrevista</a></li>
+                                        <li><a href="{{route('modalidad.mostrarModalidad','video')}}">Video</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{{route('semana.verConvocatoria')}}" class="">Convocatoria</a> </li>
@@ -48,8 +48,10 @@
                                             @elseif(auth()->user() && auth()->user()->hasRoles(['director']))
                                                 <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>
                                                 <li><a href="{{route('director.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
+                                            @elseif(auth()->user() && auth()->user()->hasRoles(['coordinador']))
+                                                <li><a href="{{route('director.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
                                             @elseif(auth('admin')->user())
-                                                <li><a href="{{route('alumno.edit',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
+                                                <li><a href="{{route('coordinador.edit',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @endif
                                             <li><a class="loginUsuario" href="{{route('coordinador.index')}}">Administrar institución</a> </li>
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
