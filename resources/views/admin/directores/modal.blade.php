@@ -51,15 +51,9 @@
                 </div>
 
                 <div class="form-row">
-                        <div class="form-group col-md-3">
-                        <label for="grado" class="control-label">Grado</label>
-                        <input type="text" class="form-control" id="grado_di" name="grado_di"
-                            placeholder="Grado del director" value="" maxlength="30" required="">
-                        <small><span class="mensajeError text-danger" id="grado_di_error"></span></small>
+                        
 
-                    </div>
-
-                <div class="form-group col-md-9">
+                <div class="form-group col-md-12">
                         <label for="nombre" class="control-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre_di" name="nombre_di"
                             placeholder="Nombre del usuario" value="" maxlength="40" required="">

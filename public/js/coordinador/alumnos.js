@@ -345,10 +345,9 @@ $('#crear-alumno').click(function () {
                     $('#directorSelect_al').append('<option selected value="">Seleccione un director de tesis</option>');
                     
                     $.each(data[1], function(key, val) {
-                        $('#directorSelect_al').append('<option value="' + val.id + '">'+val.directortesis.grado + '. ' +val.nombre+ ' ' +val.primer_apellido+ ' ' +val.segundo_apellido+ '</option>');
+                        $('#directorSelect_al').append('<option value="' + val.id + '">'+val.nombre+ ' ' +val.primer_apellido+ ' ' +val.segundo_apellido+ '</option>');
                     })
-                    $("#btn-save-alumno").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
+                    
                 },
                 error: function (data) {
                     reiniciarselect();
@@ -359,8 +358,6 @@ $('#crear-alumno').click(function () {
                         });
                     }
                     $('#btn-save-alumno').html('Guardar');
-                    $("#btn-save-alumno").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
                 complete: function (data) {
                     if(edicion){
@@ -368,6 +365,8 @@ $('#crear-alumno').click(function () {
                         $("#directorSelect_al").val(bDirector);
                     }
                     $(".loader").hide();
+                    $("#btn-save-alumno").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
                 }
 
             });

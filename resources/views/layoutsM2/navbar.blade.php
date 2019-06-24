@@ -49,11 +49,13 @@
                                                 <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>
                                                 <li><a href="{{route('director.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
                                             @elseif(auth()->user() && auth()->user()->hasRoles(['coordinador']))
-                                                <li><a href="{{route('director.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
+                                                <li><a href="{{route('coordinador.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
                                             @elseif(auth('admin')->user())
                                                 <li><a href="{{route('coordinador.edit',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @endif
-                                            <li><a class="loginUsuario" href="{{route('coordinador.index')}}">Administrar institución</a> </li>
+                                            @if(auth()->user() && auth()->user()->hasRoles(['coordinador']))
+                                                <li><a class="loginUsuario" href="{{route('coordinador.index')}}">Administrar institución</a> </li>
+                                            @endif
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
                                             
                                         <ul>

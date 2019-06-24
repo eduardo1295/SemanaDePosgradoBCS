@@ -46,7 +46,6 @@
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
-                        <th>Grado</th>
                         <th>Puesto</th>
                         <th>Email</th>
                         <th>Institución</th>
@@ -56,7 +55,6 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -110,7 +108,7 @@
         });
 
         var table = $('#coordinadoresdt').DataTable({
-            "order": [[ 8, "desc" ]],
+            "order": [[ 7, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -145,7 +143,6 @@
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
-                { data: 'coordinadores.grado', searchable: false },
                 { data: 'coordinadores.puesto', searchable: false },
                 { data: 'email', searchable: true },
                 { data: 'instituciones.nombre', searchable: true },
@@ -154,8 +151,8 @@
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 9 },
-                { width: 105, targets: 9 }
+                { responsivePriority: 2, targets: 8 },
+                { width: 105, targets: 8 }
             ]
         });
 
@@ -191,7 +188,6 @@
                 $('#primer_apellido').val(data.primer_apellido);
                 $('#segundo_apellido').val(data.segundo_apellido);
                 $('#email').val(data.email);
-                $('#grado').val(data.coordinadores.grado);
                 $("#institucionSelect").val(data.instituciones.id);
                 
 

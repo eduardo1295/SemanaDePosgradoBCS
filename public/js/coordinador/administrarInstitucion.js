@@ -78,7 +78,7 @@ $(document).ready(function () {
 function cargarDataTableDirectores(){
     if(!table){
         table = $('#directoresdt').DataTable({
-            "order": [[ 6, "desc" ]],
+            "order": [[ 5, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -114,15 +114,14 @@ function cargarDataTableDirectores(){
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
-                { data: 'grado', searchable: false },
                 { data: 'email', searchable: true },
                 { data: 'fecha_usuario', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 2 },
-                { responsivePriority: 2, targets: 7 },
-                { width: 105, targets: 7 }
+                { responsivePriority: 2, targets: 6 },
+                { width: 105, targets: 6 }
             ]
         });
     }else{
@@ -144,7 +143,7 @@ $("input[name='verDir']").change(function (e) {
             var ruta = rutaBaseDirector + '/' + director_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
-                
+                console.log(data);
                 $('#password_di').val("");
                 $('#password').attr("placeholder", "Nueva contraseña");
                 $('#directorCrudModal').html("Editar director:" + data.nombre);
@@ -156,7 +155,6 @@ $("input[name='verDir']").change(function (e) {
                 $('#primer_apellido_di').val(data.primer_apellido);
                 $('#segundo_apellido_di').val(data.segundo_apellido);
                 $('#email_di').val(data.email);
-                $('#grado_di').val(data.directortesis.grado);
                 $("#institucionSelect_di").val(data.instituciones.id);
                 
 

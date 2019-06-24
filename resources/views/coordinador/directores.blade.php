@@ -40,7 +40,6 @@
                             <th>Nombre</th>
                             <th>Primer apellido</th>
                             <th>Segundo apellido</th>
-                            <th>Grado</th>
                             <th>Email</th>
                             <th>Última Actualización</th>
                             <th>Acciones</th>
@@ -48,7 +47,6 @@
                     </thead>
                     <tfoot>
                             <tr>
-                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>

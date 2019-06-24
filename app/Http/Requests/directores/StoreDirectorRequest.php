@@ -39,8 +39,6 @@ class StoreDirectorRequest extends FormRequest
 
             'id_institucion_di'    => Rule::requiredIf(Auth::guard("admin")->user()).'|exists:instituciones,id',
 
-            //Validacion campos extra para director
-            'grado_di'  => 'required|max:30',
         ];
     }
 

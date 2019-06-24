@@ -81,13 +81,12 @@ class CoordinadorController extends Controller
         
         
         if($user){
-            $coordActual = DB::select('SELECT coordinadores.id, coordinadores.grado FROM coordinadores WHERE '.
+            $coordActual = DB::select('SELECT coordinadores.id FROM coordinadores WHERE '.
                 'coordinadores.id IN (SELECT users.id FROM users WHERE users.id_institucion = ?)',[$request->id_institucion]);
             $dataSet = [];
             foreach ($coordActual as $coordinador) {
                 $dataSet[] = [
-                    'id'  => $coordinador->id,
-                    'grado'    => $coordinador-> grado,
+                    'id'  => $coordinador->id
                 ];
             }
 
@@ -95,7 +94,7 @@ class CoordinadorController extends Controller
             
             $actualizar = DB::update('UPDATE rol_usuario SET rol_usuario.id_rol = 4 WHERE rol_usuario.id_rol=3 AND id_usuario'. 
             ' IN (SELECT users.id FROM users WHERE users.id_institucion = ?)',[$request->id_institucion]);
-            $user->coordinadores()->create(['puesto'=> ucfirst($request->puesto),'grado'=>ucfirst($request->grado),'id_semana'=>$idSemana]);
+            $user->coordinadores()->create(['puesto'=> ucfirst($request->puesto)]);
             $user->roles()->attach([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         
@@ -124,11 +123,11 @@ class CoordinadorController extends Controller
         if(auth()->user()){
             $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
-            $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id,grado')->where('id',$id)->first();
-            return view('director.editarDirector',compact(['usuario','semana','instituciones']));
+            $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();
+            return view('coordinador.editarCoordinador',compact(['usuario','semana','instituciones']));
         }else if (auth('admin')->user()) {
-        $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,grado,puesto','instituciones:id,nombre')->where('id',$id)->first();
-        return \Response::json($usuario);
+            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,puesto','instituciones:id,nombre')->where('id',$id)->first();
+            return \Response::json($usuario);
         }
     }
 
@@ -158,7 +157,7 @@ class CoordinadorController extends Controller
         $user->save();
         
         if($user){
-            $user->coordinadores()->update(['puesto'=> ucfirst($request->puesto),'grado'=>ucfirst($request->grado),'id_semana'=>$idSemana]);
+            $user->coordinadores()->update(['puesto'=> ucfirst($request->puesto)]);
             $user->roles()->sync([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
         }
         
@@ -208,14 +207,14 @@ class CoordinadorController extends Controller
     public function listCoordinador(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,grado,puesto','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
+            $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,puesto','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
             return datatables()->of($usuarios)
             ->addColumn('action', 'admin.acciones')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
-            $usuarios = User::onlyTrashed()->select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,grado,puesto','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
+            $usuarios = User::onlyTrashed()->select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,puesto','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});
             return datatables()->of($usuarios)
             ->addColumn('action', 'admin.reactivar')
             ->rawColumns(['action'])

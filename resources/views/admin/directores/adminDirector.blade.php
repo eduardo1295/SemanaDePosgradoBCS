@@ -44,7 +44,6 @@
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
-                        <th>Grado</th>
                         <th>Email</th>
                         <th>Institución</th>
                         <th>Última Actualización</th>
@@ -57,7 +56,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
+                            
                             <th></th>
                             <th></th>
                             <th></th>
@@ -102,7 +101,7 @@
         });
 
         var table = $('#directoresdt').DataTable({
-            "order": [[ 7, "desc" ]],
+            "order": [[ 6, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -137,7 +136,7 @@
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
-                { data: 'grado', searchable: false },
+                
                 { data: 'email', searchable: true },
                 { data: 'institucion_nombre', searchable: true },
                 { data: 'fecha_usuario', searchable: false },
@@ -145,8 +144,8 @@
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 8 },
-                { width: 105, targets: 8 }
+                { responsivePriority: 2, targets: 7 },
+                { width: 105, targets: 7 }
             ]
         });
 
@@ -180,7 +179,7 @@
                 $('#primer_apellido_di').val(data.primer_apellido);
                 $('#segundo_apellido_di').val(data.segundo_apellido);
                 $('#email_di').val(data.email);
-                $('#grado_di').val(data.directortesis.grado);
+                
                 $("#institucionSelect_di").val(data.instituciones.id);
                 
 
@@ -311,7 +310,7 @@
 
     /*Accion al presionar el boton save*/
     $("#btn-save-director").click(function () {
-        reiniciar();
+        $('.mensajeError').text("");
         $("#btn-save-director").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var actionType = $('#btn-save-director').val();

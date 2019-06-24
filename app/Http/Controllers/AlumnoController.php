@@ -219,7 +219,7 @@ class AlumnoController extends Controller
             ' users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,'.
             ' programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones'.
             ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND'. $finalConsulta .' AND users.deleted_at IS NULL) t1'.
-            ' inner JOIN (SELECT users.id AS id_dir, users.nombre AS director_nombre, users.primer_apellido AS director_pa, users.segundo_apellido AS director_sa,directores_tesis.grado FROM users,directores_tesis WHERE users.id = directores_tesis.id) t2 ON t1.id_director = t2.id_dir;';
+            ' inner JOIN (SELECT users.id AS id_dir, users.nombre AS director_nombre, users.primer_apellido AS director_pa, users.segundo_apellido AS director_sa FROM users,directores_tesis WHERE users.id = directores_tesis.id) t2 ON t1.id_director = t2.id_dir;';
 
             /*
             $consulta = 'SELECT alumnos.num_control,alumnos.id,'.
@@ -243,7 +243,7 @@ class AlumnoController extends Controller
             $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('alumnos:alumnos.id,alumnos.id_programa,num_control,semestre,constancia_generada,fecha_constancia,gafete_generado,fecha_gafete','instituciones:instituciones.id,instituciones.nombre','programas:programas.id,programas.id_programa,programas.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'alumno');});
             return datatables()->of($alumnos)
             ->addColumn('director', function($alumnos){
-                return $alumnos->grado . ' ' .$alumnos->director_nombre .' '. $alumnos->director_pa .' '. $alumnos->director_sa;
+                return $alumnos->director_nombre .' '. $alumnos->director_pa .' '. $alumnos->director_sa;
             }
             
             )
@@ -319,7 +319,7 @@ class AlumnoController extends Controller
             $auxInstitucion = $id;
         }
         $programas = Institucion::select('instituciones.id')->with('programas:programas.id_institucion,programas.id,programas.id_programa,programas.nombre')->where('id',$auxInstitucion)->get();
-        $directores = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:directores_tesis.id,directores_tesis.grado')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');})->where('id_institucion',$auxInstitucion)->get();
+        $directores = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('directortesis:directores_tesis.id')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');})->where('id_institucion',$auxInstitucion)->get();
         
         $busquedas = collect([$programas[0]->programas, $directores]);
         return $busquedas;
