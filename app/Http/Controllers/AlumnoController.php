@@ -202,6 +202,10 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function listAlumnos(Request $request ){
+        $semana = DB::select(DB::raw("SELECT semanas.id_semana	
+		FROM semanas
+        WHERE vigente = 1"));
+        $id_selectSemana = $semana[0]->id_semana;
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
             //AND users.id_institucion = ?'
@@ -214,12 +218,13 @@ class AlumnoController extends Controller
                 
             }
             
-            $consulta = 'SELECT * FROM (SELECT alumnos.id, alumnos.num_control,alumnos.id_director,'.
-            ' users.nombre,users.primer_apellido,users.segundo_apellido,users.email,'.
-            ' users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,'.
-            ' programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones'.
-            ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND'. $finalConsulta .' AND users.deleted_at IS NULL) t1'.
-            ' inner JOIN (SELECT users.id AS id_dir, users.nombre AS director_nombre, users.primer_apellido AS director_pa, users.segundo_apellido AS director_sa FROM users,directores_tesis WHERE users.id = directores_tesis.id) t2 ON t1.id_director = t2.id_dir;';
+            $consulta = "SELECT * FROM (SELECT alumnos.id, alumnos.num_control,alumnos.id_director,
+             users.nombre,users.primer_apellido,users.segundo_apellido,users.email,
+             users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,
+             (SELECT id_semana FROM alumno_constancia WHERE id_semana = $id_selectSemana  AND id_alumno=alumnos.id ) AS id_sem_constancia, 
+             programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones
+             WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND $finalConsulta AND users.deleted_at IS NULL) t1
+             INNER JOIN (SELECT users.id AS id_dir, users.nombre AS director_nombre, users.primer_apellido AS director_pa, users.segundo_apellido AS director_sa FROM users,directores_tesis WHERE users.id = directores_tesis.id) t2 ON t1.id_director = t2.id_dir;";
 
             /*
             $consulta = 'SELECT alumnos.num_control,alumnos.id,'.

@@ -13,7 +13,7 @@ $('#alumnosdt tfoot  th.text-input').each(function (i) {
 function cargarDataTableAlumnos(){
     if(!tableAlumno){
         tableAlumno = $('#alumnosDT').DataTable({
-            "order": [[ 8, "desc" ]],
+            "order": [[ 9, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -30,7 +30,7 @@ function cargarDataTableAlumnos(){
                     d.busqueda = checkAlumno
                 }
             },
-            initComplete: function () {
+            /*initComplete: function () {
                 var api = this.api();
                 api.columns(2).every(function () {
                     var that = this;
@@ -42,29 +42,36 @@ function cargarDataTableAlumnos(){
                         }
                     });
                 })
-            },
+            },*/
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
-                {
-                    "class":          'details-control',
-                    "orderable":      false,
-                    "data":           null,
-                    "defaultContent": ''
-                },
                 { data: 'num_control', searchable: false },
                 { data: 'programa_nombre', searchable: true },
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
                 { data: 'email', searchable: true },
+                {
+                    data: 'id_sem_constancia',
+                    name: 'id_sem_constancia',
+                    render: function (data, type, full, meta) {
+                        if(data ==null){
+                            return '<div style="width:100%;text-align:center"><input style="width: 20px; height: 20px;" type="checkbox" class = "constanciaGuardar" name="'+data+'" value="'+data+'"></div>';
+                        }else{
+                            return '<div style="width:100%;text-align:center"><input type="checkbox" style="width: 20px; height: 20px;" class = "constanciaGuardar" checked name="'+data+'" value="'+data+'"></div>';
+                        }
+                    },
+                    orderable: false, searchable: false
+                },
                 { data: 'director', searchable: true },
                 { data: 'fecha_usuario', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
+                
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 9 },
-                { width: 105, targets: 9 }
+                { responsivePriority: 2, targets: 10 },
+                { width: 105, targets: 10 }
             ]
         });
     }else{

@@ -79,6 +79,7 @@
 
 <script src="/js/imagenes/vistaprevia.js"></script>
 <script src="/js/imagenes/modalimagen.js"></script>
+<script src="/js/snack/snack.js"></script>
 
 <script>
 
@@ -211,11 +212,7 @@
                                         var oTable = $('#slidersC').dataTable();
                                         oTable.fnDraw(false);
                                     }
-
-                                    var x = document.getElementById("snackbar");
-                                    x.innerHTML="<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen eliminada exitosamente.";
-                                    x.className = "show";
-                                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+                                    mostrarSnack("Imagen eliminada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -264,10 +261,7 @@
                                         oTable.fnDraw(false);
                                     }
                                     
-                                    
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen activada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("Imagen activada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -338,16 +332,14 @@
                     var oTable = $('#slidersC').dataTable();
                     oTable.fnDraw(false);
                     
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    mostrarSnack("Actualización exitosa.");
 
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevaImagen').addClass('d-none');
                     $('#vistaPrevia').prop('src', "");
-                    console.log(data);
+                    
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     if (xhr.status == 422) {
@@ -385,9 +377,8 @@
                     var oTable = $('#slidersC').dataTable();
                     oTable.fnDraw(false);
                     
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> imagen registrada exitosamente.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    mostrarSnack("Imagen guardada exitosamente.");
+
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');

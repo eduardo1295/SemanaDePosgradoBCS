@@ -79,6 +79,7 @@
 <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="/js/snack/snack.js"></script>
 <!--
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -222,9 +223,8 @@
                                         var oTable = $('#directoresdt').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Cuenta eliminada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    
+                                    mostrarSnack("Cuenta eliminada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -272,9 +272,8 @@
                                         var oTable = $('#directoresdt').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Cuenta activada exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+
+                                    mostrarSnack("Cuenta activada exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -337,10 +336,8 @@
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
                     
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
-
+                    mostrarSnack("Actualización exitosa.");
+                    
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                     console.log(data);
@@ -382,9 +379,9 @@
                     //recargar serverside
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> director registrado exitosamente.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    
+                    mostrarSnack("Director registrado exitosamente.");
+
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },

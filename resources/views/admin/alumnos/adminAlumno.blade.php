@@ -468,7 +468,7 @@
                     $('#directorSelect_al').append('<option selected value="">Seleccione un director de tesis</option>');
                     
                     $.each(data[1], function(key, val) {
-                        $('#directorSelect_al').append('<option value="' + val.id + '">'+val.directortesis.grado + '. ' +val.nombre+ ' ' +val.primer_apellido+ ' ' +val.segundo_apellido+ '</option>');
+                        $('#directorSelect_al').append('<option value="' + val.id + '">'+val.nombre+ ' ' +val.primer_apellido+ ' ' +val.segundo_apellido+ '</option>');
                     })
                     $("#btn-save-alumno").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
@@ -520,7 +520,7 @@
 <link href="/css/modales/snackbar.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/datatable/colores.css">
 <link href="/css/modales/modalresponsivo.css" rel="stylesheet">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
+
 <style>
     .tooltip{
         pointer-events: none;

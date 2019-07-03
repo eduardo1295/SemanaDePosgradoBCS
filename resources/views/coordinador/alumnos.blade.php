@@ -37,13 +37,14 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th></th>
+                        
                         <th class="all">No. Control</th>
                         <th class="none">Programa de estudios</th>
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
                         <th>Email</th>
+                        <th class="all">Constancia</th>
                         <th class="none">Director de tesis</th>
                         <th>Última Actualización</th>
                         <th class="all">Acciones</th>
