@@ -34,7 +34,7 @@
                                         placeholder="Contraseña para la cuenta" value="" maxlength="60" required=""
                                         aria-describedby="passwordHelpBlock">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary btn-show-pass" type="button"><span>
+                                        <button class="btn btn-outline-secondary btn-show-pass" onclick="mostrarContra('password',this)" type="button"><span>
                                                 <i class="fas fa-eye"></i>
                                             </span></button>
                                     </div>

@@ -84,7 +84,7 @@
 
 <script src="/js/imagenes/vistaprevia.js"></script>
 <script src="/js/imagenes/modalimagen.js"></script>
-
+<script src="/js/snack/snack.js"></script>
 <script>
 
     var SITEURL = "{{URL::to('/')}}";
@@ -221,9 +221,7 @@
                                         var oTable = $('#programasDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Programa borrado exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("Programa borrado exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -271,9 +269,8 @@
                                         var oTable = $('#programasDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Porgrama activado exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    
+                                    mostrarSnack("Porgrama activado exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -336,10 +333,8 @@
                     //recargar serverside
                     var oTable = $('#programasDT').dataTable();
                     oTable.fnDraw(false);
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
-
+                    
+                    mostrarSnack("Actualización exitosa.");
                     
                     $("#btn-save-pro").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
@@ -381,9 +376,8 @@
                     //recargar serverside
                     var oTable = $('#programasDT').dataTable();
                     oTable.fnDraw(false);
-                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Pograma registrado exitosamente.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    
+                    mostrarSnack("Pograma registrado exitosamente.");
                     $("#btn-save-pro").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
