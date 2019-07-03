@@ -358,7 +358,6 @@ class modalidadController extends Controller
 		' AND rol_usuario.id_usuario = users.id'.
 		' AND users.id = coordinadores.id'.
         ' AND rol_usuario.id_rol = 3;'));
-
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         return view('modalidad.mostrarModalidad',compact(['semana','instituciones','nombre']));
     }

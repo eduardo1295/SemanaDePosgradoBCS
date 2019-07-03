@@ -9,14 +9,14 @@
                     <input type="hidden" name="noticia_id" id="noticia_id">
                     
                     <div class="form-group">
-                        <label for="titulo" class="control-label">Titulo</label>
+                        <strong><label for="titulo" class="control-label">Titulo</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="titulo" name="titulo"
                             placeholder="Titulo de la noticia" value="" maxlength="500" required="">
                         <small><span class="mensajeError text-danger" id="titulo_error"></span></small>
 
                     </div>
                     <div class="form-group">
-                        <label for="resumen" class="control-label">Resumen</label>
+                        <strong><label for="resumen" class="control-label">Resumen</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="resumen" name="resumen"
                             placeholder="Resumen de la noticia" value="" maxlength="500" required="">
                         <small><span class="mensajeError text-danger" id="resumen_error"></span></small>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-row mt-2">
                         <div class="form-group col-12">
-                            <strong>Contenido:</strong>
+                            <strong>Contenido:<label class="text-danger">*</label></strong>
                             <textarea class="summernote"  style=" word-wrap: break-word;"  id="contenido" name="contenido"></textarea>
                         <small><span class="mensajeError text-danger" id="contenido_error"></span></small>  
                         </div>
@@ -44,6 +44,7 @@
 
                    
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"

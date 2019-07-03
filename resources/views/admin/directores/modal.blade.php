@@ -10,7 +10,7 @@
                     <input type="hidden" name="director_id" id="director_id">
                     @if (auth('admin')->user())
                         <div class="form-group">
-                            <label for="institucionSelect">Institución</label>
+                            <label for="institucionSelect">Institución</label><label class="text-danger">*</label>
                             <select class="form-control" id="institucionSelect_di" name="id_institucion_di">
                                 <option selected value="">Seleccione una institución</option>
                                 @foreach ($instituciones as $institucion)
@@ -24,7 +24,7 @@
                     
                     <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="email" class="control-label">Email</label>
+                        <strong><label for="email" class="control-label">Email</label><label class="text-danger">*</label></strong>
                         <input type="email" class="form-control" id="email_di" name="email_di" placeholder="Email del usuario"
                             value="" maxlength="60" required="">
                         <small><span class="mensajeError text-danger" id="email_di_error"></span></small>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="password" class="control-label">Contraseña</label>
+                        <strong><label for="password" class="control-label">Contraseña</label></strong>
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" id="password_di" name="password_di"
                                 placeholder="Contraseña para la cuenta" value="" maxlength="60" required=""
@@ -43,9 +43,6 @@
                                     </span></button>
                             </div>
                         </div>
-                        <small id="passwordHelpBlock" class="form-text text-muted">
-                                Su contraseña debe tener mínimo 6 caracteres, debe contener al menos 1 mayúscula, 1 minúscula, 1 numérica y 1 carácter especial(#?!@$^&-).
-                        </small>
                         <small><span class="mensajeError text-danger" id="password_di_error"></span></small>
                     </div>
                 </div>
@@ -54,7 +51,7 @@
                         
 
                 <div class="form-group col-md-12">
-                        <label for="nombre" class="control-label">Nombre</label>
+                        <strong><label for="nombre" class="control-label">Nombre</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="nombre_di" name="nombre_di"
                             placeholder="Nombre del usuario" value="" maxlength="40" required="">
                         <small><span class="mensajeError text-danger" id="nombre_di_error"></span></small>
@@ -63,7 +60,7 @@
                 </div>
                     <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="primer_apellido" class="control-label">Primer apellido</label>
+                        <strong><label for="primer_apellido" class="control-label">Primer apellido</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="primer_apellido_di" name="primer_apellido_di"
                             placeholder="Primer apellido del usuario" value="" maxlength="30" required="">
                         <small><span class="mensajeError text-danger" id="primer_apellido_di_error"></span></small>
@@ -71,18 +68,15 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="segundo_apellido" class="control-label">Segundo apellido</label>
+                        <strong><label for="segundo_apellido" class="control-label">Segundo apellido</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="segundo_apellido_di" name="segundo_apellido_di"
                             placeholder="Segundo apellido del usuario" value="" maxlength="30" required="">
                         <small><span class="mensajeError text-danger" id="segundo_apellido_di_error"></span></small>
 
                     </div>
                 </div>
-
-                    
-
-
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"

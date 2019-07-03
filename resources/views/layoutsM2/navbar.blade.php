@@ -15,7 +15,7 @@
                                 <li><a href="{{route('modalidad.index')}}" class="">Modalidades</a> </li>
                                 <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
                                     <ul>
-                                        <li><a href="#">General</a></li>
+                                    <li><a href="{{route('programa.mostrarProgramaGeneral')}}">General</a></li>
                                         <li><a href="{{route('modalidad.mostrarModalidad','poster')}}">Póster</a></li>
                                         <li><a href="{{route('modalidad.mostrarModalidad','entrevista')}}">Entrevista</a></li>
                                         <li><a href="{{route('modalidad.mostrarModalidad','video')}}">Video</a></li>
@@ -44,6 +44,7 @@
                                         <ul class="loginUsuario">
                                             @if(auth()->user() && auth()->user()->hasRoles(['alumno']))
                                                 <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
+                                                <li><a href="{{route('alumno.generarGafete')}}" class="loginUsuario" >Generar Gafete</a></li>
                                                 <li><a href="{{route('alumno.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @elseif(auth()->user() && auth()->user()->hasRoles(['director']))
                                                 <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>

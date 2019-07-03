@@ -50,6 +50,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#references" role="tab" data-toggle="tab" onclick="cargarDataTableAlumnos()">Alumnos participantes</a>
                   </li>
+                  <!--
+                  <li class="nav-item">
+                    <a class="nav-link" href="#sesion" role="tab" data-toggle="tab" onclick="cargarDataTableSesiones()">Sesiones</a>
+                  </li>
+                  -->
+                  @if(auth()->user()->hasRoles(['subadmin']))
+                    <li class="nav-item">
+                      <a class="nav-link" href="#locacion" role="tab" data-toggle="tab" onclick="cargarDataTableLocaciones()">Locaciones</a>
+                    </li>
+                  @endif
               </ul>
               
               <!-- Tab panes -->
@@ -58,6 +68,8 @@
                 <div role="tabpanel" class="container tab-pane fade pt-3" id="programas_estudio">@include('coordinador.programasInstitucion')</div>
                 <div role="tabpanel" class="container tab-pane fade pt-3" id="direc_tesis">@include('coordinador.directores')</div>
                 <div role="tabpanel" class="container tab-pane fade pt-3" id="references">@include('coordinador.alumnos')</div>
+                <!--<div role="tabpanel" class="container tab-pane fade pt-3" id="sesion">@include('coordinador.sesion')</div>-->
+                <div role="tabpanel" class="container tab-pane fade pt-3" id="locacion">@include('coordinador.locacion')</div>
               </div>
         </div>
     </div>
@@ -111,21 +123,29 @@
 
 <script src="/js/coordinador/programas.js"></script>
 <script src="/js/coordinador/alumnos.js"></script>
+<!--<script src="/js/coordinador/sesion.js"></script>-->
+<script src="/js/coordinador/locacion.js"></script>
 <script src="/plugins/responsive-tabs/jquery.responsivetabs.js"></script>
 
 <script>
 var checkDir = 'activos';
 var checkPro = 'activos';
 var checkAlumno = 'activos';
+var checkSesion = 'activos';
+var checkLoca = 'activos';
 var table;
 var tablePrograma;
 var tableAlumno;
+/*var tableSesion;*/
+var tableLocacion;
 var imagenRuta = "{{url('img/logo')}}";
 var rutaBaseInstitucion = "{{ route('institucion.index')}}";
 var rutaEditarInstitucion = "{{ route('institucion.index')}}/{{ auth()->user()->id_institucion }}/editar";
 var rutaBasePrograma = "{{ route('programa.index')}}";
 var rutaBaseDirector = "{{ route('director.index')}}";
 var rutaBaseAlumno = "{{ route('alumno.index')}}";
+/*var rutaBaseSesion = "{{ route('sesion.index')}}";*/
+var rutaBaseLocacion = "{{ route('locacion.index')}}";
 $(document).ready(function () {
     cargarInstitucion();
 });
@@ -142,4 +162,6 @@ $(document).ready(function () {
     @include('admin.directores.modal')
     @include('admin.programa.modal')
     @include('admin.alumnos.modal')
+    {{--@include('sesion.modal')--}}
+    @include('locacion.modal')
 @endsection

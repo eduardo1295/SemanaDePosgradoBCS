@@ -43,7 +43,7 @@ class UpdateEditarPerfilRequest extends FormRequest
             /*Alumno*/
             'semestre'  =>   Rule::requiredIf(auth()->user() && auth()->user()->hasRoles(['alumno'])).'|max:30',
 
-            'grado'  =>   Rule::requiredIf(auth()->user() && auth()->user()->hasRoles(['director'])).'|max:30',
+            //'grado'  =>   Rule::requiredIf(auth()->user() && auth()->user()->hasRoles(['director'])).'|max:30',
             //'num_control'  => Rule::requiredIf(auth()->user()->hasRoles(['alumno']).'|required|max:30',
 
             

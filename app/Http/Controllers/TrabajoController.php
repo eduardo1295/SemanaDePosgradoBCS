@@ -108,7 +108,7 @@ class TrabajoController extends Controller
             ]
         );
         //dd($trabajo->directores()->first()->email);
-        //Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
+        Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
         return \Response::json($trabajo);
     }
 
@@ -201,6 +201,7 @@ class TrabajoController extends Controller
         //dd($trabajo->usuarios()->first()->email);
         
         //Mail::to($trabajo->usuarios()->first()->email)->send(new MensajesTrabajo($request));
+        
         Notification::send($trabajo->usuarios()->first(), new RevisionTrabajo($request,$trabajo->id_alumno));
         return redirect()->route('director.revisarAlumnos');
     }

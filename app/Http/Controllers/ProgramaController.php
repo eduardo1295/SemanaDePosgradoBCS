@@ -8,6 +8,7 @@ use App\Programa;
 use App\Semana;
 use App\Institucion;
 use DataTables;
+use DB;
 use App\Http\Requests\programas\StoreProgramaRequest;
 use App\Http\Requests\programas\UpdateProgramaRequest;
 use Validator;
@@ -245,5 +246,46 @@ class ProgramaController extends Controller
             ->addIndexColumn()
             ->toJson();   
         }
+    }
+
+    public function programaGeneral(){
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
+        $instituciones = Institucion::select('id','nombre')->get();
+        return view('admin.programa.programaGeneral',compact(['instituciones','semana']));   
+    }
+    public function subirProgramaGeneral(Request $request){
+
+        if($request->hasFile('programaGeneral')){
+            
+            $programaGeneral = $request->file('programaGeneral');
+            //agregar id de usuarios a nombre
+            $nuevo_nombre = 'ProgramaGeneral.' . $programaGeneral->getClientOriginalExtension();
+            $programaGeneral->move(public_path('documentos/programaGeneral'), $nuevo_nombre);
+        }else{
+            return \Response::json("error");    
+        }
+
+        //File::put(public_path().'\documentos\modalidad\\'.$modalidad->nombre .'.pdf',$output);
+        //$path = public_path().'\documentos\modalidad\\'.$request->nombre ;
+        //File::makeDirectory($path, $mode = 0777, true, true);
+
+        return \Response::json("Listo");
+    }
+    public function mostrarProgramaGeneral(){
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+        ' AND rol_usuario.id_rol = 3;'));
+
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        return view('programa.programaGeneral',compact(['semana','instituciones','nombre']));
     }
 }

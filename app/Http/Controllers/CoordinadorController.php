@@ -9,6 +9,7 @@ use App\User;
 use App\Coordinador;
 use App\Institucion;
 use App\Semana;
+use App\Modalidad;
 use DataTables;
 use DB;
 
@@ -27,7 +28,7 @@ class CoordinadorController extends Controller
      */
     public function index()
     {
-        $semana = Semana::select('id_semana','vigente','url_logo')->where('vigente',1)->first();
+        $semana = Semana::select('id_semana','vigente','url_logo','fecha_inicio','fecha_fin')->where('vigente',1)->first();
         $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
 		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
 		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
@@ -40,8 +41,19 @@ class CoordinadorController extends Controller
 		' AND rol_usuario.id_usuario = users.id'.
 		' AND users.id = coordinadores.id'.
         ' AND rol_usuario.id_rol = 3;'));
-        
-        return view('coordinador.administrarInstitucion',compact(['instituciones','semana']));  
+        /*Agregado Rente para la cuestion de sesiones*/
+        $modalidades = Modalidad::select('id_modalidad','nombre')->get();
+        $horarios = DB::select(DB::raw("SELECT ADDDATE('$semana->fecha_inicio', INTERVAL @i:=@i+1 DAY) AS DAY FROM (
+        SELECT a.a
+        FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+        CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+        CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+        ) a
+        JOIN (SELECT @i := -1) r1
+        WHERE 
+        @i < DATEDIFF('$semana->fecha_fin','$semana->fecha_inicio')"));
+        $locaciones = DB::select("select locaciones.id_locacion as id_locacion, locaciones.nombre as nombre from locaciones,semanas where semanas.vigente = 1 AND id_sede = id_institucion");
+        return view('coordinador.administrarInstitucion',compact(['instituciones','semana','modalidades','horarios','locaciones']));  
     }
 
 

@@ -9,7 +9,7 @@
                 <form id="coordinadorForm" name="coordinadorForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="coordinador_id" id="coordinador_id">
                     <div class="form-group">
-                        <label for="institucionSelect">Institución</label>
+                        <strong><label for="institucionSelect">Institución</label><label class="text-danger">*</label></strong>
                         <select class="form-control" id="institucionSelect" name="id_institucion">
                             <option selected value="">Seleccione una institución</option>
                             @foreach ($instituciones as $institucion)
@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="email" class="control-label">Email</label>
+                            <strong><label for="email" class="control-label">Email</label><label class="text-danger">*</label></strong>
                             <input type="email" class="form-control" id="email" name="email"
                                 placeholder="Email del usuario" value="" maxlength="60" required="">
                             <small><span class="mensajeError text-danger" id="email_error"></span></small>
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                                <label for="password" class="control-label">Contraseña</label>
+                                <strong><label for="password" class="control-label">Contraseña</label></strong>
                                 <div class="input-group mb-3">
                                     <input type="password" class="form-control" id="password" name="password"
                                         placeholder="Contraseña para la cuenta" value="" maxlength="60" required=""
@@ -39,16 +39,13 @@
                                             </span></button>
                                     </div>
                                 </div>
-                                <small id="passwordHelpBlock" class="form-text text-muted">
-                                    Su contraseña debe tener mínimo 6 caracteres, debe contener al menos 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial(#?!@$^&-).
-                                </small>
                                 <small><span class="mensajeError text-danger" id="password_error"></span></small>
                             </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="grado" class="control-label">Grado</label>
+                            <strong><label for="grado" class="control-label">Grado</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="grado" name="grado"
                                 placeholder="Grado del coordinador" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="grado_error"></span></small>
@@ -56,7 +53,7 @@
                         </div>
 
                         <div class="form-group col-md-8">
-                            <label for="puesto" class="control-label">Puesto</label>
+                            <strong><label for="puesto" class="control-label">Puesto</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="puesto" name="puesto"
                                 placeholder="Puesto de trabajo" value="" maxlength="60" required="">
                             <small><span class="mensajeError text-danger" id="puesto_error"></span></small>
@@ -67,7 +64,7 @@
                     </div>
                     <div class="form-row">
                             <div class="form-group col-md-6">
-                                    <label for="nombre" class="control-label">Nombre</label>
+                                    <strong><label for="nombre" class="control-label">Nombre</label><label class="text-danger">*</label></strong>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
                                         placeholder="Nombre del coordinador" value="" maxlength="40" required="">
                                     <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
@@ -75,7 +72,7 @@
                                 </div>
 
                         <div class="form-group col-md-3">
-                            <label for="primer_apellido" class="control-label">Primer apellido</label>
+                            <strong><label for="primer_apellido" class="control-label">Primer apellido</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="primer_apellido" name="primer_apellido"
                                 placeholder="Primer apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="primer_apellido_error"></span></small>
@@ -83,18 +80,16 @@
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label for="segundo_apellido" class="control-label">Segundo apellido</label>
+                            <strong><label for="segundo_apellido" class="control-label">Segundo apellido</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido"
                                 placeholder="Segundo apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="segundo_apellido_error"></span></small>
 
                         </div>
                     </div>
-
-
-
-
+                    
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"

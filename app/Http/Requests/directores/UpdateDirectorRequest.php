@@ -34,7 +34,9 @@ class UpdateDirectorRequest extends FormRequest
 
             'nombre_di' => 'required|string|max:40',
             
-            'password_di' => 'string|nullable|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            //'password_di' => 'string|nullable|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            
+            'password_di' => 'string|nullable',
             
             'primer_apellido_di'   => 'required|string|max:30',
             

@@ -24,7 +24,7 @@
                     <input type="hidden" name="id_alumno" id="id_alumno" value="{{auth()->user()->id}}">
                     <div class="form-row pl-5 pr-5 pt-3">
                         <div class="form-group col-12">
-                            <strong><label for="modalidad" class="control-label">Modalidad</label></strong>
+                            <strong><label for="modalidad" class="control-label">Modalidad</label><label class="text-danger">*</label></strong></strong>
                                 <select class="form-control modalidad" id="modalidad" name="modalidad">
                                     <option selected value="">Seleccione modalidad</option>
                                     @foreach ($modalidades as $modalidadP)
@@ -42,17 +42,17 @@
                             <small><span class="text-danger mensajeError errorposgrado" id="modalidad_error"></span></small>
                         </div>
                         <div class="form-group col-12">
-                            <strong><label for="titulo" class="control-label">Titulo</label></strong>
+                            <strong><label for="titulo" class="control-label">Titulo</label><label class="text-danger">*</label></strong></strong>
                         <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Titulo del trabajo" value="@isset($trabajo){{$trabajo->titulo}}@endisset">
                             <small><span class="text-danger mensajeError errorposgrado" id="titulo_error"></span></small>
                         </div>
                         <div class="form-group col-12">
-                            <strong><label for="resumen" class="control-label">Resumen</label></strong>
+                            <strong><label for="resumen" class="control-label">Resumen</label><label class="text-danger">*</label></strong></strong>
                             <textarea class="form-control" id="resumen" name="resumen" rows="5" placeholder="Resumen del programa">@isset($trabajo){{$trabajo->resumen}}@endisset</textarea>
                             <small><span class="text-danger mensajeError errorposgrado" id="resumen_error"></span></small>
                         </div>
                         <div class="form-group col-12">
-                            <strong><label for="customFileLang" class="control-label">Trabajo: </label></strong>
+                            <strong><label for="customFileLang" class="control-label">Trabajo: </label><label class="text-danger">*</label></strong></strong>
                             @isset($trabajo)
                             <a href='{{ URL::to("/") }}/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >Trabajo Subido</a>
                             <input type="hidden" name="auxUrl" value="{{$trabajo->url}}">
@@ -64,7 +64,7 @@
                             <small><span class="text-danger mensajeError errorposgrado" id="url_error"></span></small>
                         </div>
                     </div>
-                    <strong><label for="clave" class="control-label pl-5">Palabra clave</label></strong><br>
+                    <strong><label for="clave" class="control-label pl-5">Palabra clave</label><label class="text-danger">*</label></strong></strong><br>
                     <div class="form-group row pl-5 pr-5" >
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0"><input type="text" name="pal_clv1"  id="pal_clv1" class="form-control" placeholder="clave 1" value="@isset($trabajo){{$trabajo->pal_clv1}}@endisset"></div>
                         <div class="col-12 col-sm-6 pb-2 col-md pb-md-0 pt-2 pt-sm-0 d-md-none"><small><span class="text-danger mensajeError errorposgrado pal_clv1_error" id=""></span></small></div>
@@ -86,19 +86,29 @@
                     </div>
                     <div class="form-row pl-5 pr-5 pb-3 ">
                         <div class="form-group col-12">
-                            <strong><label for="directortesis" class="control-label">Director de tesis</label></strong>
+                            <strong><label for="directortesis" class="control-label">Director de tesis</label><label class="text-danger">*</label></strong></strong>
                             <input type="text" class="form-control" id="directortesis" name="directortesis" placeholder="director de tesis">
                         </div>
                         <div class="form-group col-12">
-                            <strong><label for="area" class="control-label">Área</label></strong>
+                            <strong><label for="area" class="control-label">Área</label><label class="text-danger">*</label></strong></strong>
                             <input type="text" class="form-control" id="area" name="area" placeholder="director de tesis" value="@isset($programa){{$programa->nombre}}@endisset" readonly>
                         </div>
                         <div class="col-12 d-flex justify-content-end pt-3">
-                            <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar
-                            </button>
+                            @if(isset($trabajo))
+                                @if($trabajo->autorizado == 1)
+                                    <button type="button" class="btn btn-success" disabled id="btn-save" value="editar">Tu trabajo fue aprobado</button>
+                                @elseif($trabajo->revisado == 0 && $trabajo->url != "")
+                                    <button type="button" class="btn btn-secondary" disabled id="btn-save" value="editar">No ha sido revisado</button> 
+                                @else
+                                    <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar</button>
+                                @endif
+                            @else
+                            <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar</button>
+                            @endif
                         </div>        
                     </div>
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div id="snackbar"></div>
 </section>

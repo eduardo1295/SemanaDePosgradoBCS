@@ -7,8 +7,9 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RevisionTrabajo extends Notification
+class RevisionTrabajo extends Notification implements ShouldQueue
 {
     use Queueable;
     private $mensaje,$id_trabajo;

@@ -8,7 +8,9 @@ use App\Alumno;
 use App\Institucion;
 use App\Semana;
 use DataTables;
+use App;
 use DB;
+use File;
 //use App\Http\Requests\coodinador\StoreCoordinadorRequest;
 //use App\Http\Requests\usuarios\UpdateAlumnoRequest;
 use App\Http\Requests\alumno\StoreAlumnoRequest;
@@ -324,5 +326,52 @@ class AlumnoController extends Controller
         $busquedas = collect([$programas[0]->programas, $directores]);
         return $busquedas;
         
+    }
+
+    public function generarGafete(){
+        $semana = Semana::select('nombre','url_logo')->where('vigente',1)->first();
+        $instituciones = DB::select(DB::raw("SELECT instituciones.id,instituciones.url_logo,nombre,siglas 
+                                             FROM instituciones WHERE deleted_at IS NULL ORDER BY nombre"));
+                                        
+        $alumno = User::select('id','id_institucion','email','nombre','primer_apellido','segundo_apellido')
+                        ->with('alumnos:alumnos.id,num_control','instituciones:id,nombre,siglas')
+                        ->where('id',auth()->user()->id)->first();
+        
+        $imagenes="";
+        $logo =  asset('img/semanaLogo/'.$semana->url_logo);
+        $imagenes .= '<img style="vertical-align: top;width:100px;height:70px;"src = "'.$logo.'">';
+        foreach ($instituciones as $insticion){
+            $ruta =  asset('img/logo/'.$insticion->url_logo);
+            $imagenes .= '<img style="vertical-align: top;width:100px;height:80px;"src = "'.$ruta.'">';
+        }
+            
+        $conacyt =  asset('img/logo/conacyt.png');    
+        $imagenes .= '<img style="vertical-align: top;width:100px;height:70px;"src = "'.$conacyt.'">';
+        
+        $pdf = App::make('dompdf.wrapper');
+        //$pdf->setPaper('A6','portrait');
+        $pdf->setPaper('letter','portrait');
+        //$pdf->loadHTML('<h1>Test</h1>');
+        $pdf->loadView('alumno.generarGafete',['alumno' => $alumno, 'imagenes' => $imagenes, 'semana' => $semana]);
+        
+        $output = $pdf->output();
+        File::put(public_path().'/gafete.pdf',$output);
+
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+		' AND rol_usuario.id_rol = 3;'));
+        
+        
+        return view('alumno.mostrarGafete', compact(['semana','instituciones','pdf']));
+        //return view('alumno.generarGafete',compact(['alumno','imagenes','semana']));   
     }
 }

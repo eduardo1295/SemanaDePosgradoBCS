@@ -31,7 +31,8 @@ class StoreCoordinadorRequest extends FormRequest
 
             'nombre' => 'required|string|max:40',
             
-            'password' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            //'password' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            'password' => 'required|string|',
             
             'primer_apellido'   => 'required|string|max:30',
             

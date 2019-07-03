@@ -81,6 +81,7 @@ Route::get('alumno/listAlumnos', 'AlumnoController@listAlumnos')->name('alumno.l
 //Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarAlumno');
 Route::put('alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
 Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
+Route::get('alumno/generarGafete','AlumnoController@generarGafete')->name('alumno.generarGafete');
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
 
 Route::resource('alumno', 'AlumnoController');
@@ -92,6 +93,10 @@ Auth::routes(['verify' => true]);
 Route::get('admin/programas', 'ProgramaController@programa')->name('programa.VerPrograma');
 Route::get('programa/listPrograma', 'ProgramaController@listPrograma')->name('programa.listPrograma');
 Route::put('programa/reactivar/{programa}', 'ProgramaController@reactivar')->name('programa.reactivar');
+Route::get('programa/programaGeneral', 'ProgramaController@programaGeneral')->name('programa.ProgramaGeneral');
+Route::post('programa/subirProgramaGeneral', 'ProgramaController@subirProgramaGeneral')->name('programa.subirProgramaGeneral');
+Route::get('programa/mostrarProgramaGeneral', 'ProgramaController@mostrarProgramaGeneral')->name('programa.mostrarProgramaGeneral');
+
 Route::resource('programa', 'ProgramaController');
 
 Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
@@ -108,11 +113,6 @@ Route::get('sesion/listSesiones', 'SesionController@listSesiones')->name('sesion
 Route::post('sesion/alumnosSeleccionados/{opcion}/{idSesion}', 'SesionController@alumnosSeleccionados')->name('sesion.alumnosSeleccionados');
 Route::resource('sesion', 'SesionController');
 
-
-
-
-
-
 Route::get('/subirTrabajo', 'TrabajoController@subirTrabajo')->name('semana.subirTrabajo');
 Route::post('/revisionTrabajo', 'TrabajoController@revisionTrabajo')->name('semana.revisionTrabajo');
 
@@ -127,6 +127,10 @@ Route::resource('VistaLogin', 'VistaLoginController');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('admin/locacion', 'LocacionController@locacion')->name('locacion.VerLocacion');
+Route::get('locacion/listLocacion', 'LocacionController@listLocacion')->name('locacion.listLocacion');
+Route::resource('locacion', 'LocacionController');
+
 Route::get('/prueba', function(){
     /*
     $pdf = App::make('dompdf.wrapper');
@@ -134,5 +138,14 @@ Route::get('/prueba', function(){
     return $pdf->stream();*/
     return view('prueba');
 });
+Route::get('/qr', function(){
+    /*
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML('<h1>Test</h1>');
+    return $pdf->stream();*/
+    return view('qr');
+});
+
+
 
 

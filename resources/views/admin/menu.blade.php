@@ -61,11 +61,22 @@
                         <span><strong>Modalidades</strong></span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="{{route('locacion.VerLocacion')}}">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><strong>Locaciones</strong></span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{route('sesion.VerSesiones')}}">
                         <i class="far fa-id-card"></i>
                         <span><strong>Sesiones</strong></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('programa.ProgramaGeneral')}}">
+                        <i class="far fa-id-card"></i>
+                        <span><strong>Programa General</strong></span>
                     </a>
                 </li>
 

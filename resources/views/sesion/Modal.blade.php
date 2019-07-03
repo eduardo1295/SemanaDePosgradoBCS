@@ -9,7 +9,7 @@
                 <input type="hidden" name="sesion_id" id="sesion_id">
                     <div class="row">
                         <div class="form-group col-6">
-                          <strong><label for="modalidad">Modalidad</label></strong>
+                          <strong><label for="modalidad">Modalidad</label><label class="text-danger">*</label></strong>
                             @isset($modalidades)
                                 <select class="form-control modalidad" id="modalidad"  name="modalidad" onchange="cambio(1,0)">
                                     <option selected value="">Seleccione periodo</option>
@@ -21,7 +21,7 @@
                             @endisset
                         </div>
                         <div class="form-group col-6">
-                          <strong><label for="dia">Día</label></strong>
+                          <strong><label for="dia">Día</label><label class="text-danger"> *</label></strong>
                           @isset($horarios)
                                 <select class="form-control dia" id="dia"  name="dia">
                                     <option selected value="">Seleccione periodo</option>
@@ -39,22 +39,30 @@
                           @endisset
                         </div>
                         <div class="form-group col-6">
-                          <strong><label for="hora_inicio">Hora inicio</label></strong>
+                          <strong><label for="hora_inicio">Hora inicio</label><label class="text-danger">*</label></strong>
                           <input type="time" name="hora_inicio" id="hora_inicio" class="form-control">
                           <small><span class="text-danger mensajeError" id="hora_inicio_error"></span></small>
                         </div>
                         <div class="form-group col-6">
-                          <strong><label for="hora_fin">Hora fin</label></strong>
+                          <strong><label for="hora_fin">Hora fin</label><label class="text-danger"> *</label></strong>
                           <input type="time" name="hora_fin" id="hora_fin" class="form-control">
                           <small><span class="text-danger mensajeError" id="hora_fin_error"></span></small>
                         </div>
                         <div class="form-group col-12">
-                          <strong><label for="lugar">Lugar</label></strong>
-                          <input type="text" name="lugar" id="lugar" class="form-control">
-                          <small><span class="text-danger mensajeError" id="lugar_error"></span></small>
+                          <strong><label for="lugar">Lugar</label><label class="text-danger"> *</label></strong>
+                          @isset($locaciones)
+                                <select class="form-control lugar" id="lugar"  name="lugar">
+                                    <option selected value="">Seleccione locación</option>
+                                    @foreach($locaciones as $locacion)
+                                    @php
+                                    <option value="{{$locacion->nombre}}">{{$locacion->nombre}}</option>
+                                    @endforeach
+                                </select>
+                                <small><span class="text-danger mensajeError" id="lugar_error"></span></small>
+                          @endisset
                         </div>
                         <div class="form-group col-4">
-                          <strong><label for="cantidad">Cantidad Participantes</label></strong>
+                          <strong><label for="cantidad">Cantidad Participantes</label> <label class="text-danger"> *</label></strong>
                           <input type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Número de participantes por sesión" value="0" min="0" max="99" onKeyUp="validacion(this)">
                           <small><span class="text-danger mensajeError" id="cantidad_error"></span></small>
                         </div>
@@ -62,6 +70,7 @@
                 <div id="mostrar_alumnos" class="ml-3 mr-3"></div>
                 <small><span class="text-danger mensajeError pt-2" id="participantes_error"></span></small>
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
                 
             </div>
             <div class="modal-footer">

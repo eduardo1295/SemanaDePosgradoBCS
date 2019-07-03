@@ -11,6 +11,7 @@ use App\Trabajo;
 use App\Modalidad;
 use App\Semana;
 use App\Institucion;
+use App\Locacion;
 use App\Sesion;
 use App\Http\Requests\sesiones\StoreSesionRequest;
 use DB;
@@ -138,11 +139,21 @@ class SesionController extends Controller
             $error = 'seleccion';
                 return \Response::json($error);
         }
-        $auxTrabajos = Trabajo::where('id_sesion',$id)->get();
-        foreach ($auxTrabajos as $auxTrabajo) {
-            $auxTrabajo->id_sesion = 0;
-            $auxTrabajo->save();
+        $sesiones_Agregadas  = Sesion::select('hora_inicio','hora_fin','lugar')->where('id_sesion','!=',$id)->get();
+        $vuelta = 0;
+        
+        foreach($sesiones_Agregadas as $agregadas){
+            $error = 'cruze';
+            if($request->hora_inicio >= $agregadas->hora_inicio && $request->hora_inicio <= $agregadas->hora_fin && $agregadas->lugar == $request->lugar){
+                return \Response::json($error);
+            }elseif($request->hora_fin >= $agregadas->hora_inicio && $request->hora_fin <= $agregadas->hora_fin && $agregadas->lugar == $request->lugar){
+                return \Response::json($error);
+            }elseif($request->hora_inicio <= $agregadas->hora_inicio && $request->hora_fin >= $agregadas->hora_fin && $agregadas->lugar == $request->lugar){
+                return \Response::json($error);
+            }
+            $vuelta++;  
         }
+        
         $sesion = Sesion::find($id);
         $sesion->id_modalidad = $request->modalidad;
         $modalidad = Modalidad::select('nombre')->where('id_modalidad',$request->modalidad)->first();
@@ -152,20 +163,15 @@ class SesionController extends Controller
         $sesion->hora_fin = $request->hora_fin;
         $sesion->cantidad = $request->cantidad;
         $sesion->lugar = $request->lugar;
-        $sesiones_Agregadas  = Sesion::select('hora_inicio','hora_fin')->where('id_sesion','!=',$id)->get();
-        $vuelta = 0;
-        foreach($sesiones_Agregadas as $agregadas){
-            $error = 'cruze';
-            if($sesion->hora_inicio > $agregadas->hora_inicio && $sesion->hora_inicio < $agregadas->hora_fin){
-                return \Response::json($error);
-            }elseif($sesion->hora_fin > $agregadas->hora_inicio && $sesion->hora_fin < $agregadas->hora_fin){
-                return \Response::json($error);
-            }elseif($sesion->hora_inicio < $agregadas->hora_inicio && $sesion->hora_fin > $agregadas->hora_fin){
-                return \Response::json($error);
-            }
-            $vuelta++;  
-        }
+        
         $sesion->save();
+
+        $auxTrabajos = Trabajo::where('id_sesion',$id)->get();
+        foreach ($auxTrabajos as $auxTrabajo) {
+            $auxTrabajo->id_sesion = 0;
+            $auxTrabajo->save();
+        }
+
         foreach($request->trabajos as $trab){
             $trabajo = Trabajo::find($trab);
             $trabajo->id_sesion = $sesion->id_sesion; 
@@ -207,7 +213,30 @@ class SesionController extends Controller
             $trabajo->id_sesion = 0;
             $trabajo->save();
         }
-        $sesion = Sesion::where('id_sesion',$id)->delete();
+        $sesion = Sesion::find($id);
+        
+        $consulta ="SELECT id_alumno,sesiones.id_sesion,modalidad,titulo,id_programa,users.id_institucion,users.nombre,primer_apellido,segundo_apellido, dia,
+                    hora_inicio, hora_fin,area,siglas,lugar
+                    FROM trabajos,alumnos,users,sesiones,instituciones
+                    WHERE id_alumno = alumnos.id AND users.id = alumnos.id AND sesiones.id_sesion = trabajos.id_sesion AND 
+                          trabajos.id_sesion != 0 AND modalidad = $sesion->id_modalidad AND instituciones.id = users.id_institucion
+                    ORDER BY dia ASC, hora_inicio ASC;";
+        $traba = DB::select($consulta);
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->setPaper('letter','landscape');
+        //$pdf->loadHTML('<h1>Test</h1>');
+        $modalidad = Modalidad::all()->where('id_modalidad',$sesion->id_modalidad)->first();
+        $semana = Semana::All()->last();
+        $fInicio = new Date($semana->fecha_inicio);
+        $fFin = new Date($semana->fecha_fin);
+        $fInicio = $fInicio->format('l d').' de '.$fInicio->format('F');
+        $fFin = $fFin->format('l d').' de '.$fFin->format('F').' del '.$fFin->format('Y');
+        $pdf->loadView('prueba',['trabajo' => $traba, 'modalidad' => $modalidad, 'semana' => $semana ,'fInicio' => $fInicio, 'fFin' => $fFin]);
+        $output = $pdf->output();
+        File::put(public_path().'\documentos\modalidad\\'.$modalidad->nombre .'.pdf',$output);
+        
+        $sesion->forceDelete();
         return \Response::json($sesion);
     }
 
@@ -225,7 +254,8 @@ class SesionController extends Controller
         WHERE 
         @i < DATEDIFF('$semana->fecha_fin','$semana->fecha_inicio')"));
         //dd($horarios[0]->DAY);
-        return view('admin.modalidad.adminSesiones',compact(['semana','modalidades','horarios']));
+        $locaciones = DB::select("select locaciones.id_locacion as id_locacion, locaciones.nombre as nombre from locaciones,semanas where semanas.vigente = 1 AND id_sede = id_institucion");
+        return view('admin.modalidad.adminSesiones',compact(['semana','modalidades','horarios','locaciones']));
         
     }
 
@@ -234,7 +264,22 @@ class SesionController extends Controller
         if($busqueda == 'activos'){
             $selectnoticias = Sesion::select('id_sesion as id','nombre','dia','hora_inicio','hora_fin','lugar');
             return datatables()->of($selectnoticias)
-            ->addColumn('action', 'admin.acciones')
+            ->addColumn('action', 
+            '<div style="text-align:center;width:100px" class="mx-auto">
+
+            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $id }}" title="Editar" data-placement="top"
+                style="height:40px" class="edit btn btn-xs btn-primary editarSesion">
+                <span><i class="fas fa-edit"></i>
+                </span></a>
+        
+        
+            <a href="javascript:void(0);" id="eliminar" data-toggle="tooltip" title="Eliminar" data-placement="top"
+                data-id="{{ $id }}" class="delete btn btn-xs btn-danger eliminarSesion" style="height:40px">
+                <span><i class="fas fa-trash-alt"></i>
+                </span></a>
+            </div>'
+            
+            )
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();

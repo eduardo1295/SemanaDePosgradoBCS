@@ -7,7 +7,7 @@ $(document).ready(function () {
         //console.log('Presionado');
     });
     $("#show-sidebar").click(function () {
-        $('#sesion').DataTable().ajax.reload(null, false);
+        $('#locacion').DataTable().ajax.reload(null, false);
     });
 
     $.extend($.fn.dataTableExt.oStdClasses, {
@@ -15,7 +15,7 @@ $(document).ready(function () {
         "sLengthSelect": ""
     });
 
-    table = $('#sesion').DataTable({
+    table = $('#locacion').DataTable({
         "order":[[2,"asc"]],
         pageLength: 5,
         lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
@@ -28,7 +28,7 @@ $(document).ready(function () {
         "serverSide": true,
         "search": true,
         "ajax": {
-            "url": '/sesion/listSesiones',
+            "url": '/locacion/listLocacion',
             "data": function (d) {
                 d.busqueda = checkInsti
             }
@@ -36,61 +36,53 @@ $(document).ready(function () {
         "columns": [
             { data: 'id', name: 'id', 'visible': false, searchable: false },
             { data: 'nombre', searchable: true },
-            { data: 'dia', searchable: true , 'visible': true },
-            { data: 'hora_inicio', searchable: true , 'visible': true },
-            { data: 'hora_fin', searchable: true , 'visible': true },
-            { data: 'lugar', searchable: false },
+            { data: 'fecha_actualizacion', searchable: true , 'visible': true },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],
         columnDefs: [
             { responsivePriority: 1, targets: 1 },
-            { responsivePriority: 2, targets: 6 },
-            { width: 105, targets: 4 }
+            { responsivePriority: 2, targets: 3 },
+            { width: 105, targets: 3 }
         ]
     });
 
 
     $("input[name='verNoti']").change(function (e) {
         checkInsti = $(this).val();
-        $('#sesion').DataTable().ajax.reload();
+        $('#locacion').DataTable().ajax.reload();
     });
 
-    $('#sesion tbody').on('click', '.eliminar, .reactivar', function (e) {
+    $('#locacion tbody').on('click', '.eliminar, .reactivar', function (e) {
         var tr = $(this).closest("tr");
-        var data = $("#sesion").DataTable().row(tr).data();
+        var data = $("#locacion").DataTable().row(tr).data();
         titulo = data.titulo;
     });
 });
 /*Al presionar el boton editar*/
-$('body').on('click', '.editarSesion', function () {
-    var sesion_id = $(this).data('id');
-    var ruta = "/sesion/" + sesion_id + "/editar";
+$('body').on('click', '.editar', function () {
+    var locacion_id = $(this).data('id');
+    var ruta = "/locacion/" + locacion_id + "/editar";
     reiniciar();
     $.get(ruta, function (data) {
-        $('#sesionCrudModal').html("Editar sesion: " + data.nombre);
+        $('#locacionCrudModal').html("Editar locacion: " + data.nombre);
         $('#btn-save').val("editar");
-        $('#sesion-crud-modal').modal('show');
-        $('#sesion_id').val(data.id_sesion);
-        $('#modalidad').val(data.id_modalidad);
-        $('#dia').val(data.dia);
-        $('#hora_inicio').val(data.hora_inicio);
-        $('#hora_fin').val(data.hora_fin);
-        $('#lugar').val(data.lugar);
-        $('#cantidad').val(data.cantidad);
-        cambio(2,data.id_sesion);
+        $('#locacion-crud-modal').modal('show');
+        $('#id_locacion').val(data.id_locacion);
+        $('#nombre').val(data.nombre);
+        
 
         
     })
 });
-/*Accion al presionar el boton crear-sesion*/
-$('#crear-sesion').click(function () {
+/*Accion al presionar el boton crear-locacion*/
+$('#crear-locacion').click(function () {
     reiniciar();
-    $('#btn-save').val("crear-sesion");
-    $('#sesion_id').val('');
-    $('#sesionForm').trigger("reset");
-    $('#sesionCrudModal').html("Agregar nueva sesión");
-    $('#sesion-crud-modal').modal({ backdrop: 'static', keyboard: false })
-    $('#sesion-crud-modal').modal('show');
+    $('#btn-save').val("crear-locacion");
+    $('#locacion_id').val('');
+    $('#locacionForm').trigger("reset");
+    $('#locacionCrudModal').html("Agregar nueva sesión");
+    $('#locacion-crud-modal').modal({ backdrop: 'static', keyboard: false })
+    $('#locacion-crud-modal').modal('show');
     $('#mostrar_alumnos').html('');
 
 });
@@ -103,9 +95,9 @@ $("#btn-save").click(function () {
     var actionType = $('#btn-save').val();
     $('#btn-save').html('Guardando..');
     if (actionType == "editar") {
-        var id = $('#sesion_id').val();
-        var ruta = "/sesion/" + id;
-        var datos = new FormData($("#sesionForm")[0]);
+        var id = $('#id_locacion').val();
+        var ruta = "/locacion/" + id;
+        var datos = new FormData($("#locacionForm")[0]);
         console.log(Array.from(datos));
         datos.append('_method', 'PUT');
         $.ajax({
@@ -126,14 +118,13 @@ $("#btn-save").click(function () {
                 }
                 else{
                     $('#mostrar_alumnos').html('');
-                    mostrarSnack("sesion agregada exitosamente.");
-                    $('#sesion-crud-modal').modal('hide');
-                    $('#sesionForm').trigger("reset");
+                    mostrarSnack("locación editada exitosamente.");
+                    $('#locacion-crud-modal').modal('hide');
                 }
-                
+                $('#locacionForm').trigger("reset");
                 $('#btn-save').html('Guardar');
                 //recargar serverside
-                var oTable = $('#sesion').dataTable();
+                var oTable = $('#locacion').dataTable();
                 oTable.fnDraw(false);
                 //recargar sin serverside
                 //$('#instituciones').DataTable().ajax.reload();
@@ -153,14 +144,14 @@ $("#btn-save").click(function () {
             },
 
         });
-    } else if (actionType == "crear-sesion") {
+    } else if (actionType == "crear-locacion") {
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
-        var datos = new FormData($("#sesionForm")[0]);
+        var datos = new FormData($("#locacionForm")[0]);
         console.log(Array.from(datos));
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            url: "/sesion",
+            url: "/locacion",
             type: "POST",
             data: datos,
             dataType: 'JSON',
@@ -168,22 +159,18 @@ $("#btn-save").click(function () {
             cache: false,
             processData: false,
             success: function (data) {
-                if(data == "cruze"){
-                    $('#hora_inicio_error').text('Los horarios se Cruzan con otra sesión');
-                }
-                else if(data =="seleccion"){
-                    $('#participantes_error').text('No ha seleccionado ningun Alumno');
+                if(data == "Repetida"){
+                    $('#nombre_error').text('La locación esta repetida.');
                 }
                 else{
-                    $('#mostrar_alumnos').html('');
-                    mostrarSnack("sesion agregada exitosamente.");
-                    $('#sesion-crud-modal').modal('hide');
-                    $('#sesionForm').trigger("reset");
+                    mostrarSnack("locación agregada exitosamente.");
+                    $('#locacion-crud-modal').modal('hide');
+                    $('#locacionForm').trigger("reset");
                 }
                 
                 $('#btn-save').html('Guardar');
                 //recargar serverside
-                var oTable = $('#sesion').dataTable();
+                var oTable = $('#locacion').dataTable();
                 oTable.fnDraw(false);
                 //recargar sin serverside
                 //$('#instituciones').DataTable().ajax.reload();
@@ -210,11 +197,11 @@ $("#btn-save").click(function () {
     }
 });
 /*Accion al presionar el boton eliminar*/
-$('body').on('click', '.eliminarSesion', function () {
-    var carrusel_id = $(this).data("id");
+$('body').on('click', '.eliminar', function () {
+    var locacion_id = $(this).data("id");
     $.confirm({
         columnClass: 'col-md-6',
-        title: '¿Desea eliminar la sesión ?',
+        title: '¿Desea eliminar la imagen?',
         content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
         autoClose: 'cancelAction|8000',
         buttons: {
@@ -232,13 +219,13 @@ $('body').on('click', '.eliminarSesion', function () {
                     $.ajax({
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         type: "DELETE",
-                        url: "/sesion/" + carrusel_id,
+                        url: "/locacion/" + locacion_id,
                         success: function (data) {
 
                             if (table.data().count() == 1) {
-                                $('#sesion').DataTable().ajax.reload();
+                                $('#locacion').DataTable().ajax.reload();
                             } else {
-                                var oTable = $('#sesion').dataTable();
+                                var oTable = $('#locacion').dataTable();
                                 oTable.fnDraw(false);
                             }
 

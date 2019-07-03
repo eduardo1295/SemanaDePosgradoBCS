@@ -32,7 +32,8 @@ class UpdateAlumnoRequest extends FormRequest
 
             'nombre_al' => 'required|string|max:40',
             
-            'password_al' => 'string|nullable|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            //'password_al' => 'string|nullable|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            'password_al' => 'string|nullable',
             
             'primer_apellido_al'   => 'required|string|max:30',
             

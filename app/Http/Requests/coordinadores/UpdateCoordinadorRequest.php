@@ -32,7 +32,8 @@ class UpdateCoordinadorRequest extends FormRequest
 
             'nombre' => 'required|string|max:40',
             
-            'password' => 'string|nullable|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            //'password' => 'string|nullable|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            'password' => 'string|nullable',
             
             'primer_apellido'   => 'required|string|max:30',
             

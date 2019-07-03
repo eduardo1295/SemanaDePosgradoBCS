@@ -34,4 +34,8 @@ class Locacion extends Model
                     ->withPivot('creada_por', 'actualizado_por', 'dia', 'hora')
                     ->withTimestamps();
     }
+    public function instituciones(){
+
+        return $this->belongsTo(Institucion::class,'id_locacion','id');
+    }
 }

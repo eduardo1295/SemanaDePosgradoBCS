@@ -32,7 +32,8 @@ class StoreAlumnoRequest extends FormRequest
 
             'nombre_al' => 'required|string|max:40',
             
-            'password_al' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            //'password_al' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            'password_al' => 'required',
             
             'primer_apellido_al'   => 'required|string|max:30',
             

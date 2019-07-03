@@ -31,7 +31,9 @@ class StoreDirectorRequest extends FormRequest
 
             'nombre_di' => 'required|string|max:40',
             
-            'password_di' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+            //'password_di' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+
+            'password_di' => 'required|string',
             
             'primer_apellido_di'   => 'required|string|max:30',
             

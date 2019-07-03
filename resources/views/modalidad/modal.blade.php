@@ -13,14 +13,14 @@ var hola;
                 <form id="modalidadForm" name="modalidadForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="modalidad_id" id="modalidad_id">
                     <div class="form-group">
-                        <label for="titulo" class="control-label">Titulo</label>
+                        <strong><label for="titulo" class="control-label">Titulo</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="titulo" name="titulo"
                             placeholder="Titulo de la modalidad" value="" maxlength="500" required="">
                         <small><span class="mensajeError text-danger" id="nombres_error"></span></small>
                     </div>
                     <div class="row nr" id="nuevorenglon_1">
                         <div class="form-group col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                                    <strong><label for="posgrado" class="control-label">Posgrado</label></strong>
+                                    <strong><label for="posgrado" class="control-label">Posgrado</label><label class="text-danger">*</label></strong>
                                     <select class="form-control posgrado" id="posgrado" name="posgrado">
                                         <option selected value="">Seleccione posgrado</option>
                                         <option value="Maestría">Maestria</option>
@@ -30,7 +30,7 @@ var hola;
                                     <small><span class="text-danger mensajeError errorposgrado" id="posgrado.0_error"> asdas</span></small>
                         </div>
                         <div class="form-group col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                                    <strong><label for="periodo" class="control-label">Periodo</label></strong>
+                                    <strong><label for="periodo" class="control-label">Periodo</label><label class="text-danger">*</label></strong>
                                     <select class="form-control periodo" id="periodo"  name="periodo">
                                         <option selected value="">Seleccione periodo</option>
                                         <option value="Trimestre">Trimestre</option>
@@ -42,7 +42,7 @@ var hola;
                         </div>
                         {{-- comment 
                         <div class="form-group col-6">
-                                            <p><strong>Periodo</strong></p>
+                                            <p><strong>Periodo</strong><label class="text-danger">*</label></p>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="trimestre">
                                                 <label class="form-check-label" for="inlineCheckbox1">Trimestre</label>
@@ -68,12 +68,13 @@ var hola;
 
                     <div class="form-row mt-2">
                         <div class="form-group col-12">
-                            <strong>Descripción:</strong>
+                            <strong>Descripción:<label class="text-danger">*</label></strong>
                             <textarea class="summernote"  id="contenido" name="contenido"></textarea>
                             <small><span class="text-danger mensajeError" id="contenido_error"></span></small>
                           </div>
                     </div>
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"

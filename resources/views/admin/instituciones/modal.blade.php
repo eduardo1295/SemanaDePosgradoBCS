@@ -11,7 +11,7 @@
 
                     <div class="form-row">
                     <div class="form-group col-md-7">
-                        <label for="nombre" class="control-label">Nombre</label>
+                        <strong><label for="nombre" class="control-label">Nombre</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="nombre" name="nombre"
                             placeholder="Nombre de la institución" value="" maxlength="100" required>
                         <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
@@ -19,9 +19,9 @@
                     </div>
 
                     <div class="form-group col-md-5">
-                        <label for="siglas" class="control-label">Siglas</label>
+                        <strong><label for="siglas" class="control-label">Siglas</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="siglas" name="siglas"
-                            placeholder="Siglas de la institución" value="" maxlength=100" required>
+                            placeholder="Siglas de la institución" value="" maxlength="100" required>
                         <small><span class="mensajeError text-danger" id="siglas_error"></span></small>
 
                     </div>
@@ -31,7 +31,7 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-8">
-                                <label for="direccion_web" class="control-label">Dirección Web</label>
+                            <strong><label for="direccion_web" class="control-label">Dirección Web</label><label class="text-danger">*</label></strong>
 
                             <input type="text" class="form-control" id="direccion_web" name="direccion_web"
                                 placeholder="Ingrese la URL de la institución" value="" required="">
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                                <label for="telefono" class="control-label">Télefono</label>
+                            <strong><label for="telefono" class="control-label">Télefono</label><label class="text-danger">*</label></strong>
 
                             <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Télefono"
                                 value="" required="">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
-                            <label for="ciudad" class="control-label">Ciudad</label>
+                            <strong><label for="ciudad" class="control-label">Ciudad</label><label class="text-danger">*</label></strong>
 
                             <input type="text" class="form-control" id="ciudad" name="ciudad"
                                 placeholder="Ciudad de la institución" value="" required="">
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="form-group col-md-5">
-                            <label for="calle" class="control-label">Calle</label>
+                            <strong><label for="calle" class="control-label">Calle</label><label class="text-danger">*</label></strong>
 
                             <input type="text" class="form-control" id="calle" name="calle"
                                 placeholder="Calle de la institución" value="" required="">
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="form-group col-md-2">
-                            <label for="numero" class=" control-label">Número</label>
+                            <strong><label for="numero" class=" control-label">Número</label><label class="text-danger">*</label></strong>
 
                             <input type="text" class="form-control" id="numero" name="numero" placeholder="0000"
                                 value="" required="">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-9">
-                            <label for="colonia" class="control-label">Colonia</label>
+                            <strong><label for="colonia" class="control-label">Colonia</label><label class="text-danger">*</label></strong>
 
                             <input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia"
                                 value="" required="">
@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label for="cp" class="control-label">CP</label>
+                            <strong><label for="cp" class="control-label">CP</label><label class="text-danger">*</label></strong>
 
                             <input type="text" class="form-control" id="cp" name="cp" placeholder="00000" value=""
                                 required="">
@@ -99,7 +99,7 @@
 
 
                         <div class="form-group col-md-6">
-                            <label id="imagenlogo"> Logo:</label>
+                            <strong><label id="imagenlogo"> Logo:</label><label class="text-danger">*</label></strong>
                             <div class="custom-file">
                                 <input type="file" name="logo" class="custom-file-input" id="logo" lang="es"  onchange="readURL(this,'vistaPrevia');mostrar('nuevoLogo');">
                                 <label for="logo" class="custom-file-label">Seleccionar Archivo</label>
@@ -128,7 +128,7 @@
 
 
                         <div class="form-group col-md-6" id="col-logo">
-                            <label for="googleMap" class="control-label">Ubicación</label>
+                            <strong><label for="googleMap" class="control-label">Ubicación</label><label class="text-danger">*</label></strong>
 
                             <div id="googleMap" style="height: 300px;"></div>
                             <input type='hidden' name='lat' id='lat'>
@@ -136,8 +136,8 @@
                         </div>
 
                     </div>
-
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"

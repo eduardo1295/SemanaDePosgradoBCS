@@ -42,7 +42,7 @@
                         <div class="form-group col-6">
                                 <strong><label for="primer_apellido" class="control-label">Correo Electrónico</label></strong>
                                 <input type="text" name="email" id="email" value="{{$usuario->email}}" class="form-control" max="60">
-                                <small><span class="text-danger mensajeError errorposgrado" id="primer_apellido_error"></span></small>
+                                <small><span class="text-danger mensajeError errorposgrado" id="email_error"></span></small>
                         </div>
                         <div class="form-group col-md-6">
                             <strong><label for="password" class="control-label">Contraseña</label></strong>

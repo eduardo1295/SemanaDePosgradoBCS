@@ -11,7 +11,7 @@
                     
                             @if (auth('admin')->user())
                             <div class="form-group">
-                        <label for="institucionSelect_al">Institución</label>
+                        <strong><label for="institucionSelect_al">Institución</label><label class="text-danger"> *</label></strong>
                         <select class="form-control" id="institucionSelect_al" name="id_institucion_al">
                             <option selected value="">Seleccione una institución</option>
                             @foreach ($instituciones as $institucion)
@@ -23,7 +23,7 @@
                     @endif
                     <div class="form-row">
                     <div class="form-group col-lg-8">
-                            <label for="programaSelect_al">Programa de posgrado</label>
+                            <strong><label for="programaSelect_al">Programa de posgrado</label><label class="text-danger"> *</label></strong>
                             <select class="form-control" id="programaSelect_al" name="programaSelect_al">
                                 
                                 
@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="form-group col-lg-4">
-                    <label for="institucionSelect_al">Director de tesis</label>
+                    <strong><label for="institucionSelect_al">Director de tesis</label><label class="text-danger"> *</label></strong>
                     <select class="form-control" id="directorSelect_al" name="directorSelect_al">
                         
                         
@@ -44,7 +44,7 @@
                     <div class="form-row">
                             
                         <div class="form-group col-lg-6">
-                            <label for="email_al" class="control-label">Email</label>
+                            <strong><label for="email_al" class="control-label">Email</label><label class="text-danger"> *</label></strong>
                             <input type="text" class="form-control" id="email_al" name="email_al"
                                 placeholder="Email del usuario" value="" maxlength="60" required="">
                             <small><span class="mensajeError text-danger" id="email_al_error"></span></small>
@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <label for="password_al" class="control-label">Contraseña</label>
+                            <strong><label for="password_al" class="control-label">Contraseña</label><label class="text-danger"> *</label></strong>
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control" id="password_al" name="password_al"
                                     placeholder="Contraseña para la cuenta" value="" maxlength="60" required=""
@@ -63,17 +63,14 @@
                                         </span></button>
                                 </div>
                             </div>
-                            <small id="passwordHelpBlock" class="form-text text-muted">
-                                Su contraseña debe tener mínimo 6 caracteres, debe contener al menos 1 letra mayúscula,
-                                1 letra minúscula, 1 número y 1 carácter especial(#?!@$^&-).
-                            </small>
+                            
                             <small><span class="mensajeError text-danger" id="password_al_error"></span></small>
                         </div>
                     </div>
 
                     <div class="form-row">
                             <div class="form-group col-lg-3">
-                                    <label for="num_control_al" class="control-label">Número de control</label>
+                                    <strong><label for="num_control_al" class="control-label">Número de control</label><label class="text-danger"> *</label></strong>
                                     <input type="text" class="form-control" id="num_control_al" name="num_control_al"
                                         placeholder="Número de control" value="" maxlength="60" required="">
                                     <small><span class="mensajeError text-danger" id="num_control_al_error"></span></small>
@@ -81,7 +78,7 @@
                                 </div>
 
                         <div class="form-group col-lg-2">
-                            <label for="semestre_al" class="control-label">Semestre</label>
+                            <strong><label for="semestre_al" class="control-label">Semestre</label><label class="text-danger"> *</label></strong>
                             <input type="number" value="1" min="1" max="10" step="1" class="form-control" id="semestre_al" name="semestre_al"
                                 required>
                             <small><span class="mensajeError text-danger" id="semestre_al_error"></span></small>
@@ -89,7 +86,7 @@
                         </div>
 
                         <div class="form-group col-lg-7">
-                            <label for="nombre_al" class="control-label">Nombre</label>
+                            <strong><label for="nombre_al" class="control-label">Nombre</label><label class="text-danger"> *</label></strong>
                             <input type="text" class="form-control" id="nombre_al" name="nombre_al"
                                 placeholder="Nombre del alumno" value="" maxlength="40" required="">
                             <small><span class="mensajeError text-danger" id="nombre_al_error"></span></small>
@@ -98,7 +95,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-lg-6">
-                            <label for="primer_apellido_al" class="control-label">Primer apellido</label>
+                            <strong><label for="primer_apellido_al" class="control-label">Primer apellido</label><label class="text-danger"> *</label></strong>
                             <input type="text" class="form-control" id="primer_apellido_al" name="primer_apellido_al"
                                 placeholder="Primer apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="primer_apellido_al_error"></span></small>
@@ -106,18 +103,16 @@
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <label for="segundo_apellido_al" class="control-label">Segundo apellido</label>
+                            <strong><label for="segundo_apellido_al" class="control-label">Segundo apellido</label><label class="text-danger"> *</label></strong> 
                             <input type="text" class="form-control" id="segundo_apellido_al" name="segundo_apellido_al"
                                 placeholder="Segundo apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="segundo_apellido_al_error"></span></small>
 
                         </div>
                     </div>
-
-
-
-
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"

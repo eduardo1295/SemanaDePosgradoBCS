@@ -10,7 +10,7 @@
                     <input type="hidden" name="carrusel_id" id="carrusel_id">
 
                     <div class="form-group">
-                        <label for="link_web" class="control-label">Link para la imagen</label>
+                        <strong><label for="link_web" class="control-label">Link para la imagen</label><label class="text-danger"> *</label></strong>
                         <input type="text" class="form-control" id="link_web" name="link_web" placeholder="Link para la imagen"
                             value="" maxlength="500" required="">
                         <small><span class="mensajeError text-danger" id="link_web_error"></span></small>
@@ -24,17 +24,17 @@
 
 
                         <div class="form-group col-md-6">
-                            <p id="imagenslider"> Imagen:</p>
+                            <strong><p id="imagenslider"> Imagen: </label><label class="text-danger"> *</label></p></strong>
                             <div class="custom-file">
                                 <input type="file" name="imagenCarrusel" class="custom-file-input" id="imagenCarrusel" lang="es"
                                     onchange="readURL(this,'vistaPrevia');mostrar('nuevaImagen');">
-                                <label for="imagen" class="custom-file-label">Seleccionar Archivo</label>
+                                <label for="imagen" class="custom-file-label">Seleccionar Archivo
                             </div>
 
                             <small><span class="mensajeError text-danger" id="imagenCarrusel_error"></span></small>
                             <div class="row">
                                 <div id="imagenAnterior" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <label for="imgslide" id="imagenactualT" class="control-label"></label>
+                                    <label for="imgslide" id="imagenactualT" class="control-label">
 
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
                                         <img style="height:240px" src="" alt="" id="imgslide" class="img-fluid mx-auto">
@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <div id="nuevaImagen" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-none">
-                                <label for="imgni" id="textVP" class="control-label">Nueva imagen</label>
+                                <label for="imgni" id="textVP" class="control-label">Nueva imagen
 
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
                                     <img style="height:240px" src="" alt="" id="vistaPrevia" class="img-fluid mx-auto">
@@ -53,8 +53,8 @@
                         </div>
 
                     </div>
-
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"

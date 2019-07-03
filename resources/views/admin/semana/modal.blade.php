@@ -11,13 +11,13 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-7">
-                            <label for="nombre" class="control-label">Nombre</label>
+                            <strong><label for="nombre" class="control-label">Nombre</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"
                                 value="" maxlength="100" required="">
                             <small><span class="mensajeError text-danger" id="nombre_error"></span></small>
                         </div>
                         <div class="form-group col-md-5">
-                            <label for="institucionSelect">Institución</label>
+                            <strong><label for="institucionSelect">Institución</label><label class="text-danger">*</label></strong> 
                             <select class="form-control" id="institucionSelect" name="id_institucion">
                                 <option selected value="">Seleccione una institución</option>
                                 @foreach ($instituciones as $institucion)
@@ -30,17 +30,14 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="fecha" class="control-label">Periodo del evento</label>
+                            <strong><label for="fecha" class="control-label">Periodo del evento</label><label class="text-danger">*</label></strong>
                             <input type="text" id="fecha" name="fecha" class="form-control"
                                 value="{{date('Y-m-d')}} - {{date('Y-m-d')}}">
                             <small><span class="mensajeError text-danger" id="fecha_inicio_error"></span></small>
                             <small><span class="mensajeError text-danger" id="fecha_fin_error"></span></small>
                         </div>
                         <div class="form-group col-md-6">
-                            <label id="ligaConvo"> Convocatoria</label>
-                            
-                            
-                            
+                            <strong><label id="ligaConvo"> Convocatoria</label><label class="text-danger">*</label></strong>
                             <div class="custom-file">
                                 <input type="file" name="convocatoria" class="custom-file-input" id="convocatoria"
                                     lang="es">
@@ -48,12 +45,10 @@
                             </div>
                             <small><span class="mensajeError text-danger" id="convocatoria_error"></span></small>
                         </div>
-
                     </div>
-
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <strong>Información genereal:</strong>
+                            <strong>Información general:</strong><label class="text-danger">*</label>
                             <textarea class="summernote" style=" word-wrap: break-word;" id="contenido"
                                 name="contenido"></textarea>
                                 <small><span class="mensajeError text-danger" id="contenido_error"></span></small>
@@ -65,7 +60,7 @@
 
 
                         <div class="form-group col-md-6">
-                            <p id="logos"> Logo del evento:</p>
+                            <strong><p id="logos"> Logo del evento:</p></strong>
                             <div class="custom-file">
                                 <input type="file" name="imagensemana" class="custom-file-input" id="imagensemana"
                                     lang="es" onchange="readURL(this,'vistaPrevia');mostrar('nuevoLogo');">
@@ -97,8 +92,10 @@
 
 
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
+                
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"
                     value="cerrar">Cancelar
                 </button>

@@ -12,14 +12,14 @@
 
                     <div class="form-row">
                         <div class="form-group col-12 col-sm-6">
-                                <strong><label for="id_programa" class="control-label">Clave del programa</label></strong>
+                                <strong><label for="id_programa" class="control-label">Clave del programa</label><label class="text-danger">*</label></strong>
                                 <input type="text" class="form-control" id="id_programa_pro" name="id_programa_pro" placeholder="Ingrese Clave del programa"
                                     value="" maxlength="100" required="">
                                 <small><span class="text-danger mensajeError" id="id_programa_pro_error"></span></small>
                         </div>
                         @if (auth('admin')->user())
                             <div class="form-group col-12 col-sm-6">
-                                <strong><label for="id_institucion" class="control-label">Institución</label></strong>
+                                <strong><label for="id_institucion" class="control-label">Institución</label><label class="text-danger">*</label></strong>
                                 <select class="form-control" id="id_institucion_pro" name="id_institucion_pro">
                                     <option selected value="">Seleccione una institución</option>
                                     @foreach ($instituciones as $institucion)
@@ -31,14 +31,14 @@
                         @endif
 
                         <div class="form-group col-12 col-sm-6">
-                            <strong><label for="nombre" class="control-label">Nombre</label></strong>
+                            <strong><label for="nombre" class="control-label">Nombre</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="nombre_pro" name="nombre_pro" placeholder="Ingrese el nombre del programa"
                                value="" maxlength="100" required="">
                             <small> <span class="text-danger mensajeError" id="nombre_pro_error"></span> </small>                            
                                 
                         </div>
                         <div class="form-group col-12 col-sm-6">
-                            <strong><label for="nivel" class="control-label">Nivel</label></strong>
+                            <strong><label for="nivel" class="control-label">Nivel</label><label class="text-danger">*</label></strong>
                             <select class="form-control" id="nivel_pro" name="nivel_pro">
                                 <option selected value="">Seleccione nivel</option>
                                 <option value="Maestría">Maestría</option>
@@ -47,7 +47,7 @@
                             <small> <span class="text-danger mensajeError" id="nivel_pro_error"></span> </small>
                         </div>
                         <div class="form-group col-12 col-sm-6">
-                                <strong> <label for="periodo" class="control-label">Periodo</label></strong>
+                                <strong> <label for="periodo" class="control-label">Periodo</label><label class="text-danger">*</label></strong>
                                 <select class="form-control" id="periodo_pro" name="periodo_pro">
                                     <option selected value="">Seleccione periodo</option>
                                     <option value="Trimestre">Trimestre</option>
@@ -68,6 +68,7 @@
                         --}}
                     </div>
                 </form>
+                <strong class="text-danger">Campos requeridos *</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"
