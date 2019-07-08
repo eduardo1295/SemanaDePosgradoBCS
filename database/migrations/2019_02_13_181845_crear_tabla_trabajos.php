@@ -22,7 +22,7 @@ class CrearTablaTrabajos extends Migration
             $table->foreign('id_director')->references('id')->on('users');
             $table->integer('id_semana')->unsigned();
             $table->foreign('id_semana')->references('id_semana')->on('semanas');
-
+            $table->integer('id_sesion')->unsigned();
             $table->string('titulo', 100);
             $table->string('resumen', 1000);
             $table->string('area', 100);

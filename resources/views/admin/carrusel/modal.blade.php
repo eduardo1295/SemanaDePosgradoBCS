@@ -34,7 +34,7 @@
                             <small><span class="mensajeError text-danger" id="imagenCarrusel_error"></span></small>
                             <div class="row">
                                 <div id="imagenAnterior" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <label for="imgslide" id="imagenactualT" class="control-label">
+                                    <label for="imgslide" id="imagenactualT" class="control-label"></label>
 
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
                                         <img style="height:240px" src="" alt="" id="imgslide" class="img-fluid mx-auto">

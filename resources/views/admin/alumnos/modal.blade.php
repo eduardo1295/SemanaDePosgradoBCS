@@ -103,7 +103,7 @@
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <strong><label for="segundo_apellido_al" class="control-label">Segundo apellido</label><label class="text-danger"> *</label></strong> 
+                            <strong><label for="segundo_apellido_al" class="control-label">Segundo apellido</label></strong> 
                             <input type="text" class="form-control" id="segundo_apellido_al" name="segundo_apellido_al"
                                 placeholder="Segundo apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="segundo_apellido_al_error"></span></small>

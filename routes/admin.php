@@ -27,4 +27,7 @@ Route::group(['namespace' => 'Admin'], function() {
     // Contraseña primer cambio
     Route::get('contrasena', 'HomeController@cambiarContrasena')->name('admin.contrasena');
     Route::post('contrasenaGuardar', 'HomeController@guardarContrasena')->name('admin.guardarContrasena');
+
+    Route::get('{id}/editar', 'HomeController@editarPerfil')->name('admin.editarPerfil');
+    Route::post('editarAdmin/{id}', 'HomeController@editarAdmin')->name('admin.editarAdmin');
 });

@@ -349,9 +349,11 @@ class AlumnoController extends Controller
             $ruta =  asset('img/logo/'.$insticion->url_logo);
             $imagenes .= '<img style="vertical-align: top;width:100px;height:80px;"src = "'.$ruta.'">';
         }
-            
-        $conacyt =  asset('img/logo/conacyt.png');    
-        $imagenes .= '<img style="vertical-align: top;width:100px;height:70px;"src = "'.$conacyt.'">';
+        if(file_exists( public_path(). '/img/logo/conacyt.png') || file_exists( public_path(). '/img/logo/conacyt.jpg')){
+            $conacyt =  asset('img/logo/conacyt.png');    
+            $imagenes .= '<img style="vertical-align: top;width:100px;height:70px;"src = "'.$conacyt.'">';
+        }
+        
         
         $pdf = App::make('dompdf.wrapper');
         //$pdf->setPaper('A6','portrait');
