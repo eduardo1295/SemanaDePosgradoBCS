@@ -13,14 +13,14 @@ class CrearTablaSesion extends Migration
      */
     public function up()
     {
-        Schema::table('sesiones', function (Blueprint $table) {
+        Schema::create('sesiones', function (Blueprint $table) {
             $table->increments('id_sesion');
-            $table->int('id_modalidad');
+            $table->integer('id_modalidad');
             $table->string('nombre', 50);
-            $table->date('dia', 15);
-            $table->time('hora_inicio', 15);
-            $table->time('hora_fin', 15);
-            $table->int('cantidad');
+            $table->date('dia');
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
+            $table->integer('cantidad');
             $table->string('lugar', 100);
 
             $table->softDeletes();

@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <strong><label for="segundo_apellido" class="control-label">Segundo apellido</label><label class="text-danger">*</label></strong>
+                        <strong><label for="segundo_apellido" class="control-label">Segundo apellido</label></strong>
                         <input type="text" class="form-control" id="segundo_apellido_di" name="segundo_apellido_di"
                             placeholder="Segundo apellido del usuario" value="" maxlength="30" required="">
                         <small><span class="mensajeError text-danger" id="segundo_apellido_di_error"></span></small>

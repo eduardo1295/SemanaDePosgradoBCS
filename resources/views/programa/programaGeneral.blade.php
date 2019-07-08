@@ -26,7 +26,7 @@
         <!--<div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">-->
             <div class="row">
                 <div class="col-12">
-                    <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Convocatoria</h1> <br>
+                    <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Programa general</h1> <br>
                 </div>
             </div>
             <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/documentos/programaGeneral/ProgramaGeneral.pdf"

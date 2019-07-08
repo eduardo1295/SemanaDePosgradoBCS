@@ -93,7 +93,8 @@
                             <strong><label for="area" class="control-label">Área</label><label class="text-danger">*</label></strong></strong>
                             <input type="text" class="form-control" id="area" name="area" placeholder="director de tesis" value="@isset($programa){{$programa->nombre}}@endisset" readonly>
                         </div>
-                        <div class="col-12 d-flex justify-content-end pt-3">
+                        <div class="col-12 d-flex pt-3 d-flex justify-content-between">
+                            <strong class="text-danger">Campos requeridos *</strong>
                             @if(isset($trabajo))
                                 @if($trabajo->autorizado == 1)
                                     <button type="button" class="btn btn-success" disabled id="btn-save" value="editar">Tu trabajo fue aprobado</button>
@@ -103,12 +104,12 @@
                                     <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar</button>
                                 @endif
                             @else
-                            <button type="button" class="btn btn-primary" id="btn-save" value="editar">Guardar</button>
+                            <button type="button" class="btn btn-primary " id="btn-save" value="editar">Guardar</button>
                             @endif
                         </div>        
                     </div>
                 </form>
-                <strong class="text-danger">Campos requeridos *</strong>
+                
             </div>
             <div id="snackbar"></div>
 </section>

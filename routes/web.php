@@ -32,6 +32,8 @@ Route::get('admin/instituciones', 'InstitucionController@instituciones')->name('
 Route::get('admin/institcucion/listUsuarios', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');
 Route::put('admin/institucion/reactivar/{institucion}', 'InstitucionController@reactivar')->name('institucion.reactivar');
 
+Route::post('admin/institucion/suibirLogoConacyt', 'InstitucionController@suibirLogoConacyt')->name('institucion.suibirLogoConacyt');
+
 Route::resource('institucion', 'InstitucionController');
 
 Route::post('noticias/vistaPrevia', 'NoticiaController@vistaPrevia')->name('noticia.vistaPrevia');
@@ -83,7 +85,6 @@ Route::put('alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alu
 Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
 Route::get('alumno/generarGafete','AlumnoController@generarGafete')->name('alumno.generarGafete');
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
-
 Route::resource('alumno', 'AlumnoController');
 
 Auth::routes(['verify' => true]);
@@ -130,6 +131,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('admin/locacion', 'LocacionController@locacion')->name('locacion.VerLocacion');
 Route::get('locacion/listLocacion', 'LocacionController@listLocacion')->name('locacion.listLocacion');
 Route::resource('locacion', 'LocacionController');
+
 
 Route::get('/prueba', function(){
     /*

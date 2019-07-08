@@ -59,56 +59,45 @@ class TrabajoController extends Controller
      */
     public function store(StoreTrabajoRequest $request)
     {   
+        
         $nuevo_nombre = 'sin Trabajo';
         if($request->hasFile('url')){
             $trabajoAlumno = $request->url;
-            //agregar id de usuarios a nombre
             $nuevo_nombre = auth()->user()->nombre.'_'.auth()->user()->primer_apellido.'_'.auth()->user()->segundo_apellido . '.' . $trabajoAlumno->getClientOriginalExtension();
             $trabajoAlumno->move(public_path('documentos/trabajos'), $nuevo_nombre);
         }
         elseif (isset($request->auxUrl)) {
             $nuevo_nombre = $request->auxUrl;
         }
-        /*
-        $trabajo = new Trabajo();
-        $trabajo->id_alumno   = auth()->user()->id   ;
-        $trabajo->id_director = $request->id_director;
-        $trabajo->id_semana   = $request->id_semana  ;
-        $trabajo->titulo      = $request->titulo     ;
-        $trabajo->resumen     = $request->resumen    ;
-        $trabajo->area        = $request->area       ;
-        $trabajo->pal_clv1    = $request->pal_clv1   ;
-        $trabajo->pal_clv2    = $request->pal_clv2   ;
-        $trabajo->pal_clv3    = $request->pal_clv3   ;
-        $trabajo->pal_clv4    = $request->pal_clv4   ;
-        $trabajo->pal_clv5    = $request->pal_clv5   ;
-        $trabajo->url         = $trabajoAlumno       ;
-        $trabajo->save();
-        */
-        $semana = Semana::all()->last(); 
-        
-        $trabajo = Trabajo::updateOrCreate(
-            ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
-            [
-             'id_director' => $request->id_director,
-             'id_semana' => $request->id_semana  ,
-             'titulo' => $request->titulo     ,
-             'resumen' => $request->resumen    ,
-             'area' => $request->area       ,
-             'pal_clv1' => $request->pal_clv1   ,
-             'pal_clv2' => $request->pal_clv2   ,
-             'pal_clv3' => $request->pal_clv3   ,
-             'pal_clv4' => $request->pal_clv4   ,
-             'pal_clv5' => $request->pal_clv5   ,
-             'url' => $nuevo_nombre,
-             'id_alumno' => $request->id_alumno,
-             'comentario' => null,
-             'revisado' => 0,
-             'modalidad' => $request->modalidad,
-            ]
-        );
-        //dd($trabajo->directores()->first()->email);
-        Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
+        $semana = Semana::all()->last();
+        $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->where('id_semana',$semana->id_semana)->first();
+        if($trabajo != null){
+
+        }else{
+            $trabajo = Trabajo::updateOrCreate(
+                ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
+                [
+                 'id_director' => $request->id_director,
+                 'id_semana' => $request->id_semana  ,
+                 'titulo' => $request->titulo     ,
+                 'resumen' => $request->resumen    ,
+                 'area' => $request->area       ,
+                 'pal_clv1' => $request->pal_clv1   ,
+                 'pal_clv2' => $request->pal_clv2   ,
+                 'pal_clv3' => $request->pal_clv3   ,
+                 'pal_clv4' => $request->pal_clv4   ,
+                 'pal_clv5' => $request->pal_clv5   ,
+                 'url' => $nuevo_nombre,
+                 'id_alumno' => $request->id_alumno,
+                 'comentario' => null,
+                 'revisado' => 0,
+                 'modalidad' => $request->modalidad,
+                ]
+            );
+            //dd($trabajo->directores()->first()->email);
+
+            Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
+        }
         return \Response::json($trabajo);
     }
 
@@ -120,9 +109,19 @@ class TrabajoController extends Controller
      */
     public function show($id)
     {
+
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->first();
-        $trabajo = Trabajo::select('id_trabajo','url','comentario','autorizado')->where('id_alumno',$id)->where('id_semana',$semana->id_semana)->first();
+        $trabajo = Trabajo::select('id_director','id_alumno','id_trabajo','url','comentario','autorizado')->where('id_alumno',$id)->where('id_semana',$semana->id_semana)->firstOrFail();
+        if(auth()->user() && auth()->user()->hasRoles(['director','alumno'])){
+            if(auth()->user()->hasRoles(['director'])){
+                if(auth()->user()->id!=$trabajo->id_director)
+                    return abort(403);
+            }else if(auth()->user()->hasRoles(['alumno'])){
+                if(auth()->user()->id!=$trabajo->id_alumno)
+                    return abort(403);
+            }
+        }
         return view('director.revisarTrabajo',compact(['instituciones','trabajo','semana']));
     }
 

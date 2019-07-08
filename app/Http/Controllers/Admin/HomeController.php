@@ -10,6 +10,9 @@ use App\Semana;
 use App\Admin;
 use App\VistaLogin;
 use Carbon\Carbon;
+use DB;
+use App\User;
+use App\Http\Requests\admin\UpdateAdminRequest;
 
 
 class HomeController extends Controller
@@ -58,6 +61,25 @@ class HomeController extends Controller
         if($admin){
             return redirect()->route('admin.index');
         }
+    }
+
+    public function editarPerfil($id){
+            $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+            $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+            $admin = $admin = User::select('id','id_institucion','nombre','email')->where('id',$id)->first();
+            return view('admin.editarPerfil',compact(['admin','semana','instituciones']));
+    }
+
+    public function editarAdmin(UpdateAdminRequest $request,$id){
+            $admin = Admin::find($id);    
+            $admin->nombre = ucfirst($request->nombre);
+            $admin->email = ucfirst($request->email);
+            if(!empty($request->password))
+                $admin->password = bcrypt($request->password);
+            
+            $admin->save();
+
+            return \Response::json($admin);
     }
 
     

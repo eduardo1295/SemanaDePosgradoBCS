@@ -255,4 +255,16 @@ class InstitucionController extends Controller
             ->toJson();   
         }
     }
+
+    public function suibirLogoConacyt(Request $request){
+        $nuevo_nombre = 'sin imagen';
+        if($request->hasFile('logo')){
+            
+            $imagenlogo= $request->file('logo');
+            //agregar id de usuarios a nombre
+            $nuevo_nombre = 'conacyt.' . $imagenlogo->getClientOriginalExtension();
+            $imagenlogo->move(public_path('/img/logo/'), $nuevo_nombre);
+        }
+        return \Response::json("LISTO");
+    }
 }

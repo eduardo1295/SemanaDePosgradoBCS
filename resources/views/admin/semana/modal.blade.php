@@ -73,7 +73,7 @@
                                     <label for="imglogo" id="imagenactualT" class="control-label"></label>
 
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
-                                        <img style="height:240px" src="" alt="imagen_no_disponible" id="imglogo" class="img-fluid mx-auto">
+                                        <img style="height:150px" src="" alt="imagen_no_disponible" id="imglogo" class="img-fluid mx-auto">
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                 <label for="imgN" id="textVP" class="control-label">Nuevo logo</label>
 
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center">
-                                    <img style="height:240px" src="" alt="imagen_no_disponible" id="vistaPrevia" class="img-fluid mx-auto">
+                                    <img style="height:150px" src="" alt="imagen_no_disponible" id="vistaPrevia" class="img-fluid mx-auto">
                                 </div>
                             </div>
                         </div>

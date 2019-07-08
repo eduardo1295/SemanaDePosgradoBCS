@@ -26,7 +26,7 @@
                             <i class="fas fa-user"></i> {{auth('admin')->user()->nombre}}
                         </button>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Mi Perfil</a>
+                            <a class="dropdown-item" href="{{route('admin.editarPerfil',auth('admin')->user()->id)}}">Mi Perfil</a>
                             @if(auth('admin')->user() || auth()->user())
                                 {{-- comment 
                                 @if(auth()->user()->hasRoles(['alumno']))
