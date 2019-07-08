@@ -56,9 +56,9 @@ function cargarDataTableAlumnos(){
                     name: 'id_sem_constancia',
                     render: function (data, type, full, meta) {
                         if(data ==null){
-                            return '<div style="width:100%;text-align:center"><input style="width: 20px; height: 20px;" type="checkbox" class = "constanciaGuardar" name="'+data+'" value="'+data+'"></div>';
+                            return '<div style="width:100%;text-align:center"><input style="width: 20px; height: 20px;" type="checkbox" onchange="cambio(this)" name="constancia" value="'+full.id+'"></div>';
                         }else{
-                            return '<div style="width:100%;text-align:center"><input type="checkbox" style="width: 20px; height: 20px;" class = "constanciaGuardar" checked name="'+data+'" value="'+data+'"></div>';
+                            return '<div style="width:100%;text-align:center"><input type="checkbox" style="width: 20px; height: 20px;" onchange="cambio(this)" checked name="constancia" value="'+full.id+'"></div>';
                         }
                     },
                     orderable: false, searchable: false
@@ -231,17 +231,17 @@ $('body').on('click', '.eliminarAlumno', function () {
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#alumnoForm').trigger("reset");
                     $('#alumno-crud-modal').modal('hide');
-                    $('#btn-save-alumno').html('Guardar');
                     //recargar serverside
                     var oTable = $('#alumnosDT').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Actualización exitosa.");
-                    $("#btn-save-alumno").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                     console.log(data);
                 },
                 error: function (data) {
@@ -254,11 +254,13 @@ $('body').on('click', '.eliminarAlumno', function () {
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save-alumno').html('Guardar');
                     $("#btn-save-alumno").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
             });
         } else if (actionType == "crear-alumno") {
             $("#btn-save-alumno").prop("disabled", true);
@@ -275,17 +277,20 @@ $('body').on('click', '.eliminarAlumno', function () {
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#alumnoForm').trigger("reset");
                     $('#alumno-crud-modal').modal('hide');
-                    $('#btn-save-alumno').html('Guardar');
+                    
                     //recargar serverside
                     var oTable = $('#alumnosDT').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Alumno registrado exitosamente.");
-                    $("#btn-save-alumno").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
+                    
+                    
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -296,11 +301,13 @@ $('body').on('click', '.eliminarAlumno', function () {
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save-alumno').html('Guardar');
                     $("#btn-save-alumno").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
 
             });
         }
@@ -385,3 +392,83 @@ $('#crear-alumno').click(function () {
         $('#directorSelect_al').html('');
         $('#directorSelect_al').append('<option selected value="">Seleccione una institución</option>');
     }
+
+
+    /*Accion al presionar el boton save*/
+    $(".constanciaGuardar").change(function () {
+        
+        var alumno_id = $(this).data('id');
+            
+            var ruta = rutaBaseAlumno + '/constanciaAlta';
+            
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: ruta,
+                type: "POST",
+                data: {id_alumno:alumno_id},
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function (data) {
+                    //recargar serverside
+                    var oTable = $('#alumnosDT').dataTable();
+                    oTable.fnDraw(false);
+                    
+                    mostrarSnack("Actualización exitosa.");
+                },
+                error: function (data) {
+                    
+                    
+                    if (data.status == 422) {
+                        
+                    }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
+                }
+
+            });
+        
+
+    })
+
+
+    function cambio(checkEnviar){
+        var alumno_id = $(checkEnviar).val();
+            
+            var ruta = rutaBaseAlumno + '/constanciaAlta';
+            
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: ruta,
+                type: "POST",
+                data: {id_alumno:alumno_id},
+                dataType: 'JSON',
+                
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function (data) {
+                    //recargar serverside
+                    var oTable = $('#alumnosDT').dataTable();
+                    oTable.fnDraw(false);
+                    
+                    mostrarSnack("Actualización exitosa.");
+                },
+                error: function (data) {
+                    
+                    
+                    if (data.status == 422) {
+                        
+                    }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
+                }
+
+            });
+    };

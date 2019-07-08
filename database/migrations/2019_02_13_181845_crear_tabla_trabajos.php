@@ -23,6 +23,8 @@ class CrearTablaTrabajos extends Migration
             $table->integer('id_semana')->unsigned();
             $table->foreign('id_semana')->references('id_semana')->on('semanas');
 
+            $table->integer('id_modalidad')->unsigned();
+
             $table->string('titulo', 100);
             $table->string('resumen', 1000);
             $table->string('area', 100);

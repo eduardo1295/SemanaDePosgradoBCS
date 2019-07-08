@@ -148,4 +148,7 @@ Route::get('/qr', function(){
 
 
 
-
+Route::post('constancia/guardarImagenes', 'ConstanciaController@guardarImagenes')->name('constancia.guardarImagenes');
+Route::post('alumno/constanciaAlta','ConstanciaController@altaConstancia');
+Route::get('constancia/generate-pdf','ConstanciaController@generatePDF');
+Route::resource('constancia', 'ConstanciaController');

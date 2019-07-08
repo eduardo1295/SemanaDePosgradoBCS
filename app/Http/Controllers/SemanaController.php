@@ -35,6 +35,7 @@ class SemanaController extends Controller
      */
     public function index()
     {
+        
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio',DB::raw("(DATE_FORMAT(fecha_inicio,'%Y-%m-%d'))as n") ,'fecha_fin')->where('vigente',1)->first();
         //dd($semana->n);
         $fInicio = $semana->fecha_inicio;

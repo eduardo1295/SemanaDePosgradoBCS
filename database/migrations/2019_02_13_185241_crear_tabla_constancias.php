@@ -15,7 +15,12 @@ class CrearTablaConstancias extends Migration
     {
         Schema::create('constancias', function (Blueprint $table) {
             $table->increments('id');
-    
+            $table->mediumText('cComponentes');
+            $table->mediumText('cHTML');
+            $table->mediumText('cCSS');
+            $table->string('url_imagen_fondo', 100)->nullable();
+            $table->integer('id_semana')->unsigned();
+    /*
             $table->integer('creada_por')->unsigned();
             $table->foreign('creada_por')->references('id')->on('users');
             $table->integer('id_semana')->unsigned();
@@ -24,10 +29,10 @@ class CrearTablaConstancias extends Migration
 
             $table->string('titulo', 40);
             $table->string('cuerpo', 100);
-            $table->string('url_imagen_fondo', 100)->nullable();
-
+            
+*/
             $table->timestamps();
-            $table->integer('actualizado_por')->nullable();
+  //          $table->integer('actualizado_por')->nullable();
 
             $table->engine = 'InnoDB';
             $table->collation = 'latin1_swedish_ci';

@@ -116,6 +116,15 @@ class InstitucionController extends Controller
      */
     public function edit($id)
     {
+        
+        //return \Response::json(['error' => 'Error msg'], 404);
+        if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+            
+            if(auth()->user()->id_institucion!=$id){
+                return \Response::json(['error' => 'Acceso denegado'], 403);
+            }
+        }
+        
         $institucion  = Institucion::where('id', $id)->first();
         return \Response::json($institucion);
     }

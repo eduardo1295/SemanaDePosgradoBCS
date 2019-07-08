@@ -16,6 +16,6 @@ class Constancia extends Model
      * @var array
      */
     protected $fillable = [
-        'creado_por', 'id_semana', 'url_imagen_fondo', 'actualizado_por',
+        'cComponentes','cCSS','cHTML', 'id_semana', 'url_imagen_fondo',
     ];
 }

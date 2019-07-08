@@ -41,26 +41,6 @@
                         <span><strong>Instituciones</strong></span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="{{route('carrusel.VerCarrusel')}}">
-                        <i class="fab fa-slideshare"></i>
-                        <span><strong>Carrusel</strong></span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('programa.VerPrograma')}}">
-                        <i class="fas fa-user-tie"></i>
-                        <span><strong>Programas de estudio</strong></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('modalidad.VerModalidad')}}">
-                        <i class="far fa-id-card"></i>
-                        <span><strong>Modalidades</strong></span>
-                    </a>
-                </li>
                 <li>
                     <a href="{{route('locacion.VerLocacion')}}">
                         <i class="fas fa-map-marker-alt"></i>
@@ -68,41 +48,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('sesion.VerSesiones')}}">
-                        <i class="far fa-id-card"></i>
-                        <span><strong>Sesiones</strong></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('programa.ProgramaGeneral')}}">
-                        <i class="far fa-id-card"></i>
-                        <span><strong>Programa General</strong></span>
-                    </a>
-                </li>
-
-                {{-- comment 
-
-                <li>
-                    <a href="{{route('coordinador.VerCoodinadores')}}">
+                    <a href="{{route('programa.VerPrograma')}}">
                         <i class="fas fa-user-tie"></i>
-                        <span><strong>Coordinadores</strong></span>
+                        <span><strong>Programas de estudio</strong></span>
                     </a>
                 </li>
-                
-                <li>
-                    <a href="{{route('director.VerDirectores')}}">
-                        <i class="fas fa-user"></i>
-                        <span><strong>Directores de tesis</strong></span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('alumnos.VerAlumnos')}}">
-                        <i class="fas fa-user-graduate"></i>
-                        <span><strong>Alumnos</strong></span>
-                    </a>
-                </li>
-                --}}
                 <li class="sidebar-dropdown">
                     <a>
                         <i class="fas fa-user"></i>
@@ -133,6 +83,62 @@
                         </ul>
                     </div>
                 </li>
+
+                
+                <li>
+                    <a href="{{route('modalidad.VerModalidad')}}">
+                        <i class="far fa-id-card"></i>
+                        <span><strong>Modalidades</strong></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('carrusel.VerCarrusel')}}">
+                        <i class="fab fa-slideshare"></i>
+                        <span><strong>Carrusel</strong></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('sesion.VerSesiones')}}">
+                        <i class="far fa-id-card"></i>
+                        <span><strong>Sesiones</strong></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('programa.ProgramaGeneral')}}">
+                        <i class="far fa-id-card"></i>
+                        <span><strong>Programa General</strong></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('constancia.index')}}">
+                        <i class="far fa-id-card"></i>
+                        <span><strong>Diseño de constancia de participación</strong></span>
+                    </a>
+                </li>
+                {{-- comment 
+
+                <li>
+                    <a href="{{route('coordinador.VerCoodinadores')}}">
+                        <i class="fas fa-user-tie"></i>
+                        <span><strong>Coordinadores</strong></span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{{route('director.VerDirectores')}}">
+                        <i class="fas fa-user"></i>
+                        <span><strong>Directores de tesis</strong></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('alumnos.VerAlumnos')}}">
+                        <i class="fas fa-user-graduate"></i>
+                        <span><strong>Alumnos</strong></span>
+                    </a>
+                </li>
+                --}}
+                
                 <!---->
                 <li class="sidebar-dropdown">
                     <a>

@@ -65,6 +65,7 @@ function cargarInstitucion(){
         },
         complete: function (data) {
             $(".loader").hide();
+            console.log(data);
         }
 
     });
