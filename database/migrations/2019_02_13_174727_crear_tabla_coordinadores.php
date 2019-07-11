@@ -16,8 +16,8 @@ class CrearTablaCoordinadores extends Migration
         Schema::create('coordinadores', function (Blueprint $table) {
             $table->integer('id')->unsigned();
             $table->foreign('id')->references('id')->on('users');
-            $table->integer('id_semana')->unsigned();
-            $table->foreign('id_semana')->references('id_semana')->on('semanas');
+            //$table->integer('id_semana')->unsigned();
+            //$table->foreign('id_semana')->references('id_semana')->on('semanas');
 
             $table->string('puesto', 60);
             //$table->string('grado', 30);
