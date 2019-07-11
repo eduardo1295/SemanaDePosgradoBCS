@@ -43,7 +43,7 @@
                 $horaFin = $horaFin->format('H:i');
                 @endphp
                 @if($dia == "")
-                <div>{{$fecha.', Hora:( '.$horaInicio .'-'.$horaFin.')'.'  Lugar: '.$trab->lugar}}</div>
+                <div>{{$fecha.', Hora:('.$horaInicio .' - '.$horaFin.')'.'  Lugar: '.$trab->lugar}}</div>
                 <table  style="width: 100%; padding-top: 0px;">
                     <thead>
                       <tr>
@@ -64,7 +64,7 @@
                 @php $x = 1; @endphp
                 </tbody>
                 </table>
-                <div style="margin-top: 25px;">{{$fecha.' ('.$horaInicio .'-'.$horaFin.') '.'  Lugar: '.$trab->lugar}}</div>
+                <div style="margin-top: 25px;">{{$fecha.' ('.$horaInicio .' - '.$horaFin.') '.'  Lugar: '.$trab->lugar}}</div>
                 <table  style="width: 100%; margin-top: 0px; padding-top: 0px" >
                   <thead>
                     <tr>

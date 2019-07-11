@@ -31,7 +31,7 @@
     var checkInsti = 'activos';
 
     $(document).ready(function () {
-
+        
         $.extend($.fn.dataTableExt.oStdClasses, {
             "sFilterInput": "busqueda",
             "sLengthSelect": ""
@@ -138,6 +138,7 @@
             var ruta = rutaBaseIntitucion + "/" + institucion_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
+                
                 $('#institucionCrudModal').html("Editar institución: " + data.nombre);
                 $('#btn-save').val("editar");
                 $('#institucion-crud-modal').modal('show');
@@ -151,7 +152,7 @@
                 $('#colonia').val(data.colonia);
                 $('#siglas').val(data.siglas);
                 $('#cp').val(data.cp);
-                $('#imglogo').prop('src', rutaLogo + "/" + data.url_logo);
+                $('#imglogo').prop('src', rutaLogo + "/" + data.url_logo + '/?'+ $.now());
                 $('#logoactual').html('Logo actual');
                 lati = data.latitud;
                 longi = data.longitud;
@@ -434,10 +435,13 @@
     }
 
     function reiniciar() {
+        $('#institucionForm').trigger("reset");
         $('.mensajeError').text("");
         $('#vistaPrevia').prop('src', "");
         $('#nuevoLogo').addClass('d-none');
         $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
+        //$('.custom-file-label').val("");
+        
     }
 
     $('body').on('click', '#Logo-conacyt', function () {

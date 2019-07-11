@@ -2,6 +2,7 @@
     var titulo = "";
     var table = "";
     $(document).ready(function () {
+        
         $("#show-sidebar").click(function () {
             $('#modalidad').DataTable().ajax.reload(null, false);
         });
@@ -25,7 +26,7 @@
         });
 
         table = $('#modalidad').DataTable({
-            "order":[[3,"desc"]],
+            "order":[[2,"desc"]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
             responsive: true,
@@ -42,30 +43,17 @@
                     d.busqueda = checkInsti
                 }
             },
-            initComplete: function () {
-                var api = this.api();
-                api.columns(1).every(function () {
-                    var that = this;
-                    $('input', this.footer()).on('keyup change', function () {
-                        if (that.search() !== this.value) {
-                            that
-                                .search(this.value)
-                                .draw();
-                        }
-                    });
-                })
-            },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false },
                 { data: 'nombre', searchable: true },
-                { data: 'descripcion', searchable: true , 'visible': false },
+                
                 { data: 'fecha_actualizacion', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 4 },
-                { width: 105, targets: 4 }
+                { responsivePriority: 2, targets: 3 },
+                { width: 105, targets: 3 }
             ]
         });
 

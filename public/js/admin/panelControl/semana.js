@@ -1,6 +1,7 @@
     var titulo = "";
     var table = "";
     $(document).ready(function () {
+        
         $('.note-statusbar').hide();
 
         $("#show-sidebar").click(function () {
@@ -129,7 +130,7 @@
 
 
         $.get(ruta, function (data) {
-
+            $('#semanaForm').trigger("reset");
             var unique = $.now();
             $('#semanaCrudModal').html("Editar semana: " + data.nombre);
             $('#btn-save').val("editar");

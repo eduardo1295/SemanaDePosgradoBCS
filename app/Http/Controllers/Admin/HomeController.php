@@ -68,7 +68,17 @@ class HomeController extends Controller
             if(Auth::guard('admin')->user()->id != $id){
                 return abort(403);
             }
-            $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+            $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones;
+         "));
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
             $admin = $admin = Admin::select('id','id_institucion','nombre','email')->where('id',$id)->first();
             return view('admin.editarPerfil',compact(['admin','semana','instituciones']));

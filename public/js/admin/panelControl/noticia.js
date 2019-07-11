@@ -2,6 +2,8 @@
     var titulo = "";
     var table = "";
     $(document).ready(function () {
+        
+          
         $('.note-statusbar').hide();
 
         $("#show-sidebar").click(function () {

@@ -21,6 +21,9 @@
     .dropdown-menu{
         -webkit-filter: blur(0.000001px);
     }
+    .tooltip{
+        pointer-events: none;
+    }
 </style>
 @endsection
 
@@ -30,7 +33,7 @@
         <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h1 id="Titulo" class="display-   font-weight-bold rounded p-auto pt-3">Subir trabajo</h1> <br>
+                        <h1 id="Titulo" class="display-   font-weight-bold rounded p-auto pt-3">Panel de control</h1> <br>
                     </div>
                 </div>
                 <div class="row">
@@ -96,9 +99,10 @@
 <script src="/js/owl.carousel.min.js"> </script>
 <script src="/js/snack/snack.js"></script>
 <script>
-    $(function () {
+    /*$(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
+    */
 
     $('.nav-link').on('click', function () {
             $('.nav-link').removeClass("active");
