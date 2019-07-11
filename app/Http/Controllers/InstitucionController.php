@@ -20,13 +20,13 @@ class InstitucionController extends Controller
      */
 
      public function __construct(){
-        $this->middleware('admin.auth:admin')->only('instituciones');
+        $this->middleware('admin.auth:admin')->only(['instituciones']);
 
      }
 
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -118,6 +118,9 @@ class InstitucionController extends Controller
     {
         
         //return \Response::json(['error' => 'Error msg'], 404);
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
             
             if(auth()->user()->id_institucion!=$id){

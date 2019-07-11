@@ -18,7 +18,7 @@ use Validator;
 class CoordinadorController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin')->only('coordinador');
+        $this->middleware('admin.auth:admin')->only(['coordinador']);
         $this-> middleware('auth')->only('index');
      }
     /**

@@ -23,8 +23,8 @@ class SemanaController extends Controller
 {
 
     public function __construct(){
-        $this-> middleware('auth:admin')->only('indexAdmin');
-        $this-> middleware('auth:admin')->only('noticias');
+        $this-> middleware('auth:admin')->only(['indexAdmin','noticias']);
+        //$this-> middleware('auth:admin')->only();
         
 
     }
@@ -201,6 +201,9 @@ class SemanaController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio','fecha_fin',DB::raw("CONCAT(fecha_inicio,' - ',fecha_fin) AS fecha"))->with('instituciones:id,nombre')->where('id_semana',$id)->first();
         return \Response::json($semana);
     }

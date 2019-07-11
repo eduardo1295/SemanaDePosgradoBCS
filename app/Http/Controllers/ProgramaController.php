@@ -24,6 +24,7 @@ class ProgramaController extends Controller
      public function __construct(){
         //$this-> middleware('auth:admin');
         $this->middleware('admin.auth:admin')->only('programa');
+        $this-> middleware('auth')->only('listAlumnos');
      }
 
     public function index()
@@ -38,7 +39,7 @@ class ProgramaController extends Controller
      */
     public function create()
     {
-        return view('programa.crear');
+        
     }
 
     /**

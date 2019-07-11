@@ -34,14 +34,14 @@ Route::put('admin/institucion/reactivar/{institucion}', 'InstitucionController@r
 
 Route::post('admin/institucion/suibirLogoConacyt', 'InstitucionController@suibirLogoConacyt')->name('institucion.suibirLogoConacyt');
 
-Route::resource('institucion', 'InstitucionController');
+Route::resource('institucion', 'InstitucionController')->except(['index','create','show']);
 
 Route::post('noticias/vistaPrevia', 'NoticiaController@vistaPrevia')->name('noticia.vistaPrevia');
 Route::get('admin/noticias', 'NoticiaController@noticias')->name('noticia.VerNoticias');
 Route::get('admin/noticia/listNoticias', 'NoticiaController@listNoticias')->name('noticia.listNoticias');
 Route::get('noticia/fetch_data', 'NoticiaController@fetch_data');
 Route::put('admin/noticias/reactivar/{noticia}', 'NoticiaController@reactivar')->name('noticia.reactivar');
-Route::resource('noticias', 'NoticiaController');
+Route::resource('noticias', 'NoticiaController')->except(['create']);
 
 
 
@@ -55,18 +55,18 @@ Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.ve
 
 Route::get('/', 'SemanaController@index')->name('pag.inicio');
 Route::get('/home', 'SemanaController@index');
-Route::resource('semana', 'SemanaController');
+Route::resource('semana', 'SemanaController')->except(['create','show']);
 
 
 Route::get('admin/carruselImagenes', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
 Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('carrusel.listCarrusel');
 Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
-Route::resource('carrusel', 'CarruselController');
+Route::resource('carrusel', 'CarruselController')->except(['index','create','show']);
 
 Route::get('admin/coordinadores', 'CoordinadorController@coordinador')->name('coordinador.VerCoodinadores');
 Route::get('coordinador/listCoordinador', 'CoordinadorController@listCoordinador')->name('coordinador.listCoordinador');
 Route::put('admin/coordinador/reactivar/{coordinador}', 'CoordinadorController@reactivar')->name('coordinador.reactivar');
-Route::resource('coordinador', 'CoordinadorController');
+Route::resource('coordinador', 'CoordinadorController')->except(['show','create']);
 
 
 Route::get('admin/directores', 'DirectorController@director')->name('director.VerDirectores');
@@ -74,18 +74,15 @@ Route::get('director/listDirector', 'DirectorController@listDirector')->name('di
 Route::put('director/reactivar/{director}', 'DirectorController@reactivar')->name('director.reactivar');
 Route::get('director/verAlumnos', 'DirectorController@revisarAlumnos')->name('director.revisarAlumnos');
 Route::get('director/listAlumnos', 'DirectorController@listAlumnos')->name('director.listAlumnos');
-Route::resource('director', 'DirectorController');
+Route::resource('director', 'DirectorController')->except(['index','show','create']);
 
 
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
 Route::get('alumno/listAlumnos', 'AlumnoController@listAlumnos')->name('alumno.listAlumnos');
-//Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
-//Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarAlumno');
 Route::put('alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
-Route::get('alumno/editarAlumno', 'AlumnoController@editarAlumno')->name('alumno.editarPerfil');
 Route::get('alumno/generarGafete','AlumnoController@generarGafete')->name('alumno.generarGafete');
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
-Route::resource('alumno', 'AlumnoController');
+Route::resource('alumno', 'AlumnoController')->except(['index','show','create']);
 
 Auth::routes(['verify' => true]);
 
@@ -98,13 +95,13 @@ Route::get('programa/programaGeneral', 'ProgramaController@programaGeneral')->na
 Route::post('programa/subirProgramaGeneral', 'ProgramaController@subirProgramaGeneral')->name('programa.subirProgramaGeneral');
 Route::get('programa/mostrarProgramaGeneral', 'ProgramaController@mostrarProgramaGeneral')->name('programa.mostrarProgramaGeneral');
 
-Route::resource('programa', 'ProgramaController');
+Route::resource('programa', 'ProgramaController')->except(['index','create']);
 
 Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
 Route::get('modalidad/listModalidad', 'ModalidadController@listModalidad')->name('modalidad.listModalidad');
 Route::put('admin/modalidad/reactivar/{modalidad}', 'ModalidadController@reactivar')->name('modalidad.reactivar');
 Route::get('/modalidad/mostrarModalidad/{opcion}', 'ModalidadController@mostrarModalidad')->name('modalidad.mostrarModalidad');
-Route::resource('modalidad', 'ModalidadController');
+Route::resource('modalidad', 'ModalidadController')->except(['create','show']);
 
 
 Route::get('/sesion/verPdf/{opcion}', 'SesionController@verPdf')->name('sesion.verPdf');
@@ -130,7 +127,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin/locacion', 'LocacionController@locacion')->name('locacion.VerLocacion');
 Route::get('locacion/listLocacion', 'LocacionController@listLocacion')->name('locacion.listLocacion');
-Route::resource('locacion', 'LocacionController');
+Route::resource('locacion', 'LocacionController')->except(['index','create','show']);
 
 
 Route::get('/prueba', function(){

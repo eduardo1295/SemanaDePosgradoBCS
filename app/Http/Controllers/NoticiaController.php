@@ -21,6 +21,7 @@ class NoticiaController extends Controller
      */
      public function __construct(){
         $this->middleware(['admin.auth:admin', 'admin.verified'])->only('noticias');
+        //$this->middleware('admin.auth:admin')->only(['create']);
          //$this-> middleware('auth:admin')->only('noticias');
      }
     public function index()
@@ -30,10 +31,6 @@ class NoticiaController extends Controller
         $data = Noticia::latest('fecha_actualizacion')->paginate(5);
         return view('noticias.verNoticias', compact(['data','instituciones','semana']));
         //return view('noticias', compact('data'));
-
-        
-  
-        
     }
 
     public function fetch_data(Request $request)
@@ -52,7 +49,7 @@ class NoticiaController extends Controller
      */
     public function create()
     {
-        return view('noticias.crear');
+        //return view('noticias.crear');
     }
 
     /**
@@ -155,6 +152,9 @@ class NoticiaController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $noticia  = Noticia::where('id_noticia', $id)->first();
         return \Response::json($noticia);
     }

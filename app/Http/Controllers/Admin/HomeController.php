@@ -70,7 +70,7 @@ class HomeController extends Controller
             }
             $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
-            $admin = $admin = User::select('id','id_institucion','nombre','email')->where('id',$id)->first();
+            $admin = $admin = Admin::select('id','id_institucion','nombre','email')->where('id',$id)->first();
             return view('admin.editarPerfil',compact(['admin','semana','instituciones']));
     }
 

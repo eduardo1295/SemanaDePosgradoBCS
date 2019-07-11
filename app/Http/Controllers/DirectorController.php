@@ -19,7 +19,7 @@ use Validator;
 class DirectorController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin')->only('director');
+        $this->middleware('admin.auth:admin')->only(['director']);
         //$this->middleware('auth')->only('director');
         
         
@@ -199,6 +199,9 @@ class DirectorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function listDirector(Request $request ){
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $busqueda = $request->busqueda;
         $usuarios = "";
         if($busqueda == 'activos'){
@@ -280,6 +283,9 @@ class DirectorController extends Controller
     }
 
     public function listAlumnos(Request $request ){
+        if(!auth()->user()){
+            return abort(403);
+        }
         $listAlumnos = Alumno::all()->where('id_director',auth()->user()->id);
         $c = collect();
         foreach ($listAlumnos as $alum) {

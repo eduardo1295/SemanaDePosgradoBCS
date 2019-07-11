@@ -21,6 +21,11 @@ use Validator;
 
 class AlumnoController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin.auth:admin')->only(['alumnos']);
+        $this-> middleware('auth')->only('generarGafete','listAlumnos');
+
+     }
     /**
      * Display a listing of the resource.
      *
@@ -336,6 +341,9 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function programasLista($id){
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $auxInstitucion = "";
         if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
             $auxInstitucion = auth()->user()->id_institucion;

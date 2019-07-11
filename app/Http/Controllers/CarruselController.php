@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
 class CarruselController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin')->only('carrusel');
+        $this->middleware('admin.auth:admin')->only(['carrusel','listCarrusel']);
 
      }
 
@@ -35,7 +35,7 @@ class CarruselController extends Controller
      */
     public function create()
     {
-        return view('carrusel.crear');
+        
     }
 
     /**
@@ -86,6 +86,9 @@ class CarruselController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $carrusel  = Carrusel::select('id','link_web','url_imagen')->where('id', $id)->first();
         return \Response::json($carrusel);
         
