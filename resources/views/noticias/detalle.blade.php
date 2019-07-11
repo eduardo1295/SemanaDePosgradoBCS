@@ -18,21 +18,6 @@
         <div class="col-12 break-word pb-3 pt-3">
             {!! $noticia->contenido !!}
         </div>
-        {{-- comment 
-        <div class="col-3 d-flex justify-content-center">
-        @if ($noticia->url_imagen!='sin imagen')
-                <div class="row">
-                    <div class="col-12">
-                        <img src="{{url('img/noticias')}}/{{ $noticia->url_imagen }}" alt="" class="img-fluid">
-                    </div>
-            </div>
-        @endif
-        </div>    
-        --}}
-        
-        
-                
-            
     </div>
 </div>
 

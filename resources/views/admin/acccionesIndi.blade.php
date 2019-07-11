@@ -12,9 +12,9 @@
         </span></a>
 </div>
 <script>
-    $(document).ready(function(){
+    /*$(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip({
             trigger : 'hover'
         }) 
-    });
+    });*/
 </script>

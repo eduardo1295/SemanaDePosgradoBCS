@@ -39,6 +39,7 @@
         });
     }
     /*Aqui termina desplazamiento de la barra*/
+    
     </script>
     @yield('links')
 </head>

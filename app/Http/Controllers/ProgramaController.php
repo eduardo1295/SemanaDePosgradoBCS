@@ -272,18 +272,17 @@ class ProgramaController extends Controller
         return \Response::json("Listo");
     }
     public function mostrarProgramaGeneral(){
-        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
-		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
-		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
-		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
-		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
-		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
-		' FROM instituciones, coordinadores, users, rol_usuario'.
-		' WHERE '.
-		' users.id_institucion = instituciones.id'.
-		' AND rol_usuario.id_usuario = users.id'.
-		' AND users.id = coordinadores.id'.
-        ' AND rol_usuario.id_rol = 3;'));
+        $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones;
+         "));
 
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         return view('programa.programaGeneral',compact(['semana','instituciones','nombre']));

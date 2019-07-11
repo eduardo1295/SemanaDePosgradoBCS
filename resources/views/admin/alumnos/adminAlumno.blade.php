@@ -100,7 +100,7 @@ var rutaBaseAlumno = "{{route('alumno.index')}}";
 var rutalistAlumno = '{{ route("alumno.listAlumnos")}}';
 var rutaListPrograma = "{{url('alumno/programasLista')}}";
 var SITEURL = "{{URL::to('/')}}";
-var rutaReactivar = "{{ url('admin/alumno/reactivar')}}";
+var rutaReactivar = "{{ url('alumno/reactivar')}}";
 </script>
 <script src="/js/admin/panelControl/alumno.js"></script>
 @endsection

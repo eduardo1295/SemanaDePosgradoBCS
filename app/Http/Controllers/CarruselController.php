@@ -166,7 +166,7 @@ class CarruselController extends Controller
         if(File::exists($pathDirectorio)){
           File::delete($pathDirectorio);
         }
-        $carrusel->delete();
+        $carrusel->forceDelete();
 
         return \Response::json($carrusel);
     }

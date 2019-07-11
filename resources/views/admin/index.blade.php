@@ -124,6 +124,6 @@ var rutaReactivar = "{{ url('admin/semana/reactivar')}}";
     .custom-file-input~.custom-file-label::after {
         content: "Elegir";
     }
-
+    
 </style>
 @endsection

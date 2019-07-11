@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Modalidades
+                Modalidades de participación
             </h1>
         </div>
 
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras modalidad</legend>
+        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras modalidades</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verNoti" value="activos">
@@ -44,7 +44,6 @@
                     <tr>
                         <th>id_modalidad</th>
                         <th>Titulo</th>
-                        <th>Resumen</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>
@@ -52,8 +51,7 @@
                 <tfoot>
                     <tr>
                         <th></th>
-                        <th class="text-input">Titulo</th>
-                        <th class="text-input">Resumen</th>
+                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>

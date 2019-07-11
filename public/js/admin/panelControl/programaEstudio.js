@@ -1,7 +1,7 @@
     var SITEURL = "{{URL::to('/')}}";
     var checkInsti = 'activos';
     $(document).ready(function () {
-
+        
         $.extend($.fn.dataTableExt.oStdClasses, {
             "sFilterInput": "busqueda",
             "sLengthSelect": ""

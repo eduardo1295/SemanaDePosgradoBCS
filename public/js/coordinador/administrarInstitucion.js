@@ -1,3 +1,9 @@
+$("body").tooltip({
+    selector: '[data-toggle="tooltip"]',
+    container: 'body',
+    trigger : 'hover'
+});
+
 var lati = 24.141474;
 var longi = -110.31314; 
 
@@ -50,7 +56,7 @@ function cargarInstitucion(){
             $('#colonia').val(data.colonia);
             $('#siglas').val(data.siglas);
             $('#cp').val(data.cp);
-            $('#imglogo').prop('src', imagenRuta +'/'+ data.url_logo);
+            $('#imglogo').prop('src', imagenRuta +'/'+ data.url_logo+ '/?'+ $.now());
             $('#logoactual').html('Logo actual');
             lati = data.latitud;
             longi = data.longitud;

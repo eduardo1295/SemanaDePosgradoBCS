@@ -26,7 +26,17 @@ class NoticiaController extends Controller
     public function index()
     {
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
-        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones;
+         "));
         $data = Noticia::latest('fecha_actualizacion')->paginate(5);
         return view('noticias.verNoticias', compact(['data','instituciones','semana']));
         //return view('noticias', compact('data'));
@@ -52,7 +62,7 @@ class NoticiaController extends Controller
      */
     public function create()
     {
-        return view('noticias.crear');
+        //return view('noticias.crear');
     }
 
     /**
@@ -118,7 +128,8 @@ class NoticiaController extends Controller
                 //$ultimaImagen = '/img/noticias/'.$image_name;
 
                 $img->setattribute('src', '/img/noticias/'.$noticia->id_noticia.'/'.$image_name);
-                $ultimaImagen = $pathDirectorio.$image_name;
+                //$ultimaImagen = $pathDirectorio. '/' .$image_name;
+                $ultimaImagen = '/img/noticias/'.$noticia->id_noticia.'/'.$image_name;
             }
         }
         if($ultimaImagen == ""){
@@ -142,7 +153,17 @@ class NoticiaController extends Controller
     public function show($id)
     {
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede')->where('vigente',1)->first();
-        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones;
+         "));
         $noticia  = Noticia::select('id_noticia','titulo','contenido','url_imagen','fecha_actualizacion')->where('id_noticia', $id)->firstOrFail();
         return view('noticias.detalle', compact(['noticia','instituciones','semana']));
     }
@@ -258,7 +279,7 @@ class NoticiaController extends Controller
             File::deleteDirectory($pathDirectorio);
         }
 
-        $noticia->delete();
+        $noticia->forceDelete();
                 
         return \Response::json($noticia);
     }
@@ -316,7 +337,17 @@ class NoticiaController extends Controller
 
     public function vistaPrevia(Request $noticia){
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->first();
-        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones;
+         "));
         return \Response::json(view('noticias.detalle', compact(['semana','noticia','instituciones']))->render());
     }
 }

@@ -1,7 +1,7 @@
     
     var checkInsti = 'activos';
     $(document).ready(function () {
-
+        
         $.extend($.fn.dataTableExt.oStdClasses, {
             "sFilterInput": "busqueda",
             "sLengthSelect": ""
@@ -77,6 +77,7 @@
             var ruta = rutaBaseCarrusel +"/" + carrusel_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
+                $('#carruselForm').trigger("reset");
                 $('#carruselCrudModal').html("Editar imagen");
                 $('#btn-save').val("editar");
                 $('#carrusel-crud-modal').modal('show');
@@ -84,7 +85,7 @@
                 $('#carrusel_id').val(data.id);
                 $('#link_web').val(data.link_web);
                 
-                $('#imgslide').prop('src', baseImagenes + "/" + data.url_imagen);
+                $('#imgslide').prop('src', baseImagenes + "/" + data.url_imagen+ '/?'+ $.now());
                 $('#imagenactualT').html('Imagen actual');
                 $('#imagenAnterior').removeClass('d-none');
 
