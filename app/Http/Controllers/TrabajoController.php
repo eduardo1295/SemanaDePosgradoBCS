@@ -59,7 +59,6 @@ class TrabajoController extends Controller
      */
     public function store(StoreTrabajoRequest $request)
     {   
-        
         $nuevo_nombre = 'sin Trabajo';
         if($request->hasFile('url')){
             $trabajoAlumno = $request->url;
@@ -71,33 +70,39 @@ class TrabajoController extends Controller
         }
         $semana = Semana::all()->last();
         $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->where('id_semana',$semana->id_semana)->first();
-        if($trabajo != null){
-
-        }else{
-            $trabajo = Trabajo::updateOrCreate(
-                ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
-                [
-                 'id_director' => $request->id_director,
-                 'id_semana' => $request->id_semana  ,
-                 'titulo' => $request->titulo     ,
-                 'resumen' => $request->resumen    ,
-                 'area' => $request->area       ,
-                 'pal_clv1' => $request->pal_clv1   ,
-                 'pal_clv2' => $request->pal_clv2   ,
-                 'pal_clv3' => $request->pal_clv3   ,
-                 'pal_clv4' => $request->pal_clv4   ,
-                 'pal_clv5' => $request->pal_clv5   ,
-                 'url' => $nuevo_nombre,
-                 'id_alumno' => $request->id_alumno,
-                 'comentario' => null,
-                 'revisado' => 0,
-                 'modalidad' => $request->modalidad,
-                ]
-            );
-            //dd($trabajo->directores()->first()->email);
-
-            Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
+        
+        if($trabajo !=  null){
+            if($trabajo->autorizado == 1){
+                return \Response::json("ya autorizado");
+            }
+            else if($trabajo->revisado == 0){
+                return \Response::json("ya autorizado");
+            }
         }
+        
+        $trabajo = Trabajo::updateOrCreate(
+            ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
+            [
+             'id_director' => $request->id_director,
+             'id_semana' => $request->id_semana  ,
+             'titulo' => $request->titulo     ,
+             'resumen' => $request->resumen    ,
+             'area' => $request->area       ,
+             'pal_clv1' => $request->pal_clv1   ,
+             'pal_clv2' => $request->pal_clv2   ,
+             'pal_clv3' => $request->pal_clv3   ,
+             'pal_clv4' => $request->pal_clv4   ,
+             'pal_clv5' => $request->pal_clv5   ,
+             'url' => $nuevo_nombre,
+             'id_alumno' => $request->id_alumno,
+             'comentario' => null,
+             'revisado' => 0,
+             'modalidad' => $request->modalidad,
+            ]
+        );
+        //dd($trabajo->directores()->first()->email);
+        Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
+    
         return \Response::json($trabajo);
     }
 
@@ -173,7 +178,18 @@ class TrabajoController extends Controller
         'AND ISNULL(modalidades.deleted_at)'.
         'AND modalidad_periodo.periodo_min <=' . $alumno->semestre .' '.
         'AND modalidad_periodo.periodo_max >=' . $alumno->semestre));
-        $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
+        $instituciones = DB::select(DB::raw('SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,'.
+		' instituciones.siglas, instituciones.telefono, instituciones.direccion_web,'.
+		' instituciones.url_logo, instituciones.ciudad, users.id, users.id_institucion, coordinadores.id,'.
+		' rol_usuario.id_usuario, rol_usuario.id_rol,users.email,'.
+		' CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
+		' CONCAT(instituciones.calle," #", instituciones.numero, ", col. ", instituciones.colonia , ", C.P.", instituciones.cp) AS domicilio'.
+		' FROM instituciones, coordinadores, users, rol_usuario'.
+		' WHERE '.
+		' users.id_institucion = instituciones.id'.
+		' AND rol_usuario.id_usuario = users.id'.
+		' AND users.id = coordinadores.id'.
+		' AND rol_usuario.id_rol = 3;'));
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
         $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->first();

@@ -4,7 +4,9 @@
 @section('links')
 <link rel="stylesheet" href="/css/Maqueta2.css">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
+<link href="/css/modales/snackbar.css" rel="stylesheet">
 <script src="/js/owl.carousel.min.js"> </script>
+
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -25,9 +27,11 @@
                     <div class="form-row pl-5 pr-5 pt-3">
                         <div class="form-group col-12">
                             <strong><label for="modalidad" class="control-label">Modalidad</label><label class="text-danger">*</label></strong></strong>
+                            
                                 <select class="form-control modalidad" id="modalidad" name="modalidad">
                                     <option selected value="">Seleccione modalidad</option>
                                     @foreach ($modalidades as $modalidadP)
+                                        
                                         @if(isset($trabajo))
                                             @if($modalidadP->id_modalidad == $trabajo->modalidad)
                                             <option value="{{$modalidadP->id_modalidad}}" selected>{{$modalidadP->nombre}} </option>
@@ -111,7 +115,8 @@
                 </form>
                 
             </div>
-            <div id="snackbar"></div>
+            <div id="snackbar"></div> 
+            <div id="snackbarError"></div>
 </section>
 <script>
 $('.custom-file-input').on('change', function () {
@@ -127,5 +132,6 @@ $('.custom-file-input').on('change', function () {
 @section('scripts')
 <script src="/js/menumaker.js"></script>
 <script src="/js/trabajo/subirtrabajo.js"></script>
+<script src="/js/snack/snack.js"></script>
 @endsection
 @endsection

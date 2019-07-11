@@ -28,7 +28,7 @@
         <div class="error-box">
             <div class="error-body text-center">
                 <h1 class="error-title text-danger" >403</h1>
-                <h3 class="text-uppercase error-subtitle">Acceso no autorizado a esta página</h3>
+                <h3 class="text-uppercase error-subtitle">Acceso no autorizado</h3>
                 <a href="/" class="btn btn-danger btn-rounded waves-effect waves-light m-b-40">Volver al inicio</a> </div>
         </div>
     </div>

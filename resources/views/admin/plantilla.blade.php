@@ -25,10 +25,13 @@
   -->
   <link rel="stylesheet" href="/css/admin/menu2.css">
   <link rel="stylesheet" href="/css/admin/sidebar-themes.css">
-  <link rel="stylesheet" href="/css/admin/jquery.mCustomScrollbar.css" />
+  <link rel="stylesheet" href="/css/admin/jquery.mCustomScrollbar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css">
   
-  
+  <link rel="stylesheet" href="/css/Maqueta2.css">
+  <link rel="stylesheet" href="/css/imagenes/imagenes.css">
+  <script src="/js/owl.carousel.min.js"> </script>
+
   @yield('estilos')
 </head>
 

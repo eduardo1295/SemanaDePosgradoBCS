@@ -22,8 +22,6 @@
                                     </ul>
                                 </li>
                                 <li><a href="{{route('semana.verConvocatoria')}}" class="">Convocatoria</a> </li>
-                                
-                                
                                 @if(auth('admin')->user() || auth()->user())
                                     {{-- comment 
                                     @if(auth()->user()->hasRoles(['alumno']))
@@ -53,6 +51,7 @@
                                                 <li><a href="{{route('coordinador.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
                                             @elseif(auth('admin')->user())
                                                 <li><a href="{{route('admin.editarPerfil',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
+                                                <li><a href="/admin" class="loginUsuario">Panel control</a></li>
                                             @endif
                                             @if(auth()->user() && auth()->user()->hasRoles(['coordinador']))
                                                 <li><a class="loginUsuario" href="{{route('coordinador.index')}}">Administrar institución</a> </li>

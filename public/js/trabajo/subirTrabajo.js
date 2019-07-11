@@ -20,23 +20,19 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             success: function(data) {
-                console.log(data);
-                console.log('Aqui');
-                $("#btn-save").html("Guardar");
-                $('#link').html(data.url);
+                console.log(data)
+                if(data == "ya autorizado"){
+                    mostrarSnackError('Error.')
+                }else{
+                    $("#btn-save").html("Guardar");
+                    $('#link').html(data.url);
+                    $('#link').prop('href','/documentos/trabajos/'+ data.url );
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                    mostrarSnack('Se ha entregado exitosamente.')
+                    $("#btn-save").html("No ha sido revisado");;
+                }
                 
-                $('#link').prop('href','/documentos/trabajos/'+ data.url );
-
-                $("#btn-save").prop("disabled", false);
-                $("#btn-close").prop("disabled", false);
-                $("#snackbar").html(
-                    "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Se ha Actualizado exitosamente."
-                );
-                $("#snackbar").addClass("show");
-                setTimeout(function() {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
-                console.log(data);
             },
             error: function(data) {
                 if (data.status == 422) {
