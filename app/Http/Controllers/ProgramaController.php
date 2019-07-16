@@ -23,8 +23,8 @@ class ProgramaController extends Controller
 
      public function __construct(){
         //$this-> middleware('auth:admin');
-        $this->middleware('admin.auth:admin')->only('programa');
-        $this-> middleware('auth')->only('listAlumnos');
+        $this->middleware('admin.auth:admin')->only(['programa','programaGeneral']);
+        
      }
 
     public function index()
@@ -104,6 +104,9 @@ class ProgramaController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $programa  = Programa::select('id','id_programa','id_institucion','nombre','nivel','periodo')->where('id', $id)->first();
         return \Response::json($programa);
     }
@@ -199,6 +202,9 @@ class ProgramaController extends Controller
 
 
     public function listPrograma(Request $request ){
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $busqueda = $request->busqueda;
         $selectProgramas = "";
         if($busqueda == 'activos'){

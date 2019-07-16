@@ -16,9 +16,9 @@
                                 <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
                                     <ul>
                                     <li><a href="{{route('programa.mostrarProgramaGeneral')}}">General</a></li>
-                                        <li><a href="{{route('modalidad.mostrarModalidad','poster')}}">Póster</a></li>
-                                        <li><a href="{{route('modalidad.mostrarModalidad','entrevista')}}">Entrevista</a></li>
-                                        <li><a href="{{route('modalidad.mostrarModalidad','video')}}">Video</a></li>
+                                        <li><a href="{{route('modalidad.mostrarModalidad','Póster')}}">Póster</a></li>
+                                        <li><a href="{{route('modalidad.mostrarModalidad','Entrevista')}}">Entrevista</a></li>
+                                        <li><a href="{{route('modalidad.mostrarModalidad','Video')}}">Video</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{{route('semana.verConvocatoria')}}" class="">Convocatoria</a> </li>

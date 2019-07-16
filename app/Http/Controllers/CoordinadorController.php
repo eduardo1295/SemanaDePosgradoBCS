@@ -131,6 +131,9 @@ class CoordinadorController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         if(auth()->user()){
             $instituciones = DB::select(DB::raw("
         SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
@@ -226,6 +229,9 @@ class CoordinadorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function listCoordinador(Request $request ){
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
             $usuarios = User::select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','users.email','users.fecha_actualizacion')->with('coordinadores:coordinadores.id,puesto','instituciones:instituciones.id,instituciones.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'coordinador');});

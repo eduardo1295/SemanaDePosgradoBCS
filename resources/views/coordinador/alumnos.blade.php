@@ -68,5 +68,10 @@
             </table>
         </div>
     </div>
+    <div>
+        <strong><label for="">Exportar participantes:</label></strong><br>
+        <a href="/alumno/ExportarAlumnos" target="_blank" id="pdf" class="btn btn-primary">PDF</a>
+        <a href="" class="btn btn-primary">Excel</a>
+    </div>
     
 </div>

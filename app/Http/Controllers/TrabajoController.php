@@ -24,11 +24,15 @@ use Illuminate\Support\Facades\Mail;
 
 class TrabajoController extends Controller
 {
+    /*
     function __construct(){
         $this->middleware(['auth'], ['only' => ['show']]);
         //$this->middleware(['verificarcontrasena'], ['except' => ['cambiarContrasena','guardarContrasena','editarPerfil']]);
         //$this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
-        
+    }
+    */
+    public function __construct(){
+        $this-> middleware('auth')->only(['store','show','subirTrabajo']);
 
     }
     /**
@@ -138,7 +142,7 @@ class TrabajoController extends Controller
      */
     public function edit($id)
     {
-        return "Eduardo";
+        
     }
 
     /**

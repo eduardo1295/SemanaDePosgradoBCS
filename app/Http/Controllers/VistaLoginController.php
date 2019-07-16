@@ -9,6 +9,10 @@ use DB;
 
 class VistaLoginController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin.auth:admin');
+
+     }
     /**
      * Display a listing of the resource.
      *

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 mx-auto">
             <h1>
-                Programas General 
+                Programa General 
             </h1>
         </div>
 
@@ -20,7 +20,7 @@
                 <div class="form-group col-md-12">
                     <strong><label id="ligaConvo">Subir programa general</label></strong>
                     @if(file_exists(public_path().'\documentos\programaGeneral\ProgramaGeneral.pdf')) 
-                    <a target="_blank" href='{{ URL::to("/") }}/documentos/programaGeneral/ProgramaGeneral.pdf'> Convocatoria actual </a>
+                    <a target="_blank" href='{{ URL::to("/") }}/documentos/programaGeneral/ProgramaGeneral.pdf'> Programa actual </a>
                     @endif
                     <div class="custom-file">
                         <input type="file" name="programaGeneral" class="custom-file-input" id="programaGeneral"

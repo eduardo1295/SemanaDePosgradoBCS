@@ -11,6 +11,7 @@ use DataTables;
 use App;
 use DB;
 use File;
+use Jenssegers\Date\Date;
 //use App\Http\Requests\coodinador\StoreCoordinadorRequest;
 //use App\Http\Requests\usuarios\UpdateAlumnoRequest;
 use App\Http\Requests\alumno\StoreAlumnoRequest;
@@ -23,7 +24,7 @@ class AlumnoController extends Controller
 {
     public function __construct(){
         $this->middleware('admin.auth:admin')->only(['alumnos']);
-        $this-> middleware('auth')->only('generarGafete','listAlumnos');
+        $this-> middleware('auth')->only('generarGafete');
 
      }
     /**
@@ -225,6 +226,10 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function listAlumnos(Request $request ){
+        if(!auth()->user() && !auth('admin')->user()){
+            return abort(403);
+        }
+        
         $semana = DB::select(DB::raw("SELECT semanas.id_semana	
 		FROM semanas
         WHERE vigente = 1"));
@@ -403,5 +408,39 @@ class AlumnoController extends Controller
         
         return view('alumno.mostrarGafete', compact(['semana','instituciones','pdf']));
         //return view('alumno.generarGafete',compact(['alumno','imagenes','semana']));   
+    }
+    public function ExportarAlumnos(){
+        if(auth()->user()){
+            $institucion = Institucion::select('nombre')->where('id',auth()->user()->id_institucion)->first();
+            $semana = DB::select(DB::raw("SELECT semanas.id_semana	
+		    FROM semanas
+            WHERE vigente = 1"));
+            $id_selectSemana = $semana[0]->id_semana;
+
+            $id_institucion = auth()->user()->id_institucion;
+            $consulta = "SELECT num_control,nombre, primer_apellido,segundo_apellido,semestre
+                            FROM users u , alumnos a
+                            WHERE a.id = u.id AND u.id_institucion = $id_institucion
+                            ORDER BY semestre ASC, num_control ASC";
+            $alumnos = DB::select($consulta);
+
+
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->setPaper('letter','landscape');
+            //$pdf->loadHTML('<h1>Test</h1>');
+            $semana = Semana::All()->last();
+            $fInicio = new Date($semana->fecha_inicio);
+            $fFin = new Date($semana->fecha_fin);
+            $fInicio = $fInicio->format('l d').' de '.$fInicio->format('F');
+            $fFin = $fFin->format('l d').' de '.$fFin->format('F').' del '.$fFin->format('Y');
+            
+            $pdf->loadView('listaAlumnos',['alumnos' => $alumnos, 'semana' => $semana ,'fInicio' => $fInicio, 'fFin' => $fFin, 'institucion' => $institucion]);
+            //return $pdf->download('invoice.pdf');
+            return $pdf->stream();
+        }
+        
+        //$output = $pdf->output();
+        //File::put(public_path().'\documentos\modalidad\\'.$modalidad->nombre .'.pdf',$output);
+        //return \Response::json("Listo");
     }
 }

@@ -28,11 +28,10 @@ class modalidadController extends Controller
      */
 
     public function __construct(){
-        $this-> middleware('auth:admin');
+        $this-> middleware('auth:admin')->only(['listModalidad','store','edit','update','modalidad']);
     }
     public function index()
     {
-        
         $instituciones = DB::select(DB::raw("
         SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
 		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
@@ -144,9 +143,6 @@ class modalidadController extends Controller
      */
     public function store(StoreModalidadRequest $request)
     {   
-        
-
-
         $dom = new \domdocument();
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getelementsbytagname('img');
@@ -357,6 +353,18 @@ class modalidadController extends Controller
          FROM instituciones;
          "));
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        $modalidad = App\Modalidad::select('nombre')->get();
+        $error = true;
+        foreach($modalidad as $modal){
+            if($modal->nombre == $nombre){
+                $error = false;
+                break;
+            }
+        }
+        if($error){
+            return abort(404);
+        }
+        
         return view('modalidad.mostrarModalidad',compact(['semana','instituciones','nombre']));
     }
 
