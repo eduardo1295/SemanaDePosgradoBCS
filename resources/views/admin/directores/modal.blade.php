@@ -10,7 +10,7 @@
                     <input type="hidden" name="director_id" id="director_id">
                     @if (auth('admin')->user())
                         <div class="form-group">
-                            <label for="institucionSelect">Institución</label><label class="text-danger">*</label>
+                            <strong><label for="institucionSelect">Institución</label><label class="text-danger">*</label></strong>
                             <select class="form-control" id="institucionSelect_di" name="id_institucion_di">
                                 <option selected value="">Seleccione una institución</option>
                                 @foreach ($instituciones as $institucion)
