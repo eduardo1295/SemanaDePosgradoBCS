@@ -20,8 +20,3 @@
     });
     */
 </script>
-<style>
-.tooltip{
-        pointer-events: none;
-    }
-</style>

@@ -52,6 +52,7 @@ class CoordinadorController extends Controller
         WHERE 
         @i < DATEDIFF('$semana->fecha_fin','$semana->fecha_inicio')"));
         $locaciones = DB::select("select locaciones.id_locacion as id_locacion, locaciones.nombre as nombre from locaciones,semanas where semanas.vigente = 1 AND id_sede = id_institucion");
+        
         return view('coordinador.administrarInstitucion',compact(['instituciones','semana','modalidades','horarios','locaciones']));  
     }
 
@@ -74,7 +75,8 @@ class CoordinadorController extends Controller
      */
     public function store(StoreCoordinadorRequest $request)
     {
-        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+        $buscar = Semana::select('id_semana','id_sede','vigente')->where('vigente',1)->get();
+        $idSemana = $buscar[0]->id_semana;
         $user = new User([
             'nombre'     => ucfirst($request->nombre),
             'email'     => $request->email,
@@ -106,7 +108,18 @@ class CoordinadorController extends Controller
             $actualizar = DB::update('UPDATE rol_usuario SET rol_usuario.id_rol = 4 WHERE rol_usuario.id_rol=3 AND id_usuario'. 
             ' IN (SELECT users.id FROM users WHERE users.id_institucion = ?)',[$request->id_institucion]);
             $user->coordinadores()->create(['puesto'=> ucfirst($request->puesto)]);
-            $user->roles()->attach([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
+            $user->roles()->attach([$user->id => ['id_rol'=>'3']]);
+
+            if($request->id_institucion == $buscar[0]->id_sede){
+                DB::table('rol_usuario')
+                ->where('id_rol',2)
+                ->delete();
+                $buscarUsuario = DB::select("SELECT users.id FROM rol_usuario ,users WHERE id_institucion = ? AND users.id = rol_usuario.id_usuario AND rol_usuario.id_rol = 3;", [$request->id_institucion]);
+                if(count($buscarUsuario)>0)
+                DB::table('rol_usuario')->insert(
+                    ['id_usuario' => $buscarUsuario[0]->id, 'id_rol' => 2,'fecha_creacion' => date("Y-m-d H:i:s"), 'fecha_actualizacion' => date("Y-m-d H:i:s")]
+                );
+            }
         }
         
         return \Response::json($user);
@@ -182,7 +195,7 @@ class CoordinadorController extends Controller
         
         if($user){
             $user->coordinadores()->update(['puesto'=> ucfirst($request->puesto)]);
-            $user->roles()->sync([$user->id => ['id_rol'=>'3', 'creada_por'=>'1']]);
+            $user->roles()->sync([$user->id => ['id_rol'=>'3']]);
         }
         
         return \Response::json($user);

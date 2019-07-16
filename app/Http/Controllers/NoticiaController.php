@@ -98,8 +98,14 @@ class NoticiaController extends Controller
         $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
         //dd($pathDirectorio);
         if(count($images)>0){
-            if(!File::isDirectory($pathDirectorio)){
+            /*if(!File::isDirectory($pathDirectorio)){
                 File::makeDirectory($pathDirectorio, 0777, true, true);
+            }*/
+            
+            if(!is_dir($pathDirectorio)){
+                //File::makeDirectory($pathDirectorio);
+                mkdir($pathDirectorio);
+                
             }
         }
         //loop over img elements, decode their base64 src and save them to public folder,
@@ -213,8 +219,13 @@ class NoticiaController extends Controller
         $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
         //dd($pathDirectorio);
         if(count($images)>0){
-            if(!File::isDirectory($pathDirectorio)){
+            /*if(!File::isDirectory($pathDirectorio)){
                 File::makeDirectory($pathDirectorio, 0777, true, true);
+            }*/
+            if(!is_dir($pathDirectorio)){
+                //File::makeDirectory($pathDirectorio);
+                mkdir($pathDirectorio);
+                
             }
         }
 

@@ -23,7 +23,7 @@ class SemanaController extends Controller
 {
 
     public function __construct(){
-        $this-> middleware('auth:admin')->only(['indexAdmin','noticias']);
+        $this-> middleware('auth:admin')->only(['indexAdmin']);
         //$this-> middleware('auth:admin')->only();
         
 
@@ -163,7 +163,7 @@ class SemanaController extends Controller
         
         $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;
-        $semana->creado_por= 1;
+        $semana->creado_por= auth('admin')->user()->id;
         $semana->save();
         if($semana){
             DB::table('semanas')
@@ -180,6 +180,10 @@ class SemanaController extends Controller
             DB::table('rol_usuario')
             ->where('id_rol',2)
             ->delete();
+            $buscarUsuario = DB::select("SELECT users.id FROM rol_usuario ,users WHERE id_institucion = ? AND users.id = rol_usuario.id_usuario AND rol_usuario.id_rol = 3;", [$request->id_institucion]);
+            DB::table('rol_usuario')->insert(
+                ['id_usuario' => $buscarUsuario[0]->id, 'id_rol' => 2]
+            );
         }
         return \Response::json($semana);
     }
@@ -275,10 +279,7 @@ class SemanaController extends Controller
         else{
             $nuevo_convocatoria = $semana->url_convocatoria;
         }
-        if($request->id_institucion==""){
-            $semana->id_sede = $semana->id_sede;
-        }
-        else{
+        if($request->id_institucion!=""){
             $semana->id_sede = $request->id_institucion;
         }
         $detail = $dom->savehtml();
@@ -292,8 +293,24 @@ class SemanaController extends Controller
         $semana->url_logo = $nuevo_nombre;
         $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;
-        $semana->creado_por= 1;
+        $semana->actualizado_por= auth('admin')->user()->id;
         $semana->save();
+        /*if($semana){
+            DB::table('semanas')
+            ->where('vigente', 1)
+            ->where('id_semana','!=',$semana->id_semana)
+            ->update(['vigente' => 0]);
+            DB::table('instituciones')
+            ->where('sede', 1)
+            ->where('id','!=',$request->id_institucion)
+            ->update(['sede' => 0]);
+            DB::table('instituciones')
+            ->where('id',$request->id_institucion)
+            ->update(['sede' => 1]);
+            DB::table('rol_usuario')
+            ->where('id_rol',2)
+            ->delete();
+        }*/
         if($semana){
             DB::table('semanas')
             ->where('vigente', 1)
@@ -309,6 +326,11 @@ class SemanaController extends Controller
             DB::table('rol_usuario')
             ->where('id_rol',2)
             ->delete();
+            $buscarUsuario = DB::select("SELECT users.id FROM rol_usuario ,users WHERE id_institucion = ? AND users.id = rol_usuario.id_usuario AND rol_usuario.id_rol = 3;", [$request->id_institucion]);
+            if(count($buscarUsuario)>0)
+            DB::table('rol_usuario')->insert(
+                ['id_usuario' => $buscarUsuario[0]->id, 'id_rol' => 2,'fecha_creacion' => date("Y-m-d H:i:s"), 'fecha_actualizacion' => date("Y-m-d H:i:s")]
+            );
         }
         return \Response::json($semana);
     }

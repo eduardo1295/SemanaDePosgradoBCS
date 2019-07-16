@@ -43,7 +43,8 @@
                             </div>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-group">
+                        <!--
                         <div class="form-group col-md-4">
                             <strong><label for="grado" class="control-label">Grado</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="grado" name="grado"
@@ -51,14 +52,14 @@
                             <small><span class="mensajeError text-danger" id="grado_error"></span></small>
 
                         </div>
-
-                        <div class="form-group col-md-8">
+                    -->
+                       
                             <strong><label for="puesto" class="control-label">Puesto</label><label class="text-danger">*</label></strong>
                             <input type="text" class="form-control" id="puesto" name="puesto"
                                 placeholder="Puesto de trabajo" value="" maxlength="60" required="">
                             <small><span class="mensajeError text-danger" id="puesto_error"></span></small>
 
-                        </div>
+                       
 
                         
                     </div>

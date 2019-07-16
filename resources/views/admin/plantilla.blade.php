@@ -30,8 +30,13 @@
   
   <link rel="stylesheet" href="/css/Maqueta2.css">
   <link rel="stylesheet" href="/css/imagenes/imagenes.css">
-  <script src="/js/owl.carousel.min.js"> </script>
-
+  
+  <link href="/css/imagenes/cargando.css" rel="stylesheet">
+  <style>
+    .tooltip{
+            pointer-events: none;
+        }
+    </style>
   @yield('estilos')
 </head>
 
@@ -58,6 +63,8 @@
     
     @yield('extra')
 
+    <div id="snackbar"></div>
+    <div id="loader" class="loader"></div>
   </div>
 
   

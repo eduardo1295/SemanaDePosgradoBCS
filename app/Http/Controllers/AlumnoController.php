@@ -81,7 +81,7 @@ class AlumnoController extends Controller
                                     'id_director'=>$request->directorSelect_al,
                                     'id_programa'=>$request->programaSelect_al
                                     ]);
-            $user->roles()->attach([$user->id => ['id_rol'=>'5', 'creada_por'=>'1']]);
+            $user->roles()->attach([$user->id => ['id_rol'=>'5']]);
         }
         
         return \Response::json($user);
@@ -177,7 +177,7 @@ class AlumnoController extends Controller
                                         'id_director'=>$request->directorSelect_al,
                                         'id_programa'=>$request->programaSelect_al
                                         ]);
-                $user->roles()->sync([$user->id => ['id_rol'=>'5', 'creada_por'=>'1']]);
+                $user->roles()->sync([$user->id => ['id_rol'=>'5']]);
             }
         }
         

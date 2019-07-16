@@ -17,7 +17,7 @@ class Semana extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'url_logo','url_convocatoria', 'fecha_inicio', 'fecha_fin', 'creado_por', 'actualizado_por', 'vigente',
+        'nombre', 'url_logo','id_sede','desc_general','url_convocatoria', 'fecha_inicio', 'fecha_fin', 'creado_por', 'actualizado_por', 'vigente',
     ];
 
     protected $dates = [

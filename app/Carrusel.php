@@ -19,7 +19,7 @@ class Carrusel extends Model
      * @var array
      */
     protected $fillable = [
-        'creado_por', 'titulo', 'contenido', 'url_imagen', 'actualizado_por',
+        'creado_por', 'link_web', 'url_imagen', 'actualizado_por',
     ];
 
     protected $dates = ['deleted_at'];

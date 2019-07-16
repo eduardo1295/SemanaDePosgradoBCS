@@ -29,6 +29,7 @@ class modalidadController extends Controller
 
     public function __construct(){
         $this-> middleware('auth:admin')->only(['listModalidad','store','edit','update','modalidad']);
+       // $this-> middleware('auth:admin')->only(['modalidad']);
     }
     public function index()
     {

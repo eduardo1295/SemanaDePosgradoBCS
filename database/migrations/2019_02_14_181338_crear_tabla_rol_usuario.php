@@ -21,10 +21,10 @@ class CrearTablaRolUsuario extends Migration
             $table->integer('id_rol')->unsigned();
             $table->foreign('id_rol')->references('id_rol')->on('roles');
 
-            $table->integer('creada_por')->unsigned();
-            $table->foreign('creada_por')->references('id')->on('users');
+            //$table->integer('creada_por')->unsigned();
+            //$table->foreign('creada_por')->references('id')->on('users');
             $table->timestamp('fecha_creacion')->nullable();
-            $table->integer('actualizado_por')->nullable();
+            //$table->integer('actualizado_por')->nullable();
             $table->timestamp('fecha_actualizacion')->nullable();
 
             $table->engine = 'InnoDB';

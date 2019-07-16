@@ -75,10 +75,6 @@
 
                                                     <ul>
                                                 </li>
-                                                <form id="logout-form" action="{{route($ruta)}}" method="POST"
-                                                    style="display: none;">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                </form>
                                             </ul>
                                         </div>
                                     </div>

@@ -1,5 +1,5 @@
 function mostrarSnack(mensaje){
-    var texto = "<span style='color:#FFF;'><i class='far fa-check-circle'></i></span> ";
+    var texto = "<span style='color:#FFF;'><i style='color:#FFF;' class='far fa-check-circle'></i></span> ";
     var botonCerrar = '<span class="closeSnack" onclick="cerrarSnack();" >&times;</span>';
     $("#snackbar").html(texto + mensaje + botonCerrar);
     $("#snackbar").addClass("show");

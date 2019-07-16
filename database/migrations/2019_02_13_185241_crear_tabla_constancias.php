@@ -31,7 +31,10 @@ class CrearTablaConstancias extends Migration
             $table->string('cuerpo', 100);
             
 */
-            $table->timestamps();
+$table->timestamp('fecha_creacion')->nullable();
+//$table->integer('actualizado_por')->nullable();
+$table->timestamp('fecha_actualizacion')->nullable();
+
   //          $table->integer('actualizado_por')->nullable();
 
             $table->engine = 'InnoDB';

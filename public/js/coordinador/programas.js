@@ -141,9 +141,7 @@ $('body').on('click', '.eliminarPrograma', function () {
                                         var oTable = $('#programasDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Programa borrado exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("Programa borrado exitosamente.");
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -192,9 +190,8 @@ $('body').on('click', '.eliminarPrograma', function () {
                                         var oTable = $('#programasDT').dataTable();
                                         oTable.fnDraw(false);
                                     }
-                                    $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Porgrama activado exitosamente.");
-                                    $("#snackbar").addClass("show");
-                                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                                    mostrarSnack("Porgrama activado exitosamente.");
+                                    
                                 },
                                 error: function (data) {
                                     console.log('Error:', data);
@@ -231,20 +228,17 @@ $('body').on('click', '.eliminarPrograma', function () {
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function(){
+                $(".loader").show();
+            },
             success: function (data) {
                 $('#programaForm').trigger("reset");
                 $('#programa-crud-modal').modal('hide');
-                $('#btn-save-pro').html('Guardar');
                 //recargar serverside
                 var oTable = $('#programasDT').dataTable();
                 oTable.fnDraw(false);
-                $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Actualización exitosa.");
-                $("#snackbar").addClass("show");
-                setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
-
                 
-                $("#btn-save-pro").prop("disabled", false);
-                $("#btn-close").prop("disabled", false);
+                mostrarSnack("Actualización exitosa.");
                 
                 console.log(data);
             },
@@ -255,11 +249,13 @@ $('body').on('click', '.eliminarPrograma', function () {
                         $('#' + key + "_error").text(value);
                     });
                 }
+            },
+            complete: function (data) {
+                $(".loader").hide();
                 $('#btn-save-pro').html('Guardar');
                 $("#btn-save-pro").prop("disabled", false);
                 $("#btn-close").prop("disabled", false);
-            },
-
+            }
         });
     } else if (actionType == "crear-programa") {
         $("#btn-save-pro").prop("disabled", true);
@@ -276,18 +272,17 @@ $('body').on('click', '.eliminarPrograma', function () {
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function(){
+                $(".loader").show();
+            },
             success: function (data) {
                 $('#programaForm').trigger("reset");
                 $('#programa-crud-modal').modal('hide');
-                $('#btn-save-pro').html('Guardar');
                 //recargar serverside
                 var oTable = $('#programasDT').dataTable();
                 oTable.fnDraw(false);
-                $("#snackbar").html("<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Pograma registrado exitosamente.");
-                $("#snackbar").addClass("show");
-                setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
-                $("#btn-save-pro").prop("disabled", false);
-                $("#btn-close").prop("disabled", false);
+                
+                mostrarSnack("Pograma registrado exitosamente.");
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -297,12 +292,14 @@ $('body').on('click', '.eliminarPrograma', function () {
                         $('#' + key + "_error").text(value);
                     });
                 }
+                
+            },
+            complete: function (data) {
+                $(".loader").hide();
                 $('#btn-save-pro').html('Guardar');
                 $("#btn-save-pro").prop("disabled", false);
                 $("#btn-close").prop("disabled", false);
-                
-            },
-
+            }
 
         });
     }

@@ -99,6 +99,7 @@ Route::get('programa/programaGeneral', 'ProgramaController@programaGeneral')->na
 Route::post('programa/subirProgramaGeneral', 'ProgramaController@subirProgramaGeneral')->name('programa.subirProgramaGeneral');
 Route::get('programa/mostrarProgramaGeneral', 'ProgramaController@mostrarProgramaGeneral')->name('programa.mostrarProgramaGeneral');
 /*LISTO*/
+
 Route::resource('programa', 'ProgramaController')->except(['create']);
 
 Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
@@ -160,5 +161,6 @@ Route::get('/qr', function(){
 
 Route::post('constancia/guardarImagenes', 'ConstanciaController@guardarImagenes')->name('constancia.guardarImagenes');
 Route::post('alumno/constanciaAlta','ConstanciaController@altaConstancia');
-Route::get('constancia/generate-pdf','ConstanciaController@generatePDF');
+Route::get('constancia/{id}','ConstanciaController@generatePDF');
+Route::get('verConstancia','ConstanciaController@verConstancias')->name('verConstancias');
 Route::resource('constancia', 'ConstanciaController');

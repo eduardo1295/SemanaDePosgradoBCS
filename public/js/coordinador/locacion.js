@@ -106,7 +106,7 @@ $("#btn-save").click(function () {
                 }
                 else{
                     $('#mostrar_alumnos').html('');
-                    mostrarSnack("locación editada exitosamente.");
+                    mostrarSnack("Locación editada exitosamente.");
                     $('#locacion-crud-modal').modal('hide');
                 }
                 $('#locacionForm').trigger("reset");
@@ -151,7 +151,7 @@ $("#btn-save").click(function () {
                     $('#nombre_error').text('La locación esta repetida.');
                 }
                 else{
-                    mostrarSnack("locación agregada exitosamente.");
+                    mostrarSnack("Locación agregada exitosamente.");
                     $('#locacion-crud-modal').modal('hide');
                     $('#locacionForm').trigger("reset");
                 }
@@ -217,10 +217,8 @@ $('body').on('click', '.eliminarLocacion', function () {
                                 oTable.fnDraw(false);
                             }
 
-                            var x = document.getElementById("snackbar");
-                            x.innerHTML="<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen eliminada exitosamente.";
-                            x.className = "show";
-                            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+                            
+                            mostrarSnack("Locación eliminada exitosamente.");
                         },
                         error: function (data) {
                             console.log('Error:', data);

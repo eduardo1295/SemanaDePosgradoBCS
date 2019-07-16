@@ -293,6 +293,9 @@ $("input[name='verDir']").change(function (e) {
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#directorForm').trigger("reset");
                     $('#director-crud-modal').modal('hide');
@@ -321,7 +324,12 @@ $("input[name='verDir']").change(function (e) {
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
-
+                complete: function (data) {
+                    $(".loader").hide();
+                    $('#btn-save-director').html('Guardar');
+                    $("#btn-save-director").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                }
             });
         } else if (actionType == "crear-director") {
             $("#btn-save-director").prop("disabled", true);
@@ -338,16 +346,16 @@ $("input[name='verDir']").change(function (e) {
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#directorForm').trigger("reset");
                     $('#director-crud-modal').modal('hide');
-                    $('#btn-save-director').html('Guardar');
                     //recargar serverside
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
                     mostrarSnack("Director de tesis registrado exitosamente.");
-                    $("#btn-save-director").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -358,11 +366,13 @@ $("input[name='verDir']").change(function (e) {
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save-director').html('Guardar');
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
 
             });
         }
