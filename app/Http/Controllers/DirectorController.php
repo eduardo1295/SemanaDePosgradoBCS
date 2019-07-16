@@ -84,7 +84,7 @@ class DirectorController extends Controller
         
         if($user){
             $user->directortesis()->create();
-            $user->roles()->attach([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
+            $user->roles()->attach([$user->id => ['id_rol'=>'4']]);
         }
         
         return \Response::json($user);
@@ -162,7 +162,7 @@ class DirectorController extends Controller
         
         if($user){
             //$user->directortesis()->update([]);
-            $user->roles()->sync([$user->id => ['id_rol'=>'4', 'creada_por'=>'1']]);
+            $user->roles()->sync([$user->id => ['id_rol'=>'4']]);
         }
         
         return \Response::json($user);

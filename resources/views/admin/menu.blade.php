@@ -49,7 +49,7 @@
                 </li>
                 <li>
                     <a href="{{route('programa.VerPrograma')}}">
-                        <i class="fas fa-user-tie"></i>
+                        <i class="fas fa-book"></i>
                         <span><strong>Programas de estudio</strong></span>
                     </a>
                 </li>
@@ -87,8 +87,8 @@
                 
                 <li>
                     <a href="{{route('modalidad.VerModalidad')}}">
-                        <i class="far fa-id-card"></i>
-                        <span><strong>Modalidades</strong></span>
+                        <i class="fas fa-paint-brush"></i>
+                        <span><strong>Modalidades de participación</strong></span>
                     </a>
                 </li>
                 <li>
@@ -99,19 +99,19 @@
                 </li>
                 <li>
                     <a href="{{route('sesion.VerSesiones')}}">
-                        <i class="far fa-id-card"></i>
+                        <i class="fas fa-clock"></i>
                         <span><strong>Sesiones</strong></span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('programa.ProgramaGeneral')}}">
-                        <i class="far fa-id-card"></i>
+                        <i class="fas fa-calendar-alt"></i>
                         <span><strong>Programa General</strong></span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('constancia.index')}}">
-                        <i class="far fa-id-card"></i>
+                        <i class="fas fa-certificate"></i>
                         <span><strong>Diseño de constancia de participación</strong></span>
                     </a>
                 </li>
@@ -189,9 +189,7 @@
                 <i class="fas fa-sign-out-alt"></i>
             </a>
 
-            <form id="logout-form" action="{{route($ruta)}}" method="POST" style="display: none;">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            </form>
+            
             @endif
 
         </div>

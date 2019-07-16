@@ -15,7 +15,7 @@ use DOMXPath;
 class ConstanciaController extends Controller
 {
     public function __construct(){
-        $this-> middleware('auth:admin');
+        //$this-> middleware('auth:admin');
     }
     /**
      * Display a listing of the resource.
@@ -274,34 +274,36 @@ class ConstanciaController extends Controller
         return \Response::json(['data' => $resultArray], 200);
     }
 
-    public function generatePDF()
+    public function generatePDF($id)
     {
-        /*
-        $semanaquery = DB::select(DB::raw("SELECT semanas.id_semana, 
+        
+        $semanaquery = DB::select("SELECT semanas.id_semana, nombre
         FROM semanas 
-        WHERE vigente = 1"));
+        WHERE id_semana = ?",[$id]);
+        
         $idAlumno = auth()->user()->id;
         $constancia = DB::select("SELECT id_semana FROM alumno_constancia WHERE 
-        id_alumno = ? AND id_semana = ?;",[$idAlumno, $request->id_semana]);
-
+        id_alumno = ? AND id_semana = ?;",[$idAlumno, $id]);
+        
         if(COUNT($constancia)>0){
             $datosConstancia = DB::select("SELECT CONCAT(users.nombre, ' ', users.primer_apellido, ' ', 
             users.segundo_apellido) AS nombre_completo, trabajos.titulo, modalidades.nombre
             FROM users, trabajos, modalidades WHERE users.id = trabajos.id_alumno AND 
             modalidades.id_modalidad = trabajos.id_modalidad AND trabajos.id_semana = ?
-            AND users.id = ?",[$idAlumno, $request->id_semana]);
+            AND users.id = ?",[$id, $idAlumno]);
+        }else{
+            return abort(403);
         }
 
-        */
-
-
+        /*
         $semana = DB::select(DB::raw('SELECT semanas.id_semana, '.
 		' semanas.url_logo,vigente,semanas.nombre'.		
 		' FROM semanas'.
         ' WHERE vigente = 1'));
+        */
         $constancia = DB::select('SELECT constancias.cHTML, constancias.cCSS, constancias.url_imagen_fondo'.
 		' FROM constancias'.
-        ' WHERE id_semana = ?',[$semana[0]->id_semana]);
+        ' WHERE id_semana = ?',[$semanaquery[0]->id_semana]);
         $titulo = "Constancia";
         $view = View::make('constancias.constanciapdf', compact('titulo','constancia'));
         
@@ -318,19 +320,19 @@ class ConstanciaController extends Controller
         $respuesta = $xpath->query('//div[contains(@class, "participante")]'); //instance of DOMNodeList
         
         foreach ($respuesta as $encontrado) 
-            $encontrado->textContent = "Hugo Paco Ruiz Perez";
+            $encontrado->textContent = $datosConstancia[0]->nombre_completo;
         
         $respuesta = $xpath->query('//div[contains(@class, "evento")]'); //instance of DOMNodeList
         foreach ($respuesta as $encontrado) 
-            $encontrado->textContent = $semana[0]->nombre;
+            $encontrado->textContent = $semanaquery[0]->nombre;
 
         $respuesta = $xpath->query('//div[contains(@class, "trabajo")]'); //instance of DOMNodeList
         foreach ($respuesta as $encontrado) 
-            $encontrado->textContent = "Distintos titulos de trabajos";
+            $encontrado->textContent = $datosConstancia[0]->titulo;
 
             $respuesta = $xpath->query('//div[contains(@class, "modalidad")]'); //instance of DOMNodeList
             foreach ($respuesta as $encontrado) 
-                $encontrado->textContent = "PONENCIA ORAL";
+                $encontrado->textContent = $datosConstancia[0]->nombre;
         /*
         $images = $dom->getelementsbytagname('img');
  
@@ -470,5 +472,23 @@ class ConstanciaController extends Controller
 
         return \Response::json($resultado);
         
+    }
+
+    public function verConstancias(){
+        $id = auth()->user()->id;
+        $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio',DB::raw("(DATE_FORMAT(fecha_inicio,'%Y-%m-%d'))as n") ,'fecha_fin')->where('vigente',1)->first();
+        $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones;
+         "));
+        $constancias = DB::select('SELECT alumno_constancia.id_semana, semanas.nombre FROM alumno_constancia, semanas WHERE semanas.id_semana = alumno_constancia.id_semana AND alumno_constancia.id_alumno = ?;', [$id]);
+        return view('alumno.constancias',compact(['semana','instituciones','constancias']));   
     }
 }

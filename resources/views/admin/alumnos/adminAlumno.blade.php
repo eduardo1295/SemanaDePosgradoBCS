@@ -75,8 +75,6 @@
 
 @endsection
 @section('extra')
-    <div id="snackbar"></div>
-    <div id="loader" class="loader"></div>
 @include('admin.alumnos.modal')
 @endsection
 @section('scripts')
@@ -106,7 +104,7 @@ var rutaReactivar = "{{ url('alumno/reactivar')}}";
 @endsection
 
 @section('estilos')
-<link href="/css/imagenes/cargando.css" rel="stylesheet">
+
 <link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">

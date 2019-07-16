@@ -69,12 +69,13 @@
             </table>
         </div>
     </div>
-    <div id="snackbar"></div>
+    
 </div>
 
 
 @endsection
 @section('extra')
+
 @include('admin.coordinador.modal')
 @endsection
 @section('scripts')

@@ -327,17 +327,19 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#institucionForm').trigger("reset");
                     $('#institucion-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
+                    
                     //recargar serverside
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
 
                     mostrarSnack("Actualización exitosa.");
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
+                    
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
 
@@ -349,11 +351,13 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
             });
         } else if (actionType == "crear-institucion") {
             $("#btn-save").prop("disabled", true);
@@ -372,16 +376,18 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#institucionForm').trigger("reset");
                     $('#institucion-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
+                    
                     //recargar serverside
                     var oTable = $('#instituciones').dataTable();
                     oTable.fnDraw(false);
                     mostrarSnack("Institución registrada exitosamente.");
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
+                    
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
                 },
@@ -393,11 +399,14 @@
                         });
                     }
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                  
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
 
             });
         }

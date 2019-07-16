@@ -60,9 +60,7 @@ class CarruselController extends Controller
         $carrusel->url_imagen = $nuevo_nombre;
         $carrusel->creado_por= 1;
         $carrusel->save();
-        if($carrusel){
-            //borrar imagen actual
-        }
+        
         //$institucion->update($request->all());
         return \Response::json($carrusel);
     }
@@ -117,7 +115,9 @@ class CarruselController extends Controller
         ];
         $sinerror='verdadero';
         $nuevo_nombre = 'sin imagen';
+        $imgBorrar = "sin_liga";
         if($request->hasFile('imagenCarrusel')){
+            $imgBorrar = $carrusel->url_imagen;
             $validator = Validator::make($request->all(), $rules1 );
             if(!$validator->fails()){
                 $imagencarrusel = $request->file('imagenCarrusel');
@@ -138,12 +138,16 @@ class CarruselController extends Controller
         }
         
         if ($sinerror=='verdadero') {
+            
             $carrusel->link_web = $request->link_web;
             $carrusel->url_imagen = $nuevo_nombre;
             $carrusel->creado_por= 1;
             $carrusel->save();
-            if($carrusel){
-                //borrar imagen actual
+            if($carrusel && $imgBorrar != "sin_liga"){
+                $pathDirectorio = public_path('img\\carrusel').'\\'.$imgBorrar;
+                if(File::exists($pathDirectorio)){
+                    File::delete($pathDirectorio);
+                }
             }
             //$institucion->update($request->all());
             return \Response::json($carrusel);

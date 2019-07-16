@@ -235,18 +235,18 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#directorForm').trigger("reset");
                     $('#director-crud-modal').modal('hide');
-                    $('#btn-save-director').html('Guardar');
                     //recargar serverside
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Actualización exitosa.");
                     
-                    $("#btn-save-director").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                     console.log(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -258,11 +258,14 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
+                    
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save-director').html('Guardar');
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
             });
         } else if (actionType == "crear-director") {
             $("#btn-save-director").prop("disabled", true);
@@ -279,18 +282,18 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#directorForm').trigger("reset");
                     $('#director-crud-modal').modal('hide');
-                    $('#btn-save-director').html('Guardar');
                     //recargar serverside
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Director registrado exitosamente.");
 
-                    $("#btn-save-director").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -301,12 +304,14 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save-director').html('Guardar');
                     $("#btn-save-director").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
-
+                }
             });
         }
 

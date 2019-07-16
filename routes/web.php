@@ -34,7 +34,7 @@ Route::put('admin/institucion/reactivar/{institucion}', 'InstitucionController@r
 
 Route::post('admin/institucion/suibirLogoConacyt', 'InstitucionController@suibirLogoConacyt')->name('institucion.suibirLogoConacyt');
 
-Route::resource('institucion', 'InstitucionController')->except(['index','create','show']);
+Route::resource('institucion', 'InstitucionController')->except(['create','show']);
 
 Route::post('noticias/vistaPrevia', 'NoticiaController@vistaPrevia')->name('noticia.vistaPrevia');
 Route::get('admin/noticias', 'NoticiaController@noticias')->name('noticia.VerNoticias');
@@ -61,7 +61,7 @@ Route::resource('semana', 'SemanaController')->except(['create','show']);
 Route::get('admin/carruselImagenes', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
 Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('carrusel.listCarrusel');
 Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
-Route::resource('carrusel', 'CarruselController')->except(['index','create','show']);
+Route::resource('carrusel', 'CarruselController')->except(['create','show']);
 
 Route::get('admin/coordinadores', 'CoordinadorController@coordinador')->name('coordinador.VerCoodinadores');
 Route::get('coordinador/listCoordinador', 'CoordinadorController@listCoordinador')->name('coordinador.listCoordinador');
@@ -74,7 +74,7 @@ Route::get('director/listDirector', 'DirectorController@listDirector')->name('di
 Route::put('director/reactivar/{director}', 'DirectorController@reactivar')->name('director.reactivar');
 Route::get('director/verAlumnos', 'DirectorController@revisarAlumnos')->name('director.revisarAlumnos');
 Route::get('director/listAlumnos', 'DirectorController@listAlumnos')->name('director.listAlumnos');
-Route::resource('director', 'DirectorController')->except(['index','show','create']);
+Route::resource('director', 'DirectorController')->except(['show','create']);
 
 
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
@@ -82,7 +82,7 @@ Route::get('alumno/listAlumnos', 'AlumnoController@listAlumnos')->name('alumno.l
 Route::put('alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
 Route::get('alumno/generarGafete','AlumnoController@generarGafete')->name('alumno.generarGafete');
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
-Route::resource('alumno', 'AlumnoController')->except(['index','show','create']);
+Route::resource('alumno', 'AlumnoController')->except(['show','create']);
 
 Auth::routes(['verify' => true]);
 
@@ -95,7 +95,7 @@ Route::get('programa/programaGeneral', 'ProgramaController@programaGeneral')->na
 Route::post('programa/subirProgramaGeneral', 'ProgramaController@subirProgramaGeneral')->name('programa.subirProgramaGeneral');
 Route::get('programa/mostrarProgramaGeneral', 'ProgramaController@mostrarProgramaGeneral')->name('programa.mostrarProgramaGeneral');
 
-Route::resource('programa', 'ProgramaController')->except(['index','create']);
+Route::resource('programa', 'ProgramaController')->except(['create']);
 
 Route::get('admin/modalidades', 'ModalidadController@modalidad')->name('modalidad.VerModalidad');
 Route::get('modalidad/listModalidad', 'ModalidadController@listModalidad')->name('modalidad.listModalidad');
@@ -127,7 +127,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin/locacion', 'LocacionController@locacion')->name('locacion.VerLocacion');
 Route::get('locacion/listLocacion', 'LocacionController@listLocacion')->name('locacion.listLocacion');
-Route::resource('locacion', 'LocacionController')->except(['index','create','show']);
+Route::resource('locacion', 'LocacionController')->except(['create','show']);
 
 
 Route::get('/prueba', function(){
@@ -149,5 +149,6 @@ Route::get('/qr', function(){
 
 Route::post('constancia/guardarImagenes', 'ConstanciaController@guardarImagenes')->name('constancia.guardarImagenes');
 Route::post('alumno/constanciaAlta','ConstanciaController@altaConstancia');
-Route::get('constancia/generate-pdf','ConstanciaController@generatePDF');
+Route::get('constancia/{id}','ConstanciaController@generatePDF');
+Route::get('verConstancia','ConstanciaController@verConstancias')->name('verConstancias');
 Route::resource('constancia', 'ConstanciaController');

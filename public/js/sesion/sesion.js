@@ -16,7 +16,7 @@ $(document).ready(function () {
     });
 
     table = $('#sesion').DataTable({
-        "order":[[2,"asc"]],
+        "order":[[1,"asc"]],
         pageLength: 5,
         lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
         responsive: true,

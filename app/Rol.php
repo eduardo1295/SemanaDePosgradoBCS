@@ -17,13 +17,12 @@ class Rol extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'descripcion,', 'creado_por', 'actualizado_por',
+        'nombre', 'descripcion,',
     ];
 
     public function users()
     {
         return $this->belongsToMany(User::class,'rol_usuario', 'id_rol', 'id_usuario')
-                    ->withPivot('creada_por', 'actualizado_por')
                     ->withTimestamps();
     }
 }

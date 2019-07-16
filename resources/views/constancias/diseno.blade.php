@@ -9,7 +9,7 @@
 -->
 <div class="container-fluid">
     
-    <button class="btn btnprueba">presiona aqui</button>
+   <!-- <button class="btn btnprueba">presiona aqui</button>-->
 <div class="row">
     <div class="col-12 mx-auto">
         <h1>Diseño de constancia</h1>
@@ -99,7 +99,7 @@
   <script src="{{ asset('/plugins/grapesjs/js/gjs-blocks-basic.js') }}"></script>
   <!--<script src="{{ asset('/plugins/grapesjs/js/grapesjs/grapesjs-touch.min.js') }}"></script>-->
   <script src="{{ asset('/plugins/grapesjs/js/gjs-conf2.js') }}"></script>
-  
+  <script src="/js/snack/snack.js"></script>
   <script>
     var ruta = "{{ route('constancia.store')}}";
     var componenetes = "";
@@ -168,6 +168,9 @@
                   contentType: false,
                   cache: false,
                   processData: false,
+                  beforeSend: function(){
+                    $(".loader").show();
+                },
                   success: function (data) {
                       console.log(data);
                       //mostrarSnack("Actualización exitosa.");
@@ -176,7 +179,7 @@
                       $(".gjs-frame").contents().find("#wrapper").css('background-size', '100% 100%');
                       $(".gjs-frame").contents().find("#wrapper").css('background-repeat', 'no-repeat');
                       $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
-  
+                      mostrarSnack("Cambios guardados exitosamente");
                   },
                   error: function (data) {
                       if (data.status == 422) {
@@ -185,6 +188,7 @@
                               $('#' + key + "_error").text(value);
                           });
                       }
+                      mostrarSnackError("Error al guardar los cambios");
                   },
                   complete: function (data) {
                     $(".btnGuardarDiseno").prop("disabled", false);
@@ -195,6 +199,8 @@
                           $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/' + data
                               .responseJSON['url_logo'] + '/?' + unique);
                       }*/
+                    $(".loader").hide();
+                    
                   }
   
               });
@@ -213,6 +219,7 @@
 @endsection
 
 @section('estilos')
+<link href="/css/modales/snackbar.css" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('/plugins/grapesjs/css/grapes.min.css') }}">
     <style>
       body,

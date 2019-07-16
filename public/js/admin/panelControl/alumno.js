@@ -253,18 +253,18 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#alumnoForm').trigger("reset");
                     $('#alumno-crud-modal').modal('hide');
-                    $('#btn-save-alumno').html('Guardar');
                     //recargar serverside
                     var oTable = $('#alumnosDT').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Actualización exitosa.");
 
-                    $("#btn-save-alumno").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                     console.log(data);
                 },
                 error: function (data) {
@@ -277,10 +277,13 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save-alumno').html('Guardar');
                     $("#btn-save-alumno").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
+                }
 
             });
         } else if (actionType == "crear-alumno") {
@@ -298,18 +301,18 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#alumnoForm').trigger("reset");
                     $('#alumno-crud-modal').modal('hide');
-                    $('#btn-save-alumno').html('Guardar');
                     //recargar serverside
                     var oTable = $('#alumnosDT').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Alumno registrado exitosamente.");
                     
-                    $("#btn-save-alumno").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -320,11 +323,13 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save-alumno').html('Guardar');
                     $("#btn-save-alumno").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
 
             });
         }

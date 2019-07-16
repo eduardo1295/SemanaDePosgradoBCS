@@ -245,6 +245,9 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#coordinadorForm').trigger("reset");
                     $('#coordinador-crud-modal').modal('hide');
@@ -272,7 +275,12 @@
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
                 },
-
+                complete: function (data) {
+                    $(".loader").hide();
+                    $('#btn-save').html('Guardar');
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-close").prop("disabled", false);
+                }
             });
         } else if (actionType == "crear-coordinador") {
             $("#btn-save").prop("disabled", true);
@@ -289,18 +297,17 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#coordinadorForm').trigger("reset");
                     $('#coordinador-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
                     //recargar serverside
                     var oTable = $('#coordinadoresdt').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Coordinador registrado exitosamente.");
-
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -311,11 +318,13 @@
                             $('#' + key + "_error").text(value);
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
 
             });
         }

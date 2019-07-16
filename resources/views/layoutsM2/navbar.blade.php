@@ -43,6 +43,7 @@
                                             @if(auth()->user() && auth()->user()->hasRoles(['alumno']))
                                                 <li><a href="{{route('semana.subirTrabajo')}}" class="loginUsuario" >Subir Trabajo</a></li>
                                                 <li><a href="{{route('alumno.generarGafete')}}" class="loginUsuario" >Generar Gafete</a></li>
+                                                <li><a href="{{route('verConstancias')}}" class="loginUsuario" >Constancia de participación</a></li>
                                                 <li><a href="{{route('alumno.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                             @elseif(auth()->user() && auth()->user()->hasRoles(['director']))
                                                 <li><a href="{{route('director.revisarAlumnos')}}" class="loginUsuario" >Revisar Alumnos</a></li>

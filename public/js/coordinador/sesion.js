@@ -15,7 +15,7 @@ function cargarDataTableSesiones(){
     if(!tableSesion){
         console.log('hola');
         tableSesion = $('#sesionesDT').DataTable({
-            "order":[[2,"asc"]],
+            "order":[[1,"asc"]],
         pageLength: 5,
         lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
         responsive: true,
@@ -454,10 +454,8 @@ $('body').on('click', '.eliminar', function () {
                                 oTable.fnDraw(false);
                             }
 
-                            var x = document.getElementById("snackbar");
-                            x.innerHTML="<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen eliminada exitosamente.";
-                            x.className = "show";
-                            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+                            
+                            mostrarSnack("Sesión eliminada exitosamente.");
                         },
                         error: function (data) {
                             console.log('Error:', data);

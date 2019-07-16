@@ -51,8 +51,10 @@
     @include('layoutsM2.navbar')
     <div style="min-height:100vh">
     @yield('contenido','')
-    </div>
+       
+</div>
     @yield('extra')
+    
     @include('layoutsM2.footer')
     @yield('scripts','')
     
