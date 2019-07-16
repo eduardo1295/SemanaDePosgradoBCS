@@ -13,8 +13,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras sesiones</legend>
-        <div class="col-12 col-md-6 col-lg-6 offset-6">
+        <div class="col-12 col-sm-12 col-lg-12 d-flex d-sm-block justify-content-center justify-content-sm-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-sesion"><span><i
                             class="fas fa-plus"></i></span> Nueva sesion</a>
