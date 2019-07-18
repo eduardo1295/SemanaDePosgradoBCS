@@ -19,18 +19,11 @@
     <div class="row mb-3">
         <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras modalidades</legend>
         <div class="col-12 col-md-4 col-lg-4">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verNoti" value="activos">
-                <label class="form-check-label" for="inlineRadio1">Activas</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" name="verNoti" value="eliminados">
-                <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
-            </div>
+            
         </div>
         <div class="col-12 col-md-6 col-lg-6">
-            <div class="d-flex justify-content-end">
-                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-modalidad"><span><i
+            <div class="d-flex justify-content-center justify-content-sm-end">
+                <a href="javascript:void(0)" class="btn btn-info ml-3 " id="crear-modalidad"><span><i
                             class="fas fa-plus"></i></span> Nueva Modalidad</a>
 
             </div>
@@ -43,7 +36,7 @@
                 <thead>
                     <tr>
                         <th>id_modalidad</th>
-                        <th>Titulo</th>
+                        <th>Nombre</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>
                     </tr>

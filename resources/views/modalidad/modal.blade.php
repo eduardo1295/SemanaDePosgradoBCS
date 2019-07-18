@@ -13,7 +13,7 @@ var hola;
                 <form id="modalidadForm" name="modalidadForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="modalidad_id" id="modalidad_id">
                     <div class="form-group">
-                        <strong><label for="titulo" class="control-label">Titulo</label><label class="text-danger">*</label></strong>
+                        <strong><label for="titulo" class="control-label">Nombre</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="titulo" name="titulo"
                             placeholder="Titulo de la modalidad" value="" maxlength="500" required="">
                         <small><span class="mensajeError text-danger" id="nombres_error"></span></small>
