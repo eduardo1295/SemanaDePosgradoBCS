@@ -251,6 +251,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    mostrarSnackError('Error al actualizar usuario');
                     if (xhr.status == 422) {
                         
                         var errores = xhr.responseJSON['errors'];
@@ -297,6 +298,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    mostrarSnackError('Error al guardar usuario');
                     if (xhr.status == 422) {
                         
                         var errores = xhr.responseJSON['errors'];

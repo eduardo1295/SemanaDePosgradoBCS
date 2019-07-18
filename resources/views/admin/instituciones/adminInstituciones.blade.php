@@ -68,7 +68,7 @@
 @section('extra')
 @include('admin.instituciones.modal')
 @include('admin.instituciones.modalConacyt')
-<div id="snackbar"></div>
+<!--<div id="snackbar"></div>-->
 @endsection
 @section('scripts')
 <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>

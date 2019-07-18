@@ -65,7 +65,7 @@
             </table>
         </div>
     </div>
-    <div id="snackbar"></div>
+    <!--<div id="snackbar"></div>-->
 </div>
 
 

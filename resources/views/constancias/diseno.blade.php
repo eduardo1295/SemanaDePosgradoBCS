@@ -80,9 +80,10 @@
       -->
 @endsection
 @section('extra')
+<!--
     <div id="snackbar"></div>
     <div id="loader" class="loader"></div>
-
+-->
 @endsection
 @section('scripts')
 <script>

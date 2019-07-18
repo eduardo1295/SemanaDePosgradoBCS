@@ -44,7 +44,19 @@ class StoreAlumnoRequest extends FormRequest
             //Validacion campos extra para coordinador
             'num_control_al'  => 'unique:alumnos,num_control|required|max:15',
 
-            'semestre_al'  => 'required|numeric|min:1|max:10',
+            //'semestre_al'  => 'required|numeric|min:1|max:10',
+
+            'semestre_al' => [
+                'required',
+                'numeric',
+                
+                function($attribute, $value, $fail){
+                    
+                    if ($value < 1 || $value >10 ) {
+                        $fail('Semestre no válido.');
+                    }
+                },
+            ],
 
             'programaSelect_al'  => 'required|exists:programas,id',
 

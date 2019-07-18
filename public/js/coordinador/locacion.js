@@ -68,7 +68,7 @@ $('#crear-locacion').click(function () {
     $('#btn-save').val("crear-locacion");
     $('#locacion_id').val('');
     $('#locacionForm').trigger("reset");
-    $('#locacionCrudModal').html("Agregar nueva sesión");
+    $('#locacionCrudModal').html("Agregar nueva locación");
     $('#locacion-crud-modal').modal({ backdrop: 'static', keyboard: false })
     $('#locacion-crud-modal').modal('show');
     $('#mostrar_alumnos').html('');
@@ -120,6 +120,7 @@ $("#btn-save").click(function () {
                 $("#btn-close").prop("disabled", false);
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                mostrarSnackError('Error al actualizar locación');
                 if (data.status == 422) {
                     var errores = data.responseJSON["errors"];
                     $.each(errores, function(key, value) {
@@ -166,6 +167,7 @@ $("#btn-save").click(function () {
                 $("#btn-close").prop("disabled", false);
             },
             error: function (data) {
+                mostrarSnackError('Error al guardar locación');
                 if (data.status == 422) {
                     var errores = data.responseJSON['errors'];
                     var key2;

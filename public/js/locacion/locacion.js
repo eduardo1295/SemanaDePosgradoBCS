@@ -80,7 +80,7 @@ $('#crear-locacion').click(function () {
     $('#btn-save').val("crear-locacion");
     $('#locacion_id').val('');
     $('#locacionForm').trigger("reset");
-    $('#locacionCrudModal').html("Agregar nueva sesión");
+    $('#locacionCrudModal').html("Agregar nueva locación");
     $('#locacion-crud-modal').modal({ backdrop: 'static', keyboard: false })
     $('#locacion-crud-modal').modal('show');
     $('#mostrar_alumnos').html('');

@@ -168,7 +168,9 @@
 
                 },
                 error: function (data) {
+                    mostrarSnackError('Error al actualizar noticia');
                     if (data.status == 422) {
+                        
                         var errores = data.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
@@ -207,7 +209,9 @@
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                 },
                 error: function (data) {
+                    mostrarSnackError('Error al guardar noticia');
                     if (data.status == 422) {
+                        
                         var errores = data.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);

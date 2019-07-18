@@ -53,7 +53,7 @@ class InstitucionController extends Controller
         $institucion = new Institucion;
         $institucion->nombre = $request->nombre;
         $institucion->siglas = $request->siglas;        
-        $institucion->id_institucion = date("Yhis");
+        //$institucion->id_institucion = date("Yhis");
         $institucion->direccion_web = $request->direccion_web;
         $institucion->telefono = $request->telefono;
         $institucion->ciudad = $request->ciudad;

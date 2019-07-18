@@ -246,7 +246,7 @@ $('body').on('click', '.eliminarAlumno', function () {
                 },
                 error: function (data) {
                     
-                    
+                    mostrarSnackError('Error al actualizar usuario');
                     if (data.status == 422) {
                         
                         var errores = data.responseJSON['errors'];
@@ -294,8 +294,9 @@ $('body').on('click', '.eliminarAlumno', function () {
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    mostrarSnackError('Error al guardar usuario');
                     if (xhr.status == 422) {
-                        mostrarSnackError('Error al guardar el alumno');
+                        
                         var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
@@ -365,7 +366,9 @@ $('#crear-alumno').click(function () {
                 },
                 error: function (data) {
                     reiniciarselect();
+                    mostrarSnackError('Error al cargar información');
                     if (data.status == 422) {
+                        
                         var errores = data.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
@@ -421,7 +424,7 @@ $('#crear-alumno').click(function () {
                     mostrarSnack("Actualización exitosa.");
                 },
                 error: function (data) {
-                    
+                    mostrarSnackError('Error al actualizar datos');
                     
                     if (data.status == 422) {
                         

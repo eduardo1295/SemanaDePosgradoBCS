@@ -58,8 +58,10 @@
 @endsection
 @section('extra')
 @include('modalidad.modal')
+<!--
 <div id="snackbar"></div>
 <div id="snackbarError" style="z-index:1051;"></div>
+-->
 @endsection
 @section('scripts')
 

@@ -53,8 +53,10 @@
 @endsection
 @section('extra')
 @include('sesion.modal')
+<!--
 <div id="snackbar"></div>
 <div id="snackbarError" style="z-index:1051;"></div>
+-->
 @endsection
 @section('scripts')
 <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>

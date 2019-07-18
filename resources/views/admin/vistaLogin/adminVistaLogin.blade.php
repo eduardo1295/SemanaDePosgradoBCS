@@ -71,7 +71,7 @@
                             <label for="imgslide2" id="imagenactualT" class="control-label"></label>
     
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <img src="/img/fondo/{{$datos[1]}}" alt="" id="imgslide2" class="img-fluid mx-auto">    
+                                <img src="/img/fondo/{{$datos[1] . '/?' . date('YmdHis') }}" alt="" id="imgslide2" class="img-fluid mx-auto">    
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <label for="imgni" id="textVP" class="control-label">Nueva imagen</label>
     
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <img src="/img/hola.png" alt="" id="vistaPrevia2" class="img-fluid mx-auto" style="height:250px">
+                            <img src="" alt="" id="vistaPrevia2" class="img-fluid mx-auto" style="height:250px">
                         </div>
                     </div>
                 </div>

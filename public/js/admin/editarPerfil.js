@@ -49,6 +49,7 @@ $(document).ready(function(){
                 },
                 error: function (data) {
                     if (data.status == 422) {
+                        
                         var errores = data.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);

@@ -345,7 +345,9 @@
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    mostrarSnackError('Error al actualizar institución');
                     if (xhr.status == 422) {
+                        
                         var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
@@ -392,7 +394,9 @@
                     $('#nuevoLogo').addClass('d-none');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    mostrarSnackError('Error al guardar institución');
                     if (xhr.status == 422) {
+                        
                         var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);

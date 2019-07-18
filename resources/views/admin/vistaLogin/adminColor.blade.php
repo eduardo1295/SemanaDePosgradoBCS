@@ -116,7 +116,7 @@
         </div>
     </form>
 </div>
-<div id="snackbar"></div>
+<!--<div id="snackbar"></div>-->
 @endsection
 @section('scripts')
 <script src="/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>

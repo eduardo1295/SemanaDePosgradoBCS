@@ -64,6 +64,7 @@
     @yield('extra')
 
     <div id="snackbar"></div>
+    <div id="snackbarError" style="z-index:1051;"></div>
     <div id="loader" class="loader"></div>
   </div>
 

@@ -299,7 +299,6 @@ $("input[name='verDir']").change(function (e) {
                 success: function (data) {
                     $('#directorForm').trigger("reset");
                     $('#director-crud-modal').modal('hide');
-                    $('#btn-save-director').html('Guardar');
                     //recargar serverside
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
@@ -307,22 +306,18 @@ $("input[name='verDir']").change(function (e) {
                     
                     
                     mostrarSnack("Actualización exitosa.");
-                    $("#btn-save-director").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                     console.log(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    mostrarSnackError('Error al actualizar usuario');
                     if (xhr.status == 422) {
-                        
+                       
                         var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
                         });
                     }
-                    $('#btn-save-director').html('Guardar');
-                    $("#btn-save-director").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
                 complete: function (data) {
                     $(".loader").hide();
@@ -359,6 +354,7 @@ $("input[name='verDir']").change(function (e) {
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    mostrarSnackError('Error al guardar usuario');
                     if (xhr.status == 422) {
                         
                         var errores = xhr.responseJSON['errors'];
@@ -428,7 +424,9 @@ $("input[name='verDir']").change(function (e) {
                     $('#imglogo').prop('src', imagenRuta + '/' + data.url_logo + '/?' + unique);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    mostrarSnackError('Error al actualizar institución');
                     if (xhr.status == 422) {
+                        
                         var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);

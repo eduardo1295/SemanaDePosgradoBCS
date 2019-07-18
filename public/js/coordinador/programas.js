@@ -243,7 +243,9 @@ $('body').on('click', '.eliminarPrograma', function () {
                 console.log(data);
             },
             error: function (data) {
+                mostrarSnackError('Error al actualizar actualizar programa de estudios');
                 if (data.status == 422) {
+                    
                     var errores = data.responseJSON['errors'];
                     $.each(errores, function (key, value) {
                         $('#' + key + "_error").text(value);
@@ -282,11 +284,13 @@ $('body').on('click', '.eliminarPrograma', function () {
                 var oTable = $('#programasDT').dataTable();
                 oTable.fnDraw(false);
                 
-                mostrarSnack("Pograma registrado exitosamente.");
+                mostrarSnack("Pograma de estudios registrado exitosamente.");
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                mostrarSnackError('Error al actualizar guardar programa de estudios');
                 if (xhr.status == 422) {
+                    
                     var errores = xhr.responseJSON['errors'];
                     $.each(errores, function (key, value) {
                         $('#' + key + "_error").text(value);

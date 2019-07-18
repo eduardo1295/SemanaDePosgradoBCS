@@ -38,7 +38,7 @@ class CoordinadorController extends Controller
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones;
+         FROM instituciones WHERE deleted_at IS NULL;
          "));
         /*Agregado Rente para la cuestion de sesiones*/
         $modalidades = Modalidad::select('id_modalidad','nombre')->get();
@@ -157,7 +157,7 @@ class CoordinadorController extends Controller
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones;
+         FROM instituciones WHERE deleted_at IS NULL;
          "));
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
             $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();

@@ -202,24 +202,26 @@
                 //contentType: false,
                 //cache: false,
                 //processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     //console.log(data);
                     $('#modalidadForm').trigger("reset");
                     $('#modalidad-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
                     //recargar serverside
                     var oTable = $('#modalidad').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     //$('#instituciones').DataTable().ajax.reload(null, false);
                     mostrarSnack("Actualización exitosa.");
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    mostrarSnackError('Error al actualizar la modalidad de participación');
                     if (xhr.status == 422) {
+                        
                         var errores = xhr.responseJSON['errors'];
                         var key2;
                         $.each(errores, function (key, value) {
@@ -228,11 +230,13 @@
                             console.log(($('#' + key + "_error")));
                         });
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
             });
         } else if (actionType == "crear-modalidad") {
             $("#btn-save").prop("disabled", true);
@@ -262,21 +266,23 @@
                 //contentType: false,
                 //cache: false,
                 //processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#modalidadForm').trigger("reset");
                     $('#modalidad-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
                     //recargar serverside
                     var oTable = $('#modalidad').dataTable();
                     oTable.fnDraw(false);
                     //recargar sin serverside
                     //$('#instituciones').DataTable().ajax.reload();
                     mostrarSnack("Modalidad agregada exitosamente.");
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                 },
                 error: function (data) {
+                    mostrarSnackError('Error al guardar la modalidad de participación');
                     if (data.status == 422) {
+                        
                         var errores = data.responseJSON['errors'];
                         var key2;
                         $.each(errores, function (key, value) {
@@ -285,12 +291,15 @@
                             console.log(($('#' + key + "_error")));
                         });
                     }
+                   
+                },
+
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
-
+                }
             });
         }
     });

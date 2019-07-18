@@ -44,7 +44,18 @@ class UpdateAlumnoRequest extends FormRequest
             //Validacion campos extra para alumno
             'num_control_al'  => 'required|max:15|unique:alumnos,num_control,'.$this->route('alumno'),
 
-            'semestre_al'  => 'required|max:30',
+            //'semestre_al'  => 'required|max:30',
+
+            'semestre_al' => [
+                'required',
+                'numeric',
+                function($attribute, $value, $fail){
+                    
+                    if ($value < 1 || $value >10 ) {
+                        $fail('Semestre no válido.');
+                    }
+                },
+            ],
 
             'programaSelect_al'  => Rule::requiredIf(Auth::guard("admin")->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador']))).'|exists:programas,id',
 

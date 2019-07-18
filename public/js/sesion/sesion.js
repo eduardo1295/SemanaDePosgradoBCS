@@ -117,6 +117,10 @@ $("#btn-save").click(function () {
             contentType: false,
             cache: false,
             processData: false,
+            
+            beforeSend: function(){
+                $(".loader").show();
+            },
             success: function (data) {
                 if(data == "cruze"){
                     $('#hora_inicio_error').text('Los horarios se Cruzan con otra sesión');
@@ -131,27 +135,28 @@ $("#btn-save").click(function () {
                     $('#sesionForm').trigger("reset");
                 }
                 
-                $('#btn-save').html('Guardar');
                 //recargar serverside
                 var oTable = $('#sesion').dataTable();
                 oTable.fnDraw(false);
                 //recargar sin serverside
                 //$('#instituciones').DataTable().ajax.reload();
-                $("#btn-save").prop("disabled", false);
-                $("#btn-close").prop("disabled", false);
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                mostrarSnackError('Error al actualizar sesión');
                 if (data.status == 422) {
                     var errores = data.responseJSON["errors"];
                     $.each(errores, function(key, value) {
                         $("#" + key + "_error").text(value);
                     });
                 }
+                
+            },
+            complete: function (data) {
+                $(".loader").hide();
                 $('#btn-save').html('Guardar');
                 $("#btn-save").prop("disabled", false);
                 $("#btn-close").prop("disabled", false);
-            },
-
+            }
         });
     } else if (actionType == "crear-sesion") {
         $("#btn-save").prop("disabled", true);
@@ -167,6 +172,9 @@ $("#btn-save").click(function () {
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function(){
+                $(".loader").show();
+            },
             success: function (data) {
                 if(data == "cruze"){
                     $('#hora_inicio_error').text('Los horarios se Cruzan con otra sesión');
@@ -181,16 +189,14 @@ $("#btn-save").click(function () {
                     $('#sesionForm').trigger("reset");
                 }
                 
-                $('#btn-save').html('Guardar');
                 //recargar serverside
                 var oTable = $('#sesion').dataTable();
                 oTable.fnDraw(false);
                 //recargar sin serverside
                 //$('#instituciones').DataTable().ajax.reload();
-                $("#btn-save").prop("disabled", false);
-                $("#btn-close").prop("disabled", false);
             },
             error: function (data) {
+                mostrarSnackError('Error al guardar sesión');
                 if (data.status == 422) {
                     var errores = data.responseJSON['errors'];
                     var key2;
@@ -200,11 +206,14 @@ $("#btn-save").click(function () {
                         console.log(($('#' + key + "_error")));
                     });
                 }
+                
+            },
+            complete: function (data) {
+                $(".loader").hide();
                 $('#btn-save').html('Guardar');
                 $("#btn-save").prop("disabled", false);
                 $("#btn-close").prop("disabled", false);
-            },
-
+            }
 
         });
     }

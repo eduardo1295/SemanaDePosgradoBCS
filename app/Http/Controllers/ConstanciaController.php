@@ -486,7 +486,7 @@ class ConstanciaController extends Controller
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones;
+         FROM instituciones WHERE deleted_at IS NULL;
          "));
         $constancias = DB::select('SELECT alumno_constancia.id_semana, semanas.nombre FROM alumno_constancia, semanas WHERE semanas.id_semana = alumno_constancia.id_semana AND alumno_constancia.id_alumno = ?;', [$id]);
         return view('alumno.constancias',compact(['semana','instituciones','constancias']));   

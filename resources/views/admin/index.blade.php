@@ -59,8 +59,10 @@
 @endsection
 @section('extra')
 @include('admin.semana.modal')
+<!--
 <div id="snackbar"></div>
 <div id="snackbarError" style="z-index:1051;"></div>
+-->
 @endsection
 @section('scripts')
 

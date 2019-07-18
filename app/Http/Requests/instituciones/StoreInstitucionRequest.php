@@ -27,24 +27,26 @@ class StoreInstitucionRequest extends FormRequest
         return [
             //Validacion campos institucion
             //'id_institucion' => 'unique:instituciones|required|max:15',
-
+            
             'nombre' => 'required|string|max:100',
 
             'siglas' => 'required|string|max:100',
             
-            'telefono' => 'string|max:20|nullable',
+            'logo' => 'mimes:jpeg,jpg,png|max:2048|nullable',
+
+            'telefono' => 'required|string|max:20',
             
-            'ciudad' => 'string|max:30|nullable',
+            'ciudad' => 'required|string|max:30',
 
-            'calle' => 'string|max:30|nullable',
+            'calle' => 'required|string|max:30',
 
-            'numero' => 'string|max:5|nullable',
+            'numero' => 'required|string|max:5',
 
-            'colonia' => 'string|max:30|nullable',
+            'colonia' => 'required|string|max:30',
 
-            'cp' => 'string|max:10|nullable',
+            'cp' => 'required|string|max:10',
 
-            'direccion_web' => 'string|max:100|nullable',
+            'direccion_web' => 'required|string|max:100',
 
             'latitud' => 'numeric|nullable',
 

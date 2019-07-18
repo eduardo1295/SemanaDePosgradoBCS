@@ -36,7 +36,7 @@ class NoticiaController extends Controller
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones;
+         FROM instituciones WHERE deleted_at IS NULL;
          "));
         $data = Noticia::latest('fecha_actualizacion')->paginate(5);
         return view('noticias.verNoticias', compact(['data','instituciones','semana']));
@@ -165,7 +165,7 @@ class NoticiaController extends Controller
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones;
+         FROM instituciones WHERE deleted_at IS NULL;
          "));
         $noticia  = Noticia::select('id_noticia','titulo','contenido','url_imagen','fecha_actualizacion')->where('id_noticia', $id)->firstOrFail();
         return view('noticias.detalle', compact(['noticia','instituciones','semana']));
@@ -234,7 +234,8 @@ class NoticiaController extends Controller
         foreach($images as $k => $img){
             $data = $img->getattribute('src');
             $ruta = explode('/',$data);
-            $ultimaImagen = '/img/noticias/'.$ruta[3];
+            
+            $ultimaImagen = '/img/noticias/'. $noticia->id_noticia . '/' . $ruta[4];
             
             if (substr($data, 0, 5) == 'data:') {
                 list($type, $data) = explode(';', $data);
@@ -357,7 +358,7 @@ class NoticiaController extends Controller
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
 		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones;
+         FROM instituciones WHERE deleted_at IS NULL;
          "));
         return \Response::json(view('noticias.detalle', compact(['semana','noticia','instituciones']))->render());
     }

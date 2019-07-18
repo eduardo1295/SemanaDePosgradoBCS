@@ -15,7 +15,7 @@ class CrearTablaInstituciones extends Migration
     {
         Schema::create('instituciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('id_institucion', 15)->unique();
+            //$table->string('id_institucion', 15)->unique();
 
             //$table->integer('id_semana')->unsigned()->default(0);
 

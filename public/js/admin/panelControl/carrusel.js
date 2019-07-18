@@ -240,35 +240,40 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#carruselForm').trigger("reset");
                     $('#carrusel-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
                     //recargar serverside
                     var oTable = $('#slidersC').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Actualización exitosa.");
 
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevaImagen').addClass('d-none');
                     $('#vistaPrevia').prop('src', "");
                     
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    mostrarSnackError('Error al actualizar imagen');
                     if (xhr.status == 422) {
+                        
                         var errores = xhr.responseJSON['errors'];
                         $.each(errores, function (key, value) {
                             $('#' + key + "_error").text(value);
                         });
                     }
+                    
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
             });
         } else if (actionType == "crear-carrusel") {
             $("#btn-save").prop("disabled", true);
@@ -285,29 +290,39 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     $('#carruselForm').trigger("reset");
                     $('#carrusel-crud-modal').modal('hide');
-                    $('#btn-save').html('Guardar');
                     //recargar serverside
                     var oTable = $('#slidersC').dataTable();
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Imagen guardada exitosamente.");
 
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-close").prop("disabled", false);
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevaImagen').addClass('d-none');
                     $('#vistaPrevia').prop('src', "");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    mostrarSnackError('Error al guardar imagen');
+                    if (xhr.status == 422) {
+                        
+                        var errores = xhr.responseJSON['errors'];
+                        $.each(errores, function (key, value) {
+                            $('#' + key + "_error").text(value);
+                        });
+                    }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
                     $('#btn-save').html('Guardar');
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                },
-
+                }
 
             });
         }
