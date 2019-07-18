@@ -34,7 +34,7 @@ class CrearTablaTrabajos extends Migration
             $table->string('pal_clv3', 15);
             $table->string('pal_clv4', 15);
             $table->string('pal_clv5', 15);
-            $table->string('Modalidad', 15);
+            $table->integer('Modalidad')->unsigned();
             $table->datetime('fecha_entrega')->nullable();
             $table->string('comentario', 100)->nullable();
             $table->boolean('autorizado')->default(false);

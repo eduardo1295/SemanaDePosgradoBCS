@@ -15,11 +15,12 @@ class CrearTablaConstancias extends Migration
     {
         Schema::create('constancias', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_semana')->unsigned();
             $table->mediumText('cComponentes');
             $table->mediumText('cHTML');
             $table->mediumText('cCSS');
             $table->string('url_imagen_fondo', 100)->nullable();
-            $table->integer('id_semana')->unsigned();
+            
     /*
             $table->integer('creada_por')->unsigned();
             $table->foreign('creada_por')->references('id')->on('users');

@@ -16,9 +16,11 @@ use Jenssegers\Date\Date;
 //use App\Http\Requests\usuarios\UpdateAlumnoRequest;
 use App\Http\Requests\alumno\StoreAlumnoRequest;
 use App\Http\Requests\alumno\UpdateAlumnoRequest;
-
+use App\Http\Requests\excel\ExcelRequest;
+use Excel;
 use App\Http\Requests\usuarios\UpdateEditarPerfilRequest;
 use Validator;
+use App\Exports\AlumnosExportar;
 
 class AlumnoController extends Controller
 {
@@ -34,7 +36,15 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+        /*
+        return Excel::download(new AlumnosExportar, 'users.xlsx');
+        (new AlumnosExportar)->store('invoices.xlsx');
+
+return back()->withSuccess('Export started!');
+        (new AlumnosExportar)->store('invoices.xlsx');
+*/
+       
+        
     }
 
     /**
@@ -442,5 +452,264 @@ class AlumnoController extends Controller
         //$output = $pdf->output();
         //File::put(public_path().'\documentos\modalidad\\'.$modalidad->nombre .'.pdf',$output);
         //return \Response::json("Listo");
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\excelrequest\ExcelUploadRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function importarAlumnos(ExcelRequest $request) 
+    {
+        /*
+        $errores=[];
+        
+            //funcionando
+            $array =Excel::toArray(new UsersImport, request()->file('archivo'));
+            $arrayaux = []; 
+            $arrayaux = Arr::add($arrayaux, 'usuario',$array[0]);
+            
+            $rulesArreglo = [
+                'usuario' => 'required|array|min:1|max:40',
+            ];
+
+            $rules = [
+                'usuario.*.email' => 'unique:users,email|required|email|distinct|max:60',
+                'usuario.*.nombre' => 'required|string|max:40',
+                'usuario.*.password' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+                'usuario.*.primer_apellido' => 'required|string|max:30',
+                'usuario.*.segundo_apellido' => 'string|nullable|max:30',
+                'usuario.*.id_institucion'    => 'required|exists:instituciones,id',
+                
+                'usuario.*.num_control'  => 'required|max:15',
+                'usuario.*.semestre'  => 'required|max:30',
+                'usuario.*.id_programa'  => 'required',function($attribute, $value, $fail){
+                    if($value==='MCMRC'){
+                        $fail($attribute.' is invalid');
+                    }
+                },
+                'usuario.*.id_programa'  => 'required|exists:programas,id_programa',
+                //'usuario.*.id_programa'  => 'required',Rule::exists('programas')->where(function($query){$query->where('id_programa','MCMRC');}),
+                'usuario.*.email_director'  => 'required|exists:users,email',                
+            ];
+
+            
+            
+            $attributesArreglo = [
+                'usuario' => 'archivo de alumonos',
+            ]; 
+            
+            $attributes = [];
+            
+            $re =[];
+            $arrayFinal = [];
+            $arrayFinal = Arr::add($arrayFinal,'usuario',[]);
+            
+            foreach($arrayaux['usuario'] as $key => $row)
+            {
+                $arrayAux2 = array_filter($row);
+                if(!empty($arrayAux2)){
+                    $arrayFinal['usuario'] = Arr::add($arrayFinal['usuario'], $key,$arrayAux2);
+                }
+            }
+
+            $validatorArreglo = Validator::make($arrayFinal, $rulesArreglo,[],$attributesArreglo);
+            if(!$validatorArreglo->fails()){
+                $contador = 1;
+                foreach($arrayaux['usuario'] as $key => $row)
+                {
+                    $contador = 1;
+                    $contador = $contador+$key+1;
+                    $attributes['usuario.'.$key.'.email'] = 'email en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.password'] = 'password en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.nombre'] = 'nombre en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.primer_apellido'] = 'primer apellido en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.segundo_apellido'] = 'segundo apellido en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.id_institucion'] = 'institución en renglón '.($contador);
+    
+                    $attributes['usuario.'.$key.'.num_control'] = 'número de control en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.semestre'] = 'semestre en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.programa_de_estudio'] = 'programa de estudios en renglón '.($contador);
+                    $attributes['usuario.'.$key.'.email_director'] = 'director de tesis en renglón '.($contador);
+                    
+                }
+                
+                $validator = Validator::make( $arrayFinal, $rules,[],$attributes );
+                
+                $errores = [];
+                foreach ($validator->messages()->getMessages() as $key => $message) {
+                    $errores[$key] = $message[0];
+                }
+                ksort($errores, SORT_NATURAL);
+                if(!$validator->fails()) {
+                    return back()->with('bien', 'Alumnos registrados exitosamente');
+                }
+                else{
+                    return back()->with('errores',$errores);
+                }
+            }else{
+                return back()->with('errores',$validatorArreglo->messages()->all());
+            }
+            
+        
+
+*/
+
+        
+        $errores=[];
+        DB::beginTransaction();
+        try {
+            //funcionando
+            $array =Excel::toArray(new UsersImport, request()->file('archivo'));
+            $array = $array[0];
+            $rules = [
+                'email' => 'unique:users,email|required|email|distinct|max:60',
+                'nombre' => 'required|string|max:40',
+                //'contrasena' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
+                'contrasena' => 'required',
+                'primer_apellido' => 'required|string|max:30',
+                'segundo_apellido' => 'string|nullable|max:30',
+                //'id_institucion'    => 'required|exists:instituciones,id',
+                'num_control'  => 'required|unique:alumnos,num_control|max:15',
+                'semestre'  => 'required|max:30',
+                /*'id_programa'  => 'required',function($attribute, $value, $fail){
+                    if($value==='MCMRC'){
+                        $fail($attribute.' is invalid');
+                    }
+                },*/
+                'id_programa'  => 'required|exists:programas,id_programa',
+                //'usuario.*.id_programa'  => 'required',Rule::exists('programas')->where(function($query){$query->where('id_programa','MCMRC');}),
+                //'email_director'  => 'required|exists:users,email',
+                /*'email_director'  => 'required|exists:users,email|',function($attribute, $value, $fail){
+                    
+                    $rol_director = DB::select('SELECT id_rol FROM rol_usuario, users WHERE email = ? AND users.id = rol_usuario.id_usuario;', [$value]);
+                    if ($value === 'c@gmail.com') {
+                        $fail($attribute.' is invalid.');
+                    }
+                },*/
+                'email_director' => [
+                    'required',
+                    'exists:users,email',
+                    function($attribute, $value, $fail){
+                        $rol_director = DB::select('SELECT id_rol FROM rol_usuario, users WHERE email = ? AND users.id = rol_usuario.id_usuario;', [$value]);
+                        $encontrado = false;
+                        foreach ($rol_director as $key => $value) {
+                            if($value->id_rol === 4){
+                                $encontrado = true;
+                                break;
+                            }
+                        }
+                        if (!$encontrado) {
+                            $fail('Director de tesis no se encuentra registrado.');
+                        }
+                    },
+                ]  
+            ];
+            
+            $rulesArreglo = [
+                'usuarios' => 'required|array|min:1|max:40',
+            ];
+            $arrayaux = []; 
+            $arrayaux = Arr::add($arrayaux, 'usuarios',$array);
+            
+            $validatorArreglo = Validator::make($arrayaux, $rulesArreglo);
+            
+            $re =[];
+            if(!$validatorArreglo){
+                foreach($array as $key => $row)
+                {
+                    $arrayAux = array_filter($row);
+                    if(!empty($arrayAux)){
+                        $validator = Validator::make( $row, $rules );
+                        if ($validator->fails()) {                        
+                            $re[] = [['Renglon: '.((int)$key+2)],$validator->messages()->all()];
+                        }
+                        else{
+                            $user = new User([
+                                'nombre'     => $row['nombre'],
+                                'email'     => $row['email'],
+                                'password' => bcrypt($row['contrasena']),
+                                'primer_apellido'   => $row['primer_apellido'], 
+                                'segundo_apellido'  => $row['segundo_apellido'], 
+                                'id_institucion'    => 3,
+                                //'id_semana' => $row['id_semana'],
+                            ]);
+                            $user->save();
+                            
+                            $alumno = new Alumno([
+                                //'id_usuario'=>User::select('id')->where('email','=',$user->email)->get()[0]->id,
+                                'id'=>$user->id,
+                                'id_programa'=>Programa::select('id')->where('id_programa','=',$row['id_programa'])->get()[0]->id,
+                                'id_director'=>User::select('id')->where('email','=',$row['email_director'])->get()[0]->id,
+                                'semestre'=>$row['semestre'],
+                                'num_control'=>$row['num_control'],
+                            ]);
+                            
+                            $alumno->save();
+                            
+                            $user->roles()->attach([$user->id => ['id_rol'=>'5', 'creada_por'=>'1']]);
+                        }
+                    }
+                }
+                if(empty($re)) {
+                    DB::commit();
+                    return back()->with('bien', 'Alumnos registrados exitosamente');
+                }
+                else{
+                    DB::rollback();
+                    $cadena = "";
+                    foreach ($re as $key => $value) {
+                        //dd($value[0][0]);
+                        $cadena .= "<strong>".$value[0][0]."</strong>";
+                        $cadena.= 
+                            "<ul>";
+                        foreach ($value[1] as $key => $valor) {
+                            $cadena.= 
+                            "<li>".
+                                $valor.
+                            "</li>";
+                        }
+                        $cadena.= 
+                            "</ul>";
+                        
+                    }
+                    return back()->with('errores',$cadena);
+                }
+            }else{
+                $errorArreglo = $validatorArreglo->messages()->all();
+                $cadena = "";
+                
+                foreach ($errorArreglo as $key => $value) {
+                    //dd($value[0][0]);
+                
+                    $cadena.= 
+                        "<ul>";
+                    
+                        $cadena.= 
+                        "<li>".
+                            $value.
+                        "</li>";
+                    
+                    $cadena.= 
+                        "</ul>";
+                    
+                }
+                
+                return back()->with('errores',$cadena);
+            }
+            
+        } 
+        catch (Exception $e) {
+            DB::rollback();
+            return back()->withErrors($e->errors());
+        }
+
+        
+    }
+
+    public function exportarXLSAlumnos(){
+        return Excel::download(new AlumnosExportar, 'Alumnos Participantes.xlsx');
     }
 }

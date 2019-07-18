@@ -79,6 +79,7 @@ Route::resource('director', 'DirectorController')->except(['show','create']);
 
 Route::get('admin/alumnos', 'AlumnoController@alumnos')->name('alumnos.VerAlumnos');
 Route::get('alumno/listAlumnos', 'AlumnoController@listAlumnos')->name('alumno.listAlumnos');
+Route::get('alumno/exportar', 'AlumnoController@exportarXLSAlumnos')->name('alumno.exportarXLSAlumnos');
 Route::put('alumno/reactivar/{alumno}', 'AlumnoController@reactivar')->name('alumno.reactivar');
 Route::get('alumno/generarGafete','AlumnoController@generarGafete')->name('alumno.generarGafete');
 Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista')->name('alumno.programasLista');
