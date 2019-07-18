@@ -45,7 +45,7 @@ function cargarDataTableAlumnos(){
             },*/
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
-                { data: 'num_control', searchable: false },
+                { data: 'num_control', searchable: true },
                 { data: 'programa_nombre', searchable: true },
                 { data: 'nombre', searchable: true },
                 { data: 'primer_apellido', searchable: true },

@@ -36,22 +36,9 @@
                     d.busqueda = checkAlumno
                 }
             },
-            initComplete: function () {
-                var api = this.api();
-                api.columns(2).every(function () {
-                    var that = this;
-                    $('input', this.footer()).on('keyup change', function () {
-                        if (that.search() !== this.value) {
-                            that
-                                .search(this.value)
-                                .draw();
-                        }
-                    });
-                })
-            },
             "columns": [
                 { data: 'id', name: 'id', 'visible': false,searchable: false },
-                { data: 'num_control', searchable: false },
+                { data: 'num_control', searchable: true },
                 { data: 'institucion_nombre', searchable: true },
                 { data: 'programa_nombre', searchable: false },
                 { data: 'nombre', searchable: true },

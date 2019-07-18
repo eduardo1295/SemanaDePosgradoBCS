@@ -10,6 +10,7 @@
             style="display:none">
             <strong> </strong>
         </div>
+        
     </div>
     <div class="row mb-2">
         <legend class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostras Alumnos</legend>
@@ -71,7 +72,7 @@
     <div>
         <strong><label for="">Exportar participantes:</label></strong><br>
         <a href="/alumno/ExportarAlumnos" target="_blank" id="pdf" class="btn btn-primary">PDF</a>
-        <a href="" class="btn btn-primary">Excel</a>
+        <a href="{{route('alumno.exportarXLSAlumnos')}}" class="btn btn-primary">Excel</a>
     </div>
     
 </div>
