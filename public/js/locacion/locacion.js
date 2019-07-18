@@ -59,7 +59,7 @@ $(document).ready(function () {
     });
 });
 /*Al presionar el boton editar*/
-$('body').on('click', '.editar', function () {
+$('body').on('click', '.editarLocacion', function () {
     var locacion_id = $(this).data('id');
     var ruta = "/locacion/" + locacion_id + "/editar";
     reiniciar();
@@ -197,7 +197,7 @@ $("#btn-save").click(function () {
     }
 });
 /*Accion al presionar el boton eliminar*/
-$('body').on('click', '.eliminar', function () {
+$('body').on('click', '.eliminarLocacion', function () {
     var locacion_id = $(this).data("id");
     $.confirm({
         columnClass: 'col-md-6',
