@@ -55,7 +55,7 @@
                                     <option selected value="">Seleccione locación</option>
                                     @foreach($locaciones as $locacion)
                                     @php
-                                    <option value="{{$locacion->nombre}}">{{$locacion->nombre}}</option>
+                                    <option value="{{$locacion->id_locacion}}">{{$locacion->nombre}}</option>
                                     @endforeach
                                 </select>
                                 <small><span class="text-danger mensajeError" id="lugar_error"></span></small>

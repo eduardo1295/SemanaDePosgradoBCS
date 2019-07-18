@@ -50,7 +50,8 @@ class LocacionController extends Controller
         }
         $locacion = new Locacion();
         $locacion->nombre = $request->nombre;
-        $locacion->creada_por = auth('admin')->user()->id;
+        if(auth()->user())
+            $locacion->creada_por = auth()->user()->id;
         $locacion->id_institucion =  $semana->id_sede;
         $locacion->save();
 
@@ -91,16 +92,18 @@ class LocacionController extends Controller
      */
     public function update(Request $request, $id)
     {
+     
         $semana = Semana::select('id_sede')->where('vigente',1)->first();
-        $locacion = Locacion::all()->where('id','!=',$request->id_locacion);
+        $locacion = Locacion::all()->where('id_locacion','!=',$request->id_locacion);
         foreach($locacion as $locac){
             if(str_replace(' ','',strtoupper($locac->nombre)) ==  str_replace(' ','',strtoupper($request->nombre))){
                 return \Response::json("Repetida");        
             }
         }
-        $locacion = Locacion::find($id)->first();
+        $locacion = Locacion::find($request->id_locacion);
         $locacion->nombre = $request->nombre;
-        $locacion->creada_por = auth('admin')->user()->id;
+        if(auth()->user())
+            $locacion->creada_por = auth()->user()->id;
         $locacion->id_institucion =  $semana->id_sede;
         $locacion->save();
 

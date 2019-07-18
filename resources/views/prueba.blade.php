@@ -20,10 +20,14 @@
     <div style="width: 100% ; ">
       <div style="width:80%;  float: left; margin: 0">
            Programación: Sesión de {{$modalidad->nombre}} <br>
-           <small>{{$semana->nombre}};  {{$fInicio}}  a {{$fFin}} </small>
+           <small>{{$semana->nombre}} del {{$fInicio}}  a {{$fFin}} </small>
       </div>
       <div style="width: 20%;  float: left; margin: 0">
-          <img src="{{asset('img/logo.png')}}"  alt=""  width="95px" height="50px"  style="float: right;">
+          @if(isset($semana->url_logo))
+          <img src="{{asset('img/semanaLogo/$semana->url_logo')}}"  alt=""  width="95px" height="50px"  style="float: right;">
+          @else
+          <img src="{{asset('img/semanaLogo/logo_evento.png')}}"  alt=""  width="95px" height="50px"  style="float: right;">
+          @endif
       </div>
     </div>
   </header>

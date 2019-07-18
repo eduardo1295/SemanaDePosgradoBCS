@@ -85,7 +85,7 @@
   <script src="/js/admin/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="/js/admin/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
-  
+  <script src="/js/snack/snack.js"></script>
   <script>
       $(document).ready(function () {
  $("body").tooltip({

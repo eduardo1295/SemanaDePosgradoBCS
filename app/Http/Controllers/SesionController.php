@@ -94,7 +94,7 @@ class SesionController extends Controller
         $pdf->setPaper('letter','landscape');
         //$pdf->loadHTML('<h1>Test</h1>');
         $modalidad = Modalidad::all()->where('id_modalidad',$sesion->id_modalidad)->first();
-        $semana = Semana::All()->last();
+        $semana = Semana::All()->where('vigente',1)->first();
         $fInicio = new Date($semana->fecha_inicio);
         $fFin = new Date($semana->fecha_fin);
         $fInicio = $fInicio->format('l d').' de '.$fInicio->format('F');
@@ -265,7 +265,7 @@ class SesionController extends Controller
     public function listSesiones(Request $request ){
         $busqueda = $request->busqueda;
         if($busqueda == 'activos'){
-            $selectnoticias = Sesion::select('id_sesion as id','nombre','dia','hora_inicio','hora_fin','lugar');
+            $selectnoticias = DB::select("select id_sesion as id, s.nombre, dia ,hora_inicio,hora_fin, l.nombre as lugar from sesiones s, locaciones l where s.lugar = l.id_locacion;");
             return datatables()->of($selectnoticias)
             ->addColumn('action', 
             '<div style="text-align:center;width:100px" class="mx-auto">

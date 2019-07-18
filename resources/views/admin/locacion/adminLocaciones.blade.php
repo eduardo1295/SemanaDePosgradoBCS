@@ -58,6 +58,7 @@
 <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="/js/snack/snack.js"></script>
+
 <script src="/js/locacion/locacion.js"></script> 
 @endsection
 @section('estilos')

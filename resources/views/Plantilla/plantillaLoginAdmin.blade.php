@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/fonts/fontawesomeweb/css/all.css">
     
 	<style>
-		body{ background-image: url('/img/fondo/defecto.jpg'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
+		body{ background-image: url('/img/fondo/defecto.jpg/?{{date("H:i:s")}}'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
     </style>
     
     <script src="/js/popper.min.js"></script>
