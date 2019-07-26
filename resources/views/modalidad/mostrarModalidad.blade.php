@@ -27,7 +27,7 @@
                         <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">{{ucfirst($nombre)}}</h1> <br>
                     </div>
                 </div>
-                <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/documentos/modalidad/{{$nombre}}.pdf"
+                <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/documentos/modalidad/{{$nombre}}.pdf/?{{date('H:i:s')}}"
                     type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
             </div>
         
