@@ -24,7 +24,7 @@ class DirectorController extends Controller
         $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['director']);
         $this-> middleware(['esusuario'])->only(['listDirector','store','update','edit','destroy']);
         $this->middleware(['auth','verified','verificarcontrasena'], ['only' => ['revisarAlumnos']]);
-        $this->middleware(['verificarcontrasena','verified'])->only(['edit']);
+        //$this->middleware(['verificarcontrasena','verified'])->only(['edit']);
         
         
      }

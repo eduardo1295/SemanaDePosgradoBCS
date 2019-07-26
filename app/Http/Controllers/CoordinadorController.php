@@ -21,7 +21,7 @@ class CoordinadorController extends Controller
         $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['coordinador']);
         $this-> middleware(['auth','verificarcontrasena'])->only('index');
         $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
-        $this->middleware(['verificarcontrasena','verified'])->only(['edit']);
+        //$this->middleware(['verificarcontrasena','verified'])->only(['edit']);
      }
     /**
      * Display a listing of the resource.

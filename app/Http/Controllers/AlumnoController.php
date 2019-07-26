@@ -30,7 +30,7 @@ class AlumnoController extends Controller
     public function __construct(){
         $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['alumnos']);
         $this-> middleware('auth')->only('generarGafete');
-        $this->middleware(['verificarcontrasena','verified'])->only(['generarGafete','edit']);
+        $this->middleware(['verificarcontrasena','verified'])->only(['generarGafete']);
         $this-> middleware(['esusuario'])->only(['store','update','edit','destroy','reactivar','listAlumnos']);
 
      }
