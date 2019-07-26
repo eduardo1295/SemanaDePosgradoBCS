@@ -174,7 +174,12 @@ class modalidadController extends Controller
         $modalidad = new Modalidad;
         $modalidad->nombre = $request->nombres;
         $modalidad->descripcion = $detail;
-        $modalidad->creado_por= auth('admin')->user()->id;
+        //$modalidad->creado_por= auth('admin')->user()->id;
+        if(auth()->user())
+            $modalidad->creado_por= auth()->user()->id;
+        else {
+            $modalidad->creado_por= 0;
+        }
         $modalidad->save();
 
         for ($a=0; $a < count($request->posgrado) ; $a++) { 
@@ -182,7 +187,12 @@ class modalidadController extends Controller
             $posgrado->id_modalidad = $modalidad->id_modalidad;
             $posgrado->grado = $request->posgrado[$a];
             $posgrado->periodo = $request->periodo[$a];
-            $posgrado->creado_por= auth('admin')->user()->id;
+            if(auth()->user())
+                $posgrado->creado_por= auth()->user()->id;
+            else {
+                $posgrado->creado_por= 0;
+            }
+            //$posgrado->creado_por= auth('admin')->user()->id;
 
            /* $posgrados[] = new Posgrado(['id_modalidad' => $request->id_modalidad, 
                             'grado' => $request->posgrado[$a], 'periodo' => $request->periodo[$a],
@@ -294,8 +304,13 @@ class modalidadController extends Controller
             $posgrado->id_modalidad = $modalidad->id_modalidad;
             $posgrado->grado = $request->posgrado[$a];
             $posgrado->periodo = $request->periodo[$a];
-            $posgrado->creado_por= auth('admin')->user()->id;
-
+            
+            //$posgrado->creado_por= auth('admin')->user()->id;
+            if(auth()->user())
+                $posgrado->creado_por= auth()->user()->id;
+            else {
+                $posgrado->creado_por= 0;
+            }
            /* $posgrados[] = new Posgrado(['id_modalidad' => $request->id_modalidad, 
                             'grado' => $request->posgrado[$a], 'periodo' => $request->periodo[$a],
                             'creado_por' => auth('admin')->user()->id]);*/

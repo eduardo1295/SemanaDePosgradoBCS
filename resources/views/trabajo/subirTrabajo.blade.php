@@ -27,7 +27,7 @@
                                     <option selected value="">Seleccione modalidad</option>
                                     @foreach ($modalidades as $modalidadP)   
                                         @if(isset($trabajo))
-                                            @if($modalidadP->id_modalidad == $trabajo->Modalidad)
+                                            @if($modalidadP->id_modalidad == $trabajo->modalidad)
                                             <option value="{{$modalidadP->id_modalidad}}" selected>{{$modalidadP->nombre}} </option>
                                             @else
                                             <option value="{{$modalidadP->id_modalidad}}">{{$modalidadP->nombre}} </option>
@@ -41,7 +41,7 @@
                             <small><span class="text-danger mensajeError errorposgrado" id="modalidad_error"></span></small>
                         </div>
                         <div class="form-group col-12">
-                            <strong><label for="titulo" class="control-label">Titulo</label><label class="text-danger">*</label></strong></strong>
+                            <strong><label for="titulo" class="control-label">Título</label><label class="text-danger">*</label></strong></strong>
                         <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Titulo del trabajo" value="@isset($trabajo){{$trabajo->titulo}}@endisset">
                             <small><span class="text-danger mensajeError errorposgrado" id="titulo_error"></span></small>
                         </div>

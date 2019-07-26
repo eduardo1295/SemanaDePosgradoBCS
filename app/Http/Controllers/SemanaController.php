@@ -163,7 +163,11 @@ class SemanaController extends Controller
         
         $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;
-        $semana->creado_por= auth('admin')->user()->id;
+        if(auth('admin')->user())
+            $semana->creado_por= 0;
+        else{
+            $semana->creado_por= auth()->user()->id;
+        }
         $semana->save();
         if($semana){
             DB::table('semanas')
@@ -293,7 +297,12 @@ class SemanaController extends Controller
         $semana->url_logo = $nuevo_nombre;
         $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;
-        $semana->actualizado_por= auth('admin')->user()->id;
+        //$semana->actualizado_por= auth('admin')->user()->id;
+        if(auth('admin')->user())
+            $semana->actualizado_por= 0;
+        else{
+            $semana->actualizado_por= auth()->user()->id;
+        }
         $semana->save();
         /*if($semana){
             DB::table('semanas')

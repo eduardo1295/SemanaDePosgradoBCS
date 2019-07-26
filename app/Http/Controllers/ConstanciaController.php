@@ -292,7 +292,7 @@ class ConstanciaController extends Controller
             $datosConstancia = DB::select("SELECT CONCAT(users.nombre, ' ', users.primer_apellido, ' ', 
             users.segundo_apellido) AS nombre_completo, trabajos.titulo, modalidades.nombre
             FROM users, trabajos, modalidades WHERE users.id = trabajos.id_alumno AND 
-            modalidades.id_modalidad = trabajos.id_modalidad AND trabajos.id_semana = ?
+            modalidades.id_modalidad = trabajos.modalidad AND trabajos.id_semana = ?
             AND users.id = ?",[$id, $idAlumno]);
         }else{
             return abort(403);

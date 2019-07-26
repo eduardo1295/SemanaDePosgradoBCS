@@ -276,6 +276,15 @@ class UserController extends Controller
         $user->save();
         
         if($user){
+            if(auth()->user()){
+                if(auth()->user()->hasRoles(['coordinador'])){
+                    return redirect('/coordinador');
+                }elseif (auth()->user()->hasRoles(['director'])){
+                    return redirect('/director/verAlumnos');
+                }elseif (auth()->user()->hasRoles(['alumno'])) {
+                    return redirect('/subirTrabajo');
+                }
+            }
             return redirect('/');
             //return redirect()->route('pag.Inicio');
         }

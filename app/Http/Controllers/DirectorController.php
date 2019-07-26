@@ -149,6 +149,7 @@ class DirectorController extends Controller
     {
         $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         $user = User::find($id);
+        $user->email = $request->email_di;
         $user->nombre = ucfirst($request->nombre_di);
         $user->primer_apellido = ucfirst($request->primer_apellido_di);
         $user->segundo_apellido = ucfirst($request->segundo_apellido_di);

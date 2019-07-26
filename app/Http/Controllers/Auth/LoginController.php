@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -88,5 +88,18 @@ class LoginController extends Controller
             return $this->sendFailedLoginResponse($request);
         }
     
+    }
+
+    protected function redirectTo(){
+        if(auth()->user()){
+            if(auth()->user()->hasRoles(['coordinador'])){
+                return '/coordinador';
+            }elseif (auth()->user()->hasRoles(['director'])){
+                return '/director/verAlumnos';
+            }elseif (auth()->user()->hasRoles(['alumno'])) {
+                return '/subirTrabajo';
+            }
+        }
+        return '/';
     }
 }

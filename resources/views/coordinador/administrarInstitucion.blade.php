@@ -33,7 +33,7 @@
         <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h1 id="Titulo" class="display-   font-weight-bold rounded p-auto pt-3">Panel de control</h1> <br>
+                        <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3">Administrar Institución</h1> <br>
                     </div>
                 </div>
                 <div class="row">

@@ -5,11 +5,7 @@
 <link rel="stylesheet" href="/css/Maqueta2.css">
 <link href="/css/modales/snackbar.css" rel="stylesheet">
 <script src="/js/owl.carousel.min.js"> </script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-</script>
+
 @endsection
 
 @section('contenido')
@@ -17,7 +13,7 @@
         <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h1 id="Titulo" class="display-   font-weight-bold rounded p-auto pt-3">Revisar alumnos</h1> <br>
+                        <h1 id="Titulo" class="display-5   font-weight-bold rounded p-auto pt-3">Seguimiento de alumnos</h1> <br>
                     </div>
                 </div>
                 <div class="row">

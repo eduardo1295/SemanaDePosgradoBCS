@@ -19,7 +19,7 @@ class Trabajo extends Model
 
 
     protected $fillable = [
-        'id_alumno', 'id_director', 'id_semana','id_sesion','id_modalidad','titulo', 'resumen', 'area', 'pal_clv1', 'pal_clv2', 'pal_clv3', 'pal_clv4', 'pal_clv5','modalidad','fecha_entrega','comentario','revisado', 'autorizado', 'fecha_autorizacion', 'url',
+        'id_alumno', 'id_director', 'id_semana','id_sesion','titulo', 'resumen', 'area', 'pal_clv1', 'pal_clv2', 'pal_clv3', 'pal_clv4', 'pal_clv5','modalidad','fecha_entrega','comentario','revisado', 'autorizado', 'fecha_autorizacion', 'url',
     ];
 
     protected $dates = [

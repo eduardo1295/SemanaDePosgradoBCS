@@ -21,7 +21,7 @@ class CrearTablaLocaciones extends Migration
             $table->string('nombre', 40);    
 
             $table->integer('creada_por')->unsigned();
-            $table->foreign('creada_por')->references('id')->on('users');
+            //$table->foreign('creada_por')->references('id')->on('users');
             $table->timestamp('fecha_creacion')->nullable();
             $table->integer('actualizado_por')->nullable();
             $table->timestamp('fecha_actualizacion')->nullable();

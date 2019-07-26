@@ -99,7 +99,7 @@ class TrabajoController extends Controller
                  'url' => $nuevo_nombre,
                  'comentario' => null,
                  'revisado' => 0,
-                 'id_modalidad' => $request->modalidad,
+                 //'id_modalidad' => $request->modalidad,
                  'modalidad' => $request->modalidad,
                 ]
             );
@@ -127,7 +127,7 @@ class TrabajoController extends Controller
              'id_alumno' => $request->id_alumno,
              'comentario' => null,
              'revisado' => 0,
-             'id_modalidad' => $request->modalidad,
+             //'id_modalidad' => $request->modalidad,
              'modalidad' => $request->modalidad,
              'id_sesion' => 0,
             ]
@@ -249,7 +249,7 @@ class TrabajoController extends Controller
         //dd($trabajo->usuarios()->first()->email);
         
         //Mail::to($trabajo->usuarios()->first()->email)->send(new MensajesTrabajo($request));
-        dd("km");
+        
         Notification::send($trabajo->usuarios()->first(), new RevisionTrabajo($request,$trabajo->id_alumno));
         return redirect()->route('director.revisarAlumnos');
     }

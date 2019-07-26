@@ -54,6 +54,9 @@ class LocacionController extends Controller
         $locacion->nombre = $request->nombre;
         if(auth()->user())
             $locacion->creada_por = auth()->user()->id;
+        else {
+            $locacion->creada_por = 0;
+        }
         $locacion->id_institucion =  $semana->id_sede;
         $locacion->save();
 
@@ -106,6 +109,9 @@ class LocacionController extends Controller
         $locacion->nombre = $request->nombre;
         if(auth()->user())
             $locacion->creada_por = auth()->user()->id;
+        else {
+            $locacion->creada_por = 0;
+        }
         $locacion->id_institucion =  $semana->id_sede;
         $locacion->save();
 

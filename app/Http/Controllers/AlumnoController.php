@@ -31,7 +31,7 @@ class AlumnoController extends Controller
         $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['alumnos']);
         $this-> middleware('auth')->only('generarGafete');
         $this->middleware(['verificarcontrasena','verified'])->only(['generarGafete','edit']);
-        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy','reactivar']);
+        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy','reactivar','listAlumnos']);
 
      }
     /**
@@ -165,7 +165,8 @@ return back()->withSuccess('Export started!');
     {
         
         if(auth()->user() && auth()->user()->hasRoles(['alumno'])){
-            $user = User::find($id);    
+            $user = User::find($id);   
+            $user->email = $request->email_al; 
             $user->nombre = ucfirst($request->nombre_al);
             $user->primer_apellido = ucfirst($request->primer_apellido_al);
             $user->segundo_apellido = ucfirst($request->segundo_apellido_al);
@@ -175,6 +176,7 @@ return back()->withSuccess('Export started!');
             $user->save();
         }else if (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) ) {
             $user = User::find($id);
+            $user->email = $request->email_al;
             $user->nombre = ucfirst($request->nombre_al);
             $user->primer_apellido = ucfirst($request->primer_apellido_al);
             $user->segundo_apellido = ucfirst($request->segundo_apellido_al);
@@ -254,9 +256,6 @@ return back()->withSuccess('Export started!');
      * @return \Illuminate\Http\Response
      */
     public function listAlumnos(Request $request ){
-        if(!auth()->user() && !auth('admin')->user()){
-            return abort(403);
-        }
         
         $semana = DB::select(DB::raw("SELECT semanas.id_semana	
 		FROM semanas

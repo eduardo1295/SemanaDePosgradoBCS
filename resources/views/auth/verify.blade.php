@@ -33,10 +33,10 @@
                         </div>
                     @endif
                     <div style="color:black">
-                        {{ __('Before proceeding, please check your email for a verification link.') }}
+                        {{ 'Antes de continuarAntes de continuar, por favor, confirme su correo electrónico.' }}
                     </div>
                     <div style="color:black">
-                        {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+                        <a href="{{ route('verification.resend') }}">{{ 'Haga clic aquí para solicitar un correo electrónico de confirmación.' }}</a>.
                     </div>
                 </div>
 
