@@ -80,7 +80,7 @@ class HomeController extends Controller
          FROM instituciones WHERE deleted_at IS NULL;
          "));
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
-            $admin = $admin = Admin::select('id','id_institucion','nombre','email')->where('id',$id)->first();
+            $admin = $admin = Admin::select('id','nombre','email')->where('id',$id)->first();
             return view('admin.editarPerfil',compact(['admin','semana','instituciones']));
     }
 

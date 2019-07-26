@@ -15,7 +15,7 @@
         color: {{$vistas[5]->url_imagen}} !important;
     }
     .contenidoCarrusel, .contenidoCarrusel a,.contenidoCarrusel .row div {
-        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; background: {{$vistas[4]->url_imagen}} !important ;
+        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; /*background: {{$vistas[4]->url_imagen}} !important*/ ;
         color: {{$vistas[5]->url_imagen}} !important;}
     .nota{
         background: {{$vistas[4]->url_imagen}} !important ;

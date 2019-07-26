@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card mb-3 hvr-underline-from-left w-100">
                 <div class="row no-gutters align-items-center">
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-sm-4 col-md-2 d-flex justify-content-center">
                             @if ($row->url_imagen!='sin imagen')
                             <img src="{{url($row->url_imagen)}}" alt="" class="img-fluid img-noti-pag">
                             @endif

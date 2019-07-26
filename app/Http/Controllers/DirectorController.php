@@ -19,11 +19,11 @@ use Validator;
 class DirectorController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin')->only(['director']);
+        //$this->middleware('admin.auth:admin')->only(['director']);
         //$this->middleware('auth')->only('director');
         
         
-        $this->middleware(['auth','verified','verificarcontrasena'], ['only' => ['revisarAlumnos']]);
+        //$this->middleware(['auth','verified','verificarcontrasena'], ['only' => ['revisarAlumnos']]);
         
         
      }

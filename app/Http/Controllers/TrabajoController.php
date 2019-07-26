@@ -32,7 +32,7 @@ class TrabajoController extends Controller
     }
     */
     public function __construct(){
-        $this-> middleware('auth')->only(['store','show','subirTrabajo']);
+        //$this-> middleware('auth')->only(['store','show','subirTrabajo']);
 
     }
     /**
@@ -74,7 +74,7 @@ class TrabajoController extends Controller
         }
         $semana = Semana::all()->last();
         $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->where('id_semana',$semana->id_semana)->first();
-        
+        $alumno = Alumno::all()->where('id',auth()->user()->id)->first();
         if($trabajo !=  null){
             if($trabajo->autorizado == 1){
                 return \Response::json("ya autorizado");
@@ -82,12 +82,37 @@ class TrabajoController extends Controller
             else if($trabajo->revisado == 0){
                 return \Response::json("ya autorizado");
             }
+            $trabajo = Trabajo::updateOrCreate(
+                ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
+                [
+                 'id_director' => $alumno->id_director,
+                 'id_semana' => $request->id_semana  ,
+                 'titulo' => $request->titulo     ,
+                 'resumen' => $request->resumen    ,
+                 'area' => $request->area       ,
+                 'pal_clv1' => $request->pal_clv1   ,
+                 'pal_clv2' => $request->pal_clv2   ,
+                 'pal_clv3' => $request->pal_clv3   ,
+                 'pal_clv4' => $request->pal_clv4   ,
+                 'pal_clv5' => $request->pal_clv5   ,
+                 'url' => $nuevo_nombre,
+                 'comentario' => null,
+                 'revisado' => 0,
+                 'id_modalidad' => $request->modalidad,
+                 'modalidad' => $request->modalidad,
+                ]
+            );
+            //dd($trabajo->directores()->first()->email);
+            Notification::send($trabajo->directores()->first(), new EntregaTrabajo($trabajo->usuarios()->first()));
+        
+            return \Response::json($trabajo);
         }
+        
         
         $trabajo = Trabajo::updateOrCreate(
             ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
             [
-             'id_director' => $request->id_director,
+             'id_director' => $alumno->id_director,
              'id_semana' => $request->id_semana  ,
              'titulo' => $request->titulo     ,
              'resumen' => $request->resumen    ,
@@ -101,7 +126,9 @@ class TrabajoController extends Controller
              'id_alumno' => $request->id_alumno,
              'comentario' => null,
              'revisado' => 0,
+             'id_modalidad' => $request->modalidad,
              'modalidad' => $request->modalidad,
+             'id_sesion' => 0,
             ]
         );
         //dd($trabajo->directores()->first()->email);
@@ -201,6 +228,7 @@ class TrabajoController extends Controller
     }
 
     public function revisionTrabajo(Request $request){
+    
         //dd($request->revisado);
         $trabajo = Trabajo::find($request->id_trabajo);
         $trabajo->comentario = $request->comentario;

@@ -33,7 +33,7 @@
                                     @foreach ($modalidades as $modalidadP)
                                         
                                         @if(isset($trabajo))
-                                            @if($modalidadP->id_modalidad == $trabajo->modalidad)
+                                            @if($modalidadP->id_modalidad == $trabajo->Modalidad)
                                             <option value="{{$modalidadP->id_modalidad}}" selected>{{$modalidadP->nombre}} </option>
                                             @else
                                             <option value="{{$modalidadP->id_modalidad}}">{{$modalidadP->nombre}} </option>

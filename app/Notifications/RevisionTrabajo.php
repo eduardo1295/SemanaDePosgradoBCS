@@ -10,7 +10,7 @@ use Illuminate\Support\HtmlString;
 
 
 
-class RevisionTrabajo extends Notification implements ShouldQueue
+class RevisionTrabajo extends Notification 
 {
     use Queueable;
     private $mensaje,$id_trabajo;

@@ -23,13 +23,13 @@
                 <form id="alumnoForm" name="alumnoForm" class="form-horizontal mb-5 formulario" enctype="multipart/form-data">
                     <input type="hidden" name="" value="{{auth('admin')->user()->id}}" id="alumno_id">
                     <div class="form-row pl-5 pr-5 pt-3">
-                        <div class="form-group col-12">
+                        <div class="form-group col-md-6">
                             <strong><label for="Nombre" class="control-label">Nombre</label><label class="text-danger">*</label></strong>
                             <input type="text" name="nombre" id="nombre" value="{{$admin->nombre}}" class="form-control" max="40">
                             <small><span class="text-danger mensajeError errorposgrado" id="nombre_error"></span></small>
                         </div>
                         @yield('camposExtras','')
-                        <div class="form-group col-6">
+                        <div class="form-group col-md-6">
                                 <strong><label for="primer_apellido" class="control-label">Correo Electrónico</label><label class="text-danger">*</label></strong>
                                 <input type="text" name="email" id="email" value="{{$admin->email}}" class="form-control" max="60">
                                 <small><span class="text-danger mensajeError errorposgrado" id="email_error"></span></small>
@@ -53,7 +53,7 @@
                             <small><span class="mensajeError text-danger" id="password_error"></span></small>
                         </div>
                         
-                        <div class="col-12 d-flex justify-content-between pb-3">
+                        <div class="col-12 d-flex justify-content-md-between pb-3">
                             <strong class="text-danger">Campos requeridos *</strong>
                             <button type="button" class="btn btn-primary" id="btn-save" value="">Guardar</button>
                         </div>        
