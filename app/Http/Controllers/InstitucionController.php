@@ -20,8 +20,9 @@ class InstitucionController extends Controller
      */
 
      public function __construct(){
-        $this->middleware('admin.auth:admin')->only(['instituciones']);
-
+        //$this->middleware('admin.auth:admin')->only(['instituciones']);
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['instituciones','listInstituciones']);
+        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
      }
 
     public function index()
@@ -114,22 +115,22 @@ class InstitucionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         
         //return \Response::json(['error' => 'Error msg'], 404);
-        if(!auth()->user() && !auth('admin')->user()){
-            return abort(403);
-        }
-        if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
-            
+        
+        if(auth()->user() && auth()->user()->hasRoles(['coordinador']) && !auth()->user()->hasRoles(['subadmin'])){
             if(auth()->user()->id_institucion!=$id){
                 return \Response::json(['error' => 'Acceso denegado'], 403);
             }
         }
-        
+        if($request->ajax()){
         $institucion  = Institucion::where('id', $id)->first();
         return \Response::json($institucion);
+        }else{
+            return abort(403);
+        }
     }
 
     /**

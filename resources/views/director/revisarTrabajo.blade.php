@@ -4,12 +4,7 @@
 @section('links')
 <link rel="stylesheet" href="/css/Maqueta2.css ">
 <script src="/js/owl.carousel.min.js"> </script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
 
-</script>
 <style>
     .holo {
         border-left: 10px solid white;
@@ -23,14 +18,14 @@
 @if(isset($trabajo))
 @if ($trabajo->url=='no_disponible')
 <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5" style="height:100vh">
-    <h1>Convocatoria no disponible</h1>
+    <h1>Trabajo no disponible</h1>
 </div>
 @else
 <div class="container">
     <!--<div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">-->
     <div class="row">
         <div class="col-12">
-            <h1 id="Titulo" class="display-   font-weight-bold rounded p-auto pt-3">Subir trabajo</h1>
+            <h1 id="Titulo" class="display-   font-weight-bold rounded p-auto pt-3">Revisión de trabajo</h1>
         </div>
     </div>
     <div class="row">
@@ -70,7 +65,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                        ¿Seguro que desea aceptar el trabajo?
+                        ¿Seguro qué desea aceptar el trabajo?
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

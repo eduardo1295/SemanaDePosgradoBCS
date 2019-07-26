@@ -168,7 +168,7 @@
                                 <div class="row mt-2 justify-content-center">
                                     <div class="embed-responsive embed-responsive-16by9 mt-3">
                                         <iframe
-                                            src="http://maps.google.com/maps?q=+{{$institucionSede->latitud}}+, +{{$institucionSede->longitud}}+&z=15&output=embed"
+                                            src="http://maps.google.com/maps?q={{$institucionSede->latitud}}, {{$institucionSede->longitud}}&z=15&output=embed"
                                             frameborder="0" style="border:0" allowfullscreen>
                                         </iframe>
                                     </div>

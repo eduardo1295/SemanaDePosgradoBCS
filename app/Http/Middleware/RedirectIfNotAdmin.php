@@ -18,10 +18,19 @@ class RedirectIfNotAdmin
      */
     public function handle($request, Closure $next, $guard = 'admin')
     {
-        if (!Auth::guard($guard)->check() || (auth()->user() && auth()->user()->hasRoles(['subadmin']))) {
+        
+        if (auth()->user() && !auth()->user()->hasRoles(['subadmin'])) {
+            //dd(!Auth::guard($guard)->check() && auth()->user() && !auth()->user()->hasRoles(['subadmin']));
+            return abort(403);
+            return redirect('semana');
+        }
+        
+        if (!Auth::guard($guard)->check() && !auth()->user()) {
+            //dd(!Auth::guard($guard)->check() && auth()->user() && !auth()->user()->hasRoles(['subadmin']));
+            //dd("no es admin");
             return redirect('admin/login');
         }
-
+        
         return $next($request);
     }
 

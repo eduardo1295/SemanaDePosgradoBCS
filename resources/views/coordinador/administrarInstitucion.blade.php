@@ -132,11 +132,11 @@
 <script src="/plugins/responsive-tabs/jquery.responsivetabs.js"></script>
 
 <script>
-var checkDir = 'activos';
-var checkPro = 'activos';
-var checkAlumno = 'activos';
+var checkDir = 'activoscoor';
+var checkPro = 'activoscoor';
+var checkAlumno = 'activoscoor';
 var checkSesion = 'activos';
-var checkLoca = 'activos';
+var checkLoca = 'activoscoor';
 var table;
 var tablePrograma;
 var tableAlumno;
@@ -148,6 +148,7 @@ var rutaEditarInstitucion = "{{ route('institucion.index')}}/{{ auth()->user()->
 var rutaBasePrograma = "{{ route('programa.index')}}";
 var rutaBaseDirector = "{{ route('director.index')}}";
 var rutaBaseAlumno = "{{ route('alumno.index')}}";
+var rutaImportarAlumnos = "{{ route('alumno.importar')}}";
 /*var rutaBaseSesion = "{{ route('sesion.index')}}";*/
 var rutaBaseLocacion = "{{ route('locacion.index')}}";
 $(document).ready(function () {

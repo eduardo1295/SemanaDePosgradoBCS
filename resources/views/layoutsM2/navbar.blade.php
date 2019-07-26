@@ -54,9 +54,13 @@
                                                 <li><a href="{{route('admin.editarPerfil',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
                                                 <li><a href="/admin" class="loginUsuario">Panel control</a></li>
                                             @endif
+                                            @if(auth()->user() && auth()->user()->hasRoles(['subadmin']))
+                                                <li><a class="loginUsuario" href="{{route('admin.index')}}">Panel de control</a> </li>
+                                            @endif
                                             @if(auth()->user() && auth()->user()->hasRoles(['coordinador']))
                                                 <li><a class="loginUsuario" href="{{route('coordinador.index')}}">Administrar institución</a> </li>
                                             @endif
+
                                             <li><a class="loginUsuario" onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="{{route($ruta)}}">Cerrar sesión</a> </li>
                                             
                                         <ul>

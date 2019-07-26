@@ -6,14 +6,13 @@
             </h1>
         </div>
 
-        <div id="mensaje-acciones" class="col-12 alert alert-success alert-dismissible" role="alert"
-            style="display:none">
-            <strong> </strong>
-        </div>
-        
+
+
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostras Alumnos</legend>
+        <legend
+            class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">
+            Mostras Alumnos</legend>
         <div class="col-12 col-md-4 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="alumnoR1" checked name="verAlumno" value="activos">
@@ -25,7 +24,7 @@
             </div>
         </div>
         <div class="col-12 col-md-5 col-lg-6 d-flex d-md-block justify-content-center justify-content-md-start">
-                <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-alumno"><span><i
                             class="fas fa-plus"></i></span> Agregar alumno</a>
 
@@ -38,7 +37,7 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        
+
                         <th class="all">No. Control</th>
                         <th class="none">Programa de estudios</th>
                         <th>Nombre</th>
@@ -70,9 +69,31 @@
         </div>
     </div>
     <div>
+        <form id="alumnosImportarForm" name="alumnosImportarForm" class="pl-0 col-12 form-horizontal"
+            enctype="multipart/form-data">
+            <strong><label for="">Importar alumnos:</label></strong><br>
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    <div class="custom-file">
+                        <input type="file" name="archivo" class="custom-file-input" id="archivo" lang="es">
+                        <label for="archivo" class="custom-file-label">Seleccionar Archivo</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-4" style="text-align:end">
+
+                    <a onclick="importarAlumnos();"  class="btn btn-primary importarAlumnos"
+                        id="importarAlumnos" style="color:white">Importar</a>
+
+                </div>
+            </div>
+        </form>
+
+        <div id="mensajeAlumnos" class="col-12" style="display:none">
+
+        </div>
         <strong><label for="">Exportar participantes:</label></strong><br>
         <a href="/alumno/ExportarAlumnos" target="_blank" id="pdf" class="btn btn-primary">PDF</a>
         <a href="{{route('alumno.exportarXLSAlumnos')}}" class="btn btn-primary">Excel</a>
     </div>
-    
+
 </div>

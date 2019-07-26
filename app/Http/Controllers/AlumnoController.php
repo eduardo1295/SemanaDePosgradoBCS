@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Imports\UsersImport;
 use App\Alumno;
 use App\Institucion;
+use App\Programa;
 use App\Semana;
 use DataTables;
 use App;
@@ -21,12 +23,15 @@ use Excel;
 use App\Http\Requests\usuarios\UpdateEditarPerfilRequest;
 use Validator;
 use App\Exports\AlumnosExportar;
+use Illuminate\Support\Arr;
 
 class AlumnoController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin')->only(['alumnos']);
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['alumnos']);
         $this-> middleware('auth')->only('generarGafete');
+        $this->middleware(['verificarcontrasena','verified'])->only(['generarGafete','edit']);
+        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy','reactivar']);
 
      }
     /**
@@ -65,7 +70,7 @@ return back()->withSuccess('Export started!');
      */
     public function store(StoreAlumnoRequest $request)
     {
-        
+        if($request->ajax()){
         $auxInstitucion = "";
         if (auth('admin')->user()){
             $auxInstitucion = $request->id_institucion_al;
@@ -95,6 +100,9 @@ return back()->withSuccess('Export started!');
         }
         
         return \Response::json($user);
+        }else {
+            return abort(403);
+        }
     }
 
     /**
@@ -114,14 +122,13 @@ return back()->withSuccess('Export started!');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         
         if(auth()->user() && auth()->user()->hasRoles(['alumno'])){
             if(auth()->user()->id != $id){
                 return abort(403);
             }
-            else{
                 $instituciones = DB::select(DB::raw("
         SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
 		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
@@ -136,11 +143,13 @@ return back()->withSuccess('Export started!');
                 $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
                 $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
                 return view('alumno.editarAlumno',compact(['usuario','semana','instituciones']));
-            }
-        }else if (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) ) {
+            
+        }else if ($request->ajax() && (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) )) {
             $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:alumnos.id,alumnos.id_programa,semestre,num_control,alumnos.id_director','instituciones:id,nombre','programas:programas.id,programas.id_programa,programas.nombre')->where('id',$id)->first();
             //$director = User::select('users.id')->whereHas('roles', function($q){$q->where('nombre', '=', 'director');})->where('id',$usuario->alumnos->id_director)->first();
             return \Response::json([$usuario]);
+        }else {
+            return abort(403);
         }
         
     }
@@ -193,6 +202,7 @@ return back()->withSuccess('Export started!');
         
         
         return \Response::json($user);
+        
     }
 
     /**
@@ -201,10 +211,14 @@ return back()->withSuccess('Export started!');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if($request->ajax()){
         $user = User::where('id',$id)->delete();
         return \Response::json($user);
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -213,10 +227,14 @@ return back()->withSuccess('Export started!');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function reactivar($id)
+    public function reactivar(Request $request, $id)
     {
+        if($request->ajax()){
         $user = User::withTrashed()->where('id',$id)->restore();
         return \Response::json($user);
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -245,10 +263,10 @@ return back()->withSuccess('Export started!');
         WHERE vigente = 1"));
         $id_selectSemana = $semana[0]->id_semana;
         $busqueda = $request->busqueda;
-        if($busqueda == 'activos'){
+        if($busqueda == 'activos' || $busqueda == 'activoscoor'){
             //AND users.id_institucion = ?'
             $finalConsulta="";
-            if (auth('admin')->user()){
+            if(auth('admin')->user() || ($busqueda != 'activoscoor' && auth()->user() && auth()->user()->hasRoles(['subadmin']))){
                 $finalConsulta = ' users.id_institucion = instituciones.id';
                 
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
@@ -310,23 +328,46 @@ return back()->withSuccess('Export started!');
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados'){
+            /*
             $consulta = 'SELECT alumnos.num_control,alumnos.id,'.
             ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
             ' users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,'.
             ' programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones'.
             ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NOT NULL';
-            $alumnos = new User();
+            */
+            $finalConsulta="";
             if (auth('admin')->user()){
-                $alumnos = DB::select(DB::raw($consulta. ' AND users.id_institucion = instituciones.id'));
+                $finalConsulta = ' users.id_institucion = instituciones.id';
                 
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
-                $consultaF = $consulta.' AND users.id_institucion = ?';
+                $finalConsulta = ' programas.id_institucion = instituciones.id AND users.id_institucion = ?';
                 
-                $alumnos = DB::select($consultaF,[auth()->user()->id_institucion]);
+            }
+            $consulta = "SELECT * FROM (SELECT alumnos.id, alumnos.num_control,alumnos.id_director,
+             users.nombre,users.primer_apellido,users.segundo_apellido,users.email,
+             users.fecha_actualizacion as fecha_usuario,instituciones.nombre AS institucion_nombre,
+             (SELECT id_semana FROM alumno_constancia WHERE id_semana = $id_selectSemana  AND id_alumno=alumnos.id ) AS id_sem_constancia, 
+             programas.nombre AS programa_nombre FROM alumnos,users,programas, instituciones
+             WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND $finalConsulta AND users.deleted_at IS NOT NULL) t1
+             INNER JOIN (SELECT users.id AS id_dir, users.nombre AS director_nombre, users.primer_apellido AS director_pa, users.segundo_apellido AS director_sa FROM users,directores_tesis WHERE users.id = directores_tesis.id) t2 ON t1.id_director = t2.id_dir;";
+
+            $alumnos = new User();
+            if (auth('admin')->user()){
+                $alumnos = DB::select(DB::raw($consulta));
+                
+            }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
+                //$consultaF = $consulta.' AND users.id_institucion = ?';
+                
+                $alumnos = DB::select($consulta,[auth()->user()->id_institucion]);
                 
             }
             $usuarios = User::onlyTrashed()->select('users.id','users.id_institucion','users.nombre','primer_apellido','segundo_apellido','email','users.fecha_actualizacion')->with('alumnos:alumnos.id,alumnos.id_programa,num_control,semestre,constancia_generada,fecha_constancia,gafete_generado,fecha_gafete','instituciones:instituciones.id,instituciones.nombre','programas:programas.id,programas.id_programa,programas.nombre')->whereHas('roles', function($q){$q->where('nombre', '=', 'alumno');});
             return datatables()->of($alumnos)
+            ->addColumn('director', function($alumnos){
+                return $alumnos->director_nombre .' '. $alumnos->director_pa .' '. $alumnos->director_sa;
+            }
+            
+            )
             ->addColumn('action', 
             '<div style="text-align:center;width:100px" class="mx-auto">
 
@@ -573,7 +614,17 @@ return back()->withSuccess('Export started!');
                 'segundo_apellido' => 'string|nullable|max:30',
                 //'id_institucion'    => 'required|exists:instituciones,id',
                 'num_control'  => 'required|unique:alumnos,num_control|max:15',
-                'semestre'  => 'required|max:30',
+                'semestre' => [
+                    'required',
+                    'numeric',
+                    
+                    function($attribute, $value, $fail){
+                        
+                        if ($value < 1 || $value >10 ) {
+                            $fail('Semestre no válido.');
+                        }
+                    },
+                ],
                 /*'id_programa'  => 'required',function($attribute, $value, $fail){
                     if($value==='MCMRC'){
                         $fail($attribute.' is invalid');
@@ -607,7 +658,11 @@ return back()->withSuccess('Export started!');
                     },
                 ]  
             ];
-            
+            $messages = [
+                'email.unique' => 'Email ya se encuentra registrado o aparece más de una vez en su archivo.',
+                'num_control.unique' => 'Número de control ya se encuentra registrado o aparece más de una vez en su archivo.',
+            ];
+
             $rulesArreglo = [
                 'usuarios' => 'required|array|min:1|max:40',
             ];
@@ -617,12 +672,12 @@ return back()->withSuccess('Export started!');
             $validatorArreglo = Validator::make($arrayaux, $rulesArreglo);
             
             $re =[];
-            if(!$validatorArreglo){
+            if(count($validatorArreglo->messages()->all())==0){
                 foreach($array as $key => $row)
                 {
                     $arrayAux = array_filter($row);
                     if(!empty($arrayAux)){
-                        $validator = Validator::make( $row, $rules );
+                        $validator = Validator::make( $row, $rules, $messages );
                         if ($validator->fails()) {                        
                             $re[] = [['Renglon: '.((int)$key+2)],$validator->messages()->all()];
                         }
@@ -649,60 +704,66 @@ return back()->withSuccess('Export started!');
                             
                             $alumno->save();
                             
-                            $user->roles()->attach([$user->id => ['id_rol'=>'5', 'creada_por'=>'1']]);
+                            $user->roles()->attach([$user->id => ['id_rol'=>'5']]);
                         }
                     }
                 }
                 if(empty($re)) {
                     DB::commit();
+                    $cadena = [];
+                    $cadena [] = 'Alumnos registrados exitosamente';
+                    return \Response::json([
+                        'bien' => $cadena,
+                    ], 200);
                     return back()->with('bien', 'Alumnos registrados exitosamente');
                 }
                 else{
                     DB::rollback();
-                    $cadena = "";
+                    $cadena = [];
                     foreach ($re as $key => $value) {
                         //dd($value[0][0]);
-                        $cadena .= "<strong>".$value[0][0]."</strong>";
-                        $cadena.= 
-                            "<ul>";
+                        $cadena []= "<strong>".$value[0][0]."</strong><ul>";
+                        
+                        
                         foreach ($value[1] as $key => $valor) {
-                            $cadena.= 
-                            "<li>".
-                                $valor.
-                            "</li>";
+                            $cadena [] = "<li>" . $valor ."</li>";
                         }
-                        $cadena.= 
-                            "</ul>";
+                        $cadena[] = "</ul>";
                         
                     }
+                    
+                    return \Response::json([
+                        'errors' => $cadena,
+                    ], 422);
                     return back()->with('errores',$cadena);
                 }
             }else{
                 $errorArreglo = $validatorArreglo->messages()->all();
-                $cadena = "";
+                $cadena = [];
                 
                 foreach ($errorArreglo as $key => $value) {
                     //dd($value[0][0]);
                 
-                    $cadena.= 
-                        "<ul>";
-                    
-                        $cadena.= 
-                        "<li>".
+                    $cadena[]= 
+                        "<ul><li>".
                             $value.
-                        "</li>";
-                    
-                    $cadena.= 
-                        "</ul>";
+                        "</li></ul>";
                     
                 }
-                
+                dd("oas");
+                return \Response::json([
+                    'errors' => $cadena,
+                ], 422);
                 return back()->with('errores',$cadena);
             }
             
         } 
         catch (Exception $e) {
+            dd("oqmweoqw");
             DB::rollback();
+            return \Response::json([
+                'errors' => $e->errors(),
+            ], 404);
             return back()->withErrors($e->errors());
         }
 

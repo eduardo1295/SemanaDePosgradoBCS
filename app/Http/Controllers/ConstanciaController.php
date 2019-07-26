@@ -16,6 +16,9 @@ class ConstanciaController extends Controller
 {
     public function __construct(){
         //$this-> middleware('auth:admin');
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only('index');
+        $this-> middleware(['esusuario'])->only(['store','verConstancias']);
+        $this->middleware(['verificarcontrasena','verified'])->only(['verConstancias']);
     }
     /**
      * Display a listing of the resource.
@@ -454,6 +457,7 @@ class ConstanciaController extends Controller
 
     public function altaConstancia(Request $request){
         
+        if($request->ajax()){
         $semanaquery = DB::select(DB::raw("SELECT semanas.id_semana FROM semanas WHERE vigente = 1;"));
         $semanaVigente = $semanaquery[0]->id_semana;
         $idAlumno = $request->id_alumno;
@@ -471,7 +475,9 @@ class ConstanciaController extends Controller
         }
 
         return \Response::json($resultado);
-        
+        }else{
+            return abort(403);
+        }
     }
 
     public function verConstancias(){

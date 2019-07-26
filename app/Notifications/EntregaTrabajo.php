@@ -41,6 +41,7 @@ class EntregaTrabajo extends Notification
      */
     public function toMail($notifiable)
     {
+        
         return (new MailMessage)
             ->line(new HtmlString("El Alumno ".$this->mensaje['nombre']." ".$this->mensaje['primer_apellido']." ".$this->mensaje['segundo_apellido']." 
                                    ha entregado su trabajo."))

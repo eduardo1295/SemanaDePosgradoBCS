@@ -7,11 +7,6 @@
 <link href="/css/modales/snackbar.css" rel="stylesheet">
 <script src="/js/owl.carousel.min.js"> </script>
 
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-</script>
 @endsection
 <section id="trabajo">
         <div class="container">
@@ -22,7 +17,7 @@
                 </div>
                 <form id="trabajoForm" name="trabajoForm" class="formulario form-horizontal mb-5" enctype="multipart/form-data">
                     <input type="hidden" name="id_semana" id="id_semana" value="{{$semana->id}}">
-                    <input type="hidden" name="id_director" id="id_director" value="2">
+                    <input type="hidden" name="id_director" id="id_director" value="5">
                     <input type="hidden" name="id_alumno" id="id_alumno" value="{{auth()->user()->id}}">
                     <div class="form-row pl-5 pr-5 pt-3">
                         <div class="form-group col-12">
@@ -30,8 +25,7 @@
                             
                                 <select class="form-control modalidad" id="modalidad" name="modalidad">
                                     <option selected value="">Seleccione modalidad</option>
-                                    @foreach ($modalidades as $modalidadP)
-                                        
+                                    @foreach ($modalidades as $modalidadP)   
                                         @if(isset($trabajo))
                                             @if($modalidadP->id_modalidad == $trabajo->Modalidad)
                                             <option value="{{$modalidadP->id_modalidad}}" selected>{{$modalidadP->nombre}} </option>
@@ -39,6 +33,7 @@
                                             <option value="{{$modalidadP->id_modalidad}}">{{$modalidadP->nombre}} </option>
                                             @endif
                                         @else
+                                        
                                         <option value="{{$modalidadP->id_modalidad}}">{{$modalidadP->nombre}} </option>
                                         @endif
                                     @endforeach
@@ -58,7 +53,7 @@
                         <div class="form-group col-12">
                             <strong><label for="customFileLang" class="control-label">Trabajo: </label><label class="text-danger">*</label></strong></strong>
                             @isset($trabajo)
-                            <a href='{{ URL::to("/") }}/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >Trabajo Subido</a>
+                            <a href='{{ URL::to("/") }}/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >Entrega Actual</a>
                             <input type="hidden" name="auxUrl" value="{{$trabajo->url}}">
                             @endisset
                             <div class="custom-file">
@@ -91,11 +86,11 @@
                     <div class="form-row pl-5 pr-5 pb-3 ">
                         <div class="form-group col-12">
                             <strong><label for="directortesis" class="control-label">Director de tesis</label><label class="text-danger">*</label></strong></strong>
-                            <input type="text" class="form-control" id="directortesis" name="directortesis" placeholder="director de tesis">
+                        <input value="{{ $director->nombre .' '. $director->primer_apellido .' '. $director->segundo_apellido }}" type="text" class="form-control" id="directortesis" name="directortesis" placeholder="director de tesis" readonly>
                         </div>
                         <div class="form-group col-12">
                             <strong><label for="area" class="control-label">Área</label><label class="text-danger">*</label></strong></strong>
-                            <input type="text" class="form-control" id="area" name="area" placeholder="director de tesis" value="@isset($programa){{$programa->nombre}}@endisset" readonly>
+                            <input type="text" class="form-control" id="area" name="area" placeholder="programa de estudios" value="@isset($programa){{$programa->nombre}}@endisset" readonly>
                         </div>
                         <div class="col-12 d-flex pt-3 d-flex justify-content-between">
                             <strong class="text-danger">Campos requeridos *</strong>
@@ -119,6 +114,7 @@
             <div id="snackbarError"></div>
 </section>
 <script>
+
 $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
         if (!fileName.trim()) {

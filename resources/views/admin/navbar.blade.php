@@ -1,4 +1,4 @@
-<div class="container-fluid" id="#contenedor" style="z-index:0 ; background:#ececec;">
+<div class="container-fluid redimensionar" id="#contenedor" style="z-index:0 ; background:#ececec;">
     <div class="row">
         <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-xl-between align-items-center">
@@ -28,8 +28,11 @@
                                                         <ul class="loginUsuario">
                                                             <li><a href="/admin"
                                                                 class="loginUsuario">Panel control</a></li>
-                                                            <li><a href="{{route('admin.editarPerfil',auth('admin')->user()->id)}}"
+                                                            <li><a href="{{Auth::guard('admin')->user() ? route('admin.editarPerfil',auth('admin')->user()->id) : route('coordinador.edit',auth()->user()->id)}}"
                                                                     class="loginUsuario">Editar Perfil</a></li>
+                                                            @if(auth()->user() && auth()->user()->hasRoles(['coordinador']))
+                                                                <li><a class="loginUsuario" href="{{route('coordinador.index')}}">Administrar institución</a> </li>
+                                                            @endif
                                                             <li><a class="loginUsuario"
                                                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                                                                     href="{{route($ruta)}}">Cerrar sesión</a> </li>
@@ -67,8 +70,11 @@
                                                         <li><a class="loginUsuario"
                                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                                                                 href="/admin">Panel de Control</a> </li>
-                                                        <li><a href="{{route('admin.editarPerfil',auth('admin')->user()->id)}}"
+                                                        <li><a href="{{Auth::guard('admin')->user() ? route('admin.editarPerfil',auth('admin')->user()->id) : route('coordinador.edit',auth()->user()->id)}}"
                                                                 class="loginUsuario">Editar Perfil</a></li>
+                                                                @if(auth()->user() && auth()->user()->hasRoles(['coordinador']))
+                                                                    <li><a class="loginUsuario" href="{{route('coordinador.index')}}">Administrar institución</a> </li>
+                                                                @endif
                                                         <li><a class="loginUsuario"
                                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                                                                 href="{{route($ruta)}}">Cerrar sesión</a> </li>

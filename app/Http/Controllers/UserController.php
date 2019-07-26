@@ -29,8 +29,8 @@ class UserController extends Controller
     function __construct(){
         $this->middleware(['auth', 'verified'], ['except' => ['editarPerfil']]);
         $this->middleware(['verificarcontrasena'], ['except' => ['cambiarContrasena','guardarContrasena','editarPerfil']]);
-        //$this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
-        
+        //$this->middleware(['nuevacontrasena'], ['only' => ['cambiarContrasena','guardarContrasena','editarPerfil']]);
+        $this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
 
     }
     public function index()
@@ -114,7 +114,6 @@ class UserController extends Controller
      */
     public function cargaExcel(){
         $data = User::select('nombre','email','password',"primer_apellido","segundo_apellido")->get();
-        
         return view('excelim', compact('data'));
     }
 
@@ -282,7 +281,7 @@ class UserController extends Controller
         }
     }
 
-    public function editarPerfil(UpdateEditarPerfilRequest $request,$id){
+    public function editarPerfil(UpdateEditarPerfilRequest $request, $id){
             $user = User::find($id);    
             $user->nombre = ucfirst($request->nombre);
             $user->primer_apellido = ucfirst($request->primer_apellido);

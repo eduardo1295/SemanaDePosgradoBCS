@@ -21,9 +21,10 @@ class DirectorController extends Controller
     public function __construct(){
         //$this->middleware('admin.auth:admin')->only(['director']);
         //$this->middleware('auth')->only('director');
-        
-        
-        //$this->middleware(['auth','verified','verificarcontrasena'], ['only' => ['revisarAlumnos']]);
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['director']);
+        $this-> middleware(['esusuario'])->only(['listDirector','store','update','edit','destroy']);
+        $this->middleware(['auth','verified','verificarcontrasena'], ['only' => ['revisarAlumnos']]);
+        $this->middleware(['verificarcontrasena','verified'])->only(['edit']);
         
         
      }
@@ -107,12 +108,13 @@ class DirectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        
         if(auth()->user() && auth()->user()->hasRoles(['director'])){
             if(auth()->user()->id != $id){
                 return abort(403);
-            }else{
+            }
                 $instituciones = DB::select(DB::raw("
         SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
 		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
@@ -127,10 +129,12 @@ class DirectorController extends Controller
                 $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
                 $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();
                 return view('director.editarDirector',compact(['usuario','semana','instituciones']));
-            }
-        }else if (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) ) {
+            
+        }else if ($request->ajax() && (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) )) {
             $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id','instituciones:id,nombre')->where('id',$id)->first();
             return \Response::json($usuario);
+        }else{
+            return abort(403);
         }
     }
 
@@ -209,13 +213,10 @@ class DirectorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function listDirector(Request $request ){
-        if(!auth()->user() && !auth('admin')->user()){
-            return abort(403);
-        }
         $busqueda = $request->busqueda;
         $usuarios = "";
-        if($busqueda == 'activos'){
-            if(auth('admin')->user()){
+        if($busqueda == 'activos' || $busqueda == 'activoscoor'){
+            if(auth('admin')->user() || ($busqueda != 'activoscoor' && auth()->user() && auth()->user()->hasRoles(['subadmin']))){
                 $usuarios = DB::select(DB::raw('SELECT directores_tesis.id,'.
                 ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
                 ' users.fecha_actualizacion as fecha_usuario, instituciones.nombre AS institucion_nombre'.

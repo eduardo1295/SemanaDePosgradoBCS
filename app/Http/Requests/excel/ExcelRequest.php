@@ -27,4 +27,11 @@ class ExcelRequest extends FormRequest
             'archivo'  => 'required|mimes:xls,xlsx'
         ];
     }
+
+    public function messages(){
+        return [
+            'archivo.required' => 'Debe seleccionar un archivo xls o xlsx',
+            
+        ];
+    }
 }

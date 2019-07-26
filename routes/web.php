@@ -29,7 +29,7 @@ Route::post('usuario/editarPerfil/{id}', 'UserController@editarPerfil')->name('u
 Route::resource('usuario', 'UserController')->middleware('auth:admin');
 
 Route::get('admin/instituciones', 'InstitucionController@instituciones')->name('institucion.VerInstituciones');
-Route::get('admin/institcucion/listUsuarios', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');
+Route::get('admin/institucion/listInstituciones', 'InstitucionController@listInstituciones')->name('institucion.listInstituciones');
 Route::put('admin/institucion/reactivar/{institucion}', 'InstitucionController@reactivar')->name('institucion.reactivar');
 Route::post('admin/institucion/suibirLogoConacyt', 'InstitucionController@suibirLogoConacyt')->name('institucion.suibirLogoConacyt');
 
@@ -86,6 +86,7 @@ Route::get('alumno/programasLista/{programa}', 'AlumnoController@programasLista'
 
 /*Listo */
 Route::get('/alumno/ExportarAlumnos', 'AlumnoController@ExportarAlumnos')->name('alumno.ExportarAlumnos');
+Route::post('/alumno/ImportarAlumnos', 'AlumnoController@ImportarAlumnos')->name('alumno.importar');
 
 Route::resource('alumno', 'AlumnoController')->except(['show','create']);
 

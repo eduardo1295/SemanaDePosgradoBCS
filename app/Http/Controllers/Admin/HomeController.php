@@ -28,7 +28,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['admin.auth:admin', 'admin.verified']);
+        $this->middleware(['admin.auth','admin.verified'])->only('index');
+        //$this->middleware(['admin.auth:admin','admin.verified']);
         $this->middleware('verificarcontrasena', ['except' => ['cambiarContrasena','guardarContrasena']]);
         $this->middleware('nuevacontrasena', ['only' => ['cambiarContrasena','guardarContrasena']]);
     }

@@ -34,6 +34,7 @@ var posInicial = new google.maps.LatLng(lati,longi);
 google.maps.event.addDomListener(window, 'load', iniciarMapa(posInicial));    
     
 function cargarInstitucion(){
+    $('.mensajeError').text("");
     //var ruta = "{{url('institucion')}}/" + "{{ auth()->user()->id_institucion }}" + "/editar";
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -139,7 +140,7 @@ function cargarDataTableDirectores(){
 
 
 $("input[name='verDir']").change(function (e) {
-    checkDir = $(this).val();
+    checkDir = $(this).val() + 'coor';
     $('#directoresdt').DataTable().ajax.reload();
 });
 
