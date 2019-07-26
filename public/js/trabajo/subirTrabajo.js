@@ -1,5 +1,6 @@
 var SITEURL = "{{URL::to('/')}}";
 $(document).ready(function() {
+    
     $("#btn-save").click(function() {
         $(".mensajeError").text("");
         $("#btn-save").prop("disabled", true);
@@ -8,7 +9,7 @@ $(document).ready(function() {
         var id = $("#alumno_id").val();
         var datos = new FormData($("#trabajoForm")[0]);
         
-        console.log(Array.from(datos));
+        //console.log(Array.from(datos))
         $.ajax({
             headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
             url: "/trabajo",
@@ -29,8 +30,8 @@ $(document).ready(function() {
                     $('#link').prop('href','/documentos/trabajos/'+ data.url );
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    mostrarSnack('Se ha entregado exitosamente.')
-                    $("#btn-save").html("No ha sido revisado");;
+                    mostrarSnack('Trabajo entregado exitosamente');
+                    $("#btn-save").html("Pendiente de revisión");
                 }
                 
             },
@@ -42,14 +43,8 @@ $(document).ready(function() {
                         $("." + key + "_error").text(value);
                     });
                 }
-                $("#snackbar").html(
-                    "<span style='color: red;'><i class='fas fa-times-circle'></i></span> Error al guardar los cambios."
-                );
-                $("#snackbar").addClass("show");
-                setTimeout(function() {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
                 
+                mostrarSnackError('Error al subir trabajo')
                 $("#btn-save").html("Guardar");
                 $("#btn-save").prop("disabled", false);
                 $("#btn-close").prop("disabled", false);

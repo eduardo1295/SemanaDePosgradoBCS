@@ -45,7 +45,7 @@
                 <thead>
                     <tr>
                         <th>id_noticia</th>
-                        <th>Titulo</th>
+                        <th>Título</th>
                         <th>Resumen</th>
                         <th>Última actualización</th>
                         <th>Acciones</th>

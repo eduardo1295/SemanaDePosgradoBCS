@@ -18,7 +18,8 @@ class RedirectIfAdmin
      */
     public function handle($request, Closure $next, $guard = 'admin')
     {
-        if (Auth::guard($guard)->check()) {
+        if (Auth::guard($guard)->check() || (auth()->user() && auth()->user()->hasRoles(['subadmin']))) {
+            
             return redirect()->route('admin.index');
         }
 

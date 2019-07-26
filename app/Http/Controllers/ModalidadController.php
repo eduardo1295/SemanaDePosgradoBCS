@@ -28,8 +28,10 @@ class modalidadController extends Controller
      */
 
     public function __construct(){
-        $this-> middleware('auth:admin')->only(['listModalidad','store','edit','update','modalidad']);
-       // $this-> middleware('auth:admin')->only(['modalidad']);
+        //$this-> middleware('auth:admin')->only(['listModalidad','store','edit','update','modalidad']);
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['listModalidad','store','edit','update','modalidad']);
+        // $this-> middleware('auth:admin')->only(['modalidad']);
+        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
     }
     public function index()
     {
@@ -144,6 +146,7 @@ class modalidadController extends Controller
      */
     public function store(StoreModalidadRequest $request)
     {   
+        if($request->ajax()){
         $dom = new \domdocument();
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getelementsbytagname('img');
@@ -193,6 +196,9 @@ class modalidadController extends Controller
             $periodo->save();
         }
         return \Response::json('listo');
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -212,8 +218,9 @@ class modalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        if($request->ajax()){
         //$modalidad = Modalidad::all()->where('id_modalidad',1)->get();
         $periodo = array();
         $modalidad = Modalidad::find($id);
@@ -231,6 +238,9 @@ class modalidadController extends Controller
         //dd($aux[1]->periodo_max);
         //$v =[$alv,$modalidad];
         return \Response::json(['modalidad'=> $modalidad,'posgrado' => $posgrado,'periodo'=> $periodo]);
+    }else{
+        return abort(403);
+    }
     }
 
     /**
@@ -242,6 +252,7 @@ class modalidadController extends Controller
      */
     public function update(UpdateModalidadRequest $request, $id)
     {
+        if($request->ajax()){
         $dom = new \domdocument();
         $removerXML = str_replace('<!--?xml encoding="utf-8" ?-->','',$request->contenido);
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$removerXML, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -297,6 +308,9 @@ class modalidadController extends Controller
             $periodo->save();
         }
         return \Response::json('listo');
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -305,8 +319,9 @@ class modalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if($request->ajax()){
         $modalidad = Modalidad::find($id);
         /*
         $posgrado = $modalidad->niveles()->get();
@@ -316,6 +331,9 @@ class modalidadController extends Controller
         $modalidad->niveles()->delete();
         */
         $modalidad->delete();
+    }else{
+        return abort(403);
+    }
 
     }
     public function modalidad(){

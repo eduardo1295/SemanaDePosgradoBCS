@@ -33,7 +33,7 @@ class TrabajoController extends Controller
     */
     public function __construct(){
         $this-> middleware('auth')->only(['store','show','subirTrabajo']);
-
+        $this->middleware(['verificarcontrasena','verified'])->only(['subirTrabajo']);
     }
     /**
      * Display a listing of the resource.
@@ -63,6 +63,7 @@ class TrabajoController extends Controller
      */
     public function store(StoreTrabajoRequest $request)
     {   
+        
         $nuevo_nombre = 'sin Trabajo';
         if($request->hasFile('url')){
             $trabajoAlumno = $request->url;
@@ -87,7 +88,7 @@ class TrabajoController extends Controller
         $trabajo = Trabajo::updateOrCreate(
             ['id_alumno' => auth()->user()->id, 'id_semana' => $semana->id_semana],
             [
-             'id_director' => $request->id_director,
+             'id_director' => auth()->user()->alumnos()->get()[0]->id_director,
              'id_semana' => $request->id_semana  ,
              'titulo' => $request->titulo     ,
              'resumen' => $request->resumen    ,
@@ -196,8 +197,9 @@ class TrabajoController extends Controller
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
         $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->first();
+        $director = User::find(auth()->user()->alumnos()->get()[0]->id_director);
         
-        return view('trabajo.subirTrabajo', compact(['semana','instituciones','programa','modalidades','trabajo']));
+        return view('trabajo.subirTrabajo', compact(['director','semana','instituciones','programa','modalidades','trabajo']));
     }
 
     public function revisionTrabajo(Request $request){
@@ -219,7 +221,7 @@ class TrabajoController extends Controller
         //dd($trabajo->usuarios()->first()->email);
         
         //Mail::to($trabajo->usuarios()->first()->email)->send(new MensajesTrabajo($request));
-        
+        dd("km");
         Notification::send($trabajo->usuarios()->first(), new RevisionTrabajo($request,$trabajo->id_alumno));
         return redirect()->route('director.revisarAlumnos');
     }

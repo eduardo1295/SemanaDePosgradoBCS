@@ -11,6 +11,7 @@ $('#alumnosdt tfoot  th.text-input').each(function (i) {
 });
 
 function cargarDataTableAlumnos(){
+    $("#mensajeAlumnos").hide();
     if(!tableAlumno){
         tableAlumno = $('#alumnosDT').DataTable({
             "order": [[ 9, "desc" ]],
@@ -80,7 +81,7 @@ function cargarDataTableAlumnos(){
 }
 
 $("input[name='verAlumno']").change(function (e) {
-    checkAlumno = $(this).val();
+    checkAlumno = $(this).val() + 'coor';
     $('#alumnosDT').DataTable().ajax.reload();
 });
 
@@ -91,6 +92,7 @@ $('body').on('click', '.editarAlumno', function () {
     var ruta = rutaBaseAlumno + '/' + alumno_id + "/editar";
     
     $.get(ruta, function (data) {
+        $("#mensajeAlumnos").hide();
         console.log(data);    
         $('.mensajeError').text("")
         $('#alumnoCrudModal').html("Editar alumno: " + data[0].nombre + ' ' + data[0].primer_apellido + ' ' + data[0].segundo_apellido);
@@ -113,6 +115,7 @@ $('body').on('click', '.editarAlumno', function () {
 
 /*Accion al presionar el boton eliminar*/
 $('body').on('click', '.eliminarAlumno', function () {
+    $("#mensajeAlumnos").hide();
     var alumno_id = $(this).data("id");
     $.confirm({
         columnClass: 'col-md-6',
@@ -166,6 +169,7 @@ $('body').on('click', '.eliminarAlumno', function () {
 
         /*Accion al presionar el boton reactivar*/
         $('body').on('click', '.reactivarAlumno', function () {
+            $("#mensajeAlumnos").hide();
             var alumno_id = $(this).data("id");
             $.confirm({
                 columnClass: 'col-md-6',
@@ -317,6 +321,7 @@ $('body').on('click', '.eliminarAlumno', function () {
 
 /*Accion al presionar el boton crear-alumno*/
 $('#crear-alumno').click(function () {
+    $("#mensajeAlumnos").hide();
     $('#btn-save-alumno').val("crear-alumno");
     $('#alumno_id_al').val('');
     $('#alumnoForm').trigger("reset");
@@ -468,6 +473,51 @@ $('#crear-alumno').click(function () {
                     if (data.status == 422) {
                         
                     }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
+                }
+
+            });
+    };
+
+
+    function importarAlumnos(){
+        var datos = new FormData($("#alumnosImportarForm")[0]);
+        $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: rutaImportarAlumnos,
+                type: "POST",
+                data: datos,
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function (data) {
+                    $("#mensajeAlumnos").hide();
+                    mostrarSnack('Alumnos registrados exitosamente');    
+                    $('#alumnosDT').DataTable().ajax.reload();
+                },
+                error: function (data) {
+                    
+                    mostrarSnackError('Error al registrar alumnos');
+                    if (data.status == 422) {
+                        
+                        var errores = data.responseJSON['errors'];
+                        var listaErrores = "";
+                        $.each(errores, function (key, value) {
+                            listaErrores += value;
+                        });
+                        $('#mensajeAlumnos').html(
+                            '<div class="col-12 alert alert-danger alert-dismissible" role="alert">'
+                            +
+                            listaErrores + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+                        $("#mensajeAlumnos").show();
+                    }
+                    
                 },
                 complete: function (data) {
                     $(".loader").hide();

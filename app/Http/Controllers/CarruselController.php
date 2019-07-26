@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\File;
 class CarruselController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin')->only(['carrusel','listCarrusel']);
-
+        
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['carrusel','listCarrusel']);
+        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
      }
 
     /**
@@ -101,8 +102,6 @@ class CarruselController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-
         $carrusel = Carrusel::where('id',$id)->first();
         
         $rules1 = [
@@ -164,8 +163,9 @@ class CarruselController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if($request->ajax()){
         $carrusel = Carrusel::where('id',$id)->first();
 
         $pathDirectorio = public_path('img\\carrusel').'\\'.$carrusel->url_imagen;
@@ -176,6 +176,9 @@ class CarruselController extends Controller
         $carrusel->forceDelete();
 
         return \Response::json($carrusel);
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -184,10 +187,14 @@ class CarruselController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function reactivar($id)
+    public function reactivar(Request $request, $id)
     {
+        if($request->ajax()){
         $carrusel = Carrusel::withTrashed()->where('id',$id)->restore();
         return \Response::json($carrusel);
+        }else{
+            return abort(403);
+        }
     }
 
     /**

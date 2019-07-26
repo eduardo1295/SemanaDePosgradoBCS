@@ -80,7 +80,7 @@ function cargarDataTableProgramas(){
 }
 
 $("input[name='verPro']").change(function (e) {
-    checkPro = $(this).val();
+    checkPro = $(this).val() + "coor";
     $('#programasDT').DataTable().ajax.reload();
 });
 

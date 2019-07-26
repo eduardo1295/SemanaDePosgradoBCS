@@ -9,7 +9,7 @@
                     <input type="hidden" name="noticia_id" id="noticia_id">
                     
                     <div class="form-group">
-                        <strong><label for="titulo" class="control-label">Titulo</label><label class="text-danger">*</label></strong>
+                        <strong><label for="titulo" class="control-label">Título</label><label class="text-danger">*</label></strong>
                         <input type="text" class="form-control" id="titulo" name="titulo"
                             placeholder="Titulo de la noticia" value="" maxlength="500" required="">
                         <small><span class="mensajeError text-danger" id="titulo_error"></span></small>

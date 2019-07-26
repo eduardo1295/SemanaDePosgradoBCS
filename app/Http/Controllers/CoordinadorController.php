@@ -18,8 +18,10 @@ use Validator;
 class CoordinadorController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin')->only(['coordinador']);
-        $this-> middleware('auth')->only('index');
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['coordinador']);
+        $this-> middleware(['auth','verificarcontrasena'])->only('index');
+        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
+        $this->middleware(['verificarcontrasena','verified'])->only(['edit']);
      }
     /**
      * Display a listing of the resource.
@@ -75,6 +77,7 @@ class CoordinadorController extends Controller
      */
     public function store(StoreCoordinadorRequest $request)
     {
+        
         $buscar = Semana::select('id_semana','id_sede','vigente')->where('vigente',1)->get();
         $idSemana = $buscar[0]->id_semana;
         $user = new User([
@@ -142,12 +145,13 @@ class CoordinadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        if(!auth()->user() && !auth('admin')->user()){
-            return abort(403);
-        }
+        
+        
         if(auth()->user()){
+            if(auth()->user()->id != $id)
+                return abort(403);
             $instituciones = DB::select(DB::raw("
         SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
 		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
@@ -162,7 +166,7 @@ class CoordinadorController extends Controller
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
             $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();
             return view('coordinador.editarCoordinador',compact(['usuario','semana','instituciones']));
-        }else if (auth('admin')->user()) {
+        }else if (auth('admin')->user() && $request->ajax()) {
             $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,puesto','instituciones:id,nombre')->where('id',$id)->first();
             return \Response::json($usuario);
         }

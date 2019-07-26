@@ -10,8 +10,9 @@ use DB;
 class VistaLoginController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin.auth:admin');
-
+        
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only('vistaLogin','disenoColores');
+        $this-> middleware(['esusuario'])->only(['store']);
      }
     /**
      * Display a listing of the resource.

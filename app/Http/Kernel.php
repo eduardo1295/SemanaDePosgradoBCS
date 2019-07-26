@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'roles' => \App\Http\Middleware\verificarRoles::class,
         'verificarcontrasena' => \App\Http\Middleware\VerificarContrasena::class,
         'nuevacontrasena' => \App\Http\Middleware\NuevaContrasena::class,
+        'esusuario' => \App\Http\Middleware\EsUsuario::class,
     ];
 
     /**

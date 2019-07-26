@@ -23,8 +23,9 @@ class ProgramaController extends Controller
 
      public function __construct(){
         //$this-> middleware('auth:admin');
-        $this->middleware('admin.auth:admin')->only(['programa','programaGeneral']);
         
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only('programa','programaGeneral');
+        $this-> middleware(['esusuario'])->only(['listPrograma','store','update','edit','destroy','reactivar']);
      }
 
     public function index()
@@ -50,6 +51,7 @@ class ProgramaController extends Controller
      */
     public function store(StoreProgramaRequest $request)
     {   
+        if($request->ajax()){
         /*
         $nuevo_nombre = 'sin imagen';
         if($request->hasFile('imagenCarrusel')){
@@ -83,6 +85,9 @@ class ProgramaController extends Controller
         }
         //$institucion->update($request->all());
         return \Response::json($programa);
+    }else{
+        return abort(403);
+    }
     }
 
     /**
@@ -104,9 +109,7 @@ class ProgramaController extends Controller
      */
     public function edit($id)
     {
-        if(!auth()->user() && !auth('admin')->user()){
-            return abort(403);
-        }
+        
         $programa  = Programa::select('id','id_programa','id_institucion','nombre','nivel','periodo')->where('id', $id)->first();
         return \Response::json($programa);
     }
@@ -120,6 +123,7 @@ class ProgramaController extends Controller
      */
     public function update(UpdateProgramaRequest $request, $id)
     {
+        if($request->ajax()){
         $programa = Programa::where('id',$id)->first();
         
         $rules1 = [
@@ -174,7 +178,9 @@ class ProgramaController extends Controller
             */
             //$institucion->update($request->all());
             return \Response::json($programa);
-            
+        }else{
+                return abort(403);
+            }
     }
 
     /**
@@ -183,15 +189,23 @@ class ProgramaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if($request->ajax()){
         $carrusel = Programa::where('id',$id)->delete();
         return \Response::json($carrusel);
+    }else{
+            return abort(403);
+        }
     }
-    public function reactivar($id)
+    public function reactivar(Request $request, $id)
     {
+        if($request->ajax()){
         $programa = Programa::withTrashed()->where('id',$id)->restore();
         return \Response::json($programa);
+        }else{
+            return abort(403);
+        }
     }
 
     public function programa(){
@@ -201,14 +215,13 @@ class ProgramaController extends Controller
     }
 
 
-    public function listPrograma(Request $request ){
-        if(!auth()->user() && !auth('admin')->user()){
-            return abort(403);
-        }
+    public function listPrograma(Request $request){
         $busqueda = $request->busqueda;
+        
         $selectProgramas = "";
-        if($busqueda == 'activos'){
-            if(auth('admin')->user()){
+        if($busqueda == 'activos' || $busqueda == 'activoscoor'){
+            
+            if(auth('admin')->user() || ($busqueda != 'activoscoor' && auth()->user() && auth()->user()->hasRoles(['subadmin']))){
                 $selectProgramas =  Programa::select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
                 $selectProgramas =  Programa::select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre')->where('programas.id_institucion',auth()->user()->id_institucion);
@@ -233,7 +246,7 @@ class ProgramaController extends Controller
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
-        }else if($busqueda == 'eliminados'){
+        }else if($busqueda == 'eliminados' || $busqueda == 'eliminadoscoor'){
             if(auth('admin')->user()){
                 $selectProgramas = Programa::onlyTrashed()->select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){

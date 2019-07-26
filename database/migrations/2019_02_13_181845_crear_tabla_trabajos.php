@@ -23,9 +23,9 @@ class CrearTablaTrabajos extends Migration
             $table->integer('id_semana')->unsigned();
             $table->foreign('id_semana')->references('id_semana')->on('semanas');
 
-            $table->integer('id_modalidad')->unsigned();
+            //$table->integer('id_modalidad')->unsigned()
 
-            $table->integer('id_sesion')->unsigned();
+            $table->integer('id_sesion')->unsigned()->nullable();
             $table->string('titulo', 100);
             $table->string('resumen', 1000);
             $table->string('area', 100);
@@ -34,7 +34,7 @@ class CrearTablaTrabajos extends Migration
             $table->string('pal_clv3', 15);
             $table->string('pal_clv4', 15);
             $table->string('pal_clv5', 15);
-            $table->integer('Modalidad')->unsigned();
+            $table->integer('modalidad')->unsigned();
             $table->datetime('fecha_entrega')->nullable();
             $table->string('comentario', 100)->nullable();
             $table->boolean('autorizado')->default(false);

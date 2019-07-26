@@ -20,9 +20,11 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function __construct(){
-        $this->middleware(['admin.auth:admin', 'admin.verified'])->only('noticias');
+        
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only('noticias');
         //$this->middleware('admin.auth:admin')->only(['create']);
          //$this-> middleware('auth:admin')->only('noticias');
+         $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
      }
     public function index()
     {
@@ -80,6 +82,7 @@ class NoticiaController extends Controller
             $imagennoticia->move(public_path('img/noticias'), $nuevo_nombre);
         }
         */
+        if($request->ajax()){
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->firstOrFail();
         
         $noticia = new Noticia;
@@ -145,6 +148,9 @@ class NoticiaController extends Controller
         $noticia->save();
         
         return \Response::json($noticia);
+    }else{
+        return abort(403);
+    }
     }
 
     /**
@@ -179,9 +185,6 @@ class NoticiaController extends Controller
      */
     public function edit($id)
     {
-        if(!auth()->user() && !auth('admin')->user()){
-            return abort(403);
-        }
         $noticia  = Noticia::where('id_noticia', $id)->first();
         return \Response::json($noticia);
     }
@@ -195,6 +198,7 @@ class NoticiaController extends Controller
      */
     public function update(UpdateNoticiaRequest $request, $id)
     {
+        if($request->ajax()){
         $noticia  = Noticia::where('id_noticia', $id)->first();
         
         /*
@@ -272,6 +276,9 @@ class NoticiaController extends Controller
         }
         
         return \Response::json($noticia);
+    }else{
+        return abort(403);
+    }
     }
 
     /**
@@ -280,9 +287,9 @@ class NoticiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        
+        if($request->ajax()){
         $noticia = Noticia::where('id_noticia',$id)->first();
         //dd($noticia->id_noticia);
         $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
@@ -294,6 +301,9 @@ class NoticiaController extends Controller
         $noticia->forceDelete();
                 
         return \Response::json($noticia);
+    }else{
+        return abort(403);
+    }
     }
 
     /**

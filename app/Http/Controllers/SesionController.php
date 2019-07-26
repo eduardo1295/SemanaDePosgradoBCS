@@ -20,6 +20,8 @@ class SesionController extends Controller
 {
     public function __construct(){
         //$this-> middleware('auth:admin');
+        $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only('sesiones');
+        $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
     }
     /**
      * Display a listing of the resource.
