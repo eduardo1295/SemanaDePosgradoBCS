@@ -31,7 +31,8 @@
         }
 
         thead tr th {
-            background-color: #c1f6e7
+            background-color: #3f77bc;
+            color: #ffff;
         }
 
         .contenido {
@@ -67,11 +68,15 @@
     <header style="position: fixed; top: -60px; left: 0px; right: 0px; width: 100%; height: 150px">
         <div style="width: 100% ; ">
             <div style="width:80%;  float: left; margin: 0">
-                Lista de participantes, institucion: {{$institucion->nombre}} <br>
+                Lista de participantes, institución: {{$institucion->nombre}} <br>
                 <small>{{$semana->nombre}} del {{$fInicio}} a {{$fFin}} </small>
             </div>
             <div style="width: 20%;  float: left; margin: 0">
-                <img src="{{asset('img/logo.png')}}" alt="" width="95px" height="50px" style="float: right;">
+                @if(isset($semana->url_logo))
+                <img src="{{asset('img/semanaLogo/'.$semana->url_logo)}}"  alt=""  width="95px" height="50px"  style="float: right;">
+                @else
+                <img src="{{asset('img/semanaLogo/logo_evento.png')}}"  alt=""  width="95px" height="50px"  style="float: right;">
+                @endif
             </div>
         </div>
     </header>

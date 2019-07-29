@@ -33,7 +33,7 @@
                     <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Convocatoria</h1> <br>
                 </div>
             </div>
-            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}"
+            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/pdf/convocatoria/{{$semana->url_convocatoria}}/?{{date('H:i:s')}}"
                 type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
         @endif
