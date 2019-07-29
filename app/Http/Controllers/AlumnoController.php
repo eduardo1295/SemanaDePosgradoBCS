@@ -326,7 +326,7 @@ return back()->withSuccess('Export started!');
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
-        }else if($busqueda == 'eliminados'){
+        }else if($busqueda == 'eliminados' || $busqueda == 'eliminadoscoor'){
             /*
             $consulta = 'SELECT alumnos.num_control,alumnos.id,'.
             ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.
@@ -335,7 +335,7 @@ return back()->withSuccess('Export started!');
             ' WHERE alumnos.id=users.id AND alumnos.id_programa=programas.id AND users.id_institucion = instituciones.id AND users.deleted_at IS NOT NULL';
             */
             $finalConsulta="";
-            if (auth('admin')->user()){
+            if (auth('admin')->user() || ($busqueda != 'eliminadoscoor' && auth()->user() && auth()->user()->hasRoles(['subadmin']))){
                 $finalConsulta = ' users.id_institucion = instituciones.id';
                 
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
@@ -470,7 +470,7 @@ return back()->withSuccess('Export started!');
             $id_institucion = auth()->user()->id_institucion;
             $consulta = "SELECT num_control,nombre, primer_apellido,segundo_apellido,semestre
                             FROM users u , alumnos a
-                            WHERE a.id = u.id AND u.id_institucion = $id_institucion
+                            WHERE u.deleted_at IS NULL AND a.id = u.id AND u.id_institucion = $id_institucion
                             ORDER BY semestre ASC, num_control ASC";
             $alumnos = DB::select($consulta);
 
@@ -770,6 +770,6 @@ return back()->withSuccess('Export started!');
     }
 
     public function exportarXLSAlumnos(){
-        return Excel::download(new AlumnosExportar, 'Alumnos Participantes.xlsx');
+        return Excel::download(new AlumnosExportar, 'Alumnos Participantes.xls');
     }
 }

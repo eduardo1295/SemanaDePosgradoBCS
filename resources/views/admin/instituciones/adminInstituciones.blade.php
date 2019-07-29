@@ -13,7 +13,7 @@
     <div class="row mb-2">
         <legend
             class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">
-            Mostras Instituciones</legend>
+            Mostrar Instituciones</legend>
         <div class="col-12 col-md-4 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verInsti" value="activos">
@@ -71,21 +71,10 @@
 <!--<div id="snackbar"></div>-->
 @endsection
 @section('scripts')
-<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<!--
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
--->
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
 <script src="/js/imagenes/vistaprevia.js"></script>
-<script src="/js/snack/snack.js"></script>
+
 
 <script>
 var rutaBaseIntitucion = "{{route('institucion.index')}}";
@@ -97,26 +86,6 @@ var rutaReactivar = "{{ url('admin/institucion/reactivar')}}";
 @endsection
 
 @section('estilos')
-<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<!--
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
 
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
--->
-
-
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link href="/css/modales/modalresponsivo.css" rel="stylesheet">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
-
-<style>
-    .custom-file-input~.custom-file-label::after {
-        content: "Elegir";
-    }
-
-</style>
 
 @endsection

@@ -12,7 +12,7 @@
     <div class="row mb-2">
         <legend
             class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">
-            Mostras Alumnos</legend>
+            Mostrar Alumnos</legend>
         <div class="col-12 col-md-4 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="alumnoR1" checked name="verAlumno" value="activos">
@@ -79,10 +79,10 @@
                         <label for="archivo" class="custom-file-label">Seleccionar Archivo</label>
                     </div>
                 </div>
-                <div class="form-group col-md-4" style="text-align:end">
+                <div class="form-group col-md-4" style="text-align:start">
 
                     <a onclick="importarAlumnos();"  class="btn btn-primary importarAlumnos"
-                        id="importarAlumnos" style="color:white">Importar</a>
+                        id="importarAlumnos" style="cursor: pointer;color:white;">Importar</a>
 
                 </div>
             </div>
@@ -91,7 +91,7 @@
         <div id="mensajeAlumnos" class="col-12" style="display:none">
 
         </div>
-        <strong><label for="">Exportar participantes:</label></strong><br>
+        <strong><label for="">Exportar alumnos:</label></strong><br>
         <a href="/alumno/ExportarAlumnos" target="_blank" id="pdf" class="btn btn-primary">PDF</a>
         <a href="{{route('alumno.exportarXLSAlumnos')}}" class="btn btn-primary">Excel</a>
     </div>

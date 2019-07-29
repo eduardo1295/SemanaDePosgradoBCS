@@ -11,7 +11,7 @@
         var table = $('#directoresdt').DataTable({
             "order": [[ 6, "desc" ]],
             pageLength: 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+            lengthMenu: [[5, 10, 20, 100], [5, 10, 20, 100]],
             responsive: true,
             autoWidth: false,
             "language": {

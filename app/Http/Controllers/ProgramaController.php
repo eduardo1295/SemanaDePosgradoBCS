@@ -247,7 +247,7 @@ class ProgramaController extends Controller
             ->addIndexColumn()
             ->toJson();
         }else if($busqueda == 'eliminados' || $busqueda == 'eliminadoscoor'){
-            if(auth('admin')->user()){
+            if(auth('admin')->user() || ($busqueda != 'eliminadoscoor' && auth()->user() && auth()->user()->hasRoles(['subadmin']))){
                 $selectProgramas = Programa::onlyTrashed()->select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre');
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
                 $selectProgramas = Programa::onlyTrashed()->select('programas.id','programas.id_programa','programas.nombre','programas.id_institucion','periodo','nivel','programas.fecha_actualizacion')->with('institucion:instituciones.id,instituciones.nombre')->where('programas.id_institucion',auth()->user()->id_institucion);

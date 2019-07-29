@@ -12,7 +12,7 @@
                           <strong><label for="modalidad">Modalidad</label><label class="text-danger">*</label></strong>
                             @isset($modalidades)
                                 <select class="form-control modalidad" id="modalidad"  name="modalidad" onchange="cambio(1,0)">
-                                    <option selected value="">Seleccione periodo</option>
+                                    <option selected value="">Seleccione la modalidad de participación</option>
                                     @foreach($modalidades as $modalidad)
                                     <option value="{{$modalidad->id_modalidad}}">{{$modalidad->nombre}}</option>
                                     @endforeach
@@ -24,7 +24,7 @@
                           <strong><label for="dia">Día</label><label class="text-danger"> *</label></strong>
                           @isset($horarios)
                                 <select class="form-control dia" id="dia"  name="dia">
-                                    <option selected value="">Seleccione periodo</option>
+                                    <option selected value="">Seleccione el día para la sesión</option>
                                     @foreach($horarios as $horario)
                                     @php
                                     $fecha = new Date($horario->DAY);

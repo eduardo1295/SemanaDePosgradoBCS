@@ -48,8 +48,8 @@
             ],
             pageLength: 5,
             lengthMenu: [
-                [5, 10, 20, -1],
-                [5, 10, 20, 'Todos']
+                [5, 10, 20],
+                [5, 10, 20]
             ],
             responsive: true,
             autoWidth: false,

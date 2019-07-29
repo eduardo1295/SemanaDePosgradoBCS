@@ -11,18 +11,12 @@
   <meta http-equiv="Expires" content="-1" >
   <meta http-equiv="Pragma" content="no-cache">
 
-  {{-- comment
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
-   --}}
   <link rel="stylesheet" href="{{ mix('css/bootstrap.css')}} ">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+  <link rel="stylesheet" href="/fonts/fontawesomeweb/css/all.css">
   
 
   <link rel="stylesheet" href="/css/admin/jquery.mCustomScrollbar.min.css">
-  <!--
-  <link rel="stylesheet" href="../css/admin/main.css">
-  -->
+
   <link rel="stylesheet" href="/css/admin/menu2.css">
   <link rel="stylesheet" href="/css/admin/sidebar-themes.css">
   <link rel="stylesheet" href="/css/admin/jquery.mCustomScrollbar.css">
@@ -32,11 +26,23 @@
   <link rel="stylesheet" href="/css/imagenes/imagenes.css">
   
   <link href="/css/imagenes/cargando.css" rel="stylesheet">
-  <style>
-    .tooltip{
+
+    <link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="/css/modales/snackbar.css">
+    <link rel="stylesheet" href="/css/datatable/colores.css">
+    <link rel="stylesheet" href="/css/imagenes/imagenes.css">
+    <link rel="stylesheet" href="/css/modales/modalresponsivo.css">
+    <link rel="stylesheet" href="/plugins/jqueryconfirm/jquery-confirm.css">
+    
+    <style>
+      .custom-file-input~.custom-file-label::after {
+          content: "Elegir";
+      }
+      .tooltip{
             pointer-events: none;
         }
-    </style>
+  </style>
   @yield('estilos')
 </head>
 
@@ -50,9 +56,6 @@
         </div>
     
     </div>
-    
-    
-    
 
     <main class="page-content">
         @include('admin.navbar')
@@ -68,16 +71,8 @@
     <div id="loader" class="loader"></div>
   </div>
 
-  
-  
-  
-  
-  {{-- comment 
-    
-    
-  --}}
  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
   
@@ -85,6 +80,9 @@
   <script src="/js/admin/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
   <script src="/js/snack/snack.js"></script>
+  <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+  <script src="/plugins/jqueryconfirm/jquery-confirm.js"></script>
   <script>
       $(document).ready(function () {
  $("body").tooltip({

@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row mb-2">
-            <legend class="col-form-label col-12 col-md-3 col-lg-3 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostras Directores de tesis</legend>
+            <legend class="col-form-label col-12 col-md-3 col-lg-3 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostrar Directores de tesis</legend>
             <div class="col-12 col-md-5 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" id="verDir1" checked name="verDir" value="activos">

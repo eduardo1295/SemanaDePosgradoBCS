@@ -6,7 +6,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\DataBase\Eloquent\SoftDeletes;
-//use Illuminate\Foundation\Auth\ResetsPasswords;
 use App\Notifications\ResetPassword;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -15,7 +14,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use SoftDeletes;
     const CREATED_AT = 'fecha_creacion';
     const UPDATED_AT = 'fecha_actualizacion';
-    
+
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +22,9 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'email', 'nombre', 'primer_apellido', 'segundo_apellido', 'password', 'id_institucion', 'id_semana', 'creado_por', 'actualizado_por','primerContrasena',
+        'email', 'nombre', 'primer_apellido', 
+        'segundo_apellido', 'password', 'id_institucion', 
+        'id_semana', 'creado_por', 'actualizado_por', 'primerContrasena',
     ];
 
     /**
@@ -49,13 +50,12 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at', 'deleted_at','primerContrasena'];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at', 'primerContrasena'];
 
     public function roles()
     {
         return $this->belongsToMany(Rol::class, 'rol_usuario', 'id_usuario', 'id_rol')
-                    
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function coordinadores()
@@ -75,7 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function instituciones()
     {
-        return $this->hasOne(Institucion::class, 'id', 'id_institucion')->withDefault(['nombre'=>'']);
+        return $this->hasOne(Institucion::class, 'id', 'id_institucion')->withDefault(['nombre' => '']);
     }
 
     public function noticias()
@@ -83,21 +83,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Noticia::class, 'creada_por', 'id');
     }
 
-    
+
     public function trabajos()
     {
-        return $this->hasOne(Trabajo::class,'id_alumno','id');
+        return $this->hasOne(Trabajo::class, 'id_alumno', 'id');
     }
 
-    public function hasRoles(array $roles){
+    public function hasRoles(array $roles)
+    {
 
         foreach ($roles as $rol) {
             foreach ($this->roles as $rolUsuario) {
-                if($rolUsuario->nombre === $rol){
-                return true;
-            }    
+                if ($rolUsuario->nombre === $rol) {
+                    return true;
+                }
             }
-            
         }
 
         return false;
@@ -116,7 +116,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function programas()
     {
-        return $this->hasManyThrough(Programa::class, Alumno::class, 'id', 'id','id','id_programa');
+        return $this->hasManyThrough(Programa::class, Alumno::class, 'id', 'id', 'id', 'id_programa');
     }
-
 }

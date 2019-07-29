@@ -21,7 +21,7 @@
         var table = $('#alumnosDT').DataTable({
             "order": [[ 8, "desc" ]],
             pageLength: 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+            lengthMenu: [[5, 10, 20, 100], [5, 10, 20, 100]],
             responsive: true,
             autoWidth: false,
             "language": {

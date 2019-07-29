@@ -96,13 +96,13 @@
         console.log(coordinadores);
 
     </script>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
+    
     <script src="{{ asset('/plugins/grapesjs/js/vistaprevia.js') }}"></script>
     <script src="{{ asset('/plugins/grapesjs/js/grapesjs.js') }}"></script>
     <script src="{{ asset('/plugins/grapesjs/js/gjs-blocks-basic.js') }}"></script>
     <!--<script src="{{ asset('/plugins/grapesjs/js/grapesjs/grapesjs-touch.min.js') }}"></script>-->
     <script src="{{ asset('/plugins/grapesjs/js/gjs-conf2.js') }}"></script>
-    <script src="/js/snack/snack.js"></script>
+    
     <script>
       $(window).resize(function() {
         $('.redimensionar').width($('body').width());
@@ -227,10 +227,20 @@
         }
 
     </script>
+    <script>
+        $('.custom-file-input').on('change', function () {
+            let fileName = $(this).val().split('\\').pop();
+            if (!fileName.trim()) {
+                $(this).next('.custom-file-label').removeClass("selected").html('Ningún archivo seleccionado');
+            } else {
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            }
+        });
+    </script>
     @endsection
 
     @section('estilos')
-    <link href="/css/modales/snackbar.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ asset('/plugins/grapesjs/css/grapes.min.css') }}">
     <style>
         body,

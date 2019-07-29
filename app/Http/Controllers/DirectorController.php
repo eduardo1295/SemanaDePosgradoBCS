@@ -257,9 +257,9 @@ class DirectorController extends Controller
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->toJson();
-        }else if($busqueda == 'eliminados'){
+        }else if($busqueda == 'eliminados' || $busqueda == 'eliminadoscoor'){
             
-            if(auth('admin')->user()){
+            if(auth('admin')->user() || ($busqueda != 'eliminadoscoor' && auth()->user() && auth()->user()->hasRoles(['subadmin']))){
                 
                 $usuarios = DB::select(DB::raw('SELECT  directores_tesis.id,'.
                 ' users.nombre,users.id,users.primer_apellido,users.segundo_apellido,users.email,'.

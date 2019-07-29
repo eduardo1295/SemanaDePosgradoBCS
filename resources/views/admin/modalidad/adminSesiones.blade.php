@@ -59,24 +59,5 @@
 -->
 @endsection
 @section('scripts')
-<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="/js/snack/snack.js"></script>
 <script src="/js/sesion/sesion.js"></script>
-@endsection
-@section('estilos')
-<link href="/css/imagenes/cargando.css" rel="stylesheet">
-<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link href="/css/modales/modalresponsivo.css" rel="stylesheet">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
-<script src="/js/snack/snack.js"></script>
-
-<!--
-    Nuevo Rente
--->
 @endsection
