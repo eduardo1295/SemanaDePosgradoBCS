@@ -67,7 +67,7 @@
     <header style="position: fixed; top: -60px; left: 0px; right: 0px; width: 100%; height: 150px">
         <div style="width: 100% ; ">
             <div style="width:80%;  float: left; margin: 0">
-                Lista de participantes, institucion: {{$institucion->nombre}} <br>
+                Lista de participantes, institución: {{$institucion->nombre}} <br>
                 <small>{{$semana->nombre}} del {{$fInicio}} a {{$fFin}} </small>
             </div>
             <div style="width: 20%;  float: left; margin: 0">

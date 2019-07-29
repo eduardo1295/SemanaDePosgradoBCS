@@ -94,6 +94,6 @@
 
 @endsection
 @section('scripts')
-<script src="/js/snack/snack.js"></script>
+
 <script src="/js/admin/panelControl/vistaLogin.js"></script>
 @endsection

@@ -16,7 +16,7 @@
         var table = $('#coordinadoresdt').DataTable({
             "order": [[ 7, "desc" ]],
             pageLength: 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+            lengthMenu: [[5, 10], [5, 10]],
             responsive: true,
             autoWidth: false,
             "language": {

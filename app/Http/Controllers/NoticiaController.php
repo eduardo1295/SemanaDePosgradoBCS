@@ -12,6 +12,8 @@ use App\Http\Requests\noticias\StoreNoticiaRequest;
 use App\Http\Requests\noticias\UpdateNoticiaRequest;
 use Illuminate\Support\Facades\File;
 
+use Mews\Purifier\Purifier;
+
 class NoticiaController extends Controller
 {
     /**
@@ -215,6 +217,8 @@ class NoticiaController extends Controller
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->firstOrFail();
         $dom = new \domdocument();
         $removerXML = str_replace('<!--?xml encoding="utf-8" ?-->','',$request->contenido);
+        
+        
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$removerXML, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
         $images = $dom->getelementsbytagname('img');

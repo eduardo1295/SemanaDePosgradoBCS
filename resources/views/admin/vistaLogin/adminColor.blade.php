@@ -119,7 +119,7 @@
 <!--<div id="snackbar"></div>-->
 @endsection
 @section('scripts')
-<script src="/js/snack/snack.js"></script>
+
 <script src="/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 <script src="/js/admin/panelControl/colores.js"></script>
 

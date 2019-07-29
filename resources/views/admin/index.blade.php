@@ -66,19 +66,8 @@
 @endsection
 @section('scripts')
 
-
-<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-<!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
--->
-
 <script src="/js/imagenes/vistaprevia.js"></script>
-<script src="/js/snack/snack.js"></script>
+
 
 <script src="/plugins/summernote/summernote-bs4.js"></script>
 <script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
@@ -91,7 +80,7 @@
 <script src="/plugins/daterangepicker/moment.min.js"></script>
 <script src="/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="/plugins/daterangepicker/iniciardaterangepicker.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
 <script>
 var rutaBaseSemana = "{{route('semana.index')}}";
 var rutalistSemanas = "{{route('semana.listSemanas')}}";
@@ -108,24 +97,11 @@ var rutaReactivar = "{{ url('admin/semana/reactivar')}}";
 @section('estilos')
 
 
-<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
-<!--
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
--->
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link rel="stylesheet" href="/css/imagenes/imagenes.css">
-<link rel="stylesheet" href="/css/modales/modalresponsivo.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+
 <link rel="stylesheet" type="text/css" href="/plugins/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
-<link rel="stylesheet" href="/css/modales/snackbar.css">
 
-<style>
-    .custom-file-input~.custom-file-label::after {
-        content: "Elegir";
-    }
-    
-</style>
+
+
 @endsection

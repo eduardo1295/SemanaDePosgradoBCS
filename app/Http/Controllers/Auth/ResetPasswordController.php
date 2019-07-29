@@ -65,7 +65,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -75,5 +75,18 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    protected function redirectTo(){
+        if(auth()->user()){
+            if(auth()->user()->hasRoles(['coordinador'])){
+                return '/coordinador';
+            }elseif (auth()->user()->hasRoles(['director'])){
+                return '/director/verAlumnos';
+            }elseif (auth()->user()->hasRoles(['alumno'])) {
+                return '/subirTrabajo';
+            }
+        }
+        return '/';
     }
 }

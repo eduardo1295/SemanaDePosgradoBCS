@@ -48,6 +48,7 @@ class UpdateSemanaRequest extends FormRequest
             'fecha_fin' => 'final del evento',
             'contenido' => 'información general',
             'imagensemana' => 'logo del evento',
+            'convocatoria' => 'Convocatoria del evento',
         ];
     }
 

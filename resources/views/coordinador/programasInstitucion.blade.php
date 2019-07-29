@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-3 col-lg-3 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostras programas de estudio</legend>
+        <legend class="col-form-label col-12 col-md-3 col-lg-3 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostrar programas de estudio</legend>
         <div class="col-12 col-md-5 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="verPro1" checked name="verPro" value="activos">

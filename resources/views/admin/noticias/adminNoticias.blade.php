@@ -18,7 +18,7 @@
     </div>
     <div class="row mb-2">
         <!--
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostras noticias</legend>
+        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostrar noticias</legend>
         <div class="col-12 col-md-4 col-lg-4">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verNoti" value="activos">
@@ -76,9 +76,7 @@
 @endsection
 @section('scripts')
 
-<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
 <!--
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -94,7 +92,7 @@
 
 <script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
 <script src="/plugins/summernote/iniciarSummernote.js"></script>
-<script src="/js/snack/snack.js"></script>
+
 <script>
 var rutaBaseNoticia = "{{route('noticias.index')}}";
 var rutalistNoticia = "{{route('noticia.listNoticias')}}";
@@ -107,20 +105,6 @@ var rutaVistaPrevia = "{{route('noticia.vistaPrevia')}}";
 @endsection
 
 @section('estilos')
-
-<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
-<!--
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
--->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link rel="stylesheet" href="/css/imagenes/imagenes.css">
-<link rel="stylesheet" href="/css/modales/modalresponsivo.css">
-<link rel="stylesheet" href="/css/modales/snackbar.css">
 
 <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
 @endsection
