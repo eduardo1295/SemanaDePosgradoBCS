@@ -107,7 +107,10 @@ class modalidadController extends Controller
                 for ($i=0; $i < count($columasFinal) ; $i++) { 
                     if($columasFinal[$i] == $nombre){
                         $aa = Posgrado::find($datos->id)->periodos()->get();
-                        $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. '-'.$aa[0]->periodo_max.'</td>' ;
+                        if($aa[0]->periodo_min == $aa[0]->periodo_max)
+                            $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min.'</td>' ;
+                        else
+                            $aux_per[$j][$i] = '<td class="text-center">'.$aa[0]->periodo_min. '-'.$aa[0]->periodo_max.'</td>' ;
                     }
                 }
             }
