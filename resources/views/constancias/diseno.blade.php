@@ -15,7 +15,7 @@
             <h1>Diseño de constancia</h1>
         </div>
     </div>
-
+{{-- 
     <div class="d-xl-none">
         <div class="row">
             <div class="col-12" style="text-align:center;color:red">
@@ -23,8 +23,8 @@
             </div>
         </div>
     </div>
-
-    <div class="d-none d-xl-block">
+ --}}
+    <div>
         <div class="row">
             <div class="col-12 mx-auto">
                 <form id="constanciaForm" name="constanciaForm" class="form-horizontal" enctype="multipart/form-data">
@@ -35,7 +35,7 @@
                                 onchange="readURL(this,'vistaPrevia');">
                             <label for="fondo" class="custom-file-label">Seleccionar Archivo</label>
                         </div>
-                        <div class="col-2 d-flex ">
+                        <div class="col-2">
                             <button class="btn btn-primary btnGuardarDiseno">Guardar</button>
                         </div>
 
@@ -47,44 +47,11 @@
         <div class="row">
             <div class="col-12">
                 <div id="gjs" class="mx-auto">
-
-
                 </div>
             </div>
         </div>
 
     </div>
-    <!--
-        <style>
-          .panel {
-            width: 90%;
-            max-width: 700px;
-            border-radius: 3px;
-            padding: 30px 20px;
-            margin: 150px auto 0px;
-            background-color: #d983a6;
-            box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.25);
-            color:rgba(255,255,255,0.75);
-            font: caption;
-            font-weight: 100;
-          }
-          .description {
-            text-align: justify;
-            font-size: 1rem;
-            line-height: 1.5rem;
-          }
-          #wrapper{
-            padding: 0px !important;
-          }
-          
-        </style>
-      -->
-    @endsection
-    @section('extra')
-    <!--
-    <div id="snackbar"></div>
-    <div id="loader" class="loader"></div>
--->
     @endsection
     @section('scripts')
     <script>
@@ -104,16 +71,42 @@
     <script src="{{ asset('/plugins/grapesjs/js/gjs-conf2.js') }}"></script>
     
     <script>
-      $(window).resize(function() {
-        $('.redimensionar').width($('body').width());
-        
-      });
+      
+      var id;
+$(window).resize(function() {
+    clearTimeout(id);
+    
+        id = setTimeout(doneResizing, 500);
+    
+    
+    
+});
+
+function doneResizing(){
+    if(screen.width === window.innerWidth){
+        console.log(document.body.scrollWidth);
+        console.log($(window).width());
+            var resPantalla = document.body.scrollWidth-$(window).width()-260*2-40;
+            const element = document.querySelector("#menuAd");
+
+            document.getElementById('contenedor').setAttribute("style","width: calc(100% + "+resPantalla+"px);z-index:0;background:#ececec;");
+    }else{
+    var tPantalla = $(window).width();
+            var x = document.body.scrollWidth-tPantalla;
+            document.getElementById('contenedor').setAttribute("style","width: calc(100% + "+x+"px);z-index:0;background:#ececec;");
+    }
+}
+
         var ruta = "{{ route('constancia.store')}}";
         var componenetes = "";
         $(document).ready(function () {
-          //$('.redimensionar').width($(window).width()-40)
-            $('#tamano').attr('content', '');
-            $('#menuAd').removeClass('toggled');
+//            $('.redimensionar').width('100%');
+            var tPantalla = $(window).width();
+            var x = document.body.scrollWidth-tPantalla;
+            document.getElementById('contenedor').setAttribute("style","width: calc(100% + "+x+"px);z-index:0;background:#ececec;");
+            
+            //$('.redimensionar').width($(window).width()-40)
+            
             if (constancia[0].url_imagen_fondo != "") {
                 var unique = $.now();
                 $(".gjs-frame").contents().find("#wrapper").css('background-image', 'url("' + constancia[0]
@@ -275,10 +268,6 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
 
-
-        .page-wrapper .page-content>div {
-            padding-left: 10px !important;
-        }
 
         .custom-file-input~.custom-file-label::after {
             content: "Elegir";
