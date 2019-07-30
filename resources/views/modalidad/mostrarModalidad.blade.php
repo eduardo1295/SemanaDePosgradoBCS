@@ -3,13 +3,7 @@
 
 @section('links')
 <link rel="stylesheet" href="/css/Maqueta2.css ">
-<script src="/js/owl.carousel.min.js"> </script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
 
-</script>
 <style>
     .holo {
         border-left: 10px solid white;
@@ -45,8 +39,4 @@
             <h1>No disponible</h1>
         </div>
     @endif
-@endsection
-
-@section('scripts')
-    <script src="/js/menumaker.js"></script>
 @endsection

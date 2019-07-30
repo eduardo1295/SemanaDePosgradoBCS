@@ -55,7 +55,7 @@
 @endsection
 @section('scripts')
 
-<script src="/js/locacion/locacion.js"></script> 
+<script src="{{ asset('js/locacion/locacion.js') }}"></script> 
 @endsection
 @section('estilos')
 

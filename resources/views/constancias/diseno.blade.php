@@ -1,18 +1,9 @@
 @extends('admin.plantilla')
 @section('contenido')
-
-<!--
-<div class="container-fluid" id="#contenedor">
-    
-    
-</div>
--->
 <div class="container-fluid">
-
-    <!-- <button class="btn btnprueba">presiona aqui</button>-->
     <div class="row">
         <div class="col-12 mx-auto">
-            <h1>Diseño de constancia</h1>
+            <h1>Diseño constancia de participación</h1>
         </div>
     </div>
 {{-- 
@@ -58,16 +49,13 @@
         var imagenes = @json($imagenes);
         var coordinadores = @json($coordinadores);
         var constancia = @json($constancia);
-
         var rutaImagenes = "{{ route('constancia.guardarImagenes')}}";
-        console.log(coordinadores);
-
     </script>
     
     <script src="{{ asset('/plugins/grapesjs/js/vistaprevia.js') }}"></script>
     <script src="{{ asset('/plugins/grapesjs/js/grapesjs.js') }}"></script>
     <script src="{{ asset('/plugins/grapesjs/js/gjs-blocks-basic.js') }}"></script>
-    <!--<script src="{{ asset('/plugins/grapesjs/js/grapesjs/grapesjs-touch.min.js') }}"></script>-->
+    {{--<script src="{{ asset('/plugins/grapesjs/js/grapesjs/grapesjs-touch.min.js') }}"></script>--}}
     <script src="{{ asset('/plugins/grapesjs/js/gjs-conf2.js') }}"></script>
     
     <script>
@@ -75,17 +63,11 @@
       var id;
 $(window).resize(function() {
     clearTimeout(id);
-    
         id = setTimeout(doneResizing, 500);
-    
-    
-    
 });
 
 function doneResizing(){
     if(screen.width === window.innerWidth){
-        console.log(document.body.scrollWidth);
-        console.log($(window).width());
             var resPantalla = document.body.scrollWidth-$(window).width()-260*2-40;
             const element = document.querySelector("#menuAd");
 
@@ -100,13 +82,9 @@ function doneResizing(){
         var ruta = "{{ route('constancia.store')}}";
         var componenetes = "";
         $(document).ready(function () {
-//            $('.redimensionar').width('100%');
             var tPantalla = $(window).width();
             var x = document.body.scrollWidth-tPantalla;
             document.getElementById('contenedor').setAttribute("style","width: calc(100% + "+x+"px);z-index:0;background:#ececec;");
-            
-            //$('.redimensionar').width($(window).width()-40)
-            
             if (constancia[0].url_imagen_fondo != "") {
                 var unique = $.now();
                 $(".gjs-frame").contents().find("#wrapper").css('background-image', 'url("' + constancia[0]
@@ -118,24 +96,16 @@ function doneResizing(){
 
         $('.btnprueba').click(function () {
             const domComponents = JSON.stringify(editor.getComponents());
-            //var wrapperChildren = domComponents.getComponents();
-            console.log(domComponents);
             var sinquotes = JSON.stringify(domComponents);
             var HtmlE = editor.getHtml();
             var CssE = editor.getCss();
             var componente = editor.getComponents('gjs-components');
-            //console.log(HtmlE);
-            console.log(CssE);
             const head = editor.Canvas.getDocument().body;
             const all = getAllComponents(editor.DomComponents.getWrapper());
-            console.log(all);
             const x = JSON.stringify(componente);
-            //var cuerpo = $(".gjs-frame").contents().find("body")[0].scrollHeight
-            //console.log(cuerpo);
             var imagen = $(".gjs-frame").contents().find("#wrapper").css('background-image');
-            //console.log(imagen);
             imagen = imagen.replace('url(', '').replace(')', '').replace(/\"/gi, "");
-            //      console.log(imagen);
+            
         })
 
         $('.btnGuardarDiseno').click(function () {
@@ -144,21 +114,14 @@ function doneResizing(){
             $("#btn-close").prop("disabled", true);
             var actionType = $('#btn-save').val();
             $('.btnGuardarDiseno').html('Guardando...');
-
-            //var wrapperChildren = domComponents.getComponents();
-
             var datos = new FormData($("#constanciaForm")[0]);
             const domComponents = JSON.stringify(editor.getComponents());
             var HtmlE = editor.getHtml();
             var CssE = editor.getCss();
-            //var id = $('#semana_id').val();
-
-
             datos.append('cComponentes', domComponents);
             datos.append('cHTML', HtmlE);
             datos.append('cCSS', CssE);
-            //datos.append('_method', 'PUT');
-            console.log(Array.from(datos));
+            
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -173,9 +136,7 @@ function doneResizing(){
                 beforeSend: function () {
                     $(".loader").show();
                 },
-                success: function (data) {
-                    console.log(data);
-                    //mostrarSnack("Actualización exitosa.");
+                success: function (data) {                    
                     var unique = $.now();
                     $(".gjs-frame").contents().find("#wrapper").css('background-image', 'url("' +
                         data.url_imagen_fondo + '/?' + unique + '")');
@@ -198,11 +159,6 @@ function doneResizing(){
                     $(".btnGuardarDiseno").prop("disabled", false);
                     $(".btnGuardarDiseno").prop("disabled", false);
                     $('.btnGuardarDiseno').html('Guardar');
-                    /*var unique = $.now();
-                    if (data.responseJSON['vigente'] == 1) {
-                        $('#logoMenu').prop('src', '{{ URL::to("/") }}/img/semanaLogo/' + data
-                            .responseJSON['url_logo'] + '/?' + unique);
-                    }*/
                     $(".loader").hide();
 
                 }

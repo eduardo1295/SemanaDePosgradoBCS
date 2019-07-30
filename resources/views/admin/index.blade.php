@@ -66,20 +66,20 @@
 @endsection
 @section('scripts')
 
-<script src="/js/imagenes/vistaprevia.js"></script>
+<script src="{{ asset('js/imagenes/vistaprevia.js') }}"></script>
 
 
-<script src="/plugins/summernote/summernote-bs4.js"></script>
-<script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
-<script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
-<script src="/plugins/summernote/plugin/summernote-table-headers-master/summernote-table-headers.js"></script>
-<script src="/plugins/summernote/plugin/list-styles-bs4/summernote-list-styles-bs4.js"></script>
-<script src="/plugins/summernote/iniciarSummernote.js"></script>
+<script src="{{ asset('plugins/summernote/summernote-bs4.js') }}"></script>
+<script src="{{ asset('plugins/summernote/lang/summernote-es-ES.js') }}"></script>
+<script src="{{ asset('plugins/summernote/plugin/cleaner/summernote-cleaner.js') }}"></script>
+<script src="{{ asset('plugins/summernote/plugin/summernote-table-headers-master/summernote-table-headers.js') }}"></script>
+<script src="{{ asset('plugins/summernote/plugin/list-styles-bs4/summernote-list-styles-bs4.js') }}"></script>
+<script src="{{ asset('plugins/summernote/iniciarSummernote.js') }}"></script>
 
 
-<script src="/plugins/daterangepicker/moment.min.js"></script>
-<script src="/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="/plugins/daterangepicker/iniciardaterangepicker.js"></script>
+<script src="{{ asset('plugins/daterangepicker/moment.min.js') }}"></script>
+<script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('plugins/daterangepicker/iniciardaterangepicker.js') }}"></script>
 
 <script>
 var rutaBaseSemana = "{{route('semana.index')}}";
@@ -88,7 +88,7 @@ var SITEURL = "{{URL::to('/')}}";
 var logoURL = "{{url('img/semanaLogo')}}";
 var rutaReactivar = "{{ url('admin/semana/reactivar')}}";
 </script>
-<script src="/js/admin/panelControl/semana.js"></script>
+<script src="{{ asset('js/admin/panelControl/semana.js') }}"></script>
 
 
 

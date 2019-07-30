@@ -20,7 +20,7 @@
     </style>
     
     
-    <script src="/js/popper.min.js"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
     
     
 </head>
@@ -29,7 +29,7 @@
     @yield('contenido','')
     </div>
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="/js/admin/mostrarPassword.js"></script>
+    <script src="{{ asset('js/admin/mostrarPassword.js') }}"></script>
     
 </body>
 </html>

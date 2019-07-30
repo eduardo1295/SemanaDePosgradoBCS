@@ -71,8 +71,8 @@
 @endsection
 @section('scripts')
 
-<script src="/js/imagenes/vistaprevia.js"></script>
-<script src="/js/imagenes/modalimagen.js"></script>
+<script src="{{ asset('js/imagenes/vistaprevia.js') }}"></script>
+<script src="{{ asset('js/imagenes/modalimagen.js') }}"></script>
 
 <script>
 var rutaBaseCarrusel = "{{route('carrusel.index')}}";
@@ -80,7 +80,7 @@ var rutalistCarrusel = '{{ route("carrusel.listCarrusel")}}';
 var SITEURL = "{{URL::to('/')}}";
 var baseImagenes = "{{url('img/carrusel')}}";
 </script>
-<script src="/js/admin/panelControl/carrusel.js"></script>
+<script src="{{ asset('js/admin/panelControl/carrusel.js') }}"></script>
 
 @endsection
 

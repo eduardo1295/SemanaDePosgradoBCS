@@ -2,9 +2,6 @@
 @section('links')
     <link rel="stylesheet" href="/css/Maqueta2.css ">
 @endsection   
-@section('scripts')
-        <script src="/js/menumaker.js"></script>
-@endsection
 
 @section('contenido')
     <div class="container"  >

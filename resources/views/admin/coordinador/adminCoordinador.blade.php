@@ -79,7 +79,7 @@
 @include('admin.coordinador.modal')
 @endsection
 @section('scripts')
-<script src="/js/admin/mostrarPassword.js"></script>
+<script src="{{ asset('js/admin/mostrarPassword.js') }}"></script>
 
 
 <script>
@@ -88,5 +88,5 @@ var rutalistCoordinador = '{{ route("coordinador.listCoordinador")}}';
 var SITEURL = "{{URL::to('/')}}";
 var rutaReactivar = "{{ url('admin/coordinador/reactivar')}}";
 </script>
-<script src="/js/admin/panelControl/coordinador.js"></script>
+<script src="{{ asset('js/admin/panelControl/coordinador.js') }}"></script>
 @endsection

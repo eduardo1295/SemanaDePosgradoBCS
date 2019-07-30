@@ -78,7 +78,7 @@
 @include('admin.alumnos.modal')
 @endsection
 @section('scripts')
-<script src="/js/admin/mostrarPassword.js"></script>
+<script src="{{ asset('/js/admin/mostrarPassword.js') }}"></script>
 
 <script>
 var rutaBaseAlumno = "{{route('alumno.index')}}";
@@ -87,5 +87,5 @@ var rutaListPrograma = "{{url('alumno/programasLista')}}";
 var SITEURL = "{{URL::to('/')}}";
 var rutaReactivar = "{{ url('alumno/reactivar')}}";
 </script>
-<script src="/js/admin/panelControl/alumno.js"></script>
+<script src="{{ asset('/js/admin/panelControl/alumno.js') }}"></script>
 @endsection

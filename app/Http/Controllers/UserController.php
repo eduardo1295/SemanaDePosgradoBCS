@@ -295,7 +295,7 @@ class UserController extends Controller
             $user->nombre = ucfirst($request->nombre);
             $user->primer_apellido = ucfirst($request->primer_apellido);
             $user->segundo_apellido = ucfirst($request->segundo_apellido);
-            $user->email = ucfirst($request->email);
+            $user->email = $request->email;
             if(!empty($request->password))
                 $user->password = bcrypt($request->password);
             

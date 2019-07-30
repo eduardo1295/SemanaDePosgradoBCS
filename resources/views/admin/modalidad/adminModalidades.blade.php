@@ -65,16 +65,16 @@
 @endsection
 @section('scripts')
 
-<script src="/plugins/summernote/summernote-bs4.js"></script>
-<script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
-<script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
-<script src="/plugins/summernote/plugin/summernote-table-headers-master/summernote-table-headers.js"></script>
-<script src="/plugins/summernote/plugin/list-styles-bs4/summernote-list-styles-bs4.js"></script>
-<script src="/plugins/summernote/iniciarSummernote.js"></script>
+<script src="{{ asset('plugins/summernote/summernote-bs4.js') }}"></script>
+<script src="{{ asset('plugins/summernote/lang/summernote-es-ES.js') }}"></script>
+<script src="{{ asset('plugins/summernote/plugin/cleaner/summernote-cleaner.js') }}"></script>
+<script src="{{ asset('plugins/summernote/plugin/summernote-table-headers-master/summernote-table-headers.js') }}"></script>
+<script src="{{ asset('plugins/summernote/plugin/list-styles-bs4/summernote-list-styles-bs4.js') }}"></script>
+<script src="{{ asset('plugins/summernote/iniciarSummernote.js') }}"></script>
 <!--Nuevo Rente-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js"></script>
-<script src="/plugins/nouislider/nouislider.js"></script>
-<script src="/plugins/nouislider/wNumb.js"></script>
+<script src="{{ asset('plugins/nouislider/nouislider.js') }}"></script>
+<script src="{{ asset('plugins/nouislider/wNumb.js') }}"></script>
 
 <script>
 var rutaBaseModalidad = "{{route('modalidad.index')}}";
@@ -83,7 +83,7 @@ var SITEURL = "{{URL::to('/')}}";
 var baseImagenes = "{{url('img/carrusel')}}";
 var rutaReactivar = "{{ url('admin/modalidad/reactivar')}}";
 </script>
-<script src="/js/admin/panelControl/modalidad.js"></script>
+<script src="{{ asset('js/admin/panelControl/modalidad.js') }}"></script>
 
 @endsection
 

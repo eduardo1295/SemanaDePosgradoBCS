@@ -30,7 +30,7 @@ class UpdateAdminRequest extends FormRequest
             //Validacion campos usuario
             
             
-            'email' => 'required|email|max:60|unique:users,email,'. auth('admin')->user()->id,
+            'email' => 'required|email|max:60|unique:admins,email,'. auth('admin')->user()->id,
 
             'nombre' => 'required|string|max:40',
             

@@ -73,7 +73,7 @@
 @section('scripts')
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
-<script src="/js/imagenes/vistaprevia.js"></script>
+<script src="{{ asset('js/imagenes/vistaprevia.js') }}"></script>
 
 
 <script>
@@ -82,7 +82,7 @@ var rutalistIntitucion = '{{ route("institucion.listInstituciones")}}';
 var rutaLogo = "{{url('img/logo')}}";
 var rutaReactivar = "{{ url('admin/institucion/reactivar')}}";
 </script>
-<script src="/js/admin/panelControl/instituciones.js"></script>
+<script src="{{ asset('js/admin/panelControl/instituciones.js') }}"></script>
 @endsection
 
 @section('estilos')

@@ -59,5 +59,5 @@
 -->
 @endsection
 @section('scripts')
-<script src="/js/sesion/sesion.js"></script>
+<script src="{{ asset('js/sesion/sesion.js') }}"></script>
 @endsection

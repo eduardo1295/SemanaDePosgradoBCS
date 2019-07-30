@@ -3,9 +3,6 @@
     <link rel="stylesheet" href="/css/Maqueta2.css ">
     <link rel="stylesheet" href="/css/imagenes/imagenes.css">
 @endsection
-@section('scripts')
-        <script src="/js/menumaker.js"></script>
-@endsection
 
 @section('contenido')
 <div class="container" style=" word-wrap: break-word;">

@@ -115,7 +115,7 @@
 </div>
 @endsection
 @section('scripts')
-<script src="/js/admin/mostrarPassword.js"></script>
-<script src="/js/Login/main2.js"></script>
-<script src="/js/popper.min.js"></script>
+<script src="{{ asset('js/admin/mostrarPassword.js') }}"></script>
+<script src="{{ asset('js/Login/main2.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
 @endsection
