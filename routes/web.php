@@ -163,6 +163,6 @@ Route::get('/qr', function(){
 
 Route::post('constancia/guardarImagenes', 'ConstanciaController@guardarImagenes')->name('constancia.guardarImagenes');
 Route::post('alumno/constanciaAlta','ConstanciaController@altaConstancia');
-Route::get('constancia/{id}','ConstanciaController@generatePDF');
+Route::get('constancia/{id}','ConstanciaController@generatePDF')->name('constancia.generarPDF');
 Route::get('verConstancia','ConstanciaController@verConstancias')->name('verConstancias');
 Route::resource('constancia', 'ConstanciaController');

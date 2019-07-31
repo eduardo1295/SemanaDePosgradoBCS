@@ -15,7 +15,8 @@
         color: {{$vistas[5]->url_imagen}} !important;
     }
     .contenidoCarrusel, .contenidoCarrusel a,.contenidoCarrusel .row div {
-        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; /*background: {{$vistas[4]->url_imagen}} !important*/ ;
+        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; 
+        background: {{$vistas[4]->url_imagen}} !important ;
         color: {{$vistas[5]->url_imagen}} !important;}
     .nota{
         background: {{$vistas[4]->url_imagen}} !important ;
@@ -30,9 +31,9 @@
     @endif
 
 </style>
-    <link rel="stylesheet" href="/css/Maqueta2.css">
-    <link rel="stylesheet" href="/css/imagenes/imagenes.css">
-    <script src="/js/owl.carousel.min.js"> </script>
+    <link rel="stylesheet" href="{{asset('css/Maqueta2.css')}}" >
+    <link rel="stylesheet" href="{{asset('css/imagenes/imagenes.css')}}">
+    <script src="{{ asset('js/owl.carousel.min.js')}} "> </script>
     <script>
         $(function () { $('[data-toggle="tooltip"]').tooltip() })
     </script>
@@ -54,7 +55,7 @@
             @if (count($noticias) > 0)
         <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
                 <h2 class="mb-0 rounded-left">Noticias</h2>
-                <h4 class="mb-0"> <a href="/noticias" class="badge badge-primary mb-0 align-self-center">Ver todas
+                <h4 class="mb-0"> <a href="{{route('noticias.index')}}" class="badge badge-primary mb-0 align-self-center">Ver todas
                         <i class="fas fa-arrow-circle-right"></i></a> </h4>
             </div>
             <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
@@ -82,7 +83,7 @@
                             @endif
                             <div class="media-with-text  mt-4">
                                 <h2 class="h5 mb-2">
-                                    <a href="/noticias/{{$noticia->id_noticia}}"
+                                    <a href="{{ route('noticias.show', $noticia->id_noticia)}}"
                                         id="tituloNoticia">
                                         {{$noticia->titulo}}
                                     </a>

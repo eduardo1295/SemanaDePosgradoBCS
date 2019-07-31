@@ -74,6 +74,7 @@ class NoticiaController extends Controller
      */
     public function store(StoreNoticiaRequest $request)
     {
+        
         /*
         $nuevo_nombre = 'sin imagen';
         if($request->hasFile('imgnoticia')){
@@ -328,6 +329,7 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function noticias(){
+        
         return $this->direccion();
     }
 

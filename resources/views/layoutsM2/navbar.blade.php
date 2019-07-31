@@ -4,14 +4,14 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 d-flex justify-content-center">
                     @isset($semana->url_logo)
-                        <a href="/"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px" height="65px" alt=""></a>    
+                        <a href="{{route('pag.inicio')}}"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px" height="65px" alt=""></a>    
                     @endisset
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 d-flex justify-content-end align-items-end">
                     <div class="navigation" style="width:100%">
                         <div id="navigation" style="float:right">
                             <ul>
-                                <li class="active"><a href="/">Incio</a></li>
+                                <li class="active"><a href="{{route('pag.inicio')}}">Incio</a></li>
                                 <li><a href="{{route('modalidad.index')}}" class="">Modalidades</a> </li>
                                 <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
                                     <ul>
@@ -25,14 +25,14 @@
                                 @if(auth('admin')->user() || auth()->user())
                                     {{-- comment 
                                     @if(auth()->user()->hasRoles(['alumno']))
-                                        <li><a href="/login" title="Styleguide">Entro</a> </li>
+                                        <li><a href="{{route('/login')}}" title="Styleguide">Entro</a> </li>
                                     @endif
                                     --}}
                                     @php
                                       $ruta = auth('admin')->user() ? 'admin.logout' : 'logout';                                      
                                     @endphp
                                     {{-- comment 
-                                    <li><a href="/logout" title="Styleguide">Cerrar sesión {{auth()->user()->nombre}}</a> </li>
+                                    <li><a href="{{route('logout')}}" title="Styleguide">Cerrar sesión {{auth()->user()->nombre}}</a> </li>
                                     --}}
                                     <li class="has-sub"> 
                                         <div class="aliga">
@@ -52,7 +52,7 @@
                                                 <li><a href="{{route('coordinador.edit',auth()->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>    
                                             @elseif(auth('admin')->user())
                                                 <li><a href="{{route('admin.editarPerfil',auth('admin')->user()->id)}}" class="loginUsuario" >Editar Perfil</a></li>
-                                                <li><a href="/admin" class="loginUsuario">Panel control</a></li>
+                                                <li><a href="{{route('admin.index')}}" class="loginUsuario">Panel control</a></li>
                                             @endif
                                             @if(auth()->user() && auth()->user()->hasRoles(['subadmin']))
                                                 <li><a class="loginUsuario" href="{{route('admin.index')}}">Panel de control</a> </li>
@@ -72,18 +72,18 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     </form>
                                 @else
-                                <li><a href="/login">Acceso</a> </li>
+                                <li><a href="{{route('login')}}">Acceso</a> </li>
                                 @endif
                                 {{-- comment 
                                 
                                 @if (!Auth('admin')->check() && !Auth::check())
-                                    <li><a href="/login" title="Styleguide">Acceso</a> </li>
+                                    <li><a href="{{route('login')}}" title="Styleguide">Acceso</a> </li>
                                 @endif
                                 
                                 <li><a href="styleguide.html" title="Styleguide">Soporte</a> </li>
 
                                 @if (Auth('admin')->check() || Auth::check())
-                                    <li><a href="/logout" title="Styleguide">Cerrar sesión</a> </li>
+                                    <li><a href="{{route('logout')}}" title="Styleguide">Cerrar sesión</a> </li>
                                 @endif
                                 --}}
                             </ul>

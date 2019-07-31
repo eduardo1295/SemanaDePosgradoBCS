@@ -81,6 +81,5 @@
 @section('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="../css/datatable/colores.css">
-    
+    <link rel="stylesheet" href="{{ asset('/css/datatable/colores.css')}} ">
 @endsection

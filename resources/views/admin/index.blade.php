@@ -99,8 +99,8 @@ var rutaReactivar = "{{ url('admin/semana/reactivar')}}";
 
 
 
-<link rel="stylesheet" type="text/css" href="/plugins/daterangepicker/daterangepicker.css">
-<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('/plugins/daterangepicker/daterangepicker.css')}} ">
+<link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css')}} ">
 
 
 

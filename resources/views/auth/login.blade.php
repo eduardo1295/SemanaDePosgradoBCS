@@ -2,7 +2,7 @@
 @section('contenido')
 	<div class="container" style="width: 100%;  height: 300px ;">
 		<div class="d-flex row justify-content-center align-items-center align-items-center " style="height:550px">
-			<form action="/login" method="post" class="col-10  col-sm-10 col-md-8 col-lg-6 " style="background : white;  opacity: 0.9">
+			<form action="{{route('login')}}" method="post" class="col-10  col-sm-10 col-md-8 col-lg-6 " style="background : white;  opacity: 0.9">
 				@csrf
 				<div class="row">
 					<div class="col-12" style="background: #777777; color: white">

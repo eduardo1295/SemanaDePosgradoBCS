@@ -9,7 +9,7 @@
     
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <title>Error</title>
-    <link href="/css/style.min.css" rel="stylesheet">
+    <link href="{{ asset('/css/style.min.css')}}" rel="stylesheet">
     <style>
     .text-danger {
         color: #473b37!important;
@@ -29,7 +29,7 @@
             <div class="error-body text-center">
                 <h1 class="error-title text-danger" >500</h1>
                 <h3 class="text-uppercase error-subtitle">Algo salió mal en nuestro servidor</h3>
-                <a href="/" class="btn btn-danger btn-rounded waves-effect waves-light m-b-40">Volver al inicio</a> </div>
+                <a href="{{route('pag.inicio')}}" class="btn btn-danger btn-rounded waves-effect waves-light m-b-40">Volver al inicio</a> </div>
         </div>
     </div>
     <!--

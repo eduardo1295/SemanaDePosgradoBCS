@@ -92,7 +92,7 @@ var rutaReactivar = "{{ url('programa/reactivar')}}";
 @section('estilos')
 
 
-<link href="/css/modales/modalimagen.css" rel="stylesheet">
+<link href="{{ asset('/css/modales/modalimagen.css')}}" rel="stylesheet">
 
 
 @endsection

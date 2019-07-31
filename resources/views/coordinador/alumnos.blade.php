@@ -92,7 +92,7 @@
 
         </div>
         <strong><label for="">Exportar alumnos:</label></strong><br>
-        <a href="/alumno/ExportarAlumnos" target="_blank" id="pdf" class="btn btn-primary">PDF</a>
+        <a href="{{route('alumno.ExportarAlumnos')}}" target="_blank" id="pdf" class="btn btn-primary">PDF</a>
         <a href="{{route('alumno.exportarXLSAlumnos')}}" class="btn btn-primary">Excel</a>
     </div>
 

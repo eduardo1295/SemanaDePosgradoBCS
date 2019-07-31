@@ -19,7 +19,7 @@
     
     <link rel="stylesheet" href="{{ mix('css/bootstrap.css')}} ">
     <script  src="{{mix('js/app.js')}} "> </script>
-    <link rel="stylesheet" href="/fonts/fontawesomeweb/css/all.css">
+    <link rel="stylesheet" href="{{ asset('fonts/fontawesomeweb/css/all.css')}}">
     <script>
      window.onscroll = function() {scrollFunction()};
     /*Se usa para el desplazamiento de la barra*/

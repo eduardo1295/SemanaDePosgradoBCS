@@ -2,14 +2,7 @@
 @extends('Plantilla.principal')
 
 @section('links')
-<link rel="stylesheet" href="/css/Maqueta2.css ">
-<script src="/js/owl.carousel.min.js"> </script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-
-</script>
+<link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}">
 <style>
     .holo {
         border-left: 10px solid white;

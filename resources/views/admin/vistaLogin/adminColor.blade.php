@@ -1,7 +1,7 @@
 @extends('admin.plantilla')
 @section('estilos')
-<link rel="stylesheet" href="/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css')}} ">
+<link rel="stylesheet" href="{{ asset('/css/modales/snackbar.css')}} ">
 <style>
     .colorpicker.colorpicker-2x {
         width: 272px;

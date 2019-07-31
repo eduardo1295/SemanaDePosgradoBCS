@@ -1,7 +1,8 @@
 @extends('Plantilla.principal')
 @section('links')
-    <link rel="stylesheet" href="/css/Maqueta2.css ">
-    <link rel="stylesheet" href="/css/imagenes/imagenes.css">
+    <link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}">
+    
+    <link rel="stylesheet" href="{{ asset('/css/imagenes/imagenes.css')}}">
 @endsection
 @section('scripts')
         <script src="/js/menumaker.js"></script>

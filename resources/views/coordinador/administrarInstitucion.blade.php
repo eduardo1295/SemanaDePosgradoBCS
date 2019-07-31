@@ -2,15 +2,15 @@
 @extends('Plantilla.principal')
 
 @section('links')
-<link rel="stylesheet" href="/css/Maqueta2.css">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
-<link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}">
+<link href="{{ asset('/css/modales/snackbar.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css')}}">
 
-<link href="/css/imagenes/cargando.css" rel="stylesheet">
+<link href="{{ asset('/css/imagenes/cargando.css')}} " rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<link rel="stylesheet" href="/css/datatable/colores.css">
-<link href="/css/modales/modalresponsivo.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('/css/datatable/colores.css')}} ">
+<link href="{{ asset('/css/modales/modalresponsivo.css')}} " rel="stylesheet">
 
 <style>
     .tab-content{

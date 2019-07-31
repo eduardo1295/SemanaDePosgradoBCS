@@ -89,17 +89,17 @@ var rutaReactivar = "{{ url('admin/modalidad/reactivar')}}";
 
 @section('estilos')
 
-<link rel="stylesheet" href="/css/imagenes/imagenes.css">
+<link rel="stylesheet" href="{{ asset('/css/imagenes/imagenes.css')}} ">
 
-<link href="/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+<link href="{{ asset('/plugins/summernote/summernote-bs4.css')}}" rel="stylesheet">
 
 <!--
 
     Nuevo Rente
 -->
-<link rel="stylesheet" href="/css/admin/styleRange.css">
+<link rel="stylesheet" href="{{ asset('/css/admin/styleRange.css')}} ">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.css">
-<link rel="stylesheet" href="/plugins/nouislider/nouislider.css">
+<link rel="stylesheet" href="{{ asset('/plugins/nouislider/nouislider.css')}} ">
 <style>
     .modal100 {
         max-width: 100% !important;

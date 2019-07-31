@@ -2,7 +2,7 @@
 @extends('Plantilla.principal')
 
 @section('links')
-<link rel="stylesheet" href="/css/Maqueta2.css ">
+<link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}  ">
 
 @endsection
 
@@ -17,7 +17,7 @@
                 <ul>
                     @foreach ($constancias as $constancia)
                 
-                <h2><li><a target="_blank" href="/constancia/{{ $constancia->id_semana }}">
+                <h2><li><a target="_blank" href="{{route('constancia.generarPDF',$constancia->id_semana)}}">
                 {{ $constancia->nombre }}
                 </a></li></h2>
         @endforeach 

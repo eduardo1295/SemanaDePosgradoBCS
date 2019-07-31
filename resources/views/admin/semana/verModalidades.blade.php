@@ -3,7 +3,7 @@
 
 @section('contenido')
 @section('links')
-<link rel="stylesheet" href="/css/Maqueta2.css ">
+<link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}} ">
 <script src="/js/owl.carousel.min.js"> </script>
 <script>
     $(function () {

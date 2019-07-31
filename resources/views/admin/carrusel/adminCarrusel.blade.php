@@ -86,6 +86,6 @@ var baseImagenes = "{{url('img/carrusel')}}";
 
 @section('estilos')
 
-<link href="/css/modales/modalimagen.css" rel="stylesheet">
+<link href="{{ asset('/css/modales/modalimagen.css')}} " rel="stylesheet">
 
 @endsection

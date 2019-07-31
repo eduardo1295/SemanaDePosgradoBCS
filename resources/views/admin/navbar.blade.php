@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-xl-between align-items-center">
                 <div class="col-12 col-sm-3 col-md-3 d-flex justify-content-center justify-content-md-start">
-                    <a href="/admin"><img src="/img/logo.png" width="120px" alt=""></a>
+                    <a href="{{ route('admin.index')}}"><img src="/img/logo.png" width="120px" alt=""></a>
                 </div>
                 <div class="col-12 col-sm-9 col-md-6 col-xl-6  pt-3 pt-md-0">
                     <h1 class="text-center">Área Administrativa</h1>
@@ -26,7 +26,7 @@
                                                                     class="fas fa-user"></i>{{' '}}</span>{{Auth::guard('admin')->user() ? Auth::guard('admin')->user()->nombre : auth()->user()->nombre}}
                                                         </div>
                                                         <ul class="loginUsuario">
-                                                            <li><a href="/admin"
+                                                            <li><a href="{{ route('admin.index')}}"
                                                                 class="loginUsuario">Panel control</a></li>
                                                             <li><a href="{{Auth::guard('admin')->user() ? route('admin.editarPerfil',auth('admin')->user()->id) : route('coordinador.edit',auth()->user()->id)}}"
                                                                     class="loginUsuario">Editar Perfil</a></li>
@@ -69,7 +69,7 @@
                                                     <ul class="loginUsuario">
                                                         <li><a class="loginUsuario"
                                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
-                                                                href="/admin">Panel de Control</a> </li>
+                                                                href="{{ route('admin.index')}}">Panel de Control</a> </li>
                                                         <li><a href="{{Auth::guard('admin')->user() ? route('admin.editarPerfil',auth('admin')->user()->id) : route('coordinador.edit',auth()->user()->id)}}"
                                                                 class="loginUsuario">Editar Perfil</a></li>
                                                                 @if(auth()->user() && auth()->user()->hasRoles(['coordinador']))

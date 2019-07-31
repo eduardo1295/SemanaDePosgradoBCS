@@ -3,10 +3,10 @@
 
 @section('contenido')
 @section('links')
-<link rel="stylesheet" href="/css/Maqueta2.css">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
-<script src="/js/owl.carousel.min.js"> </script>
+<link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}} ">
+<link href="{{ asset('/css/modales/snackbar.css')}} " rel="stylesheet">
+<link href="{{ asset('/css/modales/snackbar.css')}} " rel="stylesheet">
+
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()

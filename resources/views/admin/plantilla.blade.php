@@ -12,28 +12,28 @@
   <meta http-equiv="Pragma" content="no-cache">
 
   <link rel="stylesheet" href="{{ mix('css/bootstrap.css')}} ">
-  <link rel="stylesheet" href="/fonts/fontawesomeweb/css/all.css">
+  <link rel="stylesheet" href="{{ asset('/fonts/fontawesomeweb/css/all.css')}} ">
   
 
-  <link rel="stylesheet" href="/css/admin/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet" href="{{ asset('/css/admin/jquery.mCustomScrollbar.min.css')}} ">
 
-  <link rel="stylesheet" href="/css/admin/menu2.css">
-  <link rel="stylesheet" href="/css/admin/sidebar-themes.css">
-  <link rel="stylesheet" href="/css/admin/jquery.mCustomScrollbar.css">
+  <link rel="stylesheet" href="{{ asset('/css/admin/menu2.css')}} ">
+  <link rel="stylesheet" href="{{ asset('/css/admin/sidebar-themes.css')}} ">
+  <link rel="stylesheet" href="{{ asset('/css/admin/jquery.mCustomScrollbar.css')}} ">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css">
   
-  <link rel="stylesheet" href="/css/Maqueta2.css">
-  <link rel="stylesheet" href="/css/imagenes/imagenes.css">
   
-  <link href="/css/imagenes/cargando.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="/css/modales/snackbar.css">
-    <link rel="stylesheet" href="/css/datatable/colores.css">
-    <link rel="stylesheet" href="/css/imagenes/imagenes.css">
-    <link rel="stylesheet" href="/css/modales/modalresponsivo.css">
-    <link rel="stylesheet" href="/plugins/jqueryconfirm/jquery-confirm.css">
+  <link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}} ">
+  <link rel="stylesheet" href="{{ asset('/css/imagenes/imagenes.css')}} ">
+  <link rel="stylesheet" href="{{ asset('/css/imagenes/cargando.css')}} ">
+  
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/css/modales/snackbar.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/css/datatable/colores.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/css/imagenes/imagenes.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/css/modales/modalresponsivo.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/plugins/jqueryconfirm/jquery-confirm.css')}} ">
     
     <style>
       .custom-file-input~.custom-file-label::after {

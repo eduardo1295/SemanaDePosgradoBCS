@@ -2,8 +2,8 @@
 @extends('Plantilla.principal')
 
 @section('links')
-<link rel="stylesheet" href="/css/Maqueta2.css">
-<link href="/css/modales/snackbar.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}">
+<link href="{{ asset('/css/modales/snackbar.css')}} " rel="stylesheet">
 <script src="/js/owl.carousel.min.js"> </script>
 
 @endsection
@@ -81,10 +81,10 @@ $('.custom-file-input').on('change', function () {
     <script src="/js/menumaker.js"></script>
     <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-    <link rel="stylesheet" href="/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="/css/datatable/colores.css">
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css')}} ">
+    <link rel="stylesheet" href="{{ asset('/css/datatable/colores.css')}} ">
     <script src="/js/director/script.js"></script>
 
-    <link href="/css/modales/snackbar.css" rel="stylesheet">
+    <link href="{{ asset('/css/modales/snackbar.css')}}" rel="stylesheet">
 @endsection

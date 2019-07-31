@@ -106,5 +106,5 @@ var rutaVistaPrevia = "{{route('noticia.vistaPrevia')}}";
 
 @section('estilos')
 
-<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
+<link rel="stylesheet" href="{{ asset('/plugins/summernote/summernote-bs4.css')}} ">
 @endsection
