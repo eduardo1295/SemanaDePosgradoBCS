@@ -11,7 +11,7 @@
   <meta http-equiv="Expires" content="-1" >
   <meta http-equiv="Pragma" content="no-cache">
 
-  <link rel="stylesheet" href="{{ mix('css/bootstrap.css')}} ">
+  <link rel="stylesheet" href="{{ env('APP_URL').mix('css/bootstrap.css')}} ">
   <link rel="stylesheet" href="{{ asset('/fonts/fontawesomeweb/css/all.css')}} ">
   
 
@@ -76,7 +76,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> --}}
   
-  <script  src="{{mix('js/app.js')}} "> </script>
+  <script  src="{{ env('APP_URL').mix('js/app.js')}} "> </script>
   <script src="{{ asset('js/admin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
   <script src="{{ asset('js/admin/main.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
