@@ -18,20 +18,12 @@ $(document).ready(function(){
             success: function (data) {
                 
                 if(data == "error"){
-                    $("#snackbar").html("<span style='color: red;'><i class='fas fa-times-circle'></i></span> Error.");
-                    $("#snackbar").addClass("show");
-                    setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+                    mostrarSnackError('Error al guardar');
                     $('#convocatoria_error').text("El campo es requerido");
                 }
                 else{
                     $('#convocatoria_error').text("");
-                    $("#snackbar").html(
-                        "<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Se ha Actualizado exitosamente."
-                    );
-                    $("#snackbar").addClass("show");
-                    setTimeout(function() {
-                        $("#snackbar").removeClass("show");
-                    }, 5000);
+                    mostrarSnack('Archivo guardado');
                 }
             },
             error: function (data) {
@@ -44,9 +36,7 @@ $(document).ready(function(){
                     });                    
                 }
                 */
-                $("#snackbar").html("<span style='color: red;'><i class='fas fa-times-circle'></i></span> Error al editar.");
-                $("#snackbar").addClass("show");
-                setTimeout(function () { $("#snackbar").removeClass("show"); }, 5000);
+               mostrarSnackError('Error al guardar');
             },
         });
     });
