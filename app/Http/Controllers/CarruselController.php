@@ -55,7 +55,8 @@ class CarruselController extends Controller
             //agregar id de usuarios a nombre
             $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
             //$imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
-            $imagencarrusel->storeAs('public/img/carrusel',$nuevo_nombre);
+            //$imagencarrusel->storeAs('public/img/carrusel',$nuevo_nombre);
+            $imagencarrusel->move(public_path('storage/img/carrusel'), $nuevo_nombre);
         }
         
         $carrusel = new Carrusel;
