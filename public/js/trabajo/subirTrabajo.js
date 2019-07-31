@@ -12,7 +12,7 @@ $(document).ready(function() {
         //console.log(Array.from(datos))
         $.ajax({
             headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-            url: "/trabajo",
+            url: rutaBase,
             //url: "{{route('trabajo.store')}}",
             type: "POST",
             data: datos,

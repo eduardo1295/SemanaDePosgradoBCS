@@ -23,7 +23,7 @@ $(document).ready(function(){
         var actionType = $('#btn-save').val();
         $('#btn-save').html('Guardando..');
             var id = $('#alumno_id').val();
-            var ruta = "/admin/editarAdmin/"+ id;
+            var ruta = rutaBase;
             //var ruta = "{{url('programa')}}/" + id + "";
             var datos = new FormData($("#alumnoForm")[0]);
             console.log(Array.from(datos));

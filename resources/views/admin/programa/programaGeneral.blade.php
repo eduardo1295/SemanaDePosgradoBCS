@@ -46,6 +46,9 @@
 
 <script src="{{ asset('js/programa/subirProgramaGeneral.js') }}"></script>
 <script>
+var rutaBase = "{{route('programa.subirProgramaGeneral')}}";
+</script>
+<script>
     $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
         if (!fileName.trim()) {

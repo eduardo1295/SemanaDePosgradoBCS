@@ -18,7 +18,7 @@
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,
                 //url: "{{route('VistaLogin.store')}}",
-                url: "/VistaLogin",
+                url: rutaBase,
                 type: "POST",
                 dataType: 'json',
                 contentType: false,

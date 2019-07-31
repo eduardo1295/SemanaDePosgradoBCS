@@ -75,5 +75,8 @@
 @section('scripts')
 <script src="{{ asset('/js/alumno/editarAlumno.js') }}"></script>
 <script src="{{ asset('/js/snack/snack.js') }}"></script>
+<script>
+var rutaBase = '{{route("usuario.editarPerfil",auth()->user()->id)}}'
+</script>
 @endsection
 @endsection

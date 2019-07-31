@@ -37,7 +37,7 @@
                 style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
         <form id="trabajoForm" name="trabajoForm" class="col-12 col-sm-12 col-md-4 col-xl-3 formulario form-horizontal mb-2" method="POST"
-            action="/revisionTrabajo">
+            action="{{route('trabajo.revisionTrabajo')}}">
             @csrf
             <input type="hidden" name="id_trabajo" id="id_trabajo" value="{{$trabajo->id_trabajo}}">
             <div class="row">

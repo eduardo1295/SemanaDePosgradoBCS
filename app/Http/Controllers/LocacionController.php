@@ -58,6 +58,7 @@ class LocacionController extends Controller
             $locacion->creada_por = 0;
         }
         $locacion->id_institucion =  $semana->id_sede;
+        
         $locacion->save();
 
         return \Response::json($locacion);

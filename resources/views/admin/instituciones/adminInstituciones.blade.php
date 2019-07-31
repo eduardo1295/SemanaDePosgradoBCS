@@ -24,14 +24,10 @@
                 <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
             </div>
         </div>
-        <div class="col-12 col-md-5 col-lg-6 d-flex d-md-block justify-content-center justify-content-md-start">
-            <div class="d-flex justify-content-end">
-                <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-institucion"><span><i
-                            class="fas fa-plus"></i></span> Nueva Institución</a>
-            </div>
-            <div class="d-flex justify-content-end pt-3">
-                <a href="javascript:void(0)" class="btn btn-secondary ml-3" id="Logo-conacyt"><span><i
-                            class="fas fa-plus"></i></span> Logo CONACYT</a>
+        <div class="col-12 col-md-5 col-lg-12 d-flex d-md-block justify-content-center justify-content-md-start">
+            <div class="d-flex justify-content-between ">
+                <a href="javascript:void(0)" class="btn btn-info mr-3 " id="crear-institucion"><span><i class="fas fa-plus"></i></span> Nueva Institución</a>
+                <a href="javascript:void(0)" class="btn btn-secondary ml-3" id="Logo-conacyt"><span><i class="fas fa-plus"></i></span> Logo CONACYT</a>
             </div>
         </div>
     </div>

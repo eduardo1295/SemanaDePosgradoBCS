@@ -82,6 +82,10 @@ $('.custom-file-input').on('change', function () {
     <link rel="stylesheet" href="{{ asset('/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css')}} ">
     <link rel="stylesheet" href="{{ asset('/css/datatable/colores.css')}} ">
     <script src="{{ asset('js/director/script.js') }}"></script>
+    <script>
+    rutaListAlumnos = "{{route('director.listAlumnos')}}";
+    rutaBase = "{{route('trabajo.index')}}";
+    </script>
 
     <link href="{{ asset('/css/modales/snackbar.css')}}" rel="stylesheet">
 @endsection

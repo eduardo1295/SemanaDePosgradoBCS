@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $('#guardar').click(function(){
         var id = $('#alumno_id').val();
-        var ruta = "/programa/subirProgramaGeneral";
+        var ruta = rutaBase;
         //var ruta = "{{url('programa')}}/" + id + "";
         var datos = new FormData($("#programaGeneralForm")[0]);
         console.log(Array.from(datos));
