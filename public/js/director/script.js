@@ -25,7 +25,7 @@ $(document).ready(function () {
         "serverSide": true,
         "search": true,
         "ajax": {
-            "url": '/director/listAlumnos',
+            "url": rutaListAlumnos,
             "data": function (d) {
                 d.busqueda = checkCoord
             }
@@ -61,7 +61,7 @@ $(document).ready(function () {
                         return 'Sin entrega';
                     else
                         //return "<a style='cursor:pointer' target='_blank' href=/documentos/trabajos/"+data + "> Ver Trabajo <a/>";
-                        return "<a style='cursor:pointer' class='btn btn-outline-info btn-sm'  href=/trabajo/"+full.id+"> Ver Trabajo <a/>";
+                        return "<a style='cursor:pointer' class='btn btn-outline-info btn-sm'  href=" + rutaBase + "/" + full.id+"> Ver Trabajo <a/>";
                 },
                 orderable: false, searchable: false
             },

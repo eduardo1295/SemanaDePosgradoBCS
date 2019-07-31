@@ -28,7 +28,7 @@ $(document).ready(function () {
         "serverSide": true,
         "search": true,
         "ajax": {
-            "url": '/locacion/listLocacion',
+            "url": rutalistLocacion,
             "data": function (d) {
                 d.busqueda = checkInsti
             }
@@ -61,7 +61,7 @@ $(document).ready(function () {
 /*Al presionar el boton editar*/
 $('body').on('click', '.editarLocacion', function () {
     var locacion_id = $(this).data('id');
-    var ruta = "/locacion/" + locacion_id + "/editar";
+    var ruta = rutaBaseLocacion + "/" + locacion_id + "/editar";
     reiniciar();
     $.get(ruta, function (data) {
         $('#locacionCrudModal').html("Editar locacion: " + data.nombre);
@@ -96,7 +96,7 @@ $("#btn-save").click(function () {
     $('#btn-save').html('Guardando..');
     if (actionType == "editar") {
         var id = $('#id_locacion').val();
-        var ruta = "/locacion/" + id;
+        var ruta = rutaBaseLocacion + "/" + id;
         var datos = new FormData($("#locacionForm")[0]);
         console.log(Array.from(datos));
         datos.append('_method', 'PUT');
@@ -151,7 +151,7 @@ $("#btn-save").click(function () {
         console.log(Array.from(datos));
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            url: "/locacion",
+            url: rutaBaseLocacion,
             type: "POST",
             data: datos,
             dataType: 'JSON',
@@ -219,7 +219,7 @@ $('body').on('click', '.eliminarLocacion', function () {
                     $.ajax({
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         type: "DELETE",
-                        url: "/locacion/" + locacion_id,
+                        url: rutaBaseLocacion + "/" + locacion_id,
                         success: function (data) {
 
                             if (table.data().count() == 1) {

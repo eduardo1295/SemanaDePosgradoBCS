@@ -146,7 +146,7 @@ class TrabajoController extends Controller
      */
     public function show($id)
     {
-
+        
         $instituciones = Institucion::select('id','nombre','url_logo','latitud','longitud','telefono','direccion_web',DB::raw("CONCAT(calle,' #', numero, ', col. ', colonia , ', C.P.', cp) as domicilio "))->get();
         $semana = Semana::select('id_semana','url_logo')->where('vigente',1)->first();
         $trabajo = Trabajo::select('id_director','id_alumno','id_trabajo','url','comentario','autorizado')->where('id_alumno',$id)->where('id_semana',$semana->id_semana)->firstOrFail();

@@ -65,6 +65,8 @@
 @section('scripts')
 <script src="{{ asset('js/snack/snack.js') }}"></script>
 <script src="{{ asset('js/admin/editarPerfil.js') }}"></script>
-
+<script>
+var rutaBase = '{{ route("admin.editarAdmin",auth("admin")->user()->id)}}';
+</script>
 @endsection
 @endsection

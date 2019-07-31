@@ -54,7 +54,12 @@
 -->
 @endsection
 @section('scripts')
+<script>
+var rutaBaseLocacion = "{{route('locacion.index')}}";
+var rutalistLocacion = "{{route('locacion.listLocacion')}}";
 
+var rutaReactivar = "{{ url('admin/semana/reactivar')}}";
+</script>
 <script src="{{ asset('js/locacion/locacion.js') }}"></script> 
 @endsection
 @section('estilos')

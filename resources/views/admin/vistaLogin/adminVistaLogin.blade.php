@@ -96,4 +96,7 @@
 @section('scripts')
 
 <script src="{{ asset('js/admin/panelControl/vistaLogin.js') }}"></script>
+<script>
+var rutaBase ="{{route('VistaLogin.store')}}"
+</script>
 @endsection

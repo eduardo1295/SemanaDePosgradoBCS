@@ -15,7 +15,7 @@
     
     
 	<style>
-		body{ background-image: url('/img/fondo/defecto.jpg/?{{date("H:i:s")}}'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
+		body{ background-image: url("{{ asset('/img/fondo/defecto.jpg?date("."H:i:s".")')}}"); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
     </style>
     
     <script src="{{ asset('js/popper.min.js') }}"></script>

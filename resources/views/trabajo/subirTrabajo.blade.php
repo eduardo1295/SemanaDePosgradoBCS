@@ -126,5 +126,8 @@ $('.custom-file-input').on('change', function () {
 @section('scripts')
 <script src="{{ asset('js/trabajo/subirtrabajo.js') }}"></script>
 <script src="{{ asset('js/snack/snack.js') }}"></script>
+<script>
+var rutaBase = "{{route('trabajo.index')}}"
+</script>
 @endsection
 @endsection

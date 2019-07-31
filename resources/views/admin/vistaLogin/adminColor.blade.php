@@ -122,5 +122,8 @@
 
 <script src="{{ asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}"></script>
 <script src="{{ asset('js/admin/panelControl/colores.js') }}"></script>
+<script>
+var rutaBase = "{{route('vistaLogin.cambiarColores')}}"
+</script>
 
 @endsection
