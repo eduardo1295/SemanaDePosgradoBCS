@@ -201,7 +201,7 @@ class SesionController extends Controller
         $fFin = $fFin->format('l d').' de '.$fFin->format('F').' del '.$fFin->format('Y');
         $pdf->loadView('prueba',['trabajo' => $trabajos, 'modalidad' => $modalidad, 'semana' => $semana ,'fInicio' => $fInicio, 'fFin' => $fFin]);
         $output = $pdf->output();
-        File::put(storage_path().'/app/public/documentos/modalidad/'.$modalidad->nombre .'.pdf',$output);
+        File::put(public_path().'/storage/documentos/modalidad/'.$modalidad->nombre .'.pdf',$output);
         return \Response::json("Listo");
     }
 
