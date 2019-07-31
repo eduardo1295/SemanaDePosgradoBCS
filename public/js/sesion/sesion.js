@@ -28,7 +28,7 @@ $(document).ready(function () {
         "serverSide": true,
         "search": true,
         "ajax": {
-            "url": '/sesion/listSesiones',
+            "url": rutaList,
             "data": function (d) {
                 d.busqueda = checkInsti
             }
@@ -64,7 +64,7 @@ $(document).ready(function () {
 /*Al presionar el boton editar*/
 $('body').on('click', '.editarSesion', function () {
     var sesion_id = $(this).data('id');
-    var ruta = "/sesion/" + sesion_id + "/editar";
+    var ruta = rutaBase +"/" + sesion_id + "/editar";
     reiniciar();
     $.get(ruta, function (data) {
         $('#sesionCrudModal').html("Editar sesion: " + data.nombre);
@@ -104,7 +104,7 @@ $("#btn-save").click(function () {
     $('#btn-save').html('Guardando..');
     if (actionType == "editar") {
         var id = $('#sesion_id').val();
-        var ruta = "/sesion/" + id;
+        var ruta = rutaBase + "/" + id;
         var datos = new FormData($("#sesionForm")[0]);
         console.log(Array.from(datos));
         datos.append('_method', 'PUT');
@@ -130,7 +130,7 @@ $("#btn-save").click(function () {
                 }
                 else{
                     $('#mostrar_alumnos').html('');
-                    mostrarSnack("sesion agregada exitosamente.");
+                    mostrarSnack("Sesión editada exitosamente.");
                     $('#sesion-crud-modal').modal('hide');
                     $('#sesionForm').trigger("reset");
                 }
@@ -165,7 +165,7 @@ $("#btn-save").click(function () {
         console.log(Array.from(datos));
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            url: "/sesion",
+            url: rutaBase,
             type: "POST",
             data: datos,
             dataType: 'JSON',
@@ -241,7 +241,7 @@ $('body').on('click', '.eliminarSesion', function () {
                     $.ajax({
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         type: "DELETE",
-                        url: "/sesion/" + carrusel_id,
+                        url: rutaBase + "/" + carrusel_id,
                         success: function (data) {
 
                             if (table.data().count() == 1) {

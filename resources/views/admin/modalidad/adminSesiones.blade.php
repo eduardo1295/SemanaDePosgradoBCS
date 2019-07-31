@@ -60,4 +60,8 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('js/sesion/sesion.js') }}"></script>
+<script>
+var rutaList= "{{route('sesion.listSesiones')}}"
+var rutaBase = "{{route('sesion.index')}}"
+</script>
 @endsection
