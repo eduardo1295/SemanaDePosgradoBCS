@@ -121,12 +121,12 @@ class SemanaController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/semanaDesGe/'. $image_name;
+                $path = public_path() .'/storage/img/semanaDesGe/'. $image_name;
     
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', '/img/semanaDesGe/'.$image_name);
+                $img->setattribute('src', asset('/storage/img/semanaDesGe/'.$image_name));
             }
         }
  
@@ -136,7 +136,7 @@ class SemanaController extends Controller
         if($request->hasFile('imagensemana')){
             $imagenLogo = $request->file('imagensemana');
             $nuevo_nombre = 'logo_' . $fechaArchivo . '.' . $imagenLogo->getClientOriginalExtension();
-            $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
+            $imagenLogo->move(public_path('storage/img/semanaLogo'), $nuevo_nombre);
         }
 
         $nuevo_convocatoria = 'no_disponible';
@@ -147,7 +147,7 @@ class SemanaController extends Controller
             $nombreEvento = Str::slug($request->nombre);
             $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.$fechaArchivo .'.' . $convocactoriaA->getClientOriginalExtension();
             //$nuevo_convocatoria = $urlAmigable;
-            $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
+            $convocactoriaA->move(public_path('storage/pdf/convocatoria'), $nuevo_convocatoria);
         }
 
         $detail = $dom->savehtml();
@@ -246,12 +246,12 @@ class SemanaController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/semanaDesGe/'. $image_name;
+                $path = public_path() .'/storage/img/semanaDesGe/'. $image_name;
     
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', '/img/semanaDesGe/'.$image_name);
+                $img->setattribute('src', asset('/storage/img/semanaDesGe/'.$image_name));
             }
         }
         $fechas = explode(" - ", $request->fecha);
@@ -262,7 +262,7 @@ class SemanaController extends Controller
             $imagenLogo = $request->file('imagensemana');
             //$nuevo_nombre = date("m-d-Y_h-i-s"). $imagenLogo->getClientOriginalExtension();
             $nuevo_nombre = 'logo_' . $fechaArchivo . '.' . $imagenLogo->getClientOriginalExtension();
-            $imagenLogo->move(public_path('img/semanaLogo'), $nuevo_nombre);
+            $imagenLogo->move(public_path('storage/img/semanaLogo'), $nuevo_nombre);
         }else{
             $nuevo_nombre = $semana->url_logo;
         }
@@ -277,7 +277,7 @@ class SemanaController extends Controller
             //$nombreEvento = Str::slug($request->nombre);
             //$nuevo_convocatoria = 'Convocatoria'.'_'.$nombreEvento ."_". date("m-d-Y_h-i-s") .'.' . $convocactoriaA->getClientOriginalExtension();
             $nuevo_convocatoria = 'Convocatoria_SemanaDePosgradoBCS_'.'_'.$fechaArchivo .'.' . $convocactoriaA->getClientOriginalExtension();
-            $convocactoriaA->move(public_path('pdf/convocatoria'), $nuevo_convocatoria);
+            $convocactoriaA->move(public_path('storage/pdf/convocatoria'), $nuevo_convocatoria);
             
         }
         else{

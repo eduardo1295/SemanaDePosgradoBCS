@@ -10,6 +10,7 @@ use App\Http\Requests\carrusel\StoreCarruselRequest;
 use App\Http\Requests\carrusel\UpdateCarruselRequest;
 use Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class CarruselController extends Controller
 {
@@ -53,7 +54,8 @@ class CarruselController extends Controller
             $imagencarrusel = $request->file('imagenCarrusel');
             //agregar id de usuarios a nombre
             $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
-            $imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
+            //$imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
+            $imagencarrusel->storeAs('public/img/carrusel',$nuevo_nombre);
         }
         
         $carrusel = new Carrusel;
@@ -121,7 +123,7 @@ class CarruselController extends Controller
             if(!$validator->fails()){
                 $imagencarrusel = $request->file('imagenCarrusel');
                 $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
-                $imagencarrusel->move(public_path('img/carrusel'), $nuevo_nombre);
+                $imagencarrusel->storeAs('public/img/carrusel',$nuevo_nombre);
             }else{
                 $sinerror='falso';
             }
@@ -143,9 +145,9 @@ class CarruselController extends Controller
             $carrusel->creado_por= 1;
             $carrusel->save();
             if($carrusel && $imgBorrar != "sin_liga"){
-                $pathDirectorio = public_path('img\\carrusel').'\\'.$imgBorrar;
-                if(File::exists($pathDirectorio)){
-                    File::delete($pathDirectorio);
+                $pathDirectorio = storage_path('img\\carrusel').'\\'.$imgBorrar;
+                if(Storage::disk('local')->exists($pathDirectorio)){
+                    Storage::delete($pathDirectorio);
                 }
             }
             //$institucion->update($request->all());
@@ -168,10 +170,12 @@ class CarruselController extends Controller
         if($request->ajax()){
         $carrusel = Carrusel::where('id',$id)->first();
 
-        $pathDirectorio = public_path('img\\carrusel').'\\'.$carrusel->url_imagen;
+        $pathDirectorio = public_path('storage\\img\\carrusel').'\\'.$carrusel->url_imagen;
         
         if(File::exists($pathDirectorio)){
-          File::delete($pathDirectorio);
+          //File::delete($pathDirectorio);
+          //Storage::delete('img\\carrusel\\'.$carrusel->url_imagen);
+
         }
         $carrusel->forceDelete();
 

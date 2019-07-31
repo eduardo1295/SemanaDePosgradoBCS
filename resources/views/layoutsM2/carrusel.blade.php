@@ -27,10 +27,10 @@
         @endif
           @if(isset($slide->link_web))
           <a href="{{$slide->link_web}}" target="_blank">
-            <img src="{{url('img/carrusel')}}/{{ $slide->url_imagen }}" alt="" class="w-100 h-100">
+            <img src="{{url('storage/img/carrusel')}}/{{ $slide->url_imagen }}" alt="" class="w-100 h-100">
           </a>
           @else
-            <img src="{{url('img/carrusel')}}/{{ $slide->url_imagen }}" alt="" class="w-100 h-100">
+            <img src="{{url('storage/img/carrusel')}}/{{ $slide->url_imagen }}" alt="" class="w-100 h-100">
           @endif
           
             <div class="carousel-caption d-none">

@@ -56,7 +56,7 @@
             @if (count($noticias) > 0)
         <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
                 <h2 class="mb-0 rounded-left">Noticias</h2>
-                <h4 class="mb-0"> <a href="{{route('noticias.index')}}" class="badge badge-primary mb-0 align-self-center">Ver todas
+                <h4 class="mb-0"> <a href="{{route('noticias.index')}}" class="badge badge-pill badge-primary mb-0 align-self-center">Ver todas
                         <i class="fas fa-arrow-circle-right"></i></a> </h4>
             </div>
             <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">

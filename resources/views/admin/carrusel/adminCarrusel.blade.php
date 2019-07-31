@@ -78,7 +78,7 @@
 var rutaBaseCarrusel = "{{route('carrusel.index')}}";
 var rutalistCarrusel = '{{ route("carrusel.listCarrusel")}}';
 var SITEURL = "{{URL::to('/')}}";
-var baseImagenes = "{{url('img/carrusel')}}";
+var baseImagenes = "{{url('storage/img/carrusel')}}";
 </script>
 <script src="{{ asset('js/admin/panelControl/carrusel.js') }}"></script>
 

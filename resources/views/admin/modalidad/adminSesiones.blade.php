@@ -52,7 +52,7 @@
 
 @endsection
 @section('extra')
-@include('sesion.modal')
+@include('sesion.Modal')
 <!--
 <div id="snackbar"></div>
 <div id="snackbarError" style="z-index:1051;"></div>

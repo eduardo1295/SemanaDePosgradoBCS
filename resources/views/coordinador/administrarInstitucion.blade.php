@@ -116,20 +116,10 @@
 </script>
 
 
-
-
-
-<script src="{{ asset('js/imagenes/vistaprevia.js') }}"></script>
-<script src="{{ asset('js/coordinador/administrarInstitucion.js') }}"></script>
-
-<script src="{{ asset('js/coordinador/programas.js') }}"></script>
-<script src="{{ asset('js/coordinador/alumnos.js') }}"></script>
-<!--<script src="/js/coordinador/sesion.js"></script>-->
-<script src="{{ asset('js/coordinador/locacion.js') }}"></script>
 <script src="{{ asset('plugins/responsive-tabs/jquery.responsivetabs.js') }}"></script>
 
 <script>
-var URLData = {{ asset("/js/datatableJS/es.json") }}
+var URLData = '{{ asset("/js/datatableJS/es.json") }}';
 var checkDir = 'activoscoor';
 var checkPro = 'activoscoor';
 var checkAlumno = 'activoscoor';
@@ -159,7 +149,19 @@ $(document).ready(function () {
         });
     
 </script>
+<script src="{{ asset('js/coordinador/administrarInstitucion.js') }}"></script>
 
+
+
+
+
+<script src="{{ asset('js/imagenes/vistaprevia.js') }}"></script>
+
+
+<script src="{{ asset('js/coordinador/programas.js') }}"></script>
+<script src="{{ asset('js/coordinador/alumnos.js') }}"></script>
+<!--<script src="/js/coordinador/sesion.js"></script>-->
+<script src="{{ asset('js/coordinador/locacion.js') }}"></script>
 @endsection
 
 @section('extra')

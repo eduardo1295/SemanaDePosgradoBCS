@@ -37,7 +37,7 @@
                         <label for="imgslide" id="imagenactualT" class="control-label"></label>
 
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <img  src="{{ asset("/img/fondo/".$datos[0].'/?'.date('H:i:s')) }}" alt="" id="imgslide" class="img-fluid mx-auto">
+                        <img  src="{{ asset("/storage/img/fondo/".$datos[0].'/?'.date('H:i:s')) }}" alt="" id="imgslide" class="img-fluid mx-auto">
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                             <label for="imgslide2" id="imagenactualT" class="control-label"></label>
     
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <img src="{{ asset("/img/fondo/".$datos[1].'/?'.date('H:i:s')) }}" alt="" id="imgslide2" class="img-fluid mx-auto">    
+                                <img src="{{ asset("/storage/img/fondo/".$datos[1].'/?'.date('H:i:s')) }}" alt="" id="imgslide2" class="img-fluid mx-auto">    
                             </div>
                         </div>
                     </div>

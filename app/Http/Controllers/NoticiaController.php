@@ -101,7 +101,7 @@ class NoticiaController extends Controller
         
         $images = $dom->getelementsbytagname('img');
  
-        $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
+        $pathDirectorio = public_path('storage\\img\\noticias').'\\'.$noticia->id_noticia;
         //dd($pathDirectorio);
         if(count($images)>0){
             /*if(!File::isDirectory($pathDirectorio)){
@@ -126,7 +126,7 @@ class NoticiaController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/noticias/'.$noticia->id_noticia.'/'. $image_name;
+                $path = public_path() .'/storage/img/noticias/'.$noticia->id_noticia.'/'. $image_name;
     
                 //$path = $pathDirectorio. '/' . $image_name;
                 
@@ -136,13 +136,13 @@ class NoticiaController extends Controller
                 
                 //$ultimaImagen = '/img/noticias/'.$image_name;
 
-                $img->setattribute('src', '/img/noticias/'.$noticia->id_noticia.'/'.$image_name);
+                $img->setattribute('src', asset('/storage/img/noticias/'.$noticia->id_noticia.'/'.$image_name));
                 //$ultimaImagen = $pathDirectorio. '/' .$image_name;
-                $ultimaImagen = '/img/noticias/'.$noticia->id_noticia.'/'.$image_name;
+                $ultimaImagen = '/storage/img/noticias/'.$noticia->id_noticia.'/'.$image_name;
             }
         }
         if($ultimaImagen == ""){
-            $ultimaImagen = '/img/noticias/logo_noticias.png';
+            $ultimaImagen = '/storage/img/noticias/logo_noticias.png';
         }
         $detail = $dom->savehtml();
 
@@ -225,7 +225,7 @@ class NoticiaController extends Controller
         $images = $dom->getelementsbytagname('img');
         $ultimaImagen ="";
 
-        $pathDirectorio = public_path('img\\noticias').'\\'.$noticia->id_noticia;
+        $pathDirectorio = public_path('storage\\img\\noticias').'\\'.$noticia->id_noticia;
         //dd($pathDirectorio);
         if(count($images)>0){
             /*if(!File::isDirectory($pathDirectorio)){
@@ -244,7 +244,7 @@ class NoticiaController extends Controller
             $data = $img->getattribute('src');
             $ruta = explode('/',$data);
             
-            $ultimaImagen = '/img/noticias/'. $noticia->id_noticia . '/' . $ruta[4];
+            $ultimaImagen = 'storage/img/noticias/'. $noticia->id_noticia . '/' . $ruta[4];
             
             if (substr($data, 0, 5) == 'data:') {
                 list($type, $data) = explode(';', $data);
@@ -252,7 +252,7 @@ class NoticiaController extends Controller
     
                 $data = base64_decode($data);
                 $image_name= time().$k.'.png';
-                $path = public_path() .'/img/noticias/'.$noticia->id_noticia.'/'. $image_name;
+                $path = public_path() .'/storage/img/noticias/'.$noticia->id_noticia.'/'. $image_name;
     
                 file_put_contents($path, $data);
     
@@ -260,12 +260,12 @@ class NoticiaController extends Controller
                 
                 //$ultimaImagen = '/img/noticias/'.$image_name;
 
-                $img->setattribute('src', '/img/noticias/'.$noticia->id_noticia.'/'.$image_name);
-                $ultimaImagen = '/img/noticias/'.$noticia->id_noticia.'/'.$image_name;
+                $img->setattribute('src', asset('/img/noticias/'.$noticia->id_noticia.'/'.$image_name));
+                $ultimaImagen = '/storage/img/noticias/'.$noticia->id_noticia.'/'.$image_name;
             }
         }
         if($ultimaImagen == ""){
-            $ultimaImagen = '/img/noticias/logo_noticias.png';
+            $ultimaImagen = '/storage/img/noticias/logo_noticias.png';
         }
  
         $detail = $dom->savehtml();

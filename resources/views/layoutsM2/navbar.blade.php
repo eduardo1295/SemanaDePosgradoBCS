@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 d-flex justify-content-center">
                     @isset($semana->url_logo)
-                        <a href="{{route('pag.inicio')}}"><img src="{{url('img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px" height="65px" alt=""></a>    
+                        <a href="{{route('pag.inicio')}}"><img src="{{url('storage/img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px" height="65px" alt=""></a>    
                     @endisset
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 d-flex justify-content-end align-items-end">
