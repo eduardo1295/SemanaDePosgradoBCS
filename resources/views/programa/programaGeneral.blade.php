@@ -13,7 +13,7 @@
 
 @section('contenido')
     @php
-    $nombre_fichero = public_path().'\documentos\programaGeneral\ProgramaGeneral.pdf';
+    $nombre_fichero = public_path().'/storage/documentos/programaGeneral/ProgramaGeneral.pdf';
     @endphp
     @if(file_exists($nombre_fichero)) 
         <div class="container">
@@ -23,7 +23,7 @@
                     <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Programa general</h1> <br>
                 </div>
             </div>
-            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ asset('/documentos/programaGeneral/ProgramaGeneral.pdf/?'.date('H:i:s')) }}"
+            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ asset('/storage/documentos/programaGeneral/ProgramaGeneral.pdf/?'.date('H:i:s')) }}"
                 type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
     @else 

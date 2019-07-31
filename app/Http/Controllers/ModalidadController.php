@@ -168,8 +168,8 @@ class modalidadController extends Controller
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', asset('/img/modalidades/'.$image_name));
-                $ultimaImagen = '/img/modalidades/'.$image_name;
+                $img->setattribute('src', asset('/storage/img/modalidades/'.$image_name));
+                $ultimaImagen = '/storage/img/modalidades/'.$image_name;
             }
         }
  
@@ -285,8 +285,8 @@ class modalidadController extends Controller
                 file_put_contents($path, $data);
     
                 $img->removeattribute('src');
-                $img->setattribute('src', asset('/img/modalidades/'.$image_name));
-                $ultimaImagen = '/img/modalidades/'.$image_name;
+                $img->setattribute('src', asset('/storage/img/modalidades/'.$image_name));
+                $ultimaImagen = '/storage/img/modalidades/'.$image_name;
             }
         }
  

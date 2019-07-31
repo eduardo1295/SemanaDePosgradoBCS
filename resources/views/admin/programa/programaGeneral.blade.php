@@ -19,7 +19,7 @@
         <div class="row">
                 <div class="form-group col-md-12">
                     <strong><label id="ligaConvo">Subir programa general</label></strong>
-                    @if(file_exists(public_path().'\documentos\programaGeneral\ProgramaGeneral.pdf')) 
+                    @if(file_exists(public_path().'/storage/documentos/programaGeneral/ProgramaGeneral.pdf')) 
                     <a target="_blank" href='{{ URL::to("/") }}/storage/documentos/programaGeneral/ProgramaGeneral.pdf'> Programa actual </a>
                     @endif
                     <div class="custom-file">
