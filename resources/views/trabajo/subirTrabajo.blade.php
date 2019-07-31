@@ -51,7 +51,7 @@
                         <div class="form-group col-12">
                             <strong><label for="customFileLang" class="control-label">Trabajo: </label><label class="text-danger">*</label></strong></strong>
                             @isset($trabajo)
-                            <a href='{{ URL::to("/") }}/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >Entrega Actual</a>
+                            <a href='{{ URL::to("/") }}/storage/documentos/trabajos/{{$trabajo->url}}'target="_blank" id="link" >Entrega Actual</a>
                             <input type="hidden" name="auxUrl" value="{{$trabajo->url}}">
                             @endisset
                             <div class="custom-file">

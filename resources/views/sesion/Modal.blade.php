@@ -116,7 +116,7 @@ var cambio =  function(opcion,opcion2){
     console.log(moda);
     $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                url: '/sesion/alumnosSeleccionados/'+opcion+'/'+opcion2,
+                url: '{{URL::to("/")}}/sesion/alumnosSeleccionados/'+opcion+'/'+opcion2,
                 type: "POST",
                 data: {  modalidad: moda
                 },

@@ -115,7 +115,6 @@
         
 </script>
 
-<script src="{{ asset('js/director/script.js') }}"></script>
 
 
 
@@ -150,6 +149,7 @@ var rutaBaseAlumno = "{{ route('alumno.index')}}";
 var rutaImportarAlumnos = "{{ route('alumno.importar')}}";
 /*var rutaBaseSesion = "{{ route('sesion.index')}}";*/
 var rutaBaseLocacion = "{{ route('locacion.index')}}";
+
 $(document).ready(function () {
     cargarInstitucion();
 });

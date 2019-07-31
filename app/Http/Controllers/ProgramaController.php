@@ -280,7 +280,7 @@ class ProgramaController extends Controller
             $programaGeneral = $request->file('programaGeneral');
             //agregar id de usuarios a nombre
             $nuevo_nombre = 'ProgramaGeneral.' . $programaGeneral->getClientOriginalExtension();
-            $programaGeneral->move(public_path('documentos/programaGeneral'), $nuevo_nombre);
+            $programaGeneral->move(storage_path('/app/public/documentos/programaGeneral'), $nuevo_nombre);
         }else{
             return \Response::json("error");    
         }

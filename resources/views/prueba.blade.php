@@ -6,7 +6,7 @@
     .footer { position: fixed; bottom: -60px; left: 0px; right: 0px;}
     p { page-break-after:always }
     body{ font-size: 16px;}
-    thead tr th{ background-color: #c1f6e7 }
+    thead tr th{ background-color: #3f77bc; color: #ffff; }
     .contenido{ font-size: 14px !important; }
     table{ padding-top: 20px; border-collapse: collapse; width: 100%; }
     table td, table th { border: 1px solid #ddd; padding: 8px;}

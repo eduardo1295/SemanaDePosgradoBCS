@@ -76,8 +76,8 @@ $('.custom-file-input').on('change', function () {
 @endsection
 
 @section('scripts')
-    <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/plugins/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css')}} ">
     <link rel="stylesheet" href="{{ asset('/plugins/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css')}} ">
     <link rel="stylesheet" href="{{ asset('/css/datatable/colores.css')}} ">
