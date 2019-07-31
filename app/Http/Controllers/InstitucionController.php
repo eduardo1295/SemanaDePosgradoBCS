@@ -74,7 +74,7 @@ class InstitucionController extends Controller
             $imagenLogo = $request->file('logo');
             $nuevo_nombre = 'logo'.'_'. $institucion->id .'_'.$fechaArchivo. '.' . $imagenLogo->getClientOriginalExtension();
             //$nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
-            $imagenLogo->move(public_path('img/logo'), $nuevo_nombre);
+            $imagenLogo->move(public_path('storage/img/logo'), $nuevo_nombre);
         }
 
         $institucion->url_logo = $nuevo_nombre;
@@ -152,7 +152,7 @@ class InstitucionController extends Controller
             $nuevo_nombre = 'logo'.'_'. $institucion->id .'_'.$fechaArchivo. '.' . $imagenLogo->getClientOriginalExtension();
             //$nuevo_nombre = 'logo'.'_'. $fechaArchivo. '.' . $imagenLogo->getClientOriginalExtension();
             //$nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->nombre . '.' . $imagenLogo->getClientOriginalExtension();
-            $imagenLogo->move(public_path('img/logo'), $nuevo_nombre);
+            $imagenLogo->move(public_path('storage/img/logo'), $nuevo_nombre);
         }else{
             $nuevo_nombre = $institucion->url_logo;
         }
@@ -267,7 +267,7 @@ class InstitucionController extends Controller
             $imagenlogo= $request->file('logo');
             //agregar id de usuarios a nombre
             $nuevo_nombre = 'conacyt.' . $imagenlogo->getClientOriginalExtension();
-            $imagenlogo->move(public_path('/img/logo/'), $nuevo_nombre);
+            $imagenlogo->move(public_path('storage/img/logo/'), $nuevo_nombre);
         }
         return \Response::json("LISTO");
     }

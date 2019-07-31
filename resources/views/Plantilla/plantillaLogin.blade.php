@@ -16,7 +16,7 @@
     
     @yield('links')
 	<style>
-		body{ background-image: url("{{ asset('/img/fondo/defecto.jpg/?'.date('H:i:s'))}})"); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
+		body{ background-image: url("{{ asset('/storage/img/fondo/defecto.jpg/?'.date('H:i:s'))}})"); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
     </style>
     
     
@@ -24,7 +24,7 @@
     
     
 </head>
-<body @if(isset($imagen)  && !Empty($imagen->url_imagen))style="background-image: url('{{ asset("/img/fondo/$imagen->url_imagen")}}')"@endif>
+<body @if(isset($imagen)  && !Empty($imagen->url_imagen))style="background-image: url('{{ asset("/storage/img/fondo/$imagen->url_imagen")}}')"@endif>
     <div style="min-height:100vh">
     @yield('contenido','')
     </div>

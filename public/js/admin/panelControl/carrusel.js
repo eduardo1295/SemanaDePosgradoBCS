@@ -32,7 +32,7 @@
                     data: 'url_imagen',
                     name: 'url_imagen',
                     render: function (data, type, full, meta) {
-                        return "<img src="+SITEURL+"/img/carrusel/" + data + " width='250px'  class='img-thumbnail imgmodal' onclick='mostrarModal(this);' />";
+                        return "<img src="+SITEURL+"/storage/img/carrusel/" + data + " width='250px'  class='img-thumbnail imgmodal' onclick='mostrarModal(this);' />";
                     },
                     orderable: false, searchable: false
                 },

@@ -81,7 +81,7 @@
                         if (data == "no_disponible")
                             return data.replace("_", " ");
                         else
-                            return "<a style='cursor:pointer' target='_blank' href="+SITEURL+"/pdf/convocatoria/" +
+                            return "<a style='cursor:pointer' target='_blank' href="+SITEURL+"/storage/pdf/convocatoria/" +
                                 data + '/?'+ $.now() + ">" + data + "<a/>";
                     },
                     orderable: false,
@@ -150,7 +150,7 @@
                 $('#ligaConvo').html('No se ha cargado convocatoria')
             else
                 $('#ligaConvo').html(
-                    'Convocatoria <a target="_blank" href='+SITEURL+'/pdf/convocatoria/' + data
+                    'Convocatoria <a target="_blank" href='+SITEURL+'/storage/pdf/convocatoria/' + data
                     .url_convocatoria + '/?'+ $.now() + '>' + data.url_convocatoria + '<a/>');
 
         })

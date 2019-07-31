@@ -61,7 +61,7 @@ class VistaLoginController extends Controller
             $imagenUsuario = $request->file('imagenUsuario');
             //agregar id de usuarios a nombre
             $nuevo_nombre = 'fondo.'.$imagenUsuario->getClientOriginalExtension();
-            $imagenUsuario->move(public_path('img/fondo'), $nuevo_nombre);
+            $imagenUsuario->move(public_path('storage/img/fondo'), $nuevo_nombre);
         }
         if($request->hasFile('imagenAdmin')){
 
@@ -80,7 +80,7 @@ class VistaLoginController extends Controller
             $imagenAdmin = $request->file('imagenAdmin');
             //agregar id de usuarios a nombre
             $nuevo_nombre_admin = 'fondoAdmin.'.$imagenAdmin->getClientOriginalExtension();
-            $imagenAdmin->move(public_path('img/fondo'), $nuevo_nombre_admin);
+            $imagenAdmin->move(public_path('storage/img/fondo'), $nuevo_nombre_admin);
         }
         
         

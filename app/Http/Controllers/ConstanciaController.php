@@ -114,7 +114,7 @@ class ConstanciaController extends Controller
 		' FROM constancias'.
         ' WHERE id_semana = ?',[$semana[0]->id_semana]);
 
-        $pathDirectorio = public_path('img\\constancia');
+        $pathDirectorio = public_path('storage\\img\\constancia');
         if(!is_dir($pathDirectorio)){
             //File::makeDirectory($pathDirectorio);
             mkdir($pathDirectorio);
@@ -136,8 +136,8 @@ class ConstanciaController extends Controller
             if($request->hasFile('fondo')){
                 $imagenFondo = $request->file('fondo');
                 $nuevo_nombre = 'fondo_' . $semana[0]->id_semana . '.' . $imagenFondo->getClientOriginalExtension();
-                $imagenFondo->move(public_path('img\constancia\\'.$semana[0]->id_semana), $nuevo_nombre);
-                $rutaFondo =  asset('img/constancia/'.$semana[0]->id_semana.'/'.$nuevo_nombre);
+                $imagenFondo->move(public_path('storage\\img\constancia\\'.$semana[0]->id_semana), $nuevo_nombre);
+                $rutaFondo =  asset('storage/img/constancia/'.$semana[0]->id_semana.'/'.$nuevo_nombre);
                 
                 //$constanciaActual->url_imagen_fondo = $$rutaFondo;
             }
@@ -149,8 +149,8 @@ class ConstanciaController extends Controller
             if($request->hasFile('fondo')){
                 $imagenFondo = $request->file('fondo');
                 $nuevo_nombre = 'fondo_' . $semana[0]->id_semana . '.' . $imagenFondo->getClientOriginalExtension();
-                $imagenFondo->move(public_path('img\constancia\\'.$semana[0]->id_semana), $nuevo_nombre);
-                $rutaFondo =  asset('img/constancia/'.$semana[0]->id_semana.'/'.$nuevo_nombre);
+                $imagenFondo->move(public_path('storage\\img\constancia\\'.$semana[0]->id_semana), $nuevo_nombre);
+                $rutaFondo =  asset('storage/img/constancia/'.$semana[0]->id_semana.'/'.$nuevo_nombre);
                 //$rutaFondo = public_path('img\constancia\\'.$semana[0]->id_semana.'\\'.$nuevo_nombre);
                 //$constanciaActual->url_imagen_fondo = $$rutaFondo;
             }
@@ -215,7 +215,7 @@ class ConstanciaController extends Controller
         $semana = DB::select(DB::raw('SELECT semanas.id_semana'.
 		' FROM semanas'.
         ' WHERE vigente = 1'));
-        $pathDirectorio = public_path('img\\constancia');
+        $pathDirectorio = public_path('storage\\img\\constancia');
         if(!is_dir($pathDirectorio)){
             //File::makeDirectory($pathDirectorio);
             mkdir($pathDirectorio);
@@ -244,7 +244,7 @@ class ConstanciaController extends Controller
                 /*
                 $data = base64_decode($content);
                 $image_name= time().'.'.$img->getClientOriginalExtension();
-                $path = public_path() .'/img/constancia/'.$semana[0]->id_semana.'/'.$image_name;
+                $path = public_path() .'/storage/img/constancia/'.$semana[0]->id_semana.'/'.$image_name;
                 
                 file_put_contents($path, $data);*/
                 //$img->removeattribute('src');
@@ -258,13 +258,13 @@ class ConstanciaController extends Controller
                 //$img = str_replace(' ', '+', $img);
                 
                 //\File::put(storage_path(). '/' . $image_name, base64_decode($content));
-                $path = public_path() .'\\img\\constancia\\'.$semana[0]->id_semana.'\\'.$image_name;
+                $path = public_path() .'\\storage\\img\\constancia\\'.$semana[0]->id_semana.'\\'.$image_name;
                 //$path2 = public_path() .'\\img\\constancia\\'.$semana[0]->id_semana.'\\'.$image_name2;
                 //$thumb_img = Image::make($img->getRealPath())->resize(100, 100);
                 //$thumb_img->save($path2,100);
 
-                $img->move(public_path('img/constancia\\'.$semana[0]->id_semana), $image_name);
-                $ruta =  asset('img/constancia/'.$semana[0]->id_semana.'/'.$image_name);
+                $img->move(public_path('storage/img/constancia\\'.$semana[0]->id_semana), $image_name);
+                $ruta =  asset('storage/img/constancia/'.$semana[0]->id_semana.'/'.$image_name);
                 $resultArray [] = [
                     'name'=>$image_name,
                     'type'=>'image',
