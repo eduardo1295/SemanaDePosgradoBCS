@@ -27,7 +27,7 @@
                     <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Gafete de participación</h1> <br>
                 </div>
             </div>
-            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/gafete.pdf"
+            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ asset('/gafete.pdf') }}"
                 type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
         @endif

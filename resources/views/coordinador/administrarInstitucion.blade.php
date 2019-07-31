@@ -92,8 +92,8 @@
 @section('scripts')
 <script src="{{ asset('js/admin/mostrarPassword.js') }}"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
-<script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<script src="{{ asset('plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="{{ asset('js/snack/snack.js') }}"></script>
 <script>
@@ -130,6 +130,7 @@
 <script src="{{ asset('plugins/responsive-tabs/jquery.responsivetabs.js') }}"></script>
 
 <script>
+var URLData = {{ asset("/js/datatableJS/es.json") }}
 var checkDir = 'activoscoor';
 var checkPro = 'activoscoor';
 var checkAlumno = 'activoscoor';

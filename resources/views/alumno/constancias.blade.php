@@ -17,7 +17,7 @@
                 <ul>
                     @foreach ($constancias as $constancia)
                 
-                <h2><li><a target="_blank" href="{{route('constancia.generarPDF',$constancia->id_semana)}}">
+                <h2><li><a target="_blank" href="{{route('generarpdf',$constancia->id_semana)}}">
                 {{ $constancia->nombre }}
                 </a></li></h2>
         @endforeach 

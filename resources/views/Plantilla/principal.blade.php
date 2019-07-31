@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,8 +12,8 @@
 
     <title>Semana de Posgrado BCS</title>
     
-    <link rel="stylesheet" href="{{ mix('css/bootstrap.css')}} ">
-    <script  src="{{mix('js/app.js')}} "> </script>
+    <link rel="stylesheet" href="{{ env('APP_URL').mix('css/bootstrap.css')}} ">
+    <script  src="{{ env('APP_URL').mix('js/app.js')}} "> </script>
     <link rel="stylesheet" href="{{ asset('fonts/fontawesomeweb/css/all.css')}}">
     <script>
      window.onscroll = function() {scrollFunction()};
@@ -41,20 +40,16 @@
 </head>
 
 <body>
-
-    <!--Botton que se usa para el desplazamiento-->
+    <!--Boton que se usa para el desplazamiento-->
     <button onclick="topFunction()" id="myBtn"><i  id="flecha" class="fas fa-arrow-up"></i></button>
     @include('layoutsM2.navbar')
     <div style="min-height:100vh">
-    @yield('contenido','')
-       
+    @yield('contenido','')   
 </div>
     @yield('extra')
     
     @include('layoutsM2.footer')
     @yield('scripts','')
     <script src="{{ asset('js/menumaker.js') }}"></script>
-
 </body>
-
 </html>
