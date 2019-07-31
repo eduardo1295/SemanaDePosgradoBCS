@@ -412,8 +412,8 @@ class ConstanciaController extends Controller
                     $padding_box = $frame->get_padding_box();
                     if($GLOBALS['hola']>1){
                         
-                        $GLOBALS['bodyHeight'] += $padding_box['h']-60;
-                        $GLOBALS['altura'] += $padding_box['h']-57;
+                        $GLOBALS['bodyHeight'] += $padding_box['h'];
+                        $GLOBALS['altura'] += $padding_box['h'];
                     }
                     
                     $GLOBALS['hola']+=1;
@@ -433,7 +433,14 @@ class ConstanciaController extends Controller
         $dom->loadHtml($constanciaPDF, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $head = $dom->getelementsbytagname('head');
         
-        $altura = $GLOBALS['altura']+24;
+        $altura = 792;
+        if($GLOBALS['bodyHeight']<=612){
+            $altura = $GLOBALS['altura']+77;
+        }    
+        else{
+            $altura = $GLOBALS['altura']+117;
+        }
+        //dd($altura);
         $element = $dom->createElement('style', '#watermark {height:'.$altura.'px}');
         $head[0]->appendChild($element);
         
@@ -446,7 +453,7 @@ class ConstanciaController extends Controller
         $pdf = new Dompdf();
         //dd($GLOBALS['bodyHeight']);
         
-        $pdf= PDF::loadHtml($constanciaFinal)->setPaper(array(0,0,$GLOBALS['bodyHeight'],792.00),'landscape');
+        $pdf= PDF::loadHtml($constanciaFinal)->setPaper(array(0,0,$GLOBALS['bodyHeight']+40,792.00),'landscape');
         
         //$pdf->save('myfile.pdf');
         //dd($pdf);

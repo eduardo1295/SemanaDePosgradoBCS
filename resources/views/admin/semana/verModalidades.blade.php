@@ -4,12 +4,7 @@
 @section('contenido')
 @section('links')
 <link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}} ">
-<script src="/js/owl.carousel.min.js"> </script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
+
 @endsection
 <div class="container">
     <div class="row">
@@ -52,16 +47,6 @@
             </div>
     @endforeach
 </div>
-    
-    
-        
-        
-
-
-        
-    </div> 
-@section('scripts')
-<script src="/js/menumaker.js"></script>
-@endsection
+</div>
 @endsection
 

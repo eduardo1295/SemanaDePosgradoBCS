@@ -1,8 +1,4 @@
 
-{{-- comment 
-
-{{dd(auth()->user()->roles->toArray())}}
---}}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -57,7 +53,7 @@
     
     @include('layoutsM2.footer')
     @yield('scripts','')
-    
+    <script src="{{ asset('js/menumaker.js') }}"></script>
 
 </body>
 

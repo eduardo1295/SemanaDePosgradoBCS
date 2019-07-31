@@ -44,7 +44,7 @@
 @endsection
 @section('scripts')
 
-<script src="/js/programa/subirProgramaGeneral.js"></script>
+<script src="{{ asset('js/programa/subirProgramaGeneral.js') }}"></script>
 <script>
     $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();

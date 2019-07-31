@@ -18,7 +18,7 @@
 		body{ background-image: url('/img/fondo/defecto.jpg/?{{date("H:i:s")}}'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; }
     </style>
     
-    <script src="/js/popper.min.js"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
     
     @yield('links')
 </head>
@@ -27,6 +27,6 @@
     @yield('contenido','')
     </div>
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="/js/admin/mostrarPassword.js"></script>
+    <script src="{{ asset('js/admin/mostrarPassword.js') }}"></script>
 </body>
 </html>

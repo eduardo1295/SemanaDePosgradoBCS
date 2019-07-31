@@ -49,7 +49,7 @@
     <form id="colorForm" name="colorForm" class="form-horizontal" enctype="multipart/form-data">
         <div class="row">
             <div class="col-12 mt-3">
-                <strong><label for="">Encabezados de información, noticias, sede e intituticiones participantes</label></strong>
+                <strong><label for="">Encabezado de información, noticias, sede e intituticiones participantes</label></strong>
                 <div class="row">
                     <div class="col-6">
                         <strong><label for="">Color de fondo</label></strong>
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="col-12 mt-3">
-                <strong><label for="">Contenidos de información, noticias, sede e intituticiones participantes</label></strong>
+                <strong><label for="">Contenido de información, noticias, sede e intituticiones participantes</label></strong>
                 <div class="row">
                     <div class="col-6">
                         <strong><label for="">Color de fondo</label></strong>
@@ -120,7 +120,7 @@
 @endsection
 @section('scripts')
 
-<script src="/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-<script src="/js/admin/panelControl/colores.js"></script>
+<script src="{{ asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}"></script>
+<script src="{{ asset('js/admin/panelControl/colores.js') }}"></script>
 
 @endsection

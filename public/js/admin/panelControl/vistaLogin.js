@@ -12,7 +12,8 @@
 
         $('.btn-guardar').on('click',function () {
             var datos = new FormData($("#VistaForm")[0]);
-            console.log(Array.from(datos));
+            $(".btn-guardar").prop("disabled", true);
+            $('.btn-guardar').html('Guardando...');
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,
@@ -23,6 +24,9 @@
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
                 success: function (data) {
                     var unique = $.now();
                     mostrarSnack("Actualización exitosa.");
@@ -39,7 +43,11 @@
                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
                 },
-
+                complete: function (data) {
+                    $(".loader").hide();
+                    $('.btn-guardar').html('Guardar');
+                    $(".btn-guardar").prop("disabled", false);
+                }
 
             });
         })

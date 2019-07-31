@@ -72,17 +72,18 @@
   </div>
 
  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  {{-- <scriptsrc="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> --}}
   
-  <script src="/js/admin/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="/js/admin/main.js"></script>
+  <script  src="{{mix('js/app.js')}} "> </script>
+  <script src="{{ asset('js/admin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+  <script src="{{ asset('js/admin/main.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
-  <script src="/js/snack/snack.js"></script>
-  <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-  <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
-  <script src="/plugins/jqueryconfirm/jquery-confirm.js"></script>
+  <script src="{{ asset('js/snack/snack.js') }}"></script>
+  <script src="{{ asset('plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js') }}"></script>
+  <script src="{{ asset('plugins/jqueryconfirm/jquery-confirm.js') }}"></script>
   <script>
       $(document).ready(function () {
  $("body").tooltip({

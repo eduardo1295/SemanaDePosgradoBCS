@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-xl-between align-items-center">
                 <div class="col-12 col-sm-3 col-md-3 d-flex justify-content-center justify-content-md-start">
-                    <a href="{{ route('admin.index')}}"><img src="/img/logo.png" width="120px" alt=""></a>
+                    <a href="{{ route('admin.index')}}"><img src="{{ asset('/img/logo.png') }}" width="120px" alt=""></a>
                 </div>
                 <div class="col-12 col-sm-9 col-md-6 col-xl-6  pt-3 pt-md-0">
                     <h1 class="text-center">Área Administrativa</h1>

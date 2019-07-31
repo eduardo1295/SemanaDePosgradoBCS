@@ -88,7 +88,7 @@ class HomeController extends Controller
     public function editarAdmin(UpdateAdminRequest $request,$id){            
             $admin = Admin::find($id);    
             $admin->nombre = ucfirst($request->nombre);
-            $admin->email = ucfirst($request->email);
+            $admin->email = $request->email;
             if(!empty($request->password))
                 $admin->password = bcrypt($request->password);
             

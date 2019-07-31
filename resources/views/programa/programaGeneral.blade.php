@@ -3,6 +3,7 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}">
+
 <style>
     .holo {
         border-left: 10px solid white;
@@ -22,7 +23,7 @@
                     <h1 id="Titulo" class="display-5 font-weight-bold rounded p-auto pt-3 pb-0">Programa general</h1> <br>
                 </div>
             </div>
-            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ URL::to('/') }}/documentos/programaGeneral/ProgramaGeneral.pdf/?{{date('H:i:s')}}"
+            <embed class="embed-responsive-item embed-responsive-1by1 pb-5" src="{{ asset('/documentos/programaGeneral/ProgramaGeneral.pdf/?'.date('H:i:s')) }}"
                 type="application/pdf" style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
     @else 
@@ -30,8 +31,4 @@
             <h1>Programa general no disponible</h1>
         </div>
     @endif
-@endsection
-
-@section('scripts')
-    <script src="/js/menumaker.js"></script>
 @endsection

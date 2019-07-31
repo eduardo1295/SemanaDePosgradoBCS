@@ -86,19 +86,18 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 -->
 
-<script src="/js/imagenes/vistaprevia.js"></script>
-<script src="/plugins/summernote/summernote-bs4.js"></script>
-<script src="/plugins/summernote/lang/summernote-es-ES.js"></script>
-
-<script src="/plugins/summernote/plugin/cleaner/summernote-cleaner.js"></script>
-<script src="/plugins/summernote/iniciarSummernote.js"></script>
+<script src="{{ asset('js/imagenes/vistaprevia.js') }}"></script>
+<script src="{{ asset('plugins/summernote/summernote-bs4.js') }}"></script>
+<script src="{{ asset('plugins/summernote/lang/summernote-es-ES.js') }}"></script>
+<script src="{{ asset('plugins/summernote/plugin/cleaner/summernote-cleaner.js') }}"></script>
+<script src="{{ asset('plugins/summernote/iniciarSummernote.js') }}"></script>
 
 <script>
 var rutaBaseNoticia = "{{route('noticias.index')}}";
 var rutalistNoticia = "{{route('noticia.listNoticias')}}";
 var rutaVistaPrevia = "{{route('noticia.vistaPrevia')}}";
 </script>
-<script src="/js/admin/panelControl/noticia.js"></script>
+<script src="{{ asset('js/admin/panelControl/noticia.js') }}"></script>
 
 
 

@@ -41,15 +41,7 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        /*
-        return Excel::download(new AlumnosExportar, 'users.xlsx');
-        (new AlumnosExportar)->store('invoices.xlsx');
-
-return back()->withSuccess('Export started!');
-        (new AlumnosExportar)->store('invoices.xlsx');
-*/
-       
-        
+        //
     }
 
     /**
@@ -502,102 +494,7 @@ return back()->withSuccess('Export started!');
      */
 
     public function importarAlumnos(ExcelRequest $request) 
-    {
-        /*
-        $errores=[];
-        
-            //funcionando
-            $array =Excel::toArray(new UsersImport, request()->file('archivo'));
-            $arrayaux = []; 
-            $arrayaux = Arr::add($arrayaux, 'usuario',$array[0]);
-            
-            $rulesArreglo = [
-                'usuario' => 'required|array|min:1|max:40',
-            ];
-
-            $rules = [
-                'usuario.*.email' => 'unique:users,email|required|email|distinct|max:60',
-                'usuario.*.nombre' => 'required|string|max:40',
-                'usuario.*.password' => 'required|string|min:5|max:60|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$^&-]).{6,}$/',
-                'usuario.*.primer_apellido' => 'required|string|max:30',
-                'usuario.*.segundo_apellido' => 'string|nullable|max:30',
-                'usuario.*.id_institucion'    => 'required|exists:instituciones,id',
-                
-                'usuario.*.num_control'  => 'required|max:15',
-                'usuario.*.semestre'  => 'required|max:30',
-                'usuario.*.id_programa'  => 'required',function($attribute, $value, $fail){
-                    if($value==='MCMRC'){
-                        $fail($attribute.' is invalid');
-                    }
-                },
-                'usuario.*.id_programa'  => 'required|exists:programas,id_programa',
-                //'usuario.*.id_programa'  => 'required',Rule::exists('programas')->where(function($query){$query->where('id_programa','MCMRC');}),
-                'usuario.*.email_director'  => 'required|exists:users,email',                
-            ];
-
-            
-            
-            $attributesArreglo = [
-                'usuario' => 'archivo de alumonos',
-            ]; 
-            
-            $attributes = [];
-            
-            $re =[];
-            $arrayFinal = [];
-            $arrayFinal = Arr::add($arrayFinal,'usuario',[]);
-            
-            foreach($arrayaux['usuario'] as $key => $row)
-            {
-                $arrayAux2 = array_filter($row);
-                if(!empty($arrayAux2)){
-                    $arrayFinal['usuario'] = Arr::add($arrayFinal['usuario'], $key,$arrayAux2);
-                }
-            }
-
-            $validatorArreglo = Validator::make($arrayFinal, $rulesArreglo,[],$attributesArreglo);
-            if(!$validatorArreglo->fails()){
-                $contador = 1;
-                foreach($arrayaux['usuario'] as $key => $row)
-                {
-                    $contador = 1;
-                    $contador = $contador+$key+1;
-                    $attributes['usuario.'.$key.'.email'] = 'email en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.password'] = 'password en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.nombre'] = 'nombre en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.primer_apellido'] = 'primer apellido en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.segundo_apellido'] = 'segundo apellido en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.id_institucion'] = 'institución en renglón '.($contador);
-    
-                    $attributes['usuario.'.$key.'.num_control'] = 'número de control en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.semestre'] = 'semestre en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.programa_de_estudio'] = 'programa de estudios en renglón '.($contador);
-                    $attributes['usuario.'.$key.'.email_director'] = 'director de tesis en renglón '.($contador);
-                    
-                }
-                
-                $validator = Validator::make( $arrayFinal, $rules,[],$attributes );
-                
-                $errores = [];
-                foreach ($validator->messages()->getMessages() as $key => $message) {
-                    $errores[$key] = $message[0];
-                }
-                ksort($errores, SORT_NATURAL);
-                if(!$validator->fails()) {
-                    return back()->with('bien', 'Alumnos registrados exitosamente');
-                }
-                else{
-                    return back()->with('errores',$errores);
-                }
-            }else{
-                return back()->with('errores',$validatorArreglo->messages()->all());
-            }
-            
-        
-
-*/
-
-        
+    {      
         $errores=[];
         DB::beginTransaction();
         try {

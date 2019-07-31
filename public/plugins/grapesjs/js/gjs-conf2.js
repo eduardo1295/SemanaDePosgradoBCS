@@ -261,7 +261,7 @@ for(var k in imagenes) {
     id: "logo" +k,
     category: "Logos"
   });
-  console.log(k, imagenes[k]);
+  
 }
 
 for(var k in coordinadores) {
@@ -274,7 +274,7 @@ for(var k in coordinadores) {
     id: "coordinador" +k,
     category: "Coordinadores"
   });
-  console.log(k, coordinadores[k]);
+  
 }
 
 bloques.forEach(element => {
@@ -306,7 +306,7 @@ var panelManager = editor.Panels;
 
 panelManager.removeButton("views", "open-tm");
 panelManager.removeButton('options', 'preview');
-//panelManager.removeButton('options', 'fullscreen');
+panelManager.removeButton('options', 'fullscreen');
 panelManager.removeButton('options', 'export-template');
 panelManager.removeButton('options', 'sw-visibility');
 

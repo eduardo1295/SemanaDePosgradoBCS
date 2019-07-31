@@ -75,7 +75,7 @@
 @include('admin.directores.modal')
 @endsection
 @section('scripts')
-<script src="/js/admin/mostrarPassword.js"></script>
+<script src="{{ asset('js/admin/mostrarPassword.js') }}"></script>
 
 <script>
 var rutaBaseDirector = "{{route('director.index')}}";
@@ -83,5 +83,5 @@ var rutalistDirector = '{{ route("director.listDirector")}}';
 var SITEURL = "{{URL::to('/')}}";
 var rutaReactivar = "{{ url('director/reactivar')}}";
 </script>
-<script src="/js/admin/panelControl/directorTesis.js"></script>
+<script src="{{ asset('js/admin/panelControl/directorTesis.js') }}"></script>
 @endsection

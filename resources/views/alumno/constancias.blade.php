@@ -39,7 +39,3 @@
     @endif
     
 @endsection
-
-@section('scripts')
-    <script src="/js/menumaker.js"></script>
-@endsection

@@ -6,7 +6,7 @@ use App\Notifications\Admin\Auth\ResetPassword;
 use App\Notifications\Admin\Auth\VerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\DataBase\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class Admin extends Authenticatable implements MustVerifyEmail

@@ -5,11 +5,7 @@
 @section('links')
 <link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}">
 <link rel="stylesheet" href="{{ asset('/css/modales/snackbar.css')}}">
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-</script>
+
 @endsection
 <section id="trabajo">
         <div class="container">
@@ -77,8 +73,7 @@
 </script>
 
 @section('scripts')
-<script src="/js/menumaker.js"></script>
-<script src="/js/alumno/editarAlumno.js"></script>
-<script src="/js/snack/snack.js"></script>
+<script src="{{ asset('/js/alumno/editarAlumno.js') }}"></script>
+<script src="{{ asset('/js/snack/snack.js') }}"></script>
 @endsection
 @endsection

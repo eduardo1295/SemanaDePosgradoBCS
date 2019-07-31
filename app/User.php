@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\DataBase\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\ResetPassword;
 
 class User extends Authenticatable implements MustVerifyEmail

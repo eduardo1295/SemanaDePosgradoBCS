@@ -3,7 +3,6 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/css/Maqueta2.css')}}  ">
-<script src="/js/owl.carousel.min.js"> </script>
 
 <style>
     .holo {
@@ -102,10 +101,4 @@
     <h1>Convocatoria no disponible</h1>
 </div>
 @endif
-
-    
-@endsection
-
-@section('scripts')
-<script src="/js/menumaker.js"></script>
 @endsection

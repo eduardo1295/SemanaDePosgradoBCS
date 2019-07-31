@@ -7,11 +7,6 @@
 <link href="{{ asset('/css/modales/snackbar.css')}} " rel="stylesheet">
 <link href="{{ asset('/css/modales/snackbar.css')}} " rel="stylesheet">
 
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-</script>
 @endsection
 <section id="trabajo">
         <div class="container">
@@ -68,9 +63,8 @@
 </script>
 
 @section('scripts')
-<script src="/js/snack/snack.js"></script>
-<script src="/js/menumaker.js"></script>
-<script src="/js/admin/editarPerfil.js"></script>
+<script src="{{ asset('js/snack/snack.js') }}"></script>
+<script src="{{ asset('js/admin/editarPerfil.js') }}"></script>
 
 @endsection
 @endsection

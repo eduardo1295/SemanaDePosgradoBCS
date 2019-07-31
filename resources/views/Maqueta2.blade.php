@@ -33,7 +33,8 @@
 </style>
     <link rel="stylesheet" href="{{asset('css/Maqueta2.css')}}" >
     <link rel="stylesheet" href="{{asset('css/imagenes/imagenes.css')}}">
-    <script src="{{ asset('js/owl.carousel.min.js')}} "> </script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"> </script>
+    
     <script>
         $(function () { $('[data-toggle="tooltip"]').tooltip() })
     </script>
@@ -186,7 +187,4 @@
 
             {{-- END SECCION BLADE--}}
 
-            @section('scripts')
-            <script src="/js/menumaker.js"></script>
-            @endsection
             @endsection

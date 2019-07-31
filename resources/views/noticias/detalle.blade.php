@@ -4,9 +4,6 @@
     
     <link rel="stylesheet" href="{{ asset('/css/imagenes/imagenes.css')}}">
 @endsection
-@section('scripts')
-        <script src="/js/menumaker.js"></script>
-@endsection
 
 @section('contenido')
 <div class="container" style=" word-wrap: break-word;">

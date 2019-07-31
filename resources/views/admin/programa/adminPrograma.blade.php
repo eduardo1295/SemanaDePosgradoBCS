@@ -77,7 +77,7 @@
 @section('scripts')
 
 
-<script src="/js/imagenes/modalimagen.js"></script>
+<script src="{{ asset('js/imagenes/modalimagen.js') }}"></script>
 
 <script>
 var rutaBasePrograma = "{{route('programa.index')}}";
@@ -86,7 +86,7 @@ var SITEURL = "{{URL::to('/')}}";
 
 var rutaReactivar = "{{ url('programa/reactivar')}}";
 </script>
-<script src="/js/admin/panelControl/programaEstudio.js"></script>
+<script src="{{ asset('js/admin/panelControl/programaEstudio.js') }}"></script>
 @endsection
 
 @section('estilos')

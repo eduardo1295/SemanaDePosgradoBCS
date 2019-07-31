@@ -90,14 +90,12 @@
 @endsection
 
 @section('scripts')
-<script src="/js/admin/mostrarPassword.js"></script>
+<script src="{{ asset('js/admin/mostrarPassword.js') }}"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
-<script src="/js/menumaker.js"></script>
 <script src="/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="/js/owl.carousel.min.js"> </script>
-<script src="/js/snack/snack.js"></script>
+<script src="{{ asset('js/snack/snack.js') }}"></script>
 <script>
     /*$(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -117,19 +115,19 @@
         
 </script>
 
-<script src="/js/director/script.js"></script>
+<script src="{{ asset('js/director/script.js') }}"></script>
 
 
 
 
-<script src="/js/imagenes/vistaprevia.js"></script>
-<script src="/js/coordinador/administrarInstitucion.js"></script>
+<script src="{{ asset('js/imagenes/vistaprevia.js') }}"></script>
+<script src="{{ asset('js/coordinador/administrarInstitucion.js') }}"></script>
 
-<script src="/js/coordinador/programas.js"></script>
-<script src="/js/coordinador/alumnos.js"></script>
+<script src="{{ asset('js/coordinador/programas.js') }}"></script>
+<script src="{{ asset('js/coordinador/alumnos.js') }}"></script>
 <!--<script src="/js/coordinador/sesion.js"></script>-->
-<script src="/js/coordinador/locacion.js"></script>
-<script src="/plugins/responsive-tabs/jquery.responsivetabs.js"></script>
+<script src="{{ asset('js/coordinador/locacion.js') }}"></script>
+<script src="{{ asset('plugins/responsive-tabs/jquery.responsivetabs.js') }}"></script>
 
 <script>
 var checkDir = 'activoscoor';

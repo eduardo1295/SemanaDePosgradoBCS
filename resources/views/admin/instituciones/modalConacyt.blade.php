@@ -17,7 +17,7 @@
                 <div class="col-12 pt-2">
                     @if(file_exists( public_path(). '/img/logo/conacyt.png'))
                         <label for="">Imagen actual:</label> <br>
-                        <img src="/img/logo/conacyt.png" alt="" width="125px" height="90px">
+                        <img src="{{ asset('img/logo/conacyt.png') }}" alt="" width="125px" height="90px">
                     @endif
                 </div>
                 

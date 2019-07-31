@@ -124,8 +124,7 @@ $('.custom-file-input').on('change', function () {
 </script>
 {{-- END SECCION BLADE--}}
 @section('scripts')
-<script src="/js/menumaker.js"></script>
-<script src="/js/trabajo/subirtrabajo.js"></script>
-<script src="/js/snack/snack.js"></script>
+<script src="{{ asset('js/trabajo/subirtrabajo.js') }}"></script>
+<script src="{{ asset('js/snack/snack.js') }}"></script>
 @endsection
 @endsection
