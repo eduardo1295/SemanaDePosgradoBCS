@@ -15,7 +15,7 @@ function cargarDataTableLocaciones(){
         tableLocacion = $('#locacionesDT').DataTable({
             "order":[[2,"asc"]],
             pageLength: 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+            lengthMenu: [[5, 10, 20, 50], [5, 10, 20, 50]],
             responsive: true,
             autoWidth: false,
             "language": {
