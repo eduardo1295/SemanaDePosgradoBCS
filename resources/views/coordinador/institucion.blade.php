@@ -98,7 +98,7 @@
             <strong><label id="imagenlogo"> Logo</label><label class="text-danger">*</label></strong>
             <div class="custom-file">
                 <input type="file" name="logo" class="custom-file-input" id="logo" lang="es"
-                    onchange="readURL(this,'vistaPrevia');mostrar('nuevoLogo');">
+                accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this,'vistaPrevia');mostrar('nuevoLogo');">
                 <label for="logo" class="custom-file-label">Seleccionar Archivo</label>
             </div>
 

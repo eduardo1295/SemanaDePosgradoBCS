@@ -72,7 +72,6 @@ function cargarInstitucion(){
         },
         complete: function (data) {
             $(".loader").hide();
-            console.log(data);
         }
 
     });
@@ -92,7 +91,7 @@ function cargarDataTableDirectores(){
             responsive: true,
             autoWidth: false,
             "language": {
-                "url": "/js/datatableJS/es.json"
+                "url": turaIdioma
             },
             "processing": true,
             "serverSide": true,
@@ -418,7 +417,7 @@ $("input[name='verDir']").change(function (e) {
                     $(".loader").show();
                 },
                 success: function (data) {
-                    mostrarSnack("Actualización exitosa.");
+                    mostrarSnack("Actualizaciónasdasdasd exitosa Actualiz ación ex ito sa Actua lización exitosa.");
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
                     var unique = $.now();

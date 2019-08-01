@@ -37,12 +37,12 @@
                     <thead>
                         <tr>
                             <th>id</th>
-                            <th>Nombre</th>
+                            <th class="all">Nombre</th>
                             <th>Primer apellido</th>
-                            <th>Segundo apellido</th>
-                            <th>Email</th>
-                            <th>Última Actualización</th>
-                            <th>Acciones</th>
+                            <th class="not-mobile">Segundo apellido</th>
+                            <th class="not-mobile">Email</th>
+                            <th class="not-mobile">Última Actualización</th>
+                            <th class="all">Acciones</th>
                         </tr>
                     </thead>
                     <tfoot>

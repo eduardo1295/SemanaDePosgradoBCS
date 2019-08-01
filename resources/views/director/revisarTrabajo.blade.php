@@ -33,7 +33,7 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-8 col-xl-9">
             <embed class="embed-responsive-item embed-responsive-16by9"
-                src="{{ URL::to('/') }}/documentos/trabajos/{{$trabajo->url}}" type="application/pdf"
+                src="{{ URL::to('/') }}/storage/documentos/trabajos/{{$trabajo->url}}" type="application/pdf"
                 style="width:100%;height: 100vh;" internalinstanceid="9">
         </div>
         <form id="trabajoForm" name="trabajoForm" class="col-12 col-sm-12 col-md-4 col-xl-3 formulario form-horizontal mb-2" method="POST"

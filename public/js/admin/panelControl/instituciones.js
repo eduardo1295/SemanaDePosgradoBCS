@@ -54,7 +54,7 @@
             responsive: true,
             autoWidth: false,
             "language": {
-                "url": "/js/datatableJS/es.json"
+                "url": turaIdioma
             },
             "processing": true,
             "serverSide": true,

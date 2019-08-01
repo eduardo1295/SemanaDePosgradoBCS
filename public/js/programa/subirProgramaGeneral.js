@@ -4,8 +4,7 @@ $(document).ready(function(){
         var ruta = rutaBase;
         //var ruta = "{{url('programa')}}/" + id + "";
         var datos = new FormData($("#programaGeneralForm")[0]);
-        console.log(Array.from(datos));
-        
+         
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             url: ruta,
@@ -15,6 +14,9 @@ $(document).ready(function(){
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function(){
+                $(".loader").show();
+            },
             success: function (data) {
                 
                 if(data == "error"){
@@ -25,19 +27,23 @@ $(document).ready(function(){
                     $('#convocatoria_error').text("");
                     mostrarSnack('Archivo guardado');
                 }
+                $('.mensajeError').text("");
             },
             error: function (data) {
-                console.log(data);
-                /*
+                
                 if (data.status == 422) {
                     var errores = data.responseJSON['errors'];
                     $.each(errores, function (key, value) {
                         $('#' + key + "_error").text(value);
                     });                    
                 }
-                */
+                
                mostrarSnackError('Error al guardar');
             },
+            complete: function (data) {
+                $(".loader").hide();
+                
+            }
         });
     });
 });

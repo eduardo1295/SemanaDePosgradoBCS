@@ -28,7 +28,7 @@
                 <p id="imagenslider"> Imagen actual:</p>
                 <div class="custom-file">
                     <input type="file" name="imagenUsuario" class="custom-file-input" id="imagenUsuario" lang="es"
-                        onchange="readURL(this,'vistaPrevia','nuevaImagen');mostrar('nuevaImagen');">
+                    accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this,'vistaPrevia','nuevaImagen');mostrar('nuevaImagen');">
                     <label for="imagen" class="custom-file-label">Seleccionar Archivo</label>
                 </div>
                 <small><span class="mensajeError text-danger" id="imagenUsuario_error"></span></small>
@@ -62,7 +62,7 @@
                     <p id="imagenslider"> Imagen actual:</p>
                     <div class="custom-file">
                         <input type="file" name="imagenAdmin" class="custom-file-input" id="imagenAdmin" lang="es"
-                            onchange="readURL(this,'vistaPrevia2','nuevaImagen2');mostrar('nuevaImagen2','vistaPrevia2');">
+                        accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this,'vistaPrevia2','nuevaImagen2');mostrar('nuevaImagen2','vistaPrevia2');">
                         <label for="imagen" class="custom-file-label">Seleccionar Archivo</label>
                     </div>
                     <small><span class="mensajeError text-danger" id="imagenAdmin_error"></span></small>

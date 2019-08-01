@@ -13,8 +13,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        
-        <div class="col-12 col-md-6 col-lg-6 offset-6">
+        <div class="col-12 col-md-12 col-lg-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-locacion"><span><i
                             class="fas fa-plus"></i></span> Nueva locacion</a>
@@ -27,7 +26,7 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>nombre</th>
+                        <th>Nombre</th>
                         <th>Fecha actualización</th>
                         <th>Acciones</th>
                     </tr>

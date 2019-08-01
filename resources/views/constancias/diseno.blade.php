@@ -19,14 +19,14 @@
         <div class="row">
             <div class="col-12 mx-auto">
                 <form id="constanciaForm" name="constanciaForm" class="form-horizontal" enctype="multipart/form-data">
-                    <div class="form-group row">
-                        <label for="logo" class="col-2 col-form-label" style="text-align:end">Imagen de Fondo</label>
-                        <div class="custom-file col-8">
+                    <label for="logo" class="col-12 pl-0" style="text-align:start">Imagen de Fondo</label>
+                    <div class="form-row">
+                        <div class="form-group custom-file col-8">
                             <input type="file" name="fondo" class="custom-file-input" id="fondo" lang="es"
-                                onchange="readURL(this,'vistaPrevia');">
+                            accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this,'vistaPrevia');">
                             <label for="fondo" class="custom-file-label">Seleccionar Archivo</label>
                         </div>
-                        <div class="col-2">
+                        <div class="form-group col-2">
                             <button class="btn btn-primary btnGuardarDiseno">Guardar</button>
                         </div>
 

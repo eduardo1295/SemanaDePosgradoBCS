@@ -87,7 +87,7 @@
                 
                 <li>
                     <a href="{{route('modalidad.VerModalidad')}}">
-                        <i class="fas fa-paint-brush"></i>
+                        <i class="fas fa-vector-square"></i>
                         <span><strong>Modalidades de participación</strong></span>
                     </a>
                 </li>

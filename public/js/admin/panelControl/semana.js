@@ -37,7 +37,7 @@
             responsive: true,
             autoWidth: false,
             "language": {
-                "url": "/js/datatableJS/es.json"
+                "url": turaIdioma
             },
             "processing": true,
             "serverSide": true,
@@ -248,7 +248,7 @@
                 complete: function (data) {
                     var unique = $.now();
                     if (data.responseJSON['vigente'] == 1) {
-                        $('#logoMenu').prop('src', SITEURL+'/img/semanaLogo/' + data
+                        $('#logoMenu').prop('src', SITEURL+'/storage/img/semanaLogo/' + data
                             .responseJSON['url_logo'] + '/?' + unique);
                     }
                 }
@@ -288,7 +288,7 @@
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
                     if (data.vigente == 1) {
-                        $('#logoMenu').prop('src', SITEURL+'/img/semanaLogo/' + data
+                        $('#logoMenu').prop('src', SITEURL+'/storage/img/semanaLogo/' + data
                             .url_logo);
                     }
                 },

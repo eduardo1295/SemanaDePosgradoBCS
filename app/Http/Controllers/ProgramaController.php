@@ -12,6 +12,7 @@ use DB;
 use App\Http\Requests\programas\StoreProgramaRequest;
 use App\Http\Requests\programas\UpdateProgramaRequest;
 use Validator;
+use App\Http\Requests\ProgramaGeneral;
 
 class ProgramaController extends Controller
 {
@@ -273,7 +274,7 @@ class ProgramaController extends Controller
         $instituciones = Institucion::select('id','nombre')->get();
         return view('admin.programa.programaGeneral',compact(['instituciones','semana']));   
     }
-    public function subirProgramaGeneral(Request $request){
+    public function subirProgramaGeneral(ProgramaGeneral $request){
 
         if($request->hasFile('programaGeneral')){
             

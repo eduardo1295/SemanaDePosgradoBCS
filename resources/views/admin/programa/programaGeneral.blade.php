@@ -27,7 +27,7 @@
                             lang="es" accept="application/pdf">
                         <label for="convocan" class="custom-file-label">Seleccionar Archivo</label>
                     </div>
-                    <small><span class="mensajeError text-danger" id="convocatoria_error"></span></small>
+                    <small><span class="mensajeError text-danger" id="programaGeneral_error"></span></small>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                     <input type="button" value="Guardar" id="guardar" class="btn btn-primary">
