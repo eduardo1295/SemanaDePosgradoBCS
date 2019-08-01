@@ -39,9 +39,9 @@
                             <th>id</th>
                             <th class="all">Nombre</th>
                             <th>Primer apellido</th>
-                            <th class="not-mobile">Segundo apellido</th>
-                            <th class="not-mobile">Email</th>
-                            <th class="not-mobile">Última Actualización</th>
+                            <th class="min-tablet-l">Segundo apellido</th>
+                            <th class="min-tablet-l">Email</th>
+                            <th class="min-tablet-l">Última Actualización</th>
                             <th class="all">Acciones</th>
                         </tr>
                     </thead>

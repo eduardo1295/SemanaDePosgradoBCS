@@ -40,13 +40,13 @@
 
                         <th class="all">No. Control</th>
                         <th class="none">Programa de estudios</th>
-                        <th class="not-mobile">Nombre</th>
-                        <th class="not-mobile">Primer apellido</th>
-                        <th class="not-mobile">Segundo apellido</th>
-                        <th class="not-mobile">Email</th>
+                        <th class="min-tablet-l">Nombre</th>
+                        <th class="min-tablet-l">Primer apellido</th>
+                        <th class="min-tablet-l">Segundo apellido</th>
+                        <th class="min-tablet-l">Email</th>
                         <th class="all">Constancia</th>
                         <th class="none">Director de tesis</th>
-                        <th class="not-mobile">Última Actualización</th>
+                        <th class="min-tablet-l">Última Actualización</th>
                         <th class="all">Acciones</th>
                     </tr>
                 </thead>

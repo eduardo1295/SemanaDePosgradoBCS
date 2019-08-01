@@ -66,7 +66,7 @@
               </ul>
               
               <!-- Tab panes -->
-              <div class="tab-content" style="padding-bottom: 50px;">
+              <div class="tab-content" style="overflow-x:scroll; padding-bottom: 50px;">
                 <div role="tabpanel" class="container tab-pane fade show active pt-3" id="profile">@include('coordinador.institucion')</div>
                 <div role="tabpanel" class="container tab-pane fade pt-3" id="programas_estudio">@include('coordinador.programasInstitucion')</div>
                 <div role="tabpanel" class="container tab-pane fade pt-3" id="direc_tesis">@include('coordinador.directores')</div>
