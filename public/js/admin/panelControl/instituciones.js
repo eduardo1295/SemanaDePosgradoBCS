@@ -27,7 +27,7 @@
     google.maps.event.addDomListener(window, 'load', iniciarMapa(posInicial));
 
 
-    var SITEURL = "{{URL::to('/')}}";
+    //var SITEURL = "{{URL::to('/')}}";
     var checkInsti = 'activos';
 
     $(document).ready(function () {
@@ -469,7 +469,7 @@
     
     $("#guardar-conacyt").click(function(){
         $('.mensajeError').text("");
-        var ruta = "/admin/institucion/suibirLogoConacyt";
+        var ruta = SITEURL + "/admin/institucion/suibirLogoConacyt";
         var datos = new FormData($("#conacytForm")[0]);
         console.log(Array.from(datos));
         $.ajax({

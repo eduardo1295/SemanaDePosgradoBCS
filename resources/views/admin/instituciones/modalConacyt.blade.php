@@ -10,8 +10,9 @@
                 <div class="form-group col-md-12">
                     <strong><label id="imagenlogo"> Logo:</label><label class="text-danger">*</label></strong>
                     <div class="custom-file">
-                        <input type="file" name="logo" class="custom-file-input" id="logo" lang="es" accept="image/png, image/jpeg">
+                        <input type="file" name="logo" class="custom-file-input" id="logo" lang="es" accept="image/png">
                         <label for="logo" class="custom-file-label">Seleccionar Archivo</label>
+                        <small><span class="mensajeError text-danger" id="logo_error"></span></small>
                     </div>
                 </div>                    
                 <div class="col-12 pt-2">

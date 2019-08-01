@@ -77,6 +77,7 @@ var rutaBaseIntitucion = "{{route('institucion.index')}}";
 var rutalistIntitucion = '{{ route("institucion.listInstituciones")}}';
 var rutaLogo = "{{url('storage/img/logo')}}";
 var rutaReactivar = "{{ url('admin/institucion/reactivar')}}";
+var SITEURL = "{{URL::to('/')}}";
 </script>
 <script src="{{ asset('js/admin/panelControl/instituciones.js') }}"></script>
 @endsection

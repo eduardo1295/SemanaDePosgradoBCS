@@ -10,6 +10,7 @@ use DataTables;
 use App\Http\Requests\excelrequest\ExcelUploadRequest;
 use App\Http\Requests\instituciones\UpdateInstitucionRequest;
 use App\Http\Requests\instituciones\StoreInstitucionRequest;
+use App\Http\Requests\subirConacyt;
 
 class InstitucionController extends Controller
 {
@@ -260,7 +261,7 @@ class InstitucionController extends Controller
         }
     }
 
-    public function suibirLogoConacyt(Request $request){
+    public function suibirLogoConacyt(subirConacyt $request){
         $nuevo_nombre = 'sin imagen';
         if($request->hasFile('logo')){
             
