@@ -56,14 +56,14 @@
                         <div class="">
                             <div class="row">
                                 <div class="">
-                                    <div class="navigation" style="width:100%">
+                                    <div class="navigation" style="width:100%;position:fixed">
                                         <div id="navigation">
                                             <ul>
                                                 @php
                                                 $ruta = auth('admin')->user() ? 'admin.logout' : 'logout';
                                                 @endphp
                                                 <li class="has-sub">
-                                                    <div class="aliga" style="background-color: #007bff ; color: white; padding: 10px;">
+                                                    <div class="aliga" style="border-radius: 4px 0 0 4px;background-color: #007bff ; color: white; padding: 10px;">
                                                         <span><i class="fas fa-bars"></i>
                                                     </div>
                                                     <ul class="loginUsuario">

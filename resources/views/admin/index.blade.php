@@ -85,7 +85,7 @@
 var rutaBaseSemana = "{{route('semana.index')}}";
 var rutalistSemanas = "{{route('semana.listSemanas')}}";
 var SITEURL = "{{URL::to('/')}}";
-var logoURL = "{{url('img/semanaLogo')}}";
+var logoURL = "{{url('storage/img/semanaLogo')}}";
 var rutaReactivar = "{{ url('admin/semana/reactivar')}}";
 </script>
 <script src="{{ asset('js/admin/panelControl/semana.js') }}"></script>

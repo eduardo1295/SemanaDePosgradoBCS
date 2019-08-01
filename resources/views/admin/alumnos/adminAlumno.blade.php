@@ -42,13 +42,13 @@
                     <tr>
                         <th>id</th>
                         <th class="all">No. Control</th>
-                        <th class="all">Institución</th>
+                        <th class="min-tablet-l">Institución</th>
                         <th class="none">Programa de estudios</th>
-                        <th>Nombre</th>
-                        <th>Primer apellido</th>
-                        <th>Segundo apellido</th>
-                        <th>Email</th>
-                        <th>Última Actualización</th>
+                        <th class="min-tablet-l">Nombre</th>
+                        <th class="not-mobile">Primer apellido</th>
+                        <th class="not-mobile">Segundo apellido</th>
+                        <th class="min-tablet-l">Email</th>
+                        <th class="not-mobile">Última Actualización</th>
                         <th class="all">Acciones</th>
                     </tr>
                 </thead>

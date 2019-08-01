@@ -1,7 +1,8 @@
 #snackbar {
+    word-wrap: break-word;
     visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
+    width: 50%;
+    margin: 0 auto;
     background-color: #51A351;
     color: #fff;
     text-align: center;
@@ -9,7 +10,7 @@
     padding: 16px;
     position: fixed;
     z-index: 1;
-    left: 50%;
+    left: 25%;
     bottom: 30px;
     font-size: 18px;
     padding-left: 25px;
@@ -17,9 +18,10 @@
   }
 
   #snackbarError {
+    word-wrap: break-word;
     visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
+    width: 50%;
+    margin: 0 auto;
     background-color: #BD362F;
     color: #fff;
     text-align: center;
@@ -27,7 +29,7 @@
     padding: 16px;
     position: fixed;
     z-index: 1;
-    left: 50%;
+    left: 25%;
     bottom: 30px;
     font-size: 18px;
     padding-left: 25px;

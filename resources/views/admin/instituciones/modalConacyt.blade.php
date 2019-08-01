@@ -15,9 +15,9 @@
                     </div>
                 </div>                    
                 <div class="col-12 pt-2">
-                    @if(file_exists( public_path(). '/img/logo/conacyt.png'))
+                    @if(file_exists( public_path(). '/storage/img/logo/conacyt.png'))
                         <label for="">Imagen actual:</label> <br>
-                        <img src="{{ asset('img/logo/conacyt.png') }}" alt="" width="125px" height="90px">
+                        <img src="{{ asset('storage/img/logo/conacyt.png') }}" alt="" width="125px" height="90px">
                     @endif
                 </div>
                 

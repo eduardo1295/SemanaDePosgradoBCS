@@ -27,7 +27,7 @@
                             <strong><p id="imagenslider"> Imagen: </label><label class="text-danger"> *</label></p></strong>
                             <div class="custom-file">
                                 <input type="file" name="imagenCarrusel" class="custom-file-input" id="imagenCarrusel" lang="es"
-                                    onchange="readURL(this,'vistaPrevia');mostrar('nuevaImagen');">
+                                accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this,'vistaPrevia');mostrar('nuevaImagen');">
                                 <label for="imagen" class="custom-file-label">Seleccionar Archivo
                             </div>
 

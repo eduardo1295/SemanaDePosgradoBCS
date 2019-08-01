@@ -271,7 +271,7 @@ class UserController extends Controller
     public function guardarContrasena(UpdateContrasenaRequest $request){
         
         $user = User::find(auth()->user()->id);
-        //$admin->password = bcrypt($request->password);
+        $user->password = bcrypt($request->password);
         $user->primerContrasena = Carbon::now();
         $user->save();
         

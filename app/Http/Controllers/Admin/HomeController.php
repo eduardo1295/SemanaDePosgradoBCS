@@ -56,7 +56,7 @@ class HomeController extends Controller
     public function guardarContrasena(UpdateContrasenaRequest $request){
         
         $admin = Admin::find(auth('admin')->user()->id);
-        //$admin->password = bcrypt($request->password);
+        $admin->password = bcrypt($request->password);
         $admin->primerContrasena = Carbon::now();
         $admin->save();
         

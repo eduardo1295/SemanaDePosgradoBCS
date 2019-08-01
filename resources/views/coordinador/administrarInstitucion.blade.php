@@ -130,7 +130,7 @@ var tablePrograma;
 var tableAlumno;
 /*var tableSesion;*/
 var tableLocacion;
-var imagenRuta = "{{url('img/logo')}}";
+var imagenRuta = "{{url('storage/img/logo')}}";
 var rutaBaseInstitucion = "{{ route('institucion.index')}}";
 var rutaEditarInstitucion = "{{ route('institucion.index')}}/{{ auth()->user()->id_institucion }}/editar";
 var rutaBasePrograma = "{{ route('programa.index')}}";

@@ -20,5 +20,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //meter rutas de logout
+        "/logout*",
+        "admin/logout*",
     ];
 }

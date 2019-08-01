@@ -40,7 +40,7 @@
                             <strong><label id="ligaConvo"> Convocatoria</label><label class="text-danger">*</label></strong>
                             <div class="custom-file">
                                 <input type="file" name="convocatoria" class="custom-file-input" id="convocatoria"
-                                    lang="es">
+                                    lang="es" accept="application/pdf">
                                 <label for="convocan" class="custom-file-label">Seleccionar Archivo</label>
                             </div>
                             <small><span class="mensajeError text-danger" id="convocatoria_error"></span></small>
@@ -63,7 +63,7 @@
                             <strong><p id="logos"> Logo del evento:</p></strong>
                             <div class="custom-file">
                                 <input type="file" name="imagensemana" class="custom-file-input" id="imagensemana"
-                                    lang="es" onchange="readURL(this,'vistaPrevia');mostrar('nuevoLogo');">
+                                    lang="es" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this,'vistaPrevia');mostrar('nuevoLogo');">
                                 <label for="imagen" class="custom-file-label">Seleccionar Archivo</label>
                             </div>
 

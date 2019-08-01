@@ -50,6 +50,7 @@ class RevisionTrabajo extends Notification
                     ->line(new HtmlString('Tu director de tesis ha revisado tu Trabajo, tu trabajo fue: <strong> <label style="text-decoration: underline">'.$this->mensaje['revisado'].'</label></strong>'))
                     ->line(new HtmlString('<strong>Comentarios:</strong>'))
                     ->line(new HtmlString('<i>'.$this->mensaje['comentario'].'</i>'))
+                    ->subject("Revisión trabajo")
                     ->action('Modificar trabajo',route('trabajo.show',$this->id_trabajo));
     }
 

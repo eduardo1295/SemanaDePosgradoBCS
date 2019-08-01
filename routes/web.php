@@ -119,7 +119,7 @@ Route::get('sesion/listSesiones', 'SesionController@listSesiones')->name('sesion
 Route::post('sesion/alumnosSeleccionados/{opcion}/{idSesion}', 'SesionController@alumnosSeleccionados')->name('sesion.alumnosSeleccionados');
 Route::resource('sesion', 'SesionController');
 
-Route::get('/subirTrabajo', 'TrabajoController@subirTrabajo')->name('trabajo.subirTrabajo');
+Route::get('/subirTrabajo', 'TrabajoController@subirTrabajo')->name('trabajosubirTrabajo');
 Route::post('/revisionTrabajo', 'TrabajoController@revisionTrabajo')->name('trabajo.revisionTrabajo');
 
 /*LISTO*/

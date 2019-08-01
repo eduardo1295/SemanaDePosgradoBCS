@@ -68,7 +68,7 @@ class TrabajoController extends Controller
         if($request->hasFile('url')){
             $trabajoAlumno = $request->url;
             $nuevo_nombre = auth()->user()->nombre.'_'.auth()->user()->primer_apellido.'_'.auth()->user()->segundo_apellido . '.' . $trabajoAlumno->getClientOriginalExtension();
-            $trabajoAlumno->move(public_path('documentos/trabajos'), $nuevo_nombre);
+            $trabajoAlumno->move(public_path('/storage/documentos/trabajos'), $nuevo_nombre);
         }
         elseif (isset($request->auxUrl)) {
             $nuevo_nombre = $request->auxUrl;
