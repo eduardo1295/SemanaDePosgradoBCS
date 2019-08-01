@@ -35,9 +35,9 @@
                     $('#vistaPrevia').prop('src', "");
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     if(data.nombre != 'sin imagen')
-                        $('#imgslide').prop('src', "/img/fondo/" + data.nombre+'/?'+unique);
+                        $('#imgslide').prop('src', SITEURL+"/storage/img/fondo/" + data.nombre+'/?'+unique);
                     if(data.nombreAdmin != 'sin imagen')
-                        $('#imgslide2').prop('src', "/img/fondo/" + data.nombreAdmin+'/?'+unique);
+                        $('#imgslide2').prop('src', SITEURL+"/storage/img/fondo/" + data.nombreAdmin+'/?'+unique);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

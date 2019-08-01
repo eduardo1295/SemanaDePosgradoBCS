@@ -15,7 +15,7 @@
 							<input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-describedby="c1" value="{{old('email')}}" required>
 							<small><span class="text-danger">{{$errors->first('email')}}</span></small>
 					</div>
-					<div class="col-md-10 offset-1">
+					<div class="col-10 offset-1">
 							<label for="password"><strong>Contraseña:</strong></label>
 							<div class="input-group mb-3">
 								<input id="password" type="password" class="form-control"
@@ -42,7 +42,7 @@
 					</div>
 					
 					<div class="col-12 pb-3 pt-3">
-							<input type="submit" value="Login" class="btn btn-primary mx-auto  w-100">
+							<input type="submit" value="Iniciar sesión" class="btn btn-primary mx-auto  w-100">
 							<small id="" class="text-muted"><a href="{{route('admin.password.request')}}">Olvidé mi contraseña</a></small>
 					</div>
 				</div>

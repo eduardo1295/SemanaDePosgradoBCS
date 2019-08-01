@@ -22,24 +22,24 @@
                             <input type="text" name="nombre" id="nombre" value="{{$usuario->nombre}}" class="form-control" max="40">
                             <small><span class="text-danger mensajeError errorposgrado" id="nombre_error"></span></small>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-12 col-md-6">
                             <strong><label for="primer_apellido" class="control-label">Apellido paterno</label><label class="text-danger">*</label></strong>
                             <input type="text" name="primer_apellido" id="primer_apellido" value="{{$usuario->primer_apellido}}" class="form-control" max="30">
                             <small><span class="text-danger mensajeError errorposgrado" id="primer_apellido_error"></span></small>
                         </div>
                         
-                        <div class="form-group col-6">
+                        <div class="form-group col-12 col-md-6">
                                 <strong><label for="segundo_apellido" class="control-label">Apellido materno</label></strong>
                                 <input type="text" name="segundo_apellido" id="segundo_apellido" value="{{$usuario->segundo_apellido}}" class="form-control" max="30">
                                 <small><span class="text-danger mensajeError errorposgrado" id="segundo_apellido_error"></span></small>
                         </div>
                         @yield('camposExtras','')
-                        <div class="form-group col-6">
+                        <div class="form-group col-12 col-md-6">
                                 <strong><label for="primer_apellido" class="control-label">Correo Electrónico</label><label class="text-danger">*</label></strong>
                                 <input type="text" name="email" id="email" value="{{$usuario->email}}" class="form-control" max="60">
                                 <small><span class="text-danger mensajeError errorposgrado" id="email_error"></span></small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-12 col-md-6">
                             <strong><label for="password" class="control-label">Contraseña</label></strong>
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control" id="password" name="password"

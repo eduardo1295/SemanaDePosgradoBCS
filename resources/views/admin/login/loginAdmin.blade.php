@@ -15,7 +15,7 @@
 							<input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-describedby="c1" value="{{old('email')}}" required>
 							<small><span class="text-danger">{{$errors->first('email')}}</span></small>
 					</div>
-					<div class="form-group col-9 offset-1">
+					<div class="form-group col-10 offset-1">
 							<label for="password"><strong>Contraseña:</strong></label>
 							<input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" aria-describedby="c2" required>
 							<small><span class="text-danger">{{$errors->first('password')}}</span></small>
