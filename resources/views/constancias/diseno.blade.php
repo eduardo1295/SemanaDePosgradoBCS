@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12 mx-auto">
                 <form id="constanciaForm" name="constanciaForm" class="form-horizontal" enctype="multipart/form-data">
-                    <label for="logo" class="col-12 pl-0" style="text-align:start">Imagen de Fondo</label>
+                    <label for="logo" class="col-12 pl-0" style="text-align:start">Imagen de fondo</label>
                     <div class="form-row">
                         <div class="form-group custom-file col-8">
                             <input type="file" name="fondo" class="custom-file-input" id="fondo" lang="es"

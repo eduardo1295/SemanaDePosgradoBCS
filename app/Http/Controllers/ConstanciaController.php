@@ -115,14 +115,14 @@ class ConstanciaController extends Controller
 		' FROM constancias'.
         ' WHERE id_semana = ?',[$semana[0]->id_semana]);
 
-        $pathDirectorio = public_path('storage\\img\\constancia');
-        if(!is_dir($pathDirectorio)){
+        $pathDirectorio = public_path('storage/img/constancia');
+        if(is_dir($pathDirectorio)==false){
             //File::makeDirectory($pathDirectorio);
             mkdir($pathDirectorio);
-            mkdir($pathDirectorio.'\\'.$semana[0]->id_semana);
+            mkdir($pathDirectorio.'/'.$semana[0]->id_semana);
         }else{
-            if(!is_dir($pathDirectorio.'\\'.$semana[0]->id_semana))
-                mkdir($pathDirectorio.'\\'.$semana[0]->id_semana);
+            if(is_dir($pathDirectorio.'/'.$semana[0]->id_semana)==false)
+                mkdir($pathDirectorio.'/'.$semana[0]->id_semana);
         }
             
         if(count($constancia)>0){

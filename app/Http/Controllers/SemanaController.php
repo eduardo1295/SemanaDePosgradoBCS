@@ -75,7 +75,7 @@ class SemanaController extends Controller
 
         
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
-        $carrusel = Carrusel::select('id','link_web','url_imagen')->get();
+        $carrusel = Carrusel::select('id','link_web','url_imagen')->orderBy('fecha_actualizacion','desc')->get();
         //dd(Auth::guard()->user());
         $vistas = VistaLogin::All();
         return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel','cadena','fInicio','fFin','vistas']));

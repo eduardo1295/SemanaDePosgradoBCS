@@ -124,7 +124,8 @@ class CarruselController extends Controller
             if(!$validator->fails()){
                 $imagencarrusel = $request->file('imagenCarrusel');
                 $nuevo_nombre = date("m-d-Y_h-i-s") ."_".$request->id_carrusel . '.' . $imagencarrusel->getClientOriginalExtension();
-                $imagencarrusel->storeAs('public/img/carrusel',$nuevo_nombre);
+                //$imagencarrusel->storeAs('public/img/carrusel',$nuevo_nombre);
+                $imagencarrusel->move(public_path('storage/img/carrusel'), $nuevo_nombre);
             }else{
                 $sinerror='falso';
             }
@@ -146,9 +147,13 @@ class CarruselController extends Controller
             $carrusel->creado_por= 1;
             $carrusel->save();
             if($carrusel && $imgBorrar != "sin_liga"){
-                $pathDirectorio = storage_path('img\\carrusel').'\\'.$imgBorrar;
-                if(Storage::disk('local')->exists($pathDirectorio)){
-                    Storage::delete($pathDirectorio);
+                $pathDirectorio = public_path('storage/img/carrusel').'/'.$imgBorrar;
+                // if(Storage::disk('local')->exists($pathDirectorio)){
+                //     Storage::delete($pathDirectorio);
+                // }
+                if(File::exists($pathDirectorio)){
+                    File::delete($pathDirectorio);
+                //Storage::delete('img\\carrusel\\'.$carrusel->url_imagen);
                 }
             }
             //$institucion->update($request->all());
@@ -169,18 +174,17 @@ class CarruselController extends Controller
     public function destroy(Request $request, $id)
     {
         if($request->ajax()){
-        $carrusel = Carrusel::where('id',$id)->first();
+            $carrusel = Carrusel::where('id',$id)->first();
 
-        $pathDirectorio = public_path('storage\\img\\carrusel').'\\'.$carrusel->url_imagen;
-        
-        if(File::exists($pathDirectorio)){
-          //File::delete($pathDirectorio);
-          //Storage::delete('img\\carrusel\\'.$carrusel->url_imagen);
+            $pathDirectorio = public_path('storage/img/carrusel').'/'.$carrusel->url_imagen;
+            
+            if(File::exists($pathDirectorio)){
+                File::delete($pathDirectorio);
+            //Storage::delete('img\\carrusel\\'.$carrusel->url_imagen);
+            }
+            $carrusel->forceDelete();
 
-        }
-        $carrusel->forceDelete();
-
-        return \Response::json($carrusel);
+            return \Response::json($carrusel);
         }else{
             return abort(403);
         }
