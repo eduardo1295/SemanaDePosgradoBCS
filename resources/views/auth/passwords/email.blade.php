@@ -25,6 +25,18 @@
         width: 700px;
         z-index: 9999;
     }
+    @media (min-width: 0px) and (max-width: 576px){
+        .alert-warning{
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            margin-left: -225px;
+            /* margin: 0 auto; */
+            width: 450px;
+            z-index: 9999;
+        }
+        
+    }
 
 </style>
 @endsection
