@@ -84,7 +84,7 @@ $("#btn-save").click(function () {
     $('#btn-save').html('Guardando..');
     if (actionType == "editar") {
         var id = $('#id_locacion').val();
-        var ruta = "/locacion/" + id;
+        var ruta = rutaBaseLocacion + "/" + id;
         var datos = new FormData($("#locacionForm")[0]);
         console.log(Array.from(datos));
         datos.append('_method', 'PUT');
@@ -112,7 +112,7 @@ $("#btn-save").click(function () {
                 $('#locacionForm').trigger("reset");
                 $('#btn-save').html('Guardar');
                 //recargar serverside
-                var oTable = $('#locacion').dataTable();
+                var oTable = $('#locacionesDT').dataTable();
                 oTable.fnDraw(false);
                 //recargar sin serverside
                 //$('#instituciones').DataTable().ajax.reload();
@@ -140,7 +140,7 @@ $("#btn-save").click(function () {
         console.log(Array.from(datos));
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            url: "/locacion",
+            url: rutaBaseLocacion,
             type: "POST",
             data: datos,
             dataType: 'JSON',
@@ -159,7 +159,7 @@ $("#btn-save").click(function () {
                 
                 $('#btn-save').html('Guardar');
                 //recargar serverside
-                var oTable = $('##locacionesDT').dataTable();
+                var oTable = $('#locacionesDT').dataTable();
                 oTable.fnDraw(false);
                 //recargar sin serverside
                 //$('#instituciones').DataTable().ajax.reload();
@@ -209,10 +209,10 @@ $('body').on('click', '.eliminarLocacion', function () {
                     $.ajax({
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         type: "DELETE",
-                        url: "/locacion/" + locacion_id,
+                        url: rutaBaseLocacion+ "/" + locacion_id,
                         success: function (data) {
 
-                            if (table.data().count() == 1) {
+                            if (tableLocacion.data().count() == 1) {
                                 $('#locacionesDT').DataTable().ajax.reload();
                             } else {
                                 var oTable = $('#locacionesDT').dataTable();
