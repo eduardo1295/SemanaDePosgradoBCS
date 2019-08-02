@@ -123,14 +123,14 @@ $("#btn-save").click(function () {
             },
             success: function (data) {
                 if(data == "cruze"){
-                    $('#hora_inicio_error').text('Los horarios se Cruzan con otra sesión');
+                    $('#hora_inicio_error').text('El horario se cruza con otra sesión');
                 }
                 else if(data =="seleccion"){
-                    $('#participantes_error').text('No ha seleccionado ningun Alumno');
+                    $('#participantes_error').text('Debe seleccionar por lo menos un alumno');
                 }
                 else{
                     $('#mostrar_alumnos').html('');
-                    mostrarSnack("Sesión editada exitosamente.");
+                    mostrarSnack("Sesión actualizada exitosamente.");
                     $('#sesion-crud-modal').modal('hide');
                     $('#sesionForm').trigger("reset");
                 }
@@ -177,14 +177,14 @@ $("#btn-save").click(function () {
             },
             success: function (data) {
                 if(data == "cruze"){
-                    $('#hora_inicio_error').text('Los horarios se Cruzan con otra sesión');
+                    $('#hora_inicio_error').text('El horario se cruza con otra sesión');
                 }
                 else if(data =="seleccion"){
-                    $('#participantes_error').text('No ha seleccionado ningun Alumno');
+                    $('#participantes_error').text('Debe seleccionar por lo menos un alumno');
                 }
                 else{
                     $('#mostrar_alumnos').html('');
-                    mostrarSnack("sesion agregada exitosamente.");
+                    mostrarSnack("Sesión creada exitosamente.");
                     $('#sesion-crud-modal').modal('hide');
                     $('#sesionForm').trigger("reset");
                 }
@@ -250,14 +250,11 @@ $('body').on('click', '.eliminarSesion', function () {
                                 var oTable = $('#sesion').dataTable();
                                 oTable.fnDraw(false);
                             }
-
-                            var x = document.getElementById("snackbar");
-                            x.innerHTML="<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen eliminada exitosamente.";
-                            x.className = "show";
-                            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+                            mostrarSnack('Sesión eliminada exitosamente');
+                            
                         },
                         error: function (data) {
-                            console.log('Error:', data);
+                            mostrarSnackError('Error al eliminar sesión');
                         }
                     });
                 }

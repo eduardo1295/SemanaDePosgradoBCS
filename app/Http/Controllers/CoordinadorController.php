@@ -22,6 +22,7 @@ class CoordinadorController extends Controller
         $this-> middleware(['auth','verificarcontrasena'])->only('index');
         $this-> middleware(['esusuario'])->only(['store','update','edit','destroy']);
         //$this->middleware(['verificarcontrasena','verified'])->only(['edit']);
+        $this->middleware(['roles:coordinador'])->only(['index']);
      }
     /**
      * Display a listing of the resource.
@@ -37,9 +38,9 @@ class CoordinadorController extends Controller
 		 instituciones.url_logo, instituciones.ciudad, 
 		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
 		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
         /*Agregado Rente para la cuestion de sesiones*/
@@ -87,7 +88,7 @@ class CoordinadorController extends Controller
             'primer_apellido'   => ucfirst($request->primer_apellido), 
             'segundo_apellido'  => ucfirst($request->segundo_apellido), 
             'id_institucion'    => $request->id_institucion,
-            'id_semana' => $idSemana,
+            //'id_semana' => $idSemana,
         ]);
         
         
@@ -152,17 +153,17 @@ class CoordinadorController extends Controller
         if(auth()->user()){
             if(auth()->user()->id != $id)
                 return abort(403);
-            $instituciones = DB::select(DB::raw("
-        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
-		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
-		 instituciones.url_logo, instituciones.ciudad, 
-		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
-		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
-		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones WHERE deleted_at IS NULL;
-         "));
+                $instituciones = DB::select(DB::raw("
+                SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+                 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+                 instituciones.url_logo, instituciones.ciudad, 
+                 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+                 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+                 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+                 (SELECT email 
+                 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+                 FROM instituciones WHERE deleted_at IS NULL;
+                 "));
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
             $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();
             return view('coordinador.editarCoordinador',compact(['usuario','semana','instituciones']));
@@ -181,15 +182,16 @@ class CoordinadorController extends Controller
      */
     public function update(UpdateCoordinadorRequest $request, $id)
     {
-        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
-
+        //$idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+        $buscar = Semana::select('id_semana','id_sede','vigente')->where('vigente',1)->get();
+        //$idSemana = $buscar[0]->id_semana;
         $user = User::find($id);
         $user->email = $request->email;
         $user->nombre = ucfirst($request->nombre);
         $user->primer_apellido = ucfirst($request->primer_apellido);
         $user->segundo_apellido = ucfirst($request->segundo_apellido);
         $user->id_institucion = $request->id_institucion;
-        $user->id_semana = $idSemana;
+        //$user->id_semana = $idSemana;
         
 
         if(!empty($request->password))
@@ -200,6 +202,16 @@ class CoordinadorController extends Controller
         if($user){
             $user->coordinadores()->update(['puesto'=> ucfirst($request->puesto)]);
             $user->roles()->sync([$user->id => ['id_rol'=>'3']]);
+            if($request->id_institucion == $buscar[0]->id_sede){
+                DB::table('rol_usuario')
+                ->where('id_rol',2)
+                ->delete();
+                $buscarUsuario = DB::select("SELECT users.id FROM rol_usuario ,users WHERE id_institucion = ? AND users.id = rol_usuario.id_usuario AND rol_usuario.id_rol = 3;", [$request->id_institucion]);
+                if(count($buscarUsuario)>0)
+                DB::table('rol_usuario')->insert(
+                    ['id_usuario' => $buscarUsuario[0]->id, 'id_rol' => 2,'fecha_creacion' => date("Y-m-d H:i:s"), 'fecha_actualizacion' => date("Y-m-d H:i:s")]
+                );
+            }
         }
         
         return \Response::json($user);

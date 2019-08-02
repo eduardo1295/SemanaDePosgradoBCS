@@ -66,9 +66,13 @@ class ProgramaController extends Controller
         
         $programa = new Programa;
         
-        if(auth('admin')->user()){
+        if(auth('admin')->user() || $request->has('id_institucion_pro')){
             $programa->id_institucion = $request->id_institucion_pro;
-            $programa->creado_por= auth('admin')->user()->id;
+            if(auth()->user())
+                $programa->creado_por = auth()->user()->id;
+            else {
+                $programa->creado_por = 0;
+            }
         }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
             $programa->id_institucion = auth()->user()->id_institucion;
             $programa->creado_por= auth()->user()->id;
@@ -156,9 +160,13 @@ class ProgramaController extends Controller
         }
         */
 
-        if(auth('admin')->user()){
+        if(auth('admin')->user() || $request->has('id_institucion_pro')){
             $programa->id_institucion = $request->id_institucion_pro;
-            $programa->actualizado_por= auth('admin')->user()->id;
+            if(auth()->user())
+                $programa->creado_por = auth()->user()->id;
+            else {
+                $programa->creado_por = 0;
+            }
         }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
             $programa->id_institucion = auth()->user()->id_institucion;
             $programa->creado_por= auth()->user()->id;
@@ -212,7 +220,8 @@ class ProgramaController extends Controller
     public function programa(){
         $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre')->get();
-        return view('admin.programa.adminPrograma',compact(['instituciones','semana']));   
+        $esadmin = true;
+        return view('admin.programa.adminPrograma',compact(['instituciones','semana','esadmin']));   
     }
 
 
@@ -272,6 +281,7 @@ class ProgramaController extends Controller
     public function programaGeneral(){
         $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre')->get();
+        
         return view('admin.programa.programaGeneral',compact(['instituciones','semana']));   
     }
     public function subirProgramaGeneral(ProgramaGeneral $request){
@@ -300,9 +310,9 @@ class ProgramaController extends Controller
 		 instituciones.url_logo, instituciones.ciudad, 
 		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
 		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
 

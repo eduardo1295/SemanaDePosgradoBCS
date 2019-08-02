@@ -20,7 +20,7 @@
     <div style="width: 100% ; ">
       <div style="width:80%;  float: left; margin: 0">
            Programación: Sesión de {{$modalidad->nombre}} <br>
-           <small>{{$semana->nombre}} del {{$fInicio}}  a {{$fFin}} </small>
+           <small>{{$semana->nombre}} del {{$fInicio}}  al {{$fFin}} </small>
       </div>
       <div style="width: 20%;  float: left; margin: 0">
           @if(isset($semana->url_logo))
@@ -47,7 +47,7 @@
                 $horaFin = $horaFin->format('H:i');
                 @endphp
                 @if($dia == "")
-                <div>{{$fecha.', Hora:('.$horaInicio .' - '.$horaFin.')'.'  Lugar: '.$trab->lugar}}</div>
+                <div>{{ ucfirst($fecha).' de '.$horaInicio .' a '.$horaFin.','.'  lugar:'.$trab->lugar}}</div>
                 <table  style="width: 100%; padding-top: 0px;">
                     <thead>
                       <tr>
@@ -57,7 +57,7 @@
                       <th style="text-align: center; ">Nombre           </th>
                       <th style="text-align: center; ">Institución      </th>
                       <th style="text-align: center; ">Área      </th>
-                      <th style="text-align: center; ">Titulo           </th>
+                      <th style="text-align: center; ">Título           </th>
                       </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@
                 @php $x = 1; @endphp
                 </tbody>
                 </table>
-                <div style="margin-top: 25px;">{{$fecha.' ('.$horaInicio .' - '.$horaFin.') '.'  Lugar: '.$trab->lugar}}</div>
+                <div style="margin-top: 25px;">{{ ucfirst($fecha).' de '.$horaInicio .' a '.$horaFin.', '.'  lugar:'.$trab->lugar}}</div>
                 <table  style="width: 100%; margin-top: 0px; padding-top: 0px" >
                   <thead>
                     <tr>
@@ -78,7 +78,7 @@
                       <th style="text-align: center; ">Nombre           </th>
                       <th style="text-align: center; ">Institución      </th>
                       <th style="text-align: center; ">Área      </th>
-                      <th style="text-align: center; ">Titulo           </th>
+                      <th style="text-align: center; ">Título           </th>
                     </tr>
                   </thead>
                   <tbody>

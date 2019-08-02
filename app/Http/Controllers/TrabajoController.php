@@ -33,7 +33,8 @@ class TrabajoController extends Controller
     */
     public function __construct(){
         $this-> middleware('auth')->only(['store','show','subirTrabajo']);
-        $this->middleware(['verificarcontrasena','verified'])->only(['subirTrabajo']);
+        $this->middleware(['verificarcontrasena','verified','roles:alumno'])->only(['subirTrabajo']);
+        $this->middleware(['roles:director'])->only(['show','revisionTrabajo']);
     }
     /**
      * Display a listing of the resource.
@@ -216,15 +217,15 @@ class TrabajoController extends Controller
 		 instituciones.url_logo, instituciones.ciudad, 
 		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
 		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
         $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->first();
-        $director = User::find(auth()->user()->alumnos()->get()[0]->id_director);
+        $director = User::withTrashed()->find(auth()->user()->alumnos()->get()[0]->id_director);
         
         return view('trabajo.subirTrabajo', compact(['director','semana','instituciones','programa','modalidades','trabajo']));
     }

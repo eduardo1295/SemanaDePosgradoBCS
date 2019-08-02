@@ -33,7 +33,7 @@
             <strong><label for="direccion_web" class="control-label">Dirección Web</label><label class="text-danger">*</label></strong>
 
             <input type="text" class="form-control" id="direccion_web" name="direccion_web"
-                placeholder="Ingrese la URL de la institución" value="" required="">
+                placeholder="Ingrese la URL de la institución" value="" required="" maxlength="100">
             <small><span class="mensajeError text-danger" id="direccion_web_error"></span></small>
 
         </div>
@@ -41,7 +41,7 @@
         <div class="form-group col-md-4">
             <strong><label for="telefono" class="control-label">Télefono</label><label class="text-danger">*</label></strong>
             <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Télefono" value=""
-                required="">
+                required="" maxlength="20">
             <small><span class="mensajeError text-danger" id="telefono_error"></span></small>
 
         </div>
@@ -51,7 +51,7 @@
             <strong><label for="ciudad" class="control-label">Ciudad</label><label class="text-danger">*</label></strong>
 
             <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ciudad de la institución"
-                value="" required="">
+                value="" required="" maxlength="30">
             <small><span class="mensajeError text-danger" id="ciudad_error"></span></small>
 
         </div>
@@ -60,7 +60,7 @@
             <strong><label for="calle" class="control-label">Calle</label><label class="text-danger">*</label></strong>
 
             <input type="text" class="form-control" id="calle" name="calle" placeholder="Calle de la institución"
-                value="" required="">
+                value="" required="" maxlength="30">
             <small><span class="mensajeError text-danger" id="calle_error"></span></small>
 
         </div>
@@ -68,7 +68,7 @@
         <div class="form-group col-md-2">
             <strong><label for="numero" class=" control-label">Número</label><label class="text-danger">*</label></strong>
 
-            <input type="text" class="form-control" id="numero" name="numero" placeholder="0000" value="" required="">
+            <input type="text" class="form-control" id="numero" name="numero" placeholder="0000" value="" required="" maxlength="5">
             <small><span class="mensajeError text-danger" id="numero_error"></span></small>
 
         </div>
@@ -78,7 +78,7 @@
             <strong><label for="colonia" class="control-label">Colonia</label><label class="text-danger">*</label></strong>
 
             <input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" value=""
-                required="">
+                required="" maxlength="30">
             <small><span class="mensajeError text-danger" id="colonia_error"></span></small>
 
         </div>
@@ -86,7 +86,7 @@
         <div class="form-group col-md-3">
             <strong><label for="cp" class="control-label">CP</label><label class="text-danger">*</label></strong>
 
-            <input type="text" class="form-control" id="cp" name="cp" placeholder="00000" value="" required="">
+            <input type="text" class="form-control" id="cp" name="cp" placeholder="00000" value="" required="" maxlength="10">
             <small><span class="mensajeError text-danger" id="cp_error"></span></small>
 
         </div>

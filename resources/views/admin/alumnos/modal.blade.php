@@ -9,7 +9,7 @@
                 <form id="alumnoForm" name="alumnoForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="alumno_id_al" id="alumno_id_al">
                     
-                            @if (auth('admin')->user())
+                    @if (isset($esadmin) && (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['subadmin']))))
                             <div class="form-group">
                         <strong><label for="institucionSelect_al">Institución</label><label class="text-danger"> *</label></strong>
                         <select class="form-control" id="institucionSelect_al" name="id_institucion_al">
@@ -72,9 +72,8 @@
                             <div class="form-group col-lg-3">
                                     <strong><label for="num_control_al" class="control-label">Número de control</label><label class="text-danger"> *</label></strong>
                                     <input type="text" class="form-control" id="num_control_al" name="num_control_al"
-                                        placeholder="Número de control" value="" maxlength="60" required="">
+                                        placeholder="Número de control" value="" maxlength="15" required="">
                                     <small><span class="mensajeError text-danger" id="num_control_al_error"></span></small>
-        
                                 </div>
 
                         <div class="form-group col-lg-2">
@@ -99,7 +98,6 @@
                             <input type="text" class="form-control" id="primer_apellido_al" name="primer_apellido_al"
                                 placeholder="Primer apellido" value="" maxlength="30" required="">
                             <small><span class="mensajeError text-danger" id="primer_apellido_al_error"></span></small>
-
                         </div>
 
                         <div class="form-group col-lg-6">

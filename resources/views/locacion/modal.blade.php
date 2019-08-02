@@ -9,7 +9,7 @@
                 <input type="hidden" name="id_locacion" id="id_locacion" class="id_locacion">
                 <div class="form-group">
                   <strong><label for="nombre">Nombre</label><label class="text-danger"> *</label></strong>
-                  <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre de la Locacion" aria-describedby="helpId">
+                  <input type="text" maxlength="60" name="nombre" id="nombre" class="form-control" placeholder="Nombre de la Locacion" aria-describedby="helpId">
                   <small><span class="text-danger mensajeError" id="nombre_error"></span></small>
                 </div>
                 </form>

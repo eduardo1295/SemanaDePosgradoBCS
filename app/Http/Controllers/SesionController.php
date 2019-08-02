@@ -213,11 +213,12 @@ class SesionController extends Controller
      */
     public function destroy($id)
     {   
-        $trabajos = Trabajo::where('id_sesion',$id)->get();
-        foreach ($trabajos as $trabajo) {
-            $trabajo->id_sesion = 0;
-            $trabajo->save();
-        }
+        // $trabajos = Trabajo::where('id_sesion',$id)->get();
+        // foreach ($trabajos as $trabajo) {
+        //     $trabajo->id_sesion = 0;
+        //     $trabajo->save();
+        // }
+        $trabajo = Trabajo::where('id_sesion', '=', $id)->update(['id_sesion' => 0]);
         $sesion = Sesion::find($id);
         
         $consulta ="SELECT id_alumno,sesiones.id_sesion,modalidad,titulo,id_programa,users.id_institucion,users.nombre,primer_apellido,segundo_apellido, dia,
