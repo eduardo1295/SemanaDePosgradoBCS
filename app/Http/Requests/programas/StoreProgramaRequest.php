@@ -3,6 +3,8 @@
 namespace App\Http\Requests\programas;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class StoreProgramaRequest extends FormRequest
 {
@@ -33,7 +35,7 @@ class StoreProgramaRequest extends FormRequest
             
             'periodo_pro' => 'required|string|max:30|in:Semestre,Trimestre,Cuatrimestre',
             
-            'id_institucion_pro' => 'required|max:10' 
+            'id_institucion_pro' => Rule::requiredIf(Auth::guard("admin")->user()).'|max:10' 
         ];
 
     }

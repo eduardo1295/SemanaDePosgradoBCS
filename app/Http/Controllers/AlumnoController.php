@@ -64,20 +64,20 @@ class AlumnoController extends Controller
     {
         if($request->ajax()){
         $auxInstitucion = "";
-        if (auth('admin')->user()){
+        if(auth('admin')->user() || $request->has('id_institucion_al')){
             $auxInstitucion = $request->id_institucion_al;
         }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
             $auxInstitucion = auth()->user()->id_institucion;
         }
 
         $user = new User([
-            'nombre'     => $request->nombre_al,
+            'nombre'     => ucfirst($request->nombre_al),
             'email'     => $request->email_al,
             'password' => bcrypt($request->password_al),
-            'primer_apellido'   => $request->primer_apellido_al, 
-            'segundo_apellido'  => $request->segundo_apellido_al, 
+            'primer_apellido'   => ucfirst($request->primer_apellido_al), 
+            'segundo_apellido'  => ucfirst($request->segundo_apellido_al), 
             'id_institucion'    => $auxInstitucion,
-            'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
+            //'id_semana' => Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana,
         ]);
         $user->save();
         
@@ -121,17 +121,17 @@ class AlumnoController extends Controller
             if(auth()->user()->id != $id){
                 return abort(403);
             }
-                $instituciones = DB::select(DB::raw("
-        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
-		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
-		 instituciones.url_logo, instituciones.ciudad, 
-		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
-		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
-		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones WHERE deleted_at IS NULL;
-         "));
+            $instituciones = DB::select(DB::raw("
+            SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+             instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+             instituciones.url_logo, instituciones.ciudad, 
+             CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+             (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+             FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+             (SELECT email 
+             FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+             FROM instituciones WHERE deleted_at IS NULL;
+             "));
                 $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
                 $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
                 return view('alumno.editarAlumno',compact(['usuario','semana','instituciones']));
@@ -172,12 +172,12 @@ class AlumnoController extends Controller
             $user->nombre = ucfirst($request->nombre_al);
             $user->primer_apellido = ucfirst($request->primer_apellido_al);
             $user->segundo_apellido = ucfirst($request->segundo_apellido_al);
-            if (auth('admin')->user()){
+            if(auth('admin')->user() || $request->has('id_institucion_al')){
                 $user->id_institucion = $request->id_institucion_al;
             }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
                 $user->id_institucion = auth()->user()->id_institucion;
             }
-            $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+            //$user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
             
             if(!empty($request->password_al))
                 $user->password = bcrypt($request->password_al);
@@ -239,7 +239,9 @@ class AlumnoController extends Controller
     public function alumnos(){
         $semana = Semana::select('id_semana','vigente','url_logo')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre')->get();
-        return view('admin.alumnos.adminAlumno',compact(['instituciones','semana']));   
+        $esadmin = true;
+        
+        return view('admin.alumnos.adminAlumno',compact(['instituciones','semana','esadmin']));   
     }
 
     /**
@@ -252,7 +254,9 @@ class AlumnoController extends Controller
         $semana = DB::select(DB::raw("SELECT semanas.id_semana	
 		FROM semanas
         WHERE vigente = 1"));
-        $id_selectSemana = $semana[0]->id_semana;
+        $id_selectSemana = 0;
+        if(count($semana)>0)
+            $id_selectSemana = $semana[0]->id_semana;
         $busqueda = $request->busqueda;
         if($busqueda == 'activos' || $busqueda == 'activoscoor'){
             //AND users.id_institucion = ?'
@@ -433,7 +437,7 @@ class AlumnoController extends Controller
         $pdf->loadView('alumno.generarGafete',['alumno' => $alumno, 'imagenes' => $imagenes, 'semana' => $semana]);
         
         $output = $pdf->output();
-        File::put(public_path().'/gafete.pdf',$output);
+        File::put(public_path().'/storage/gafete.pdf',$output);
 
         $instituciones = DB::select(DB::raw("
         SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
@@ -441,9 +445,9 @@ class AlumnoController extends Controller
 		 instituciones.url_logo, instituciones.ciudad, 
 		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
 		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
         
@@ -526,7 +530,7 @@ class AlumnoController extends Controller
                         $fail($attribute.' is invalid');
                     }
                 },*/
-                'id_programa'  => 'required|exists:programas,id_programa',
+                'programa'  => 'required|exists:programas,id_programa',
                 //'usuario.*.id_programa'  => 'required',Rule::exists('programas')->where(function($query){$query->where('id_programa','MCMRC');}),
                 //'email_director'  => 'required|exists:users,email',
                 /*'email_director'  => 'required|exists:users,email|',function($attribute, $value, $fail){
@@ -549,14 +553,15 @@ class AlumnoController extends Controller
                             }
                         }
                         if (!$encontrado) {
-                            $fail('Director de tesis no se encuentra registrado.');
+                            $fail('El email del director de tesis no se encuentra registrado.');
                         }
                     },
                 ]  
             ];
             $messages = [
+                'email_director.exists' => 'El email del director de tesis es inválido.',
                 'email.unique' => 'Email ya se encuentra registrado o aparece más de una vez en su archivo.',
-                'num_control.unique' => 'Número de control ya se encuentra registrado o aparece más de una vez en su archivo.',
+                'num_control.unique' => 'El número de control ya se encuentra registrado o aparece más de una vez en su archivo.',
             ];
 
             $rulesArreglo = [
@@ -592,7 +597,7 @@ class AlumnoController extends Controller
                             $alumno = new Alumno([
                                 //'id_usuario'=>User::select('id')->where('email','=',$user->email)->get()[0]->id,
                                 'id'=>$user->id,
-                                'id_programa'=>Programa::select('id')->where('id_programa','=',$row['id_programa'])->get()[0]->id,
+                                'id_programa'=>Programa::select('id')->where('id_programa','=',$row['programa'])->get()[0]->id,
                                 'id_director'=>User::select('id')->where('email','=',$row['email_director'])->get()[0]->id,
                                 'semestre'=>$row['semestre'],
                                 'num_control'=>$row['num_control'],

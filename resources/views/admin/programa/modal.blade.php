@@ -17,7 +17,7 @@
                                     value="" maxlength="100" required="">
                                 <small><span class="text-danger mensajeError" id="id_programa_pro_error"></span></small>
                         </div>
-                        @if (auth('admin')->user())
+                        @if (isset($esadmin) && (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['subadmin']))))
                             <div class="form-group col-12 col-sm-6">
                                 <strong><label for="id_institucion" class="control-label">Institución</label><label class="text-danger">*</label></strong>
                                 <select class="form-control" id="id_institucion_pro" name="id_institucion_pro">

@@ -12,13 +12,9 @@
                     <div class="form-group">
                         <strong><label for="link_web" class="control-label">Link para la imagen</label><label class="text-danger"> *</label></strong>
                         <input type="text" class="form-control" id="link_web" name="link_web" placeholder="Link para la imagen"
-                            value="" maxlength="500" required="">
+                            value="" maxlength="100" required="">
                         <small><span class="mensajeError text-danger" id="link_web_error"></span></small>
-
                     </div>
-
-
-
 
                     <div class="form-row">
 

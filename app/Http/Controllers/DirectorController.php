@@ -23,7 +23,8 @@ class DirectorController extends Controller
         //$this->middleware('auth')->only('director');
         $this->middleware(['admin.auth:admin','verificarcontrasena','admin.verified'])->only(['director']);
         $this-> middleware(['esusuario'])->only(['listDirector','store','update','edit','destroy']);
-        $this->middleware(['auth','verified','verificarcontrasena'], ['only' => ['revisarAlumnos']]);
+        $this->middleware(['auth','verified','verificarcontrasena','roles:director'], ['only' => ['revisarAlumnos']]);
+        
         //$this->middleware(['verificarcontrasena','verified'])->only(['edit']);
         
         
@@ -57,8 +58,8 @@ class DirectorController extends Controller
     public function store(StoreDirectorRequest $request)
     {
         $user = new User();
-        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
-        if(auth('admin')->user()){
+        //$idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+        if(auth('admin')->user() || $request->has('id_institucion_di')){
             $user = new User([
                 'nombre'     => ucfirst($request->nombre_di),
                 'email'     => $request->email_di,
@@ -66,7 +67,7 @@ class DirectorController extends Controller
                 'primer_apellido'   => ucfirst($request->primer_apellido_di), 
                 'segundo_apellido'  => ucfirst($request->segundo_apellido_di), 
                 'id_institucion'    => $request->id_institucion_di,
-                'id_semana' => $idSemana,
+                //'id_semana' => $idSemana,
             ]);
             $user->save();
         }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
@@ -77,7 +78,7 @@ class DirectorController extends Controller
                 'primer_apellido'   => ucfirst($request->primer_apellido_di), 
                 'segundo_apellido'  => ucfirst($request->segundo_apellido_di), 
                 'id_institucion'    => auth()->user()->id_institucion,
-                'id_semana' => $idSemana,
+                //'id_semana' => $idSemana,
             ]);
             $user->save();
         }
@@ -115,17 +116,17 @@ class DirectorController extends Controller
             if(auth()->user()->id != $id){
                 return abort(403);
             }
-                $instituciones = DB::select(DB::raw("
-        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
-		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
-		 instituciones.url_logo, instituciones.ciudad, 
-		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
-		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
-		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones WHERE deleted_at IS NULL;
-         "));
+            $instituciones = DB::select(DB::raw("
+            SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+             instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+             instituciones.url_logo, instituciones.ciudad, 
+             CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+             (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+             FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+             (SELECT email 
+             FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+             FROM instituciones WHERE deleted_at IS NULL;
+             "));
                 $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
                 $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();
                 return view('director.editarDirector',compact(['usuario','semana','instituciones']));
@@ -147,18 +148,18 @@ class DirectorController extends Controller
      */
     public function update(UpdateDirectorRequest $request, $id)
     {
-        $idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+        //$idSemana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         $user = User::find($id);
         $user->email = $request->email_di;
         $user->nombre = ucfirst($request->nombre_di);
         $user->primer_apellido = ucfirst($request->primer_apellido_di);
         $user->segundo_apellido = ucfirst($request->segundo_apellido_di);
-        if(auth('admin')->user()){
+        if(auth('admin')->user() || $request->has('id_institucion_di')){
             $user->id_institucion = $request->id_institucion_di;
         }else if(auth()->user() && auth()->user()->hasRoles(['coordinador'])){
             $user->id_institucion = auth()->user()->id_institucion;
         }
-        $user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
+        //$user->id_semana = Semana::select('id_semana','vigente')->where('vigente',1)->get()[0]->id_semana;
         
         if(!empty($request->password_di))
             $user->password = bcrypt($request->password_di);
@@ -205,7 +206,8 @@ class DirectorController extends Controller
     public function director(){
         $semana = Semana::select('id_semana','vigente','url_logo')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre')->get();
-        return view('admin.directores.adminDirector',compact(['instituciones','semana']));   
+        $esadmin = true;
+        return view('admin.directores.adminDirector',compact(['instituciones','semana','esadmin']));   
     }
 
     /**
@@ -323,9 +325,9 @@ class DirectorController extends Controller
 		 instituciones.url_logo, instituciones.ciudad, 
 		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
 		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();

@@ -16,22 +16,21 @@
         </div>
     </div>
     <div class="row mb-2">
-        <legend class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostrar Programas</legend>
+        <legend class="col-form-label col-12 col-md-3 col-lg-2 pt-0   d-flex d-md-block justify-content-center justify-content-md-start">Mostrar programas de estudio</legend>
         <div class="col-12 col-md-4 col-lg-4 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" checked name="verPrograma" value="activos">
-                <label class="form-check-label" for="inlineRadio1">Activas</label>
+                <label class="form-check-label" for="inlineRadio1">Activos</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio2" name="verPrograma" value="eliminados">
-                <label class="form-check-label" for="inlineRadio2">Eliminadas</label>
+                <label class="form-check-label" for="inlineRadio2">Eliminados</label>
             </div>
         </div>
         <div class="col-12 col-md-5 col-lg-6 d-flex d-md-block justify-content-center justify-content-md-start">
             <div class="d-flex justify-content-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="crear-programa"><span><i
                             class="fas fa-plus"></i></span> Nuevo Programa</a>
-
             </div>
         </div>
     </div>
@@ -65,7 +64,6 @@
             </table>
         </div>
     </div>
-    <!--<div id="snackbar"></div>-->
 </div>
 
 

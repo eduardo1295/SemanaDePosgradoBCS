@@ -462,13 +462,16 @@ class ConstanciaController extends Controller
     public function altaConstancia(Request $request){
         
         if($request->ajax()){
+            
         $semanaquery = DB::select(DB::raw("SELECT semanas.id_semana FROM semanas WHERE vigente = 1;"));
         $semanaVigente = $semanaquery[0]->id_semana;
+        
         $idAlumno = $request->id_alumno;
         $constancia = DB::select("SELECT id FROM alumno_constancia WHERE 
         id_alumno = ? AND id_semana = ?;",[$idAlumno, $semanaVigente]);
         
         $resultado="";
+        
         if(COUNT($constancia)>0){
             $id_constancia = $constancia[0]->id;
             $resultado = DB::table('alumno_constancia')->where('id', '=', $id_constancia)->delete();
@@ -493,9 +496,9 @@ class ConstanciaController extends Controller
 		 instituciones.url_logo, instituciones.ciudad, 
 		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
 		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
 		 (SELECT email 
-		 FROM users WHERE users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
         $constancias = DB::select('SELECT alumno_constancia.id_semana, semanas.nombre FROM alumno_constancia, semanas WHERE semanas.id_semana = alumno_constancia.id_semana AND alumno_constancia.id_alumno = ?;', [$id]);

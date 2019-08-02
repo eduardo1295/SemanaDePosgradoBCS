@@ -417,7 +417,7 @@ $("input[name='verDir']").change(function (e) {
                     $(".loader").show();
                 },
                 success: function (data) {
-                    mostrarSnack("Actualizaciónasdasdasd exitosa Actualiz ación ex ito sa Actua lización exitosa.");
+                    mostrarSnack("Actualización exitosa.");
                     $('.custom-file-label').removeClass("selected").html('Seleccionar archivo');
                     $('#nuevoLogo').addClass('d-none');
                     var unique = $.now();

@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <form id="directorForm" name="directorForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="director_id" id="director_id">
-                    @if (auth('admin')->user())
+                    @if (isset($esadmin) && (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['subadmin']))))
                         <div class="form-group">
                             <strong><label for="institucionSelect">Institución</label><label class="text-danger">*</label></strong>
                             <select class="form-control" id="institucionSelect_di" name="id_institucion_di">

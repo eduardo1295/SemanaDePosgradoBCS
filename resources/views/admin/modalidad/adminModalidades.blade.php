@@ -17,11 +17,8 @@
         </div>
     </div>
     <div class="row mb-3">
-        <legend class="col-form-label col-12 col-md-2 col-lg-2 pt-0">Mostrar modalidades</legend>
-        <div class="col-12 col-md-4 col-lg-4">
-            
-        </div>
-        <div class="col-12 col-md-6 col-lg-6">
+        
+        <div class="col-12">
             <div class="d-flex justify-content-center justify-content-sm-end">
                 <a href="javascript:void(0)" class="btn btn-info ml-3 " id="crear-modalidad"><span><i
                             class="fas fa-plus"></i></span> Nueva Modalidad</a>
