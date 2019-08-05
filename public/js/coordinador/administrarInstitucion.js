@@ -150,7 +150,7 @@ $("input[name='verDir']").change(function (e) {
             var ruta = rutaBaseDirector + '/' + director_id + "/editar";
             $.get(ruta, function (data) {
                 //ocultar errores
-                console.log(data);
+                
                 $('#password_di').val("");
                 $('#password').attr("placeholder", "Nueva contraseña");
                 $('#directorCrudModal').html("Editar director:" + data.nombre);
@@ -208,8 +208,12 @@ $("input[name='verDir']").change(function (e) {
                                     
                                     mostrarSnack("Cuenta eliminada exitosamente.");
                                 },
-                                error: function (data) {
-                                    console.log('Error:', data);
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    if (xhr.status == 422) {
+                                        var errores = xhr.responseJSON['errors'];
+                                        if(errores!=null)
+                                            mostrarSnackError(errores);
+                                    }
                                 }
                             });
 
@@ -303,13 +307,10 @@ $("input[name='verDir']").change(function (e) {
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
                     
-                    
-                    
                     mostrarSnack("Actualización exitosa.");
-                    console.log(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    
                     mostrarSnackError('Error al actualizar usuario');
                     if (xhr.status == 422) {
                        
@@ -330,8 +331,7 @@ $("input[name='verDir']").change(function (e) {
             $("#btn-save-director").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
             var datos = new FormData($("#directorForm")[0]);
-            //datos.append('id_institucion', $('#institucionSelect').find("option:selected").val());
-            console.log(Array.from(datos));
+            
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,
@@ -399,7 +399,7 @@ $("input[name='verDir']").change(function (e) {
             var ruta = rutaBaseInstitucion;
             var datos = new FormData($("#institucionForm")[0]);
             datos.append('_method', 'PUT');
-            console.log(Array.from(datos));
+            
             $("#guardarInstitucion").prop("disabled", true);
             $('#guardarInstitucion').html('Guardando..');
             $.ajax({

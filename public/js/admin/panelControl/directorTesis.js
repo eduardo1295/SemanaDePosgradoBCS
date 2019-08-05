@@ -133,8 +133,12 @@
                                     
                                     mostrarSnack("Cuenta eliminada exitosamente.");
                                 },
-                                error: function (data) {
-                                    console.log('Error:', data);
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    if (xhr.status == 422) {
+                                        var errores = xhr.responseJSON['errors'];
+                                        if(errores!=null)
+                                            mostrarSnackError(errores);
+                                    }
                                 }
                             });
 
@@ -244,13 +248,9 @@
                     //recargar serverside
                     var oTable = $('#directoresdt').dataTable();
                     oTable.fnDraw(false);
-                    
                     mostrarSnack("Actualización exitosa.");
-                    
-                    console.log(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     mostrarSnackError('Error al actualizar usuario');
                     if (xhr.status == 422) {
                         
@@ -272,8 +272,7 @@
             $("#btn-save-director").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
             var datos = new FormData($("#directorForm")[0]);
-            //datos.append('id_institucion', $('#institucionSelect').find("option:selected").val());
-            console.log(Array.from(datos));
+            
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,

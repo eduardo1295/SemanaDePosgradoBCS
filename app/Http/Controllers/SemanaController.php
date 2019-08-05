@@ -83,8 +83,9 @@ class SemanaController extends Controller
 
     public function indexAdmin()
     {
+        $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
         $instituciones = Institucion::select('id','nombre')->get();
-        return view('admin.index',compact(['instituciones']));   
+        return view('admin.index',compact(['instituciones','semana']));   
     }
 
     /**
@@ -352,8 +353,17 @@ class SemanaController extends Controller
      */
     public function destroy($id)
     {
-        $semana = Semana::where('id_semana',$id)->delete();
-        return \Response::json($semana);
+        $buscarSemana = DB::select('SELECT id_semana from trabajos where id_semana = ?', [$id]);
+        
+        if(count($buscarSemana)>0){
+            $cadena = 'No se puede eliminar el evento porque tiene trabajos registrados.';
+            return \Response::json([
+                'errors' => $cadena,
+            ], 422);
+        }else{
+            $semana = Semana::where('id_semana',$id)->delete();
+            return \Response::json($semana);
+        }
     }
     
     /**

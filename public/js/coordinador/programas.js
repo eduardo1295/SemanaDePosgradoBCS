@@ -1,6 +1,4 @@
 function cargarProgramas(ruta){
-    //var ruta = "{{url('institucion')}}/" + "{{ auth()->user()->id_institucion }}" + "/editar";
-    console.log(ruta);
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         url: ruta,
@@ -218,7 +216,7 @@ $('body').on('click', '.eliminarPrograma', function () {
         var ruta = rutaBasePrograma + '/' + id;
         var datos = new FormData($("#programaForm")[0]);
         datos.append('_method', 'PUT');
-        console.log(Array.from(datos));
+        
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             url: ruta,
@@ -237,10 +235,7 @@ $('body').on('click', '.eliminarPrograma', function () {
                 //recargar serverside
                 var oTable = $('#programasDT').dataTable();
                 oTable.fnDraw(false);
-                
-                mostrarSnack("Actualización exitosa.");
-                
-                console.log(data);
+                mostrarSnack("Actualización exitosa.");                
             },
             error: function (data) {
                 mostrarSnackError('Error al actualizar actualizar programa de estudios');

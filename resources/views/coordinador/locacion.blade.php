@@ -1,6 +1,6 @@
 <div class="container-fluid" id="#contenedor">
     <div class="row">
-        <div class="col-12 mx-auto">
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>
                 Locaciones
             </h1>
@@ -25,9 +25,9 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Nombre</th>
+                        <th class="all">Nombre</th>
                         <th>Fecha actualización</th>
-                        <th>Acciones</th>
+                        <th class="all">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>

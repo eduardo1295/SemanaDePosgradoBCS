@@ -1,6 +1,6 @@
 <div class="container-fluid" id="#contenedor">
         <div class="row">
-            <div class="col-12 mx-auto">
+            <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
                 <h1>
                     Directores de tesis
                 </h1>
@@ -39,9 +39,9 @@
                             <th>id</th>
                             <th class="all">Nombre</th>
                             <th>Primer apellido</th>
-                            <th class="min-tablet-l">Segundo apellido</th>
-                            <th class="min-tablet-l">Email</th>
-                            <th class="min-tablet-l">Última Actualización</th>
+                            <th>Segundo apellido</th>
+                            <th>Email</th>
+                            <th>Última Actualización</th>
                             <th class="all">Acciones</th>
                         </tr>
                     </thead>

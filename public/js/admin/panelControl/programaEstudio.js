@@ -227,7 +227,7 @@
             var ruta = rutaBasePrograma + "/" + id + "";
             var datos = new FormData($("#programaForm")[0]);
             datos.append('_method', 'PUT');
-            console.log(Array.from(datos));
+            
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,
@@ -247,11 +247,7 @@
                     //recargar serverside
                     var oTable = $('#programasDT').dataTable();
                     oTable.fnDraw(false);
-                    
                     mostrarSnack("Actualización exitosa.");
-                    
-                    
-                    console.log(data);
                 },
                 error: function (data) {
                     mostrarSnackError('Error al actualizar programa de estudios');

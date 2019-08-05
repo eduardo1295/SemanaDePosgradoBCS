@@ -5,15 +5,10 @@
 <div class="container-fluid" id="#contenedor">
 
     <div class="row">
-        <div class="col-12 mx-auto">
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>
                 Modalidades de participación
             </h1>
-        </div>
-
-        <div id="mensaje-acciones" class="col-12 alert alert-success alert-dismissible" role="alert"
-            style="display:none">
-            <strong> </strong>
         </div>
     </div>
     <div class="row mb-3">
@@ -33,9 +28,9 @@
                 <thead>
                     <tr>
                         <th>id_modalidad</th>
-                        <th>Nombre</th>
+                        <th class="all">Nombre</th>
                         <th>Última actualización</th>
-                        <th>Acciones</th>
+                        <th class="all">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -55,10 +50,6 @@
 @endsection
 @section('extra')
 @include('modalidad.modal')
-<!--
-<div id="snackbar"></div>
-<div id="snackbarError" style="z-index:1051;"></div>
--->
 @endsection
 @section('scripts')
 

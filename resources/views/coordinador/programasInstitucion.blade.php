@@ -1,6 +1,6 @@
 <div class="container-fluid" id="#contenedor">
     <div class="row">
-        <div class="col-12 mx-auto">
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>
                 Programas de estudio
             </h1>
@@ -42,7 +42,7 @@
                         <th>Nivel</th>
                         <th>Periodo</th>
                         <th>Última actualización</th>
-                        <th>Acciones</th>
+                        <th class="all">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>

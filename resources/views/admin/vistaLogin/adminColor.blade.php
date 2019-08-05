@@ -42,8 +42,8 @@
 @section('contenido')
 <div class="container-fluid" id="#contenedor">
     <div class="row">
-        <div class="col-12 mx-auto">
-            <h1>Diseño Colores</h1>
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
+            <h1>Diseño colores</h1>
         </div>
     </div>
     <form id="colorForm" name="colorForm" class="form-horizontal" enctype="multipart/form-data">

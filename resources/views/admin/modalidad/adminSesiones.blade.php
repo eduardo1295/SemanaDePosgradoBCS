@@ -2,14 +2,10 @@
 @section('contenido')
 <div class="container-fluid" id="#contenedor">
     <div class="row">
-        <div class="col-12 mx-auto">
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>
                 Sesiones
             </h1>
-        </div>
-        <div id="mensaje-acciones" class="col-12 alert alert-success alert-dismissible" role="alert"
-            style="display:none">
-            <strong> </strong>
         </div>
     </div>
     <div class="row mb-3">
@@ -26,12 +22,12 @@
                 <thead>
                     <tr>
                         <th>id_sesion</th>
-                        <th>Tipo Sesión</th>
+                        <th class="all">Tipo Sesión</th>
                         <th>Día</th>
                         <th>Hora inicio</th>
                         <th>Hora fin</th>
                         <th>Lugar</th>
-                        <th>Acciones</th>
+                        <th class="all">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -53,10 +49,6 @@
 @endsection
 @section('extra')
 @include('sesion.Modal')
-<!--
-<div id="snackbar"></div>
-<div id="snackbarError" style="z-index:1051;"></div>
--->
 @endsection
 @section('scripts')
 <script src="{{ asset('js/sesion/sesion.js') }}"></script>

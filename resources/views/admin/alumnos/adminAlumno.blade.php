@@ -4,7 +4,8 @@
 
 <div class="container-fluid" id="#contenedor">
     <div class="row">
-        <div class="col-12 mx-auto">
+        
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>
                 Alumnos participantes
             </h1>
@@ -42,18 +43,20 @@
                     <tr>
                         <th>id</th>
                         <th class="all">No. Control</th>
-                        <th class="min-tablet-l">Institución</th>
+                        <th >Institución</th>
                         <th class="none">Programa de estudios</th>
-                        <th class="min-tablet-l">Nombre</th>
-                        <th class="min-tablet-l">Primer apellido</th>
-                        <th class="min-tablet-l">Segundo apellido</th>
-                        <th class="min-tablet-l">Email</th>
-                        <th class="min-tablet-l">Última Actualización</th>
+                        <th >Nombre</th>
+                        <th >Primer apellido</th>
+                        <th >Segundo apellido</th>
+                        <th >Email</th>
+                        <th class="all">Constancia</th>
+                        <th >Última Actualización</th>
                         <th class="all">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>

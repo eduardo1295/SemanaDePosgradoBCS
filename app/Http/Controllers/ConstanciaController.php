@@ -56,7 +56,7 @@ class ConstanciaController extends Controller
         
         $imagenes = [];
 
-        $rutaEvento =  asset('img/semanaLogo/'.$semanaquery[0]->url_logo);
+        $rutaEvento =  asset('storage/img/semanaLogo/'.$semanaquery[0]->url_logo);
         
         $etiquetaEvento = "<img style='vertical-align:top;width:130px;height:100px;' src = '".$rutaEvento."'>";
         
@@ -77,7 +77,7 @@ class ConstanciaController extends Controller
         //dd($imagenes);
 
         foreach ($instituciones as $institucion) {
-            $ruta =  asset('img/logo/'.$institucion->url_logo);
+            $ruta =  asset('storage/img/logo/'.$institucion->url_logo);
             $imagenes [] = ["<img style='vertical-align:top;width:130px;height:100px;' src = '".$ruta."'>",$institucion->siglas];
         }
         

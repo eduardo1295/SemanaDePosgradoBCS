@@ -203,7 +203,6 @@
             datos.append('fecha_inicio', rFechas[0]);
             datos.append('fecha_fin', rFechas[1]);
             datos.append('_method', 'PUT');
-            //console.log(Array.from(datos));
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -216,7 +215,6 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
 
                     $('#semanaForm').trigger("reset");
                     $('#semana-crud-modal').modal('hide');
@@ -224,7 +222,6 @@
                     //recargar serverside
                     var oTable = $('#semanas').dataTable();
                     oTable.fnDraw(false);
-                    //recargar sin serverside
 
                     mostrarSnack("Actualización exitosa.");
                     $("#btn-save").prop("disabled", false);
@@ -261,7 +258,6 @@
             var rFechas = $('#fecha').val().split(' - ');
             datos.append('fecha_inicio', rFechas[0]);
             datos.append('fecha_fin', rFechas[1]);
-            console.log(Array.from(datos));
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -274,7 +270,6 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    console.log(Array.from(data));
                     $('#semanaForm').trigger("reset");
                     $('#semana-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
@@ -346,8 +341,13 @@
                                 }
                                 mostrarSnack("Evento eliminado exitosamente.");
                             },
-                            error: function (data) {
-                                console.log('Error:', data);
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                if (xhr.status == 422) {
+                    
+                                    var errores = xhr.responseJSON['errors'];
+                                    if(errores!=null)
+                                        mostrarSnackError(errores);
+                                }
                             }
                         });
 
