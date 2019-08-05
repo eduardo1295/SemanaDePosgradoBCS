@@ -182,11 +182,7 @@
                 auxPosgrado.push($('.posgrado')[w].value);
                 auxperiodo.push($('.periodo')[w].value);
             }
-            console.log(auxDatos);
             var content = $('#contenido').val();
-            //var datos = new FormData($("#modalidadForm")[0]);
-            //periodo.append('_method', 'PUT');
-            //console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,
@@ -206,14 +202,11 @@
                     $(".loader").show();
                 },
                 success: function (data) {
-                    //console.log(data);
                     $('#modalidadForm').trigger("reset");
                     $('#modalidad-crud-modal').modal('hide');
                     //recargar serverside
                     var oTable = $('#modalidad').dataTable();
                     oTable.fnDraw(false);
-                    //recargar sin serverside
-                    //$('#instituciones').DataTable().ajax.reload(null, false);
                     mostrarSnack("Actualización exitosa.");
 
                 },
@@ -227,7 +220,6 @@
                         $.each(errores, function (key, value) {
                             key2= key.replace('.','\\.');
                             $('#' + key2 + '_error').text(value);
-                            console.log(($('#' + key + "_error")));
                         });
                     }
                 },
@@ -250,7 +242,6 @@
                 auxPosgrado.push($('.posgrado')[w].value);
                 auxperiodo.push($('.periodo')[w].value);
             }
-            console.log(auxDatos);
             var content = $('#contenido').val();
             
             $.ajax({
@@ -288,7 +279,6 @@
                         $.each(errores, function (key, value) {
                             key2= key.replace('.','\\.');
                             $('#' + key2 + '_error').text(value);
-                            console.log(($('#' + key + "_error")));
                         });
                     }
                    

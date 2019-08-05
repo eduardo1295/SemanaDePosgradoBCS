@@ -145,52 +145,6 @@
 
         });
 
-        /*Accion al presionar el boton reactivar*/
-        $('body').on('click', '.reactivar', function () {
-            var carrusel_id = $(this).data("id");
-            $.confirm({
-                columnClass: 'col-md-6',
-                title: "¿Desea reactivar la imagen?",
-                content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
-                autoClose: 'cancelAction|8000',
-                buttons: {
-                    cancelAction: {
-                        text: 'Cancelar',
-                        btnClass: 'btn-red',
-                        action: function () {
-                        }
-                    },
-                    confirm: {
-                        text: 'Aceptar',
-                        icon: 'fas fa-warning',
-                        btnClass: 'btn-blue',
-                        action: function () {
-                            $.ajax({
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                                type: "PUT",
-                                url: rutaBaseCarrusel + '/' + carrusel_id,
-                                success: function (data) {
-                                    if (table.data().count() == 1) {
-                                        $('#slidersC').DataTable().ajax.reload();
-                                    } else {
-                                        var oTable = $('#slidersC').dataTable();
-                                        oTable.fnDraw(false);
-                                    }
-                                    
-                                    mostrarSnack("Imagen activada exitosamente.");
-                                },
-                                error: function (data) {
-                                    console.log('Error:', data);
-                                }
-                            });
-
-
-                        }
-                    }
-                }
-            });
-        });
-
     });
 
     /*Accion al presionar el boton crear-carrusel*/
@@ -230,7 +184,6 @@
             var ruta = rutaBaseCarrusel + "/" + id + "";
             var datos = new FormData($("#carruselForm")[0]);
             datos.append('_method', 'PUT');
-            console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,

@@ -141,7 +141,7 @@
             var ruta = rutaBaseNoticia + "/" + id + "";
             var datos = new FormData($("#noticiaForm")[0]);
             datos.append('_method', 'PUT');
-            //console.log(Array.from(datos));
+            
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 url: ruta,
@@ -152,7 +152,7 @@
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    //console.log(data);
+                    
                     $('#noticiaForm').trigger("reset");
                     $('#noticia-crud-modal').modal('hide');
                     $('#btn-save').html('Guardar');
@@ -278,52 +278,7 @@
     });
 
 
-    /*Accion al presionar el boton reactivar*/
-    $('body').on('click', '.reactivar', function () {
-        var noticia_id = $(this).data("id");
-        $.confirm({
-            columnClass: 'col-md-6',
-            title: '¿Desea reactivar la noticia titulada ' + titulo + '?',
-            content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
-            autoClose: 'cancelAction|8000',
-            buttons: {
-                cancelAction: {
-                    text: 'Cancelar',
-                    btnClass: 'btn-red',
-                    action: function () {
-                    }
-                },
-                confirm: {
-                    text: 'Aceptar',
-                    icon: 'fas fa-warning',
-                    btnClass: 'btn-blue',
-                    action: function () {
-                        $.ajax({
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                            type: "PUT",
-                            url: "{{ url('admin/noticias/reactivar')}}" + '/' + noticia_id,
-                            success: function (data) {
-                                var oTable = $('#noticias').dataTable();
-                                if (table.data().count() == 1) {
-                                    $('#noticias').DataTable().ajax.reload();
-                                } else {
-
-                                    oTable.fnDraw(false);
-                                }
-                                mostrarSnack("Noticia activada exitosamente.");
-                            },
-                            error: function (data) {
-                                console.log('Error:', data);
-                            }
-                        });
-
-
-                    }
-                }
-            }
-        });
-    });
-
+    
     $('.preview-btn').on('click', function (e) {
 
         e.preventDefault();
@@ -342,6 +297,7 @@
                 win.document.close();
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                mostrarSnackError("Error al cargar vista previa");
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             },
 

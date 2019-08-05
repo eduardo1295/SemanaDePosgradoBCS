@@ -13,7 +13,7 @@
 @endforeach
 <div class="container-fluid" id="#contenedor">
     <div class="row">
-        <div class="col-12 mx-auto">
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>Vista de Login</h1>
         </div>
     </div>

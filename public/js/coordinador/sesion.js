@@ -11,9 +11,7 @@ $('#sesionesDT tfoot  th.text-input').each(function (i) {
 });
 
 function cargarDataTableSesiones(){
-    console.log(tableSesion);
     if(!tableSesion){
-        console.log('hola');
         tableSesion = $('#sesionesDT').DataTable({
             "order":[[1,"asc"]],
         pageLength: 5,
@@ -48,7 +46,6 @@ function cargarDataTableSesiones(){
         ]
         });
     }else{
-        console.log('Nel');
         $('#sesionesDT').DataTable().ajax.reload();
     }
 }
@@ -65,7 +62,7 @@ $('body').on('click', '.editarSesion', function () {
     var ruta = rutaBaseSesion + '/' + sesion_id + "/editar";
     
     $.get(ruta, function (data) {
-        console.log(data);    
+        
         $('#sesionCrudModal').html("Editar sesion: " + data.nombre);
         $('#btn-save').val("editar");
         $('#sesion-crud-modal').modal('show');
@@ -212,7 +209,7 @@ $('body').on('click', '.eliminarSesion', function () {
                     mostrarSnack("Actualización exitosa.");
                     $("#btn-save-sesion").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    console.log(data);
+                    
                 },
                 error: function (data) {
                     
@@ -234,8 +231,6 @@ $('body').on('click', '.eliminarSesion', function () {
             $("#btn-save-sesion").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
             var datos = new FormData($("#sesionForm")[0]);
-            //datos.append('id_institucion', $('#institucionSelect').find("option:selected").val());
-            console.log(Array.from(datos));
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,
@@ -322,7 +317,6 @@ $("#btn-save").click(function () {
         var id = $('#sesion_id').val();
         var ruta = rutaBaseSesion + '/' + id;
         var datos = new FormData($("#sesionForm")[0]);
-        console.log(Array.from(datos));
         datos.append('_method', 'PUT');
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -371,7 +365,6 @@ $("#btn-save").click(function () {
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var datos = new FormData($("#sesionForm")[0]);
-        console.log(Array.from(datos));
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             url: rutaBaseSesion,
@@ -409,7 +402,6 @@ $("#btn-save").click(function () {
                     $.each(errores, function (key, value) {
                         key2= key.replace('.','\\.');
                         $('#' + key2 + '_error').text(value);
-                        console.log(($('#' + key + "_error")));
                     });
                 }
                 $('#btn-save').html('Guardar');

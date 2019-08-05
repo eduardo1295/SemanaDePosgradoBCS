@@ -315,7 +315,6 @@
             var ruta = rutaBaseIntitucion + "/" + id + "";
             var datos = new FormData($("#institucionForm")[0]);
             datos.append('_method', 'PUT');
-            console.log(Array.from(datos));
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -471,7 +470,6 @@
         $('.mensajeError').text("");
         var ruta = SITEURL + "/admin/institucion/suibirLogoConacyt";
         var datos = new FormData($("#conacytForm")[0]);
-        console.log(Array.from(datos));
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

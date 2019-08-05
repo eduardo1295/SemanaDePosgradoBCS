@@ -9,9 +9,8 @@ $('#locacionesDT tfoot  th.text-input').each(function (i) {
 });
 
 function cargarDataTableLocaciones(){
-    console.log(tableLocacion);
     if(!tableLocacion){
-        console.log('hola');
+        
         tableLocacion = $('#locacionesDT').DataTable({
             "order":[[2,"asc"]],
             pageLength: 5,
@@ -43,7 +42,6 @@ function cargarDataTableLocaciones(){
             ]
         });
     }else{
-        console.log('Nel');
         $('#locacionesDT').DataTable().ajax.reload();
     }
 }
@@ -86,7 +84,7 @@ $("#btn-save").click(function () {
         var id = $('#id_locacion').val();
         var ruta = rutaBaseLocacion + "/" + id;
         var datos = new FormData($("#locacionForm")[0]);
-        console.log(Array.from(datos));
+        
         datos.append('_method', 'PUT');
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -137,7 +135,7 @@ $("#btn-save").click(function () {
         $("#btn-save").prop("disabled", true);
         $("#btn-close").prop("disabled", true);
         var datos = new FormData($("#locacionForm")[0]);
-        console.log(Array.from(datos));
+        
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             url: rutaBaseLocacion,
@@ -174,7 +172,7 @@ $("#btn-save").click(function () {
                     $.each(errores, function (key, value) {
                         key2= key.replace('.','\\.');
                         $('#' + key2 + '_error').text(value);
-                        console.log(($('#' + key + "_error")));
+                        
                     });
                 }
                 $('#btn-save').html('Guardar');

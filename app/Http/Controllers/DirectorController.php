@@ -182,8 +182,16 @@ class DirectorController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::where('id',$id)->delete();
-        return \Response::json($user);
+        $directores = DB::select('SELECT id_director from alumnos where id_director = ?', [$id]);
+        if(count($directores)>0){
+            $cadena = 'No se puede eliminar la cuenta porque tiene alumnos asignados.';
+            return \Response::json([
+                'errors' => $cadena,
+            ], 422);
+        }else{
+            $user = User::where('id',$id)->delete();
+            return \Response::json($user);
+        }
     }
 
     /**

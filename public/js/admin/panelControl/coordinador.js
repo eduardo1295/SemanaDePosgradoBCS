@@ -86,7 +86,6 @@
                 $('#coordinadorCrudModal').html("Editar coordinador:" + data.nombre);
                 $('#btn-save').val("editar");
                 $('#coordinador-crud-modal').modal('show');
-                console.log(data);
                 $('#coordinador_id').val(data.id);
                 $('#puesto').val(data.coordinadores.puesto);
                 $('#institucion').val(data.institucion);
@@ -260,7 +259,6 @@
 
                     $("#btn-save").prop("disabled", false);
                     $("#btn-close").prop("disabled", false);
-                    console.log(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -287,8 +285,7 @@
             $("#btn-save").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
             var datos = new FormData($("#coordinadorForm")[0]);
-            //datos.append('id_institucion', $('#institucionSelect').find("option:selected").val());
-            console.log(Array.from(datos));
+            
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,

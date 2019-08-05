@@ -4,7 +4,7 @@
 
 <div class="container-fluid" id="#contenedor">
     <div class="row">
-        <div class="col-12 mx-auto">
+        <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>
                 Instituciones participantes
             </h1>
@@ -41,7 +41,7 @@
                         <th>Direccion Web</th>
                         <th>Telefono</th>
                         <th>Última actualización</th>
-                        <th>Acciones</th>
+                        <th class="all">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -64,7 +64,6 @@
 @section('extra')
 @include('admin.instituciones.modal')
 @include('admin.instituciones.modalConacyt')
-<!--<div id="snackbar"></div>-->
 @endsection
 @section('scripts')
 

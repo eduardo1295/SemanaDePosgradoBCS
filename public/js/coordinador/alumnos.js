@@ -14,7 +14,7 @@ function cargarDataTableAlumnos(){
     $("#mensajeAlumnos").hide();
     if(!tableAlumno){
         tableAlumno = $('#alumnosDT').DataTable({
-            "order": [[ 9, "desc" ]],
+            "order": [[ 8, "desc" ]],
             pageLength: 5,
             lengthMenu: [[5, 10, 20, 100], [5, 10, 20, 100]],
             responsive: true,
@@ -52,18 +52,7 @@ function cargarDataTableAlumnos(){
                 { data: 'primer_apellido', searchable: true },
                 { data: 'segundo_apellido', searchable: true },
                 { data: 'email', searchable: true },
-                {
-                    data: 'id_sem_constancia',
-                    name: 'id_sem_constancia',
-                    render: function (data, type, full, meta) {
-                        if(data ==null){
-                            return '<div style="width:100%;text-align:center"><input style="width: 20px; height: 20px;" type="checkbox" onchange="cambio(this)" name="constancia" value="'+full.id+'"></div>';
-                        }else{
-                            return '<div style="width:100%;text-align:center"><input type="checkbox" style="width: 20px; height: 20px;" onchange="cambio(this)" checked name="constancia" value="'+full.id+'"></div>';
-                        }
-                    },
-                    orderable: false, searchable: false
-                },
+                
                 { data: 'director', searchable: true },
                 { data: 'fecha_usuario', searchable: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
@@ -71,8 +60,8 @@ function cargarDataTableAlumnos(){
             ],
             columnDefs: [
                 { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 2, targets: 10 },
-                { width: 105, targets: 10 }
+                { responsivePriority: 2, targets: 9 },
+                { width: 105, targets: 9 }
             ]
         });
     }else{
@@ -93,7 +82,6 @@ $('body').on('click', '.editarAlumno', function () {
     
     $.get(ruta, function (data) {
         $("#mensajeAlumnos").hide();
-        console.log(data);    
         $('.mensajeError').text("")
         $('#alumnoCrudModal').html("Editar alumno: " + data[0].nombre + ' ' + data[0].primer_apellido + ' ' + data[0].segundo_apellido);
         $('#btn-save-alumno').val("editar");
@@ -246,7 +234,6 @@ $('body').on('click', '.eliminarAlumno', function () {
                     oTable.fnDraw(false);
                     
                     mostrarSnack("Actualización exitosa.");
-                    console.log(data);
                 },
                 error: function (data) {
                     
@@ -270,8 +257,7 @@ $('body').on('click', '.eliminarAlumno', function () {
             $("#btn-save-alumno").prop("disabled", true);
             $("#btn-close").prop("disabled", true);
             var datos = new FormData($("#alumnoForm")[0]);
-            //datos.append('id_institucion', $('#institucionSelect').find("option:selected").val());
-            console.log(Array.from(datos));
+            
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: datos,
@@ -400,87 +386,6 @@ $('#crear-alumno').click(function () {
         $('#directorSelect_al').html('');
         $('#directorSelect_al').append('<option selected value="">Seleccione una institución</option>');
     }
-
-
-    /*Accion al presionar el boton save*/
-    $(".constanciaGuardar").change(function () {
-        
-        var alumno_id = $(this).data('id');
-            
-            var ruta = rutaBaseAlumno + '/constanciaAlta';
-            
-            $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                url: ruta,
-                type: "POST",
-                data: {id_alumno:alumno_id},
-                dataType: 'JSON',
-                contentType: false,
-                cache: false,
-                processData: false,
-                beforeSend: function(){
-                    $(".loader").show();
-                },
-                success: function (data) {
-                    //recargar serverside
-                    var oTable = $('#alumnosDT').dataTable();
-                    oTable.fnDraw(false);
-                    
-                    mostrarSnack("Actualización exitosa.");
-                },
-                error: function (data) {
-                    mostrarSnackError('Error al actualizar datos');
-                    
-                    if (data.status == 422) {
-                        
-                    }
-                },
-                complete: function (data) {
-                    $(".loader").hide();
-                }
-
-            });
-        
-
-    })
-
-
-    function cambio(checkEnviar){
-        var alumno_id = $(checkEnviar).val();
-            
-            var ruta = rutaBaseAlumno + '/constanciaAlta';
-            
-            $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                url: ruta,
-                type: "POST",
-                data: {id_alumno:alumno_id},
-                dataType: 'JSON',
-                
-                beforeSend: function(){
-                    $(".loader").show();
-                },
-                success: function (data) {
-                    //recargar serverside
-                    var oTable = $('#alumnosDT').dataTable();
-                    oTable.fnDraw(false);
-                    
-                    mostrarSnack("Actualización exitosa.");
-                },
-                error: function (data) {
-                    
-                    
-                    if (data.status == 422) {
-                        
-                    }
-                },
-                complete: function (data) {
-                    $(".loader").hide();
-                }
-
-            });
-    };
-
 
     function importarAlumnos(){
         var datos = new FormData($("#alumnosImportarForm")[0]);
