@@ -24,7 +24,7 @@ class subirConacyt extends FormRequest
     public function rules()
     {
         return [
-            'logo' => 'required|mimes:png|max:2048',
+            'logo' => 'required|mimes:png|max:1024',
         ];
     }
     public function attributes(){

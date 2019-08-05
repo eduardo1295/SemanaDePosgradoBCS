@@ -24,6 +24,7 @@ use App\Http\Requests\usuarios\UpdateEditarPerfilRequest;
 use Validator;
 use App\Exports\AlumnosExportar;
 use Illuminate\Support\Arr;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AlumnoController extends Controller
 {
@@ -418,24 +419,21 @@ class AlumnoController extends Controller
                         ->where('id',auth()->user()->id)->first();
         
         $imagenes="";
-        $logo =  asset('img/semanaLogo/'.$semana->url_logo);
+        $logo =  asset('/storage/img/semanaLogo/'.$semana->url_logo);
         $imagenes .= '<img style="vertical-align: top;width:100px;height:70px;"src = "'.$logo.'">';
+        
         foreach ($instituciones as $insticion){
-            $ruta =  asset('img/logo/'.$insticion->url_logo);
-            $imagenes .= '<img style="vertical-align: top;width:100px;height:80px;"src = "'.$ruta.'">';
-        }
-        if(file_exists( public_path(). '/img/logo/conacyt.png') || file_exists( public_path(). '/img/logo/conacyt.jpg')){
-            $conacyt =  asset('img/logo/conacyt.png');    
-            $imagenes .= '<img style="vertical-align: top;width:100px;height:70px;"src = "'.$conacyt.'">';
+            $ruta =  asset('/storage/img/logo/'.$insticion->url_logo);
+            $imagenes .= '<img alt=" " style="vertical-align: top; width:100px;height:80px;"src = "'.$ruta.'"> ';
         }
         
+        $conacyt =  asset('/storage/img/logo/conacyt.png');    
+        $imagenes .= '<img alt= " " style="vertical-align:top;width:100px;height:70px;"src = "'.$conacyt.'">';
         
         $pdf = App::make('dompdf.wrapper');
-        //$pdf->setPaper('A6','portrait');
         $pdf->setPaper('letter','portrait');
-        //$pdf->loadHTML('<h1>Test</h1>');
+        $datos = $alumno->email.','.$alumno->alumnos->num_control.','.$alumno->nombre.' '. utf8_encode($alumno->primer_apellido).' '. utf8_encode($alumno->segundo_apellido).','.$alumno->instituciones->siglas;
         $pdf->loadView('alumno.generarGafete',['alumno' => $alumno, 'imagenes' => $imagenes, 'semana' => $semana]);
-        
         $output = $pdf->output();
         File::put(public_path().'/storage/gafete.pdf',$output);
 
@@ -450,8 +448,7 @@ class AlumnoController extends Controller
 		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
-        
-        
+
         return view('alumno.mostrarGafete', compact(['semana','instituciones','pdf']));
         //return view('alumno.generarGafete',compact(['alumno','imagenes','semana']));   
     }
