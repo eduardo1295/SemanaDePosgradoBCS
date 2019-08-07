@@ -114,7 +114,7 @@
                                         <div class="d-flex justify-content-center">
                                             <div class="col-3 col-md-12 d-flex  justify-content-center">
                                                 <img id="logoSede" class="mx-auto"
-                                                    src="{{url('img/logo')}}/{{ $institucionSede->url_logo }}" alt="">
+                                                    src="{{url('storage/img/logo')}}/{{ $institucionSede->url_logo.'/?'.date('H:i:s') }}" alt="">
                                             </div>
                                         </div>
                                         <a class="nav-link active lead text-md-right" data-toggle="modal"

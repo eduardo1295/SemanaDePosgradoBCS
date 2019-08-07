@@ -73,9 +73,9 @@
             </div>
             <div style="width: 20%;  float: left; margin: 0">
                 @if(isset($semana->url_logo))
-                <img src="{{asset('img/semanaLogo/'.$semana->url_logo)}}"  alt=""  width="95px" height="50px"  style="float: right;">
+                <img src="{{asset('storage/img/semanaLogo/'.$semana->url_logo.'/?'.date('H:i:s'))}}"  alt=""  width="95px" height="50px"  style="float: right;">
                 @else
-                <img src="{{asset('img/semanaLogo/logo_evento.png')}}"  alt=""  width="95px" height="50px"  style="float: right;">
+                <img src="{{asset('storage/img/semanaLogo/logo_evento.png')}}"  alt=""  width="95px" height="50px"  style="float: right;">
                 @endif
             </div>
         </div>

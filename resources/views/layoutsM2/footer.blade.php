@@ -8,7 +8,7 @@
             <div class="col-12 col-lg-6 mb-3 mb-md-2">
                 <div class="row">
                     <div class="col-12 col-md-3">
-                            <img src="{{url('storage/img/logo')}}/{{ $institucion->url_logo }}" alt="" class="d-block d-md-inline mx-auto img-footer-logo">
+                            <img src="{{url('storage/img/logo')}}/{{ $institucion->url_logo.'/?'.date('H:i:s') }}" alt="" class="d-block d-md-inline mx-auto img-footer-logo">
                         </div>
                         <div class="col-12 col-sm-9 ml-auto mx-sm-auto">
                             <div class="row">

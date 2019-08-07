@@ -18,7 +18,7 @@
               <div class="carousel-caption d-block text-justify">
                 <div class="row d-flex justify-content-center">
                   <div class="col-12 col-sm-3 d-flex">
-                    <img src="{{url('storage/img/logo')}}/{{ $institucion->url_logo }}" class="mx-auto img-fluid align-self-center img-carrusel-logo" alt="">
+                    <img src="{{url('storage/img/logo')}}/{{ $institucion->url_logo.'/?'.date('H:i:s') }}" class="mx-auto img-fluid align-self-center img-carrusel-logo" alt="">
                   </div>
                   <div class="col-10  col-sm-9">
                       <h4>{{$institucion->nombre}} </h4> <br>
