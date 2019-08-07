@@ -461,9 +461,9 @@ class AlumnoController extends Controller
             $id_selectSemana = $semana[0]->id_semana;
 
             $id_institucion = auth()->user()->id_institucion;
-            $consulta = "SELECT num_control,nombre, primer_apellido,segundo_apellido,semestre
-                            FROM users u , alumnos a
-                            WHERE u.deleted_at IS NULL AND a.id = u.id AND u.id_institucion = $id_institucion
+            $consulta = "SELECT num_control,u.nombre, primer_apellido,segundo_apellido,semestre, nivel
+                            FROM users u , alumnos a, programas p
+                            WHERE u.deleted_at IS NULL AND a.id = u.id AND u.id_institucion = $id_institucion AND a.id_programa = p.id
                             ORDER BY semestre ASC, num_control ASC";
             $alumnos = DB::select($consulta);
 

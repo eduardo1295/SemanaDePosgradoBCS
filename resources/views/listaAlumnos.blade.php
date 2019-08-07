@@ -82,12 +82,12 @@
     </header>
     <main>
 
-        @php $x=1; $semestre = ""; $sesion = 0 @endphp
+        @php $x=1; $semestre = ""; $sesion = 0 ; $nivel = "" @endphp
         @foreach($alumnos as $alumno)
         @php
         @endphp
-        @if($semestre == "")
-        <div>{{'Semestre: '. $alumno->semestre}}</div>
+        @if($semestre == "" && $nivel == "" )
+        <div>{{$alumno->nivel.' : '. $alumno->semestre}}</div>
         <table style="width: 100%; padding-top: 0px;">
             <thead>
                 <tr>
@@ -99,14 +99,14 @@
                 </tr>
             </thead>
             <tbody>
-                @php $semestre = $alumno->semestre; @endphp
+                @php $semestre = $alumno->semestre; $nivel = $alumno->nivel @endphp
 
-                @elseif($semestre != $alumno->semestre)
-                @php $semestre = $alumno->semestre @endphp
+                @elseif($semestre != $alumno->semestre || $nivel != $alumno->nivel)
+                @php $semestre = $alumno->semestre; $nivel = $alumno->nivel @endphp
                 @php $x = 1; @endphp
             </tbody>
         </table>
-        <div style="margin-top: 25px;" >{{'Semestre: '. $alumno->semestre}}</div>
+        <div style="margin-top: 25px;" >{{$alumno->nivel.' : '. $alumno->semestre}}</div>
         <table style="width: 100%; margin-top: 0px; padding-top: 0px">
             <thead>
                 <tr>
