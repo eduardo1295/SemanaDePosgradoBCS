@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use App\Institucion;
 use App\Semana;
 use DB;
+use App\VistaLogin;
 
 class VerificationController extends Controller
 {
@@ -50,4 +52,18 @@ class VerificationController extends Controller
         return redirect()->route('director.revisarAlumnos',compact(['instituciones','semana']));
     }
     */
+
+    /**
+     * Show the email verification notice.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $imagen= VistaLogin::find(1);
+        return $request->user()->hasVerifiedEmail()
+                        ? redirect($this->redirectPath())
+                        : view('auth.verify',compact(['imagen']));
+    }
 }

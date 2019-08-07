@@ -52,7 +52,7 @@ class UpdateAlumnoRequest extends FormRequest
                 function($attribute, $value, $fail){
                     
                     if ($value < 1 || $value >10 ) {
-                        $fail('Semestre no válido.');
+                        $fail('Periodo no válido, debe ser un valor entre 1 y 10.');
                     }
                 },
             ],
@@ -78,7 +78,7 @@ class UpdateAlumnoRequest extends FormRequest
             'segundo_apellido_al'  => 'segundo apellido',
 
             'id_institucion_al'    => 'institucion',
-            'semestre_al' => 'semestre',
+            'semestre_al' => 'periodo',
             'programaSelect_al' => 'programa de posgrado',
             'directorSelect_al' => 'director de tesis',
             'num_control_al' => 'numero de control',

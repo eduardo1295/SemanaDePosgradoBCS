@@ -57,7 +57,7 @@ class AlumnosExportar implements FromCollection, WithMapping, WithHeadings, With
     {
         return [
             'Número de control',
-            'Semestre',
+            'Periodo',
             'Nombre',
             'Primer apellido',
             'Segundo apellido',

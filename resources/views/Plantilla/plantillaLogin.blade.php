@@ -24,7 +24,7 @@
     
     
 </head>
-<body @if(isset($imagen)  && !Empty($imagen->url_imagen))style="background-image: url('{{ asset("/storage/img/fondo/$imagen->url_imagen")}}')"@endif>
+<body @if(isset($imagen)  && !Empty($imagen->url_imagen))style="background-image: url('{{ asset("/storage/img/fondo/$imagen->url_imagen/?".date('H:i:s'))}}')"@endif>
     <div style="min-height:100vh">
     @yield('contenido','')
     </div>

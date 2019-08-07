@@ -77,7 +77,7 @@
                                 </div>
 
                         <div class="form-group col-lg-2">
-                            <strong><label for="semestre_al" class="control-label">Semestre</label><label class="text-danger"> *</label></strong>
+                            <strong><label for="semestre_al" class="control-label">Periodo</label><label class="text-danger"> *</label></strong>
                             <input type="number" value="1" min="1" max="10" step="1" class="form-control" id="semestre_al" name="semestre_al"
                                 required>
                             <small><span class="mensajeError text-danger" id="semestre_al_error"></span></small>
