@@ -13,13 +13,13 @@
                         <div class="col-12 col-sm-9 ml-auto mx-sm-auto">
                             <div class="row">
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fa  fa-phone"></i> </div>
-                            <div class="col-11 pr-0"> <span>Tel&eacute;fono:</span> {{$institucion->telefono}}</div>
+                            <div class="col-11 pr-0"> <strong><span>Tel&eacute;fono:</span></strong> {{$institucion->telefono}}</div>
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fa  fa-envelope"> </i> </div>
-                                <div class="col-11 pr-0"> <span>Email: </span><a href="mailto:{{ $institucion->email }}">{{ $institucion->email }}</a></div>
+                                <div class="col-11 pr-0"> <strong><span>Email: </span></strong><a href="mailto:{{ $institucion->email }}">{{ $institucion->email }}</a></div>
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="fas fa-globe"></i> </div>
-                                <div class="col-11 pr-0 text-left"> <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}">{{$institucion->siglas}}</a></div>
+                                <div class="col-11 pr-0 text-left"> <strong><span>Direcci&oacute;n Web: </span></strong><a href="{{$institucion->direccion_web}}">{{$institucion->siglas}}</a></div>
                                 <div class="col-1 pl-0 pr-0 d-flex justify-content-end align-self-center"> <i class="far fa-address-card"></i> </div>
-                                <div class="col-11 pr-0"> </i><span>Coordinador: </span>{{ $institucion->coordinador_nombre }}</div>
+                                <div class="col-11 pr-0"> <strong><span>Coordinador: </span></strong>{{ $institucion->coordinador_nombre }}</div>
                             </div>
                     </div>
                 </div>

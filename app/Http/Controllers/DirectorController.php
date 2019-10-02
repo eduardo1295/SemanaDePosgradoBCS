@@ -308,13 +308,19 @@ class DirectorController extends Controller
         if(!auth()->user()){
             return abort(403);
         }
-        $listAlumnos = Alumno::all()->where('id_director',auth()->user()->id);
-        $c = collect();
-        foreach ($listAlumnos as $alum) {
-            $c->push(User::select('id','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,num_control','trabajos:id_alumno,url,revisado,autorizado')->where('id',$alum->id)->first());
+        $semana = Semana::select('id_semana')->where('vigente',1)->first();
+        if($semana == NULL){
+            $semana = new Semana([
+                'id_semana' => 0
+            ]);
         }
-        
-        return datatables()->of($c)
+
+        $usuarios = DB::select("SELECT u.id, u.nombre, u.primer_apellido, u.segundo_apellido, a.num_control, a.id_director, 
+        (SELECT revisado FROM trabajos WHERE trabajos.id_alumno = u.id AND id_semana = $semana->id_semana) AS revisado,
+        (SELECT autorizado FROM trabajos WHERE trabajos.id_alumno = u.id AND id_semana = $semana->id_semana) AS autorizado,
+        (SELECT url FROM trabajos WHERE trabajos.id_alumno = u.id AND id_semana = $semana->id_semana) AS url
+         FROM users u, alumnos a WHERE a.id = u.id AND u.deleted_at IS NULL AND a.id_director = ?",[auth()->user()->id]);
+        return datatables()->of($usuarios)
         ->addIndexColumn()
         ->toJson();
     }

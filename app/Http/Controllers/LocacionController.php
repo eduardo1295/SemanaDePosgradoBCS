@@ -125,12 +125,29 @@ class LocacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $locacion = Locacion::find($id);
         $locacion->forceDelete();
         return \Response::json($locacion);
+        // if($request->ajax()){
+        //     $locacionBuscar = DB::select('SELECT id_instituciones from users where id_instituciones = ?', [$id]);
+            
+        //     if(count($locacionBuscar)>0){
+        //         $cadena = 'No se puede eliminar la instituciones porque tiene usuarios registrados.';
+        //         return \Response::json([
+        //             'errors' => $cadena,
+        //         ], 422);
+        //     }else{
+        //         $locacion = Locacion::find($id);
+        //         $locacion->forceDelete();
+        //         return \Response::json($locacion);
+        //     }   
+        // }else{
+        //     return abort(403);
+        // }
     }
+
     public function locacion(){
         $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
         return view('admin.locacion.adminLocaciones',compact(['semana']));

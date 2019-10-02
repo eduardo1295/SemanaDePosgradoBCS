@@ -222,9 +222,15 @@ class TrabajoController extends Controller
 		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
          FROM instituciones WHERE deleted_at IS NULL;
          "));
+
         $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
         
-        $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->first();
+        if($semana == NULL){
+            
+            $sinevento = true;
+            return view('trabajo.subirTrabajo', compact(['sinevento','semana','instituciones','programa','modalidades','trabajo']));
+        }
+        $trabajo = Trabajo::all()->where('id_alumno',auth()->user()->id)->where('id_semana',$semana->id_semana)->first();
         $director = User::withTrashed()->find(auth()->user()->alumnos()->get()[0]->id_director);
         
         return view('trabajo.subirTrabajo', compact(['director','semana','instituciones','programa','modalidades','trabajo']));

@@ -96,7 +96,7 @@
 
 
         $.get(ruta, function (data) {
-            $('#noticiaCrudModal').html("Editar noticia: " + data.titulo);
+            $('#noticiaCrudModal').text("Editar noticia: " + data.titulo);
             $('#btn-save').val("editar");
             $('#noticia-crud-modal').modal('show');
             $('#noticia_id').val(data.id_noticia);

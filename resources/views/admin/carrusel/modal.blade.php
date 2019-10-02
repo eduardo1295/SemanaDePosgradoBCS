@@ -10,7 +10,7 @@
                     <input type="hidden" name="carrusel_id" id="carrusel_id">
 
                     <div class="form-group">
-                        <strong><label for="link_web" class="control-label">Link para la imagen</label><label class="text-danger"> *</label></strong>
+                        <strong><label for="link_web" class="control-label">Link para la imagen</label></strong>
                         <input type="text" class="form-control" id="link_web" name="link_web" placeholder="Link para la imagen"
                             value="" maxlength="100" required="">
                         <small><span class="mensajeError text-danger" id="link_web_error"></span></small>

@@ -43,7 +43,7 @@ class StoreTrabajoRequest extends FormRequest
 
             'comentario'  => 'nullable|string|max:100',
             
-            'url' => 'file|mimes:pdf'
+            'url' => 'required|file|mimes:pdf|max:5120'
         ];
     }
 
@@ -52,7 +52,7 @@ class StoreTrabajoRequest extends FormRequest
             '*.required' => 'El campo es obligatorio',
             '*.max' => 'No debe contener maximo :max caracteres',
             '*.min' => 'Debe contener minimo :min caracteres',
-            'url.mimes' => 'Debe ser un archivo con formato .Pdf',
+            'url.mimes' => 'Debe ser un archivo con formato PDF',
         ];
     }
 }

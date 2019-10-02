@@ -64,7 +64,7 @@ $('body').on('click', '.editarLocacion', function () {
     var ruta = rutaBaseLocacion + "/" + locacion_id + "/editar";
     reiniciar();
     $.get(ruta, function (data) {
-        $('#locacionCrudModal').html("Editar locacion: " + data.nombre);
+        $('#locacionCrudModal').text("Editar locacion: " + data.nombre);
         $('#btn-save').val("editar");
         $('#locacion-crud-modal').modal('show');
         $('#id_locacion').val(data.id_locacion);
@@ -163,7 +163,7 @@ $("#btn-save").click(function () {
                     $('#nombre_error').text('La locación esta repetida.');
                 }
                 else{
-                    mostrarSnack("locación agregada exitosamente.");
+                    mostrarSnack("Locación agregada exitosamente.");
                     $('#locacion-crud-modal').modal('hide');
                     $('#locacionForm').trigger("reset");
                 }
@@ -201,7 +201,7 @@ $('body').on('click', '.eliminarLocacion', function () {
     var locacion_id = $(this).data("id");
     $.confirm({
         columnClass: 'col-md-6',
-        title: '¿Desea eliminar la imagen?',
+        title: '¿Desea eliminar la locación?',
         content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
         autoClose: 'cancelAction|8000',
         buttons: {
@@ -229,10 +229,7 @@ $('body').on('click', '.eliminarLocacion', function () {
                                 oTable.fnDraw(false);
                             }
 
-                            var x = document.getElementById("snackbar");
-                            x.innerHTML="<span style='color:#32CD32;'><i class='far fa-check-circle'></i></span> Imagen eliminada exitosamente.";
-                            x.className = "show";
-                            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+                            mostrarSnack("Locación eliminada exitosamente.");
                         },
                         error: function (data) {
                             console.log('Error:', data);

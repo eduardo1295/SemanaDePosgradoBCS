@@ -11,6 +11,8 @@ use App\Http\Requests\carrusel\UpdateCarruselRequest;
 use Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use DB;
+use Carbon\Carbon;
 
 class CarruselController extends Controller
 {
@@ -58,9 +60,19 @@ class CarruselController extends Controller
             //$imagencarrusel->storeAs('public/img/carrusel',$nuevo_nombre);
             $imagencarrusel->move(public_path('storage/img/carrusel'), $nuevo_nombre);
         }
+        $ordenActual = DB::select('SELECT MAX(orden) AS maximo from carrusel');
         
+            
         $carrusel = new Carrusel;
-        $carrusel->link_web = $request->link_web;
+        if($ordenActual[0]->maximo == NULL)
+            $carrusel->orden = 1;
+        else
+            $carrusel->orden = ($ordenActual[0]->maximo)+1;
+        $url = $request->link_web;
+        if (strlen($request->link_web)>0 && !preg_match("~^(?:f|ht)tps?://~i", $url)) {
+            $url = "http://" . $url;
+        }
+        $carrusel->link_web = $url;
         $carrusel->url_imagen = $nuevo_nombre;
         $carrusel->creado_por= 1;
         $carrusel->save();
@@ -142,7 +154,11 @@ class CarruselController extends Controller
         
         if ($sinerror=='verdadero') {
             
-            $carrusel->link_web = $request->link_web;
+            $url = $request->link_web;
+            if (strlen($request->link_web)>0 && !preg_match("~^(?:f|ht)tps?://~i", $url)) {
+                $url = "http://" . $url;
+            }
+            $carrusel->link_web = $url;
             $carrusel->url_imagen = $nuevo_nombre;
             $carrusel->creado_por= 1;
             $carrusel->save();
@@ -156,7 +172,7 @@ class CarruselController extends Controller
                 //Storage::delete('img\\carrusel\\'.$carrusel->url_imagen);
                 }
             }
-            //$institucion->update($request->all());
+            
             return \Response::json($carrusel);
             
         }
@@ -174,8 +190,8 @@ class CarruselController extends Controller
     public function destroy(Request $request, $id)
     {
         if($request->ajax()){
-            $carrusel = Carrusel::where('id',$id)->first();
-
+            $carrusel = Carrusel::select('id','orden','url_imagen')->where('id',$id)->first();
+            $ordenActual = $carrusel->orden;
             $pathDirectorio = public_path('storage/img/carrusel').'/'.$carrusel->url_imagen;
             
             if(File::exists($pathDirectorio)){
@@ -183,24 +199,9 @@ class CarruselController extends Controller
             //Storage::delete('img\\carrusel\\'.$carrusel->url_imagen);
             }
             $carrusel->forceDelete();
-
+            if($carrusel)
+                $reordenar = DB::update('UPDATE carrusel set orden = orden-1 where orden > ?', [$ordenActual]);
             return \Response::json($carrusel);
-        }else{
-            return abort(403);
-        }
-    }
-
-    /**
-     * reactiva el recurso especificado.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function reactivar(Request $request, $id)
-    {
-        if($request->ajax()){
-        $carrusel = Carrusel::withTrashed()->where('id',$id)->restore();
-        return \Response::json($carrusel);
         }else{
             return abort(403);
         }
@@ -223,20 +224,62 @@ class CarruselController extends Controller
      */
     public function listCarrusel(Request $request ){
         $busqueda = $request->busqueda;
+        $maximo = DB::select('SELECT MAX(orden) FROM carrusel');
+        
         if($busqueda == 'activos'){
-            $selectcarrusel = Carrusel::select('id','link_web','url_imagen','fecha_actualizacion');
+            $selectcarrusel = DB::select('SELECT id, orden, (SELECT MAX(orden) FROM carrusel) AS maximo, url_imagen, fecha_actualizacion,link_web FROM carrusel ORDER BY id desc');
+            
             return datatables()->of($selectcarrusel)
+            ->addColumn('orden', function($selectcarrusel){
+                if($selectcarrusel->orden==$selectcarrusel->maximo && $selectcarrusel->orden>1)
+                    return "$selectcarrusel->orden<button data-id='$selectcarrusel->id' style='border:none;color:green' class='btn subir'><i class='fas fa-sort-up'></i></button>";
+                else if ($selectcarrusel->orden==1 && $selectcarrusel->maximo>1)
+                    return "$selectcarrusel->orden<button data-id='$selectcarrusel->id' style='border:none;color:green' class='btn bajar'><i class='fas fa-sort-down'></i></button>";
+                else if($selectcarrusel->orden>1 && $selectcarrusel->maximo>1)
+                    return "$selectcarrusel->orden<button data-id='$selectcarrusel->id' style='padding:5px;border:none;color:green' class='btn subir'><i class='fas fa-sort-up'></i></button>
+                                                  <button data-id='$selectcarrusel->id' style='padding:5px;border:none;color:green' class='btn bajar'><i class='fas fa-sort-down'></i></button>";
+                else
+                    return "$selectcarrusel->orden";
+            })
             ->addColumn('action', 'admin.acciones')
-            ->rawColumns(['action'])
+            ->rawColumns(['action','orden'])
             ->addIndexColumn()
             ->toJson();
-        }else if($busqueda == 'eliminados'){
-            $selectcarrusel = Carrusel::onlyTrashed()->get(['id','link_web','url_imagen','fecha_actualizacion']);
-            return datatables()->of($selectcarrusel)
-            ->addColumn('action', 'admin.reactivar')
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->toJson();   
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ordenarBajar($id){
+        $sliderActual = DB::select('SELECT id, orden from carrusel where id = ?', [$id]);
+        $sliderMover = DB::select('SELECT id from carrusel where orden = ?', [$sliderActual[0]->orden+1]);
+        $saO = $sliderActual[0]->orden;
+        $fecha= Carbon::now();
+        $actualizar = DB::update("UPDATE carrusel set fecha_actualizacion =  '$fecha', orden = $saO where id = ?", [$sliderMover[0]->id]);
+        $fecha= Carbon::now();
+        $actualizarActual = DB::update("UPDATE carrusel set fecha_actualizacion =  '$fecha', orden = $saO+1 where id = ?", [$sliderActual[0]->id]);
+        return \Response::json($actualizarActual);
+        
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ordenarSubir($id){
+        
+        $sliderActual = DB::select('SELECT id, orden from carrusel where id = ?', [$id]);
+        $sliderMover = DB::select('SELECT id from carrusel where orden = ?', [$sliderActual[0]->orden-1]);
+        $saO = $sliderActual[0]->orden;
+        $fecha= Carbon::now();
+        $actualizar = DB::update("UPDATE carrusel set fecha_actualizacion =  '$fecha',orden = $saO where id = ?", [$sliderMover[0]->id]);
+        $fecha= Carbon::now();
+        $actualizarActual = DB::update("UPDATE carrusel set fecha_actualizacion = '$fecha', orden = $saO-1 where id = ?", [$sliderActual[0]->id]);
+        return \Response::json($actualizarActual);
+    }
+
 }

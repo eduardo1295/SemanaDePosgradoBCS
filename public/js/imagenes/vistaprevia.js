@@ -7,6 +7,9 @@ function readURL(input,idimg) {
         };
 
         reader.readAsDataURL(input.files[0]);
+    }else{
+        $('#'+idimg)
+        .attr('src', '');
     }
 }
 

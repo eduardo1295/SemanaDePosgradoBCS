@@ -15,9 +15,9 @@
                             <h5 class="card-title">{{ $row->titulo }}</h5>
                             <p class="card-text">{{ $row->resumen }}</p>
                             <div class="d-flex justify-content-between ">
-                                <p class="card-text"><small class="text-muted">Ultima modiciacion
+                                <p class="card-text"><small class="text-muted">Última modificación
                                         {{ $row->fecha_creacion }}</small></p>
-                                <h4><a href="{{route('noticias.show',$row->id_noticia)}}" class="badge badge-pill badge-primary">Ver Mas</a></h4>
+                                <h4><a href="{{route('noticias.show',$row->id_noticia)}}" class="badge badge-pill badge-primary">Ver Más</a></h4>
                             </div>
                         </div>
                     </div>

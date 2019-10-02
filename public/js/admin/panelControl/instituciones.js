@@ -90,11 +90,12 @@
                 },
                 {
                     data: 'telefono',
-                    searchable: true
+                    searchable: true,
+                    orderable: false,
                 },
                 {
                     data: 'direccion',
-                    searchable: false
+                    searchable: true
                 },
                 {
                     data: 'action',
@@ -139,7 +140,7 @@
             $.get(ruta, function (data) {
                 //ocultar errores
                 
-                $('#institucionCrudModal').html("Editar institución: " + data.nombre);
+                $('#institucionCrudModal').text("Editar institución: " + data.nombre);
                 $('#btn-save').val("editar");
                 $('#institucion-crud-modal').modal('show');
                 $('#institucion_id').val(data.id);
@@ -458,8 +459,8 @@
 
     $('body').on('click', '#Logo-conacyt', function () {
         reiniciar();
-        $('#conacytCrudModal').html("Editar Logo del conacyt");
-        $('#btn-save').val("editar");
+        $('#conacytCrudModal').html("Editar logo de CONACYT");
+       
         $('#Conacy-crud-modal').modal('show');
         
 
@@ -468,6 +469,9 @@
     
     $("#guardar-conacyt").click(function(){
         $('.mensajeError').text("");
+        $('#guardar-conacyt').html('Guardando..');
+        $("#guardar-conacyt").prop("disabled", true);
+        $("#btn-closeCO").prop("disabled", true);
         var ruta = SITEURL + "/admin/institucion/suibirLogoConacyt";
         var datos = new FormData($("#conacytForm")[0]);
         $.ajax({
@@ -481,13 +485,16 @@
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function(){
+                $(".loader").show();
+            },
             success: function (data) {
                 $('#conacytCrudModal').trigger("reset");
                 $('#Conacy-crud-modal').modal('hide');
-                $('#btn-save').html('Guardar');
                 mostrarSnack("Actualización exitosa.");
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                mostrarSnackError("Error al actualizar.");
                 if (xhr.status == 422) {
                     var errores = xhr.responseJSON['errors'];
                     $.each(errores, function (key, value) {
@@ -495,6 +502,12 @@
                     });
                 }
             },
+            complete: function (data) {
+                $(".loader").hide();
+                $('#guardar-conacyt').html('Guardar');
+                $("#guardar-conacyt").prop("disabled", false);
+                $("#btn-closeCO").prop("disabled", false);
+            }
         });
          
     });

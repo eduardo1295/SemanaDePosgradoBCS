@@ -13,11 +13,13 @@ use App\Modalidad;
 use App\Posgrado;
 use DB;
 use App\Carrusel;
+use App\Constancia;
 use Auth;
 use App\VistaLogin;
 use Illuminate\Support\Str as Str;
 use Jenssegers\Date\Date;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class SemanaController extends Controller
 {
@@ -36,26 +38,29 @@ class SemanaController extends Controller
     public function index()
     {
         
+
         $semana = Semana::select('id_semana','nombre','desc_general','url_logo','url_convocatoria','id_sede','fecha_inicio',DB::raw("(DATE_FORMAT(fecha_inicio,'%Y-%m-%d'))as n") ,'fecha_fin')->where('vigente',1)->first();
         //dd($semana->n);
-        $fInicio = $semana->fecha_inicio;
-        $fInicio = str_replace('-','',$fInicio);
-        //dd($semana->fecha_fin);
-        $fFin = $semana->fecha_fin;
-        $fFin = str_replace('-','',$fFin);
-        /*$datetimeI = DateTime::createFromFormat('Ymd', $fInicio );
-        $datetimeF = DateTime::createFromFormat('Ymd', $fFin);
-        setlocale(LC_TIME,'es_ES.UTF-8');
-        $date = Carbon::now();
-        */
-        //dd(Carbon::parse("2018-03-20")->formatLocalized('%d %B %Y'));
-        //dd(Date::now()->format( ' lj FYH: i: s ' ));
-        //dd($cadena->formatLocalized('l'));
-        $fInicio = new Date($semana->fecha_inicio);
-        $fFin = new Date($semana->fecha_fin);
-        $fInicio = $fInicio->format('l d').' de '.$fInicio->format('F');
-        $fFin = $fFin->format('l, d').' de '.$fFin->format('F').' del '.$fFin->format('Y');
-        
+        if($semana != NULL){
+            
+            $fInicio = $semana->fecha_inicio;
+            $fInicio = str_replace('-','',$fInicio);
+            //dd($semana->fecha_fin);
+            $fFin = $semana->fecha_fin;
+            $fFin = str_replace('-','',$fFin);
+            /*$datetimeI = DateTime::createFromFormat('Ymd', $fInicio );
+            $datetimeF = DateTime::createFromFormat('Ymd', $fFin);
+            setlocale(LC_TIME,'es_ES.UTF-8');
+            $date = Carbon::now();
+            */
+            //dd(Carbon::parse("2018-03-20")->formatLocalized('%d %B %Y'));
+            //dd(Date::now()->format( ' lj FYH: i: s ' ));
+            //dd($cadena->formatLocalized('l'));
+            $fInicio = new Date($semana->fecha_inicio);
+            $fFin = new Date($semana->fecha_fin);
+            $fInicio = $fInicio->format('l d').' de '.$fInicio->format('F');
+            $fFin = $fFin->format('l, d').' de '.$fFin->format('F').' del '.$fFin->format('Y');
+        }
         //$cadena->format('l'); 
 
         //$cadena = $datetimeI->format('l').$datetimeF->format('l');
@@ -75,7 +80,7 @@ class SemanaController extends Controller
 
         
         $institucionSede =  Institucion::select('id','nombre','url_logo','sede','latitud','longitud')->where('sede', 1)->first();
-        $carrusel = Carrusel::select('id','link_web','url_imagen')->orderBy('fecha_actualizacion','desc')->get();
+        $carrusel = Carrusel::select('id','orden','link_web','url_imagen')->orderBy('orden','asc')->get();
         //dd(Auth::guard()->user());
         $vistas = VistaLogin::All();
         return view('Maqueta2', compact(['semana','noticias','instituciones','institucionSede','carrusel','cadena','fInicio','fFin','vistas']));
@@ -106,6 +111,17 @@ class SemanaController extends Controller
      */
     public function store(StoreSemanaRequest $request)
     {
+        $contarSemanas = DB::select('SELECT COUNT(id_semana) AS contar FROM semanas');
+        $constanciaDefecto = "";
+       
+        if($contarSemanas[0]->contar == 0){
+            $constanciaDefecto = DB::select('SELECT id_semana, cComponentes, cHTML, cCSS, url_imagen_fondo FROM constancias where id = ?', [1]);
+        }else{
+            $semanaMayor = DB::select('SELECT id_semana FROM semanas WHERE id_semana = (SELECT MAX(id_semana) FROM semanas)');
+            $constanciaDefecto = DB::select('SELECT id_semana, cComponentes, cHTML, cCSS, url_imagen_fondo FROM constancias WHERE id_semana = ?', [$semanaMayor[0]->id_semana]);
+        }
+        
+
         $dom = new \domdocument();
         $dom->loadHtml('<?xml encoding="utf-8" ?>'.$request->contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
@@ -164,17 +180,38 @@ class SemanaController extends Controller
         
         $semana->url_convocatoria = $nuevo_convocatoria;
         $semana->vigente= 1;
+        
         if(auth('admin')->user())
             $semana->creado_por= 0;
         else{
             $semana->creado_por= auth()->user()->id;
         }
         $semana->save();
+
+
+        $pathDirectorio = public_path('storage/img/constancia');
+        if(is_dir($pathDirectorio)==false){
+            mkdir($pathDirectorio);
+            mkdir($pathDirectorio.'/'.$semana->id_semana);
+        }else{
+            if(is_dir($pathDirectorio.'/'.$semana->id_semana)==false)
+                mkdir($pathDirectorio.'/'.$semana->id_semana);
+        }
+          
+        $url_fondo_constancia = "";
+        if($contarSemanas[0]->contar >= 0){
+            $fondo = explode("/", $constanciaDefecto[0]->url_imagen_fondo);
+            $pathDirectorio = public_path('storage/img/constancia').'/'.$constanciaDefecto[0]->id_semana.'/'.$fondo[count($fondo)-1];
+            $pathDirectorio2 = public_path('storage/img/constancia').'/'.$semana->id_semana.'/fondo_'.$semana->id_semana;
+            if(File::exists($pathDirectorio)){
+                $success = File::copy($pathDirectorio, $pathDirectorio2);
+                $url_fondo_constancia = $pathDirectorio2;
+            }   
+        }
+
+        $consulta = DB::update('UPDATE semanas SET vigente = 0 WHERE id_semana <> ?', [$semana->id_semana]);
+
         if($semana){
-            DB::table('semanas')
-            ->where('vigente', 1)
-            ->where('id_semana','!=',$semana->id_semana)
-            ->update(['vigente' => 0]);
             DB::table('instituciones')
             ->where('sede', 1)
             ->where('id','!=',$request->id_institucion)
@@ -189,6 +226,14 @@ class SemanaController extends Controller
             DB::table('rol_usuario')->insert(
                 ['id_usuario' => $buscarUsuario[0]->id, 'id_rol' => 2]
             );
+            $constanciaNueva = new Constancia([
+                'id_semana' => $semana->id_semana,
+                'cComponentes' => $constanciaDefecto[0]->cComponentes,
+                'cHTML' => $constanciaDefecto[0]->cHTML,
+                'cCSS' => $constanciaDefecto[0]->cCSS,
+                'url_imagen_fondo' => $url_fondo_constancia,
+            ]);
+            $constanciaNueva->save();
         }
         return \Response::json($semana);
     }
@@ -305,27 +350,7 @@ class SemanaController extends Controller
             $semana->actualizado_por= auth()->user()->id;
         }
         $semana->save();
-        /*if($semana){
-            DB::table('semanas')
-            ->where('vigente', 1)
-            ->where('id_semana','!=',$semana->id_semana)
-            ->update(['vigente' => 0]);
-            DB::table('instituciones')
-            ->where('sede', 1)
-            ->where('id','!=',$request->id_institucion)
-            ->update(['sede' => 0]);
-            DB::table('instituciones')
-            ->where('id',$request->id_institucion)
-            ->update(['sede' => 1]);
-            DB::table('rol_usuario')
-            ->where('id_rol',2)
-            ->delete();
-        }*/
         if($semana){
-            DB::table('semanas')
-            ->where('vigente', 1)
-            ->where('id_semana','!=',$semana->id_semana)
-            ->update(['vigente' => 0]);
             DB::table('instituciones')
             ->where('sede', 1)
             ->where('id','!=',$request->id_institucion)
@@ -361,7 +386,8 @@ class SemanaController extends Controller
                 'errors' => $cadena,
             ], 422);
         }else{
-            $semana = Semana::where('id_semana',$id)->delete();
+            $semana = Semana::where('id_semana',$id)->forceDelete();
+            DB::delete('DELETE FROM constancias WHERE id_semana = ?', [$id]);
             return \Response::json($semana);
         }
     }
@@ -376,7 +402,7 @@ class SemanaController extends Controller
             return abort(403);
         }
         $busqueda = $request->busqueda;
-        $semanas = DB::select(DB::raw('SELECT id_semana AS id, id_sede, semanas.nombre AS semana_nombre, url_convocatoria,'.
+        $semanas = DB::select(DB::raw('SELECT id_semana AS id, id_sede, semanas.nombre AS semana_nombre, vigente, url_convocatoria,'.
             ' fecha_inicio, fecha_fin, semanas.creado_por, semanas.actualizado_por, semanas.fecha_actualizacion, '.
             ' instituciones.nombre AS institucion_nombre'.
             ' FROM semanas, instituciones'.
@@ -386,7 +412,14 @@ class SemanaController extends Controller
         
         return datatables()->of($semanas)
         ->addColumn('action', 'admin.acciones')
-        ->rawColumns(['action'])
+        ->addColumn('vigente', function($semanas){
+            if($semanas->vigente)
+                return '<div style="width:100%;text-align:center"><input style="width: 20px; height: 20px;" type="checkbox" onchange="cambio(this)" checked value="'.$semanas->id.'"></div>';
+            else
+                return '<div style="width:100%;text-align:center"><input style="width: 20px; height: 20px;" type="checkbox" onchange="cambio(this)" value="'.$semanas->id.'"></div>';
+                
+        })
+        ->rawColumns(['action','vigente'])
         ->addIndexColumn()
         ->toJson();
         
@@ -412,7 +445,49 @@ class SemanaController extends Controller
         return view('admin.semana.verConvocatoria', compact(['semana','instituciones']));
     }
 
-   
+    public function verManual(){
+        $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones WHERE deleted_at IS NULL;
+         "));
+        $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+        
+        return view('admin.semana.verManual', compact(['semana','instituciones']));
+    }
+
+    public function vigencia(Request $request){
+        
+        if($request->ajax()){
+            $contarSemanas = DB::select('SELECT COUNT(id_semana) AS contar FROM semanas');
+            $idSemana = $request->semana_id;
+            $buscarSemana = DB::select('SELECT id_semana, vigente FROM semanas WHERE id_semana = ?', [$idSemana]);
+            if($contarSemanas[0]->contar == 1 && $buscarSemana[0]->vigente==1)
+            {
+                $cadena = 'Error: Debe existir un evento vigente.';
+                return \Response::json([
+                    'errors' => $cadena,
+                ], 422);
+            }
+            
+            $consulta = "";
+            if($buscarSemana[0]->vigente==1){
+                $consulta = DB::update('UPDATE semanas SET vigente = 0 WHERE id_semana = ?', [$buscarSemana[0]->id_semana]);
+            }else if($buscarSemana[0]->vigente==0){
+                $consulta = DB::update('UPDATE semanas SET vigente = 1 WHERE id_semana = ?', [$buscarSemana[0]->id_semana]);
+                $consulta = DB::update('UPDATE semanas SET vigente = 0 WHERE id_semana <> ?', [$buscarSemana[0]->id_semana]);
+            }
+            return \Response::json($consulta);
+        }else{
+            return abort(403);
+        }
+    }
     
      
 }

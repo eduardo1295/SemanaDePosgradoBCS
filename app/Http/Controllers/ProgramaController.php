@@ -201,12 +201,22 @@ class ProgramaController extends Controller
     public function destroy(Request $request, $id)
     {
         if($request->ajax()){
-        $carrusel = Programa::where('id',$id)->delete();
-        return \Response::json($carrusel);
-    }else{
+            $programa = DB::select('SELECT id_programa from alumnos where id_programa = ?', [$id]);
+            
+            if(count($programa)>0){
+                $cadena = 'No se puede eliminar el programa porque tiene alumnos asignados.';
+                return \Response::json([
+                    'errors' => $cadena,
+                ], 422);
+            }else{
+                $programaEliminar = Programa::where('id',$id)->delete();
+                return \Response::json($programaEliminar);
+            }   
+        }else{
             return abort(403);
         }
     }
+
     public function reactivar(Request $request, $id)
     {
         if($request->ajax()){

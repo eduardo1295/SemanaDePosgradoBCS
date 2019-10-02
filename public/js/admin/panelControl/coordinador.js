@@ -83,7 +83,7 @@
             $.get(ruta, function (data) {
                 //ocultar errores
                 $('#password').attr("placeholder", "Nueva contraseña");
-                $('#coordinadorCrudModal').html("Editar coordinador:" + data.nombre);
+                $('#coordinadorCrudModal').text("Editar coordinador:" + data.nombre);
                 $('#btn-save').val("editar");
                 $('#coordinador-crud-modal').modal('show');
                 $('#coordinador_id').val(data.id);

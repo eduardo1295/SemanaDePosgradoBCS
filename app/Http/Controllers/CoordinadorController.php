@@ -150,7 +150,10 @@ class CoordinadorController extends Controller
     {
         
         
-        if(auth()->user()){
+        if ($request->ajax() && (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) )) {
+            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,puesto','instituciones:id,nombre')->where('id',$id)->first();
+            return \Response::json($usuario);
+        }else if(auth()->user()){
             if(auth()->user()->id != $id)
                 return abort(403);
                 $instituciones = DB::select(DB::raw("
@@ -167,10 +170,7 @@ class CoordinadorController extends Controller
             $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
             $usuario = $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('directortesis:id')->where('id',$id)->first();
             return view('coordinador.editarCoordinador',compact(['usuario','semana','instituciones']));
-        }else if (auth('admin')->user() && $request->ajax()) {
-            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('coordinadores:id,puesto','instituciones:id,nombre')->where('id',$id)->first();
-            return \Response::json($usuario);
-        }
+        } 
     }
 
     /**

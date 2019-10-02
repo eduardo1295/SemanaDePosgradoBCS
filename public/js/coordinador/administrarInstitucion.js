@@ -153,7 +153,7 @@ $("input[name='verDir']").change(function (e) {
                 
                 $('#password_di').val("");
                 $('#password').attr("placeholder", "Nueva contraseña");
-                $('#directorCrudModal').html("Editar director:" + data.nombre);
+                $('#directorCrudModal').text("Editar director:" + data.nombre);
                 $('#btn-save-director').val("editar");
                 $('#director-crud-modal').modal('show');
                 $('#director_id').val(data.id);

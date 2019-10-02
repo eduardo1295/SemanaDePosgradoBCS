@@ -348,6 +348,7 @@ class modalidadController extends Controller
         }
         $modalidad->niveles()->delete();
         */
+        
         $modalidad->delete();
     }else{
         return abort(403);

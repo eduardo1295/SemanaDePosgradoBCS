@@ -3,15 +3,25 @@
         <div class="container-fluid pl-2 pr-0 pl-sm-2 pr-sm-0 pl-md-4 pr-md-4 pl-lg-5 pr-lg-5  ">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 d-flex justify-content-center">
-                    @isset($semana->url_logo)
-                        <a href="{{route('pag.inicio')}}"><img src="{{url('storage/img/semanaLogo')}}/{{ $semana->url_logo }}" width="120px" height="65px" alt=""></a>    
-                    @endisset
+                    @if(isset($semana->url_logo))
+                        <a href="{{route('pag.inicio')}}"><img src="{{url('storage/img/semanaLogo')}}/{{ $semana->url_logo.'/?'.date('H:i:s') }}" width="120px" height="65px" alt=""></a>    
+                    @else
+                        <a href="{{route('pag.inicio')}}"><img src="{{url('storage/img/semanaLogo/logo_evento.png'.'/?'.date('H:i:s'))}}" width="120px" height="65px" alt=""></a>    
+                    @endif
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 d-flex justify-content-end align-items-end">
                     <div class="navigation" style="width:100%">
                         <div id="navigation" style="float:right">
                             <ul>
-                                <li class="active"><a href="{{route('pag.inicio')}}">Incio</a></li>
+                                    <li class="has-sub"> <div class="aliga">Principal <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
+                                        <ul>
+                                        <li><a href="{{route('pag.inicio')}}">Inicio</a></li>
+                                        <li><a href="{{route('noticias.index')}}">Noticias</a></li>
+                                        <li><a href="{{route('semana.verManual')}}">Manual de usuario</a></li>
+                                            {{-- <li><ahref="route('modalidad.mostrarModalidad','Entrevista')">Ayuda</a></li> --}}
+                                        </ul>
+                                    </li>
+                                {{-- <li class="active"><a href="{{route('pag.inicio')}}">Incio</a></li> --}}
                                 <li><a href="{{route('modalidad.index')}}" class="">Modalidades</a> </li>
                                 <li class="has-sub"> <div class="aliga">Programa <i class="fas fa-angle-down d-none d-xl-inline-block "></i></div> 
                                     <ul>

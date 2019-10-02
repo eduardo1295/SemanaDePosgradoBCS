@@ -24,6 +24,7 @@
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th class="all">Orden</th>
                         <th class="all">Imagen</th>
                         <th class="not-mobile">Link</th>
                         <th>Última actualización</th>
@@ -32,6 +33,7 @@
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>

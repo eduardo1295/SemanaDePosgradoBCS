@@ -47,7 +47,7 @@ function registerSummernote(element, placeholder, max, callbackMax) {
             ['para', ['ul', 'ol', 'listStyles', 'paragraph']],
             ['table', ['table']],
             ['insert', ['link']],//, 'hr'
-            ['view', ['fullscreen']], //, 'codeview'
+            //['view', ['fullscreen']], //, 'codeview'
         ],
         popover: {
             image: [

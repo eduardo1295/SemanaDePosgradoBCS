@@ -63,7 +63,7 @@ $('body').on('click', '.editarSesion', function () {
     
     $.get(ruta, function (data) {
         
-        $('#sesionCrudModal').html("Editar sesion: " + data.nombre);
+        $('#sesionCrudModal').text("Editar sesion: " + data.nombre);
         $('#btn-save').val("editar");
         $('#sesion-crud-modal').modal('show');
         $('#sesion_id').val(data.id_sesion);

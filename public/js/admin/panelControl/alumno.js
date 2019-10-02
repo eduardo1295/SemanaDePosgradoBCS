@@ -87,7 +87,7 @@
             
             $.get(ruta, function (data) {
                 //ocultar errores
-                $('#alumnoCrudModal').html("Editar alumno: " + data[0].nombre + ' ' + data[0].primer_apellido + ' ' + data[0].segundo_apellido);
+                $('#alumnoCrudModal').text("Editar alumno: " + data[0].nombre + ' ' + data[0].primer_apellido + ' ' + data[0].segundo_apellido);
                 $('#btn-save-alumno').val("editar");
                 $('#alumno-crud-modal').modal('show');
                 

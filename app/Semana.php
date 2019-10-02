@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Semana extends Model
 {
@@ -33,5 +34,10 @@ class Semana extends Model
     public function instituciones()
     {
         return $this->hasMany(Institucion::class, 'id', 'id_sede');
+    }
+
+    public function contarSemanas(){
+        $contarSemanas = DB::select('SELECT COUNT(id_semana) AS contar FROM semanas WHERE vigente=1');
+        return $contarSemanas[0];
     }
 }

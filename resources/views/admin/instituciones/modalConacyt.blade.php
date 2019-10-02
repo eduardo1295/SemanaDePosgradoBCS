@@ -25,7 +25,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger cerrar-modal" id="btn-close" data-dismiss="modal"
+                <button type="button" class="btn btn-danger cerrar-modal" id="btn-closeCO" data-dismiss="modal"
                     value="cerrar">Cancelar
                 </button>
                 <button type="button" class="btn btn-primary" id="guardar-conacyt" value="create">Guardar

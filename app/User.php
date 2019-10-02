@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\ResetPassword;
+use DB;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -24,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'email', 'nombre', 'primer_apellido', 
         'segundo_apellido', 'password', 'id_institucion', 
-        'id_semana', 'creado_por', 'actualizado_por', 'primerContrasena',
+        'creado_por', 'actualizado_por', 'primerContrasena',
     ];
 
     /**
@@ -51,6 +52,18 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'primerContrasena'];
+
+
+    // /**
+    //  * Get the user's nombre.
+    //  *
+    //  * @param  string  $value
+    //  * @return string
+    //  */
+    // public function getNombreAttribute($value)
+    // {
+    //     return htmlspecialchars($value);
+    // }
 
     public function roles()
     {
@@ -101,6 +114,16 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return false;
+    }
+
+    public function institucionActiva()
+    {
+        $idInstitucion = auth()->user()->id_institucion;
+        $institucion = DB::select('SELECT id, deleted_at from instituciones WHERE id = ?', [$idInstitucion]);
+        if($institucion[0]->deleted_at == NULL)
+            return true;
+        else
+            return false;
     }
 
     /**

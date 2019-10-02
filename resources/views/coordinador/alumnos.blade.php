@@ -72,6 +72,11 @@
         <form id="alumnosImportarForm" name="alumnosImportarForm" class="pl-0 col-12 form-horizontal"
             enctype="multipart/form-data">
             <strong><label for="">Importar alumnos:</label></strong><br>
+            
+                    <div class="col-12 alert alert-warning" role="alert">
+                        Es necesario registrar previamente los directores de tesis
+                    </div>
+            
             <div class="form-row">
                 <div class="form-group col-md-8">
                     <div class="custom-file">
@@ -79,6 +84,7 @@
                         <label for="archivo" class="custom-file-label">Seleccionar Archivo</label>
                     </div>
                 </div>
+                
                 <div class="form-group col-md-4" style="text-align:start">
 
                     <a onclick="importarAlumnos();"  class="btn btn-primary importarAlumnos"

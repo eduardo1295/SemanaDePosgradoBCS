@@ -52,7 +52,7 @@ $('body').on('click', '.editarLocacion', function () {
     var ruta = rutaBaseLocacion + '/' + locacion_id + "/editar";
     reiniciar();
     $.get(ruta, function (data) {
-        $('#locacionCrudModal').html("Editar locacion: " + data.nombre);
+        $('#locacionCrudModal').text("Editar locacion: " + data.nombre);
         $('#btn-save').val("editar");
         $('#locacion-crud-modal').modal('show');
         $('#id_locacion').val(data.id_locacion);

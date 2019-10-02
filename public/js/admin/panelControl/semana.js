@@ -27,7 +27,7 @@
 
         table = $('#semanas').DataTable({
             "order": [
-                [6, "desc"]
+                [7, "desc"]
             ],
             pageLength: 5,
             lengthMenu: [
@@ -51,13 +51,18 @@
             "columns": [{
                     data: 'id',
                     name: 'id',
-                    'visible': false,
+                    visible: false,
                     searchable: false
                 },
                 {
                     data: 'semana_nombre',
                     orderable: false,
                     searchable: true
+                },
+                {
+                    data: 'vigente',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: 'institucion_nombre',
@@ -104,11 +109,11 @@
                 },
                 {
                     responsivePriority: 2,
-                    targets: 7
+                    targets: 8
                 },
                 {
                     width: 105,
-                    targets: 7
+                    targets: 8
                 }
             ]
         });
@@ -132,7 +137,7 @@
         $.get(ruta, function (data) {
             $('#semanaForm').trigger("reset");
             var unique = $.now();
-            $('#semanaCrudModal').html("Editar semana: " + data.nombre);
+            $('#semanaCrudModal').text("Editar semana: " + data.nombre);
             $('#btn-save').val("editar");
             $('#semana-crud-modal').modal('show');
             $('#semana_id').val(data.id_semana);
@@ -339,7 +344,7 @@
                                 } else {
                                     oTable.fnDraw(false);
                                 }
-                                mostrarSnack("Evento eliminado exitosamente.");
+                                mostrarSnack("Borrado exitoso.");
                             },
                             error: function (xhr, ajaxOptions, thrownError) {
                                 if (xhr.status == 422) {
@@ -422,3 +427,38 @@
         }
     });
 
+    function cambio(checkEnviar){
+            var semana_id = $(checkEnviar).val();
+            var ruta = rutaBaseSemana + '/vigencia';
+            
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: ruta,
+                type: "POST",
+                data: {semana_id:semana_id},
+                dataType: 'JSON',
+                
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function (data) {
+                    var oTable = $('#semanas').dataTable();
+                    oTable.fnDraw(false);
+                    
+                    mostrarSnack("Actualización exitosa.");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if (xhr.status == 422) {
+                        var oTable = $('#semanas').dataTable();
+                        oTable.fnDraw(false);
+                        var errores = xhr.responseJSON['errors'];
+                        if(errores!=null)
+                            mostrarSnackError(errores);
+                    }
+                },
+                complete: function (data) {
+                    $(".loader").hide();
+                }
+
+            });
+    };

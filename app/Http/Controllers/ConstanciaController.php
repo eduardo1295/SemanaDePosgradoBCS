@@ -29,21 +29,22 @@ class ConstanciaController extends Controller
     public function index()
     {
         $semana = Semana::select('id_semana','nombre','url_logo')->where('vigente',1)->first();
-        $semanaquery = DB::select(DB::raw('SELECT semanas.id_semana, '.
-		' semanas.url_logo,vigente'.		
-		' FROM semanas'.
-        ' WHERE vigente = 1'));
+        $semanaquery = DB::select(DB::raw("SELECT semanas.id_semana,
+		 semanas.url_logo,vigente
+		 FROM semanas
+         WHERE vigente = 1"));
         
         $instituciones = DB::select(DB::raw('SELECT instituciones.id, '.
 		' instituciones.url_logo,nombre,siglas'.
 		' FROM instituciones'.
 		' WHERE '.
         ' deleted_at IS NULL ORDER BY nombre'));
-
+        if(count($semanaquery)==0){
+            return view('constancias.diseno',compact(['semana']));
+        }
         $constancia = DB::select('SELECT constancias.id, constancias.cComponentes, constancias.cHTML, constancias.cCSS, constancias.url_imagen_fondo'.
-		' FROM constancias'.
+        ' FROM constancias'.
         ' WHERE id_semana = ?',[$semanaquery[0]->id_semana]);
-
 
         $coordinadores = DB::select(DB::raw('SELECT CONCAT(users.nombre," ", users.primer_apellido, " ", users.segundo_apellido) AS coordinador_nombre,'.
 		' coordinadores.puesto,instituciones.siglas'.

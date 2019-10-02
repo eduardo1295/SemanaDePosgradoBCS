@@ -44,7 +44,7 @@
                 }
             },
             "columns": [
-                { data: 'id', name: 'id', 'visible': false },
+                { data: 'id', name: 'id', 'visible': false,orderable: false, searchable: false  },
                 { data: 'nombre', searchable: true },
                 
                 { data: 'fecha_actualizacion', searchable: false },
@@ -116,7 +116,7 @@
 
 
         $.get(ruta, function (data) {
-            $('#modalidadCrudModal').html("Editar modalidad: " + data.modalidad.nombre);
+            $('#modalidadCrudModal').text("Editar modalidad: " + data.modalidad.nombre);
             $('#btn-save').val("editar");
             $('#modalidad-crud-modal').modal('show');
             $('#modalidad_id').val(data.modalidad.id_modalidad);
@@ -299,7 +299,7 @@
         var modalidad_id = $(this).data("id");
         $.confirm({
             columnClass: 'col-md-6',
-            title: '¿Desea eliminar la modalidad titulada ' + titulo + '?',
+            title: '¿Desea eliminar la modalidad?',
             content: 'Este mensaje activará automáticamente \'cancelar\' en 8 segundos si no responde.',
             autoClose: 'cancelAction|8000',
             buttons: {

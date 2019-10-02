@@ -47,18 +47,17 @@ Route::resource('noticias', 'NoticiaController')->except(['create']);
 Route::post('semanas/vistaPrevia', 'SemanaController@vistaPrevia')->name('semana.vistaPrevia');
 Route::get('admin/semana/listSemanas', 'SemanaController@listSemanas')->name('semana.listSemanas');
 Route::get('/convocatoria', 'SemanaController@verConvocatoria')->name('semana.verConvocatoria');
-
-//Route::get('/admin', 'SemanaController@indexAdmin')->name('admin.indexadmin');
-
-
+Route::get('/manual', 'SemanaController@verManual')->name('semana.verManual');
 Route::get('/', 'SemanaController@index')->name('pag.inicio');
 Route::get('/home', 'SemanaController@index');
+Route::post('semana/vigencia','SemanaController@vigencia');
 Route::resource('semana', 'SemanaController')->except(['create','show']);
 
 
 Route::get('admin/carruselImagenes', 'CarruselController@carrusel')->name('carrusel.VerCarrusel');
 Route::get('carrusel/listCarrusel', 'CarruselController@listCarrusel')->name('carrusel.listCarrusel');
-Route::put('admin/carrusel/reactivar/{carrusel}', 'CarruselController@reactivar')->name('carrusel.reactivar');
+Route::post('carrusel/bajar/{carrusel}', 'CarruselController@ordenarBajar')->name('carrusel.ordenarBajar');
+Route::post('carrusel/subir/{carrusel}', 'CarruselController@ordenarSubir')->name('carrusel.ordenarSubir');
 Route::resource('carrusel', 'CarruselController')->except(['create','show']);
 
 Route::get('admin/coordinadores', 'CoordinadorController@coordinador')->name('coordinador.VerCoodinadores');

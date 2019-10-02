@@ -44,6 +44,7 @@ class UpdateSemanaRequest extends FormRequest
     public function attributes()
     {
         return [
+            'id_institucion' => 'institución',
             'fecha_inicio' => 'Inicio del evento',
             'fecha_fin' => 'final del evento',
             'contenido' => 'información general',

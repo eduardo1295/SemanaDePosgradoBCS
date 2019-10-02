@@ -97,12 +97,14 @@
                         <span><strong>Carrusel</strong></span>
                     </a>
                 </li>
+               
                 <li>
                     <a href="{{route('sesion.VerSesiones')}}">
                         <i class="fas fa-clock"></i>
                         <span><strong>Sesiones</strong></span>
                     </a>
-                </li>
+                </li>                        
+                
                 <li>
                     <a href="{{route('programa.ProgramaGeneral')}}">
                         <i class="fas fa-calendar-alt"></i>

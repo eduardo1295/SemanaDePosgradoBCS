@@ -3,188 +3,308 @@
 @section('links')
 
 <style>
-    @if(count($vistas) > 2)
-    .contenidoSubPrincipal,#titulo1,#titulo2,#carruselInstituciones .cantidadParticipantes{
-        background: {{$vistas[2]->url_imagen}} !important ; 
-        color: {{$vistas[3]->url_imagen}} !important;
+    @if(count($vistas) > 2) .contenidoSubPrincipal,
+    #titulo1,
+    #titulo2,
+    #carruselInstituciones .cantidadParticipantes {
+        background: {
+                {
+                $vistas[2]->url_imagen
+            }
+        }
+
+         !important;
+
+        color: {
+                {
+                $vistas[3]->url_imagen
+            }
+        }
+
+         !important;
     }
-    .contenidoTexto{
-        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; background: {{$vistas[4]->url_imagen}} !important ;
-        color: {{$vistas[5]->url_imagen}} !important;}
-    .contenidoTexto a{
-        color: {{$vistas[5]->url_imagen}} !important;
+
+    .contenidoTexto {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+
+        background: {
+                {
+                $vistas[4]->url_imagen
+            }
+        }
+
+         !important;
+
+        color: {
+                {
+                $vistas[5]->url_imagen
+            }
+        }
+
+         !important;
     }
-    .contenidoCarrusel, .contenidoCarrusel a,.contenidoCarrusel .row div {
-        border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; 
-        background: {{$vistas[4]->url_imagen}} !important ;
-        color: {{$vistas[5]->url_imagen}} !important;}
-    .nota{
-        background: {{$vistas[4]->url_imagen}} !important ;
-        color: {{$vistas[5]->url_imagen}} !important; }
-    .nota a{
-        color: {{$vistas[5]->url_imagen}} !important; }
-    .nota:before{
-        background: -webkit-linear-gradient(top, white, {{$vistas[4]->url_imagen}}) !important; }
-    .contenidoCarrusel button{
-        color: {{$vistas[5]->url_imagen}} !important; }
+
+    .contenidoTexto a {
+        color: {
+                {
+                $vistas[5]->url_imagen
+            }
+        }
+
+         !important;
     }
+
+    .contenidoCarrusel,
+    .contenidoCarrusel a,
+    .contenidoCarrusel .row div {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+
+        background: {
+                {
+                $vistas[4]->url_imagen
+            }
+        }
+
+         !important;
+
+        color: {
+                {
+                $vistas[5]->url_imagen
+            }
+        }
+
+         !important;
+    }
+
+    .nota {
+        background: {
+                {
+                $vistas[4]->url_imagen
+            }
+        }
+
+         !important;
+
+        color: {
+                {
+                $vistas[5]->url_imagen
+            }
+        }
+
+         !important;
+    }
+
+    .nota a {
+        color: {
+                {
+                $vistas[5]->url_imagen
+            }
+        }
+
+         !important;
+    }
+
+    .nota:before {
+        background: -webkit-linear-gradient(top, white, {
+                    {
+                    $vistas[4]->url_imagen
+                }
+            }
+
+        ) !important;
+    }
+
+    .contenidoCarrusel button {
+        color: {
+                {
+                $vistas[5]->url_imagen
+            }
+        }
+
+         !important;
+    }
+    }
+
     @endif
 
 </style>
-    <link rel="stylesheet" href="{{asset('css/Maqueta2.css')}}" >
-    <link rel="stylesheet" href="{{asset('css/imagenes/imagenes.css')}}">
-    <script src="{{ asset('js/owl.carousel.min.js') }}"> </script>
-    
-    <script>
-        $(function () { $('[data-toggle="tooltip"]').tooltip() })
-    </script>
-    <style>
-        .holo { border-left: 10px solid white; }
-    </style>
+<link rel="stylesheet" href="{{asset('css/Maqueta2.css')}}">
+<link rel="stylesheet" href="{{asset('css/imagenes/imagenes.css')}}">
+<script src="{{ asset('js/owl.carousel.min.js') }}"> </script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+</script>
+<style>
+    .holo {
+        border-left: 10px solid white;
+    }
+
+</style>
 @endsection
 @section('contenido')
 @include('layoutsM2.carrusel')
+@if ($semana!= NULL)
 <div class="container-fluid mt-4 mb-4 pl-1 pr-1 pl-md-5 pr-md-5">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 contenidoPrincipal">
         @include('layoutsM2.informacion')
     </div>
 </div>
+@endif
+
 <div class="container-fluid pl-1 pr-1 pl-md-5 pr-md-5">
-        
+
     <div class="col-12  mb-4" id="noticias">
         <div class="row">
             @if (count($noticias) > 0)
-        <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
-                <h2 class="mb-0 rounded-left">Noticias</h2>
-                <h4 class="mb-0"> <a href="{{route('noticias.index')}}" class="badge badge-pill badge-primary mb-0 align-self-center">Ver todas
-                        <i class="fas fa-arrow-circle-right"></i></a> </h4>
+                @if ($semana!= NULL)
+                    <div class="col-12 col-md-9  d-flex justify-content-between align-items-center " id="titulo1">
+                @else
+                    <div class="col-12 mt-4 d-flex justify-content-between align-items-center " id="titulo1">
+                @endif
+                    <h2 class="mb-0 rounded-left">Noticias</h2>
+                    <h4 class="mb-0"> <a href="{{route('noticias.index')}}"
+                            class="badge badge-pill badge-primary mb-0 align-self-center">Ver todas
+                            <i class="fas fa-arrow-circle-right"></i></a> </h4>
+                </div>
+                @if ($semana!= NULL)
+                <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
+                    <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+                </div>
+                @endif
+                @else
+                @if ($semana!= NULL)
+                <div class="pl-0 col-12 d-none d-md-block bordeizqarriba bordederarriba" id="titulo2">
+                    <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+                </div>
+                @endif
+                @endif
+                @php
+                $cont=0;
+                @endphp
             </div>
-            <div class="pl-0 col-3 d-none d-md-block holo bordeizqarriba bordederarriba" id="titulo2">
-                <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
-            </div>
-            @else
-            <div class="pl-0 col-12 d-none d-md-block bordeizqarriba bordederarriba" id="titulo2">
-                <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
-            </div>
-            @endif
-            @php
-            $cont=0;
-            @endphp
-        </div>
-        <div class="row">
-            @foreach ($noticias as $noticia)
-            @if ($cont == 0 && count($noticias) == ($cont+1) )
-            <div class=" nota n3 n1 col-12 col-md mb-lg-0 " id="contenido">
-                @elseif($cont == 0)
-                <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido" >
-                    @elseif(count($noticias) == ($cont+1))
-                    <div class=" nota n3 col-12 col-md mb-lg-0 " id="contenido">
-                        @else
-                        <div class=" nota col-12 col-md mb-lg-0 " id="contenido">
-                            @endif
-                            <div class="media-with-text  mt-4">
-                                <h2 class="h5 mb-2">
-                                    <a href="{{ route('noticias.show', $noticia->id_noticia)}}"
-                                        id="tituloNoticia">
-                                        {{$noticia->titulo}}
-                                    </a>
-                                </h2>
-                                <small><span class="mb-2 d-block post-date">
-                                        {{$noticia->fecha_actualizacion}}</span></small>
-                                <p> {{$noticia->resumen}} </p>
-                            </div>
-                        </div>
-                        @php
-                        $cont++;
-                        @endphp
-                        @endforeach
-                        <div class="pl-0 mt-3 col-12 d-block d-md-none  bordeizqarriba bordederarriba" id="titulo2">
-                            <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
-                        </div>
-                        @if (count($noticias) > 0)
-                        <div class=" nota col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">
+            <div class="row">
+                @foreach ($noticias as $noticia)
+                @if ($cont == 0 && count($noticias) == ($cont+1) )
+                <div class=" nota n3 n1 col-12 col-md mb-lg-0 " id="contenido">
+                    @elseif($cont == 0)
+                    <div class=" nota n1 col-12 col-md mb-lg-0 " id="contenido">
+                        @elseif(count($noticias) == ($cont+1))
+                        <div class=" nota n3 col-12 col-md mb-lg-0 " id="contenido">
                             @else
-                            <div class="col-12  mx-auto ubicacionSede" id="contenido">
+                            <div class=" nota col-12 col-md mb-lg-0 " id="contenido">
                                 @endif
+                                <div class="media-with-text  mt-4">
+                                    <h2 class="h5 mb-2">
+                                        <a href="{{ route('noticias.show', $noticia->id_noticia)}}" id="tituloNoticia">
+                                            {{$noticia->titulo}}
+                                        </a>
+                                    </h2>
+                                    <small><span class="mb-2 d-block post-date">
+                                            {{$noticia->fecha_actualizacion}}</span></small>
+                                    <p> {{$noticia->resumen}} </p>
+                                </div>
+                            </div>
+                            @php
+                            $cont++;
+                            @endphp
+                            @endforeach
+                            <div class="pl-0 mt-3 col-12 d-block d-md-none  bordeizqarriba bordederarriba" id="titulo2">
+                                <h2 class="pl-3 mb-0 rounded-left">Sede</h2>
+                            </div>
+                            @if ($semana!= NULL)
+                            @if (count($noticias) > 0)
+                            
+                            <div class=" nota col-12 col-md-3 n4 mx-auto ubicacionSede" id="contenido">
+                                @else
+                                <div class="col-12  mx-auto ubicacionSede" id="contenido">
+                                    @endif
 
-                                <div class="row">
-                                    <div class="col-12">
-                                        @if (isset($institucionSede))
-                                        <p class="text-md-center pt-2">{{$institucionSede->nombre}} </p>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="col-3 col-md-12 d-flex  justify-content-center">
-                                                <img id="logoSede" class="mx-auto"
-                                                    src="{{url('storage/img/logo')}}/{{ $institucionSede->url_logo.'/?'.date('H:i:s') }}" alt="">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @if (isset($institucionSede))
+                                            <p class="text-md-center pt-2">{{$institucionSede->nombre}} </p>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="col-3 col-md-12 d-flex  justify-content-center">
+                                                    <img id="logoSede" class="mx-auto"
+                                                        src="{{url('storage/img/logo')}}/{{ $institucionSede->url_logo.'/?'.date('H:i:s') }}"
+                                                        alt="">
+                                                </div>
                                             </div>
+                                            <a class="nav-link active lead text-md-right" data-toggle="modal"
+                                                href="#cerrar">
+                                                <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
+                                            @endif
                                         </div>
-                                        <a class="nav-link active lead text-md-right" data-toggle="modal"
-                                            href="#cerrar">
-                                        <i class="fas fa-map-marker-alt"></i> Mostrar Ubicacion </a>
-                                        @endif
+
                                     </div>
 
                                 </div>
-
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-            </div>
 
-            @isset($instituciones)
-            @if (count($instituciones) > 0)
-
+                @isset($instituciones)
+                @if (count($instituciones) > 0)
 
 
-            <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
-                <div id="fondo">
-                    <div class="container-fluid" id="contenido">
-                        <div class="row cantidadParticipantes" id="titulo">
-                            <h2 class="w-100">Instituciones Participantes</h2>
-                        </div>
-                        <div class="row contenidoCarrusel">
-                            <div class=" col-12 pb-4 pt-4">
-                                @include('layoutsM2.carrusel2')
+
+                <section id="carruselInstituciones" class="mb-5 pl-1 pr-1 pl-md-5 pr-md-5">
+                    <div id="fondo">
+                        <div class="container-fluid" id="contenido">
+                            <div class="row cantidadParticipantes" id="titulo">
+                                <h2 class="w-100">Instituciones Participantes</h2>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            @endif
-            @endisset
-            @if (isset($institucionSede))
-            <section id="modales">
-                <div class="modal fade" id="cerrar" tabindex="-1" role="dialog" aria-label="modalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="modalLabel">
-                                    Ubicación sede
-                                </h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row mt-2 justify-content-center">
-                                    <div class="embed-responsive embed-responsive-16by9 mt-3">
-                                        <iframe
-                                            src="http://maps.google.com/maps?q={{$institucionSede->latitud}}, {{$institucionSede->longitud}}&z=15&output=embed"
-                                            frameborder="0" style="border:0" allowfullscreen>
-                                        </iframe>
-                                    </div>
+                            <div class="row contenidoCarrusel">
+                                <div class=" col-12 pb-4 pt-4">
+                                    @include('layoutsM2.carrusel2')
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                            </div>
                         </div>
-
                     </div>
-            </section>
-            @endif
+                </section>
+                @endif
+                @endisset
+                @if (isset($institucionSede))
+                <section id="modales">
+                    <div class="modal fade" id="cerrar" tabindex="-1" role="dialog" aria-label="modalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modalLabel">
+                                        Ubicación sede
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row mt-2 justify-content-center">
+                                        <div class="embed-responsive embed-responsive-16by9 mt-3">
+                                            <iframe
+                                                src="http://maps.google.com/maps?q={{$institucionSede->latitud}}, {{$institucionSede->longitud}}&z=15&output=embed"
+                                                frameborder="0" style="border:0" allowfullscreen>
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+
+                        </div>
+                </section>
+                @endif
 
 
-            {{-- END SECCION BLADE--}}
+                {{-- END SECCION BLADE--}}
 
-            @endsection
+                @endsection

@@ -144,20 +144,26 @@ var cambio =  function(opcion,opcion2){
                             var insertar = '<div class="row" style="max-height:100px; overflow-y: scroll">';
                             var x = 0;
                             var aaa = parseInt($("#sesion_id").val());
-                            console.log(aaa);
+                            
                             $.each(registros, function (key, value) {
                                 var aux = value;
+                                insertar = '<div class="row" style="max-height:100px; overflow-y: scroll">';
                                 insertar += '<div class="col-4 col-sm-4 col-md-3 col-lg-3 border float-left pt-3 pb-3 pl-2 pr-1">'; 
                                 if(value.id_sesion == 0  || value.id_sesion != aaa )
-                                    insertar += '<input type="checkbox" onclick="mano(this)" value="'+value.id_trabajo+'" name="trabajos[]"> ' ;
+                                    insertar += '<input type="checkbox" onclick="mano(this)" value="'+value.id_trabajo+'" name="trabajos[]"><span id="nombre'+value.id_trabajo+'" ></span> ' ;
                                 else
-                                    insertar += '<input type="checkbox" checked onclick="mano(this)" value="'+value.id_trabajo+'" name="trabajos[]"> ' ;
+                                    insertar += '<input type="checkbox" checked onclick="mano(this)" value="'+value.id_trabajo+'" name="trabajos[]"><span id="nombre'+value.id_trabajo+'"></span> ' ;
 
-                                    insertar += value.usuarios['nombre'] +' '+value.usuarios['primer_apellido'] +' '+ value.usuarios['segundo_apellido'] + '</div>';
+                                insertar += '</div></div>';
+                                
+                                $('#mostrar_alumnos').html(insertar);
+                                $("#nombre"+value.id_trabajo).text(value.usuarios['nombre'] +' '+value.usuarios['primer_apellido'] +' '+ value.usuarios['segundo_apellido']);
+                                //insertar += value.usuarios['nombre'] +' '+value.usuarios['primer_apellido'] +' '+ value.usuarios['segundo_apellido'] + '</div>';
                                 x++
+                                
                             });
-                            insertar += '</div>';
-                            $('#mostrar_alumnos').html(insertar);
+                            
+                            
                         }else{
                             $('#mostrar_alumnos').html("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>No hay alumnos registrados para esta modalidad</strong> <button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span></button></div>");
                         }

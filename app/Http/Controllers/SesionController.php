@@ -249,16 +249,21 @@ class SesionController extends Controller
 
     public function sesiones(){
         $semana = Semana::select('id_semana','nombre','url_logo','fecha_inicio','fecha_fin')->where('vigente',1)->first();
+        
         $modalidades = Modalidad::select('id_modalidad','nombre')->get();
-        $horarios = DB::select(DB::raw("SELECT ADDDATE('$semana->fecha_inicio', INTERVAL @i:=@i+1 DAY) AS DAY FROM (
-        SELECT a.a
-        FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
-        CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
-        CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
-        ) a
-        JOIN (SELECT @i := -1) r1
-        WHERE 
-        @i < DATEDIFF('$semana->fecha_fin','$semana->fecha_inicio')"));
+            
+        if($semana != NULL){
+            $horarios = DB::select(DB::raw("SELECT ADDDATE('$semana->fecha_inicio', INTERVAL @i:=@i+1 DAY) AS DAY FROM (
+            SELECT a.a
+            FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+            CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+            CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+            ) a
+            JOIN (SELECT @i := -1) r1
+            WHERE 
+            @i < DATEDIFF('$semana->fecha_fin','$semana->fecha_inicio')"));
+        }
+        
         //dd($horarios[0]->DAY);
         $locaciones = DB::select("select locaciones.id_locacion as id_locacion, locaciones.nombre as nombre from locaciones,semanas where semanas.vigente = 1 AND id_sede = id_institucion");
         return view('admin.modalidad.adminSesiones',compact(['semana','modalidades','horarios','locaciones']));
@@ -317,33 +322,4 @@ class SesionController extends Controller
         return \Response::json($alumnos);
     }
 
-    
-    public function verPdf($id){
-        /*
-        //dd($id);
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->setPaper('letter','landscape');
-        //$pdf->loadHTML('<h1>Test</h1>');
-        $trabajo = Trabajo::select('id_alumno','modalidad','titulo')
-                ->with('alumnos:id,id_programa','usuarios:id,id_institucion,nombre,primer_apellido,segundo_apellido')
-                ->where('modalidad',$id)->get();
-        $modalidad = Modalidad::all()->where('id_modalidad',$id)->first();
-        $semana = Semana::All()->last();
-        $fInicio = new Date($semana->fecha_inicio);
-        $fFin = new Date($semana->fecha_fin);
-        $fInicio = $fInicio->format('l d').' de '.$fInicio->format('F');
-        $fFin = $fFin->format('l d').' de '.$fFin->format('F').' del '.$fFin->format('Y');
-        $pdf->loadView('prueba',['trabajo' => $trabajo, 'modalidad' => $modalidad, 'semana' => $semana ,'fInicio' => $fInicio, 'fFin' => $fFin]);
-
-        $output = $pdf->output();
-        File::put(public_path().'\documentos\modalidad\\'.$modalidad->nombre .'.pdf',$output);
-        //$path = public_path() .'/documentos/modalidades/'. $modalidad->nombre;
-        //$output->move(public_path('documentos/modalidades/'), 'aaa');
-        //file_put_contents($path, $output);
-        //file_put_contents("/path/to/file.pdf", $output);
-        //return $pdf->stream('Video');
-        */
-        return redirect()->route('modalidad.mostrarModalidad',$modalidad->nombre);
-
-    }
 }

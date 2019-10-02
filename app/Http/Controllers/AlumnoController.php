@@ -14,13 +14,10 @@ use App;
 use DB;
 use File;
 use Jenssegers\Date\Date;
-//use App\Http\Requests\coodinador\StoreCoordinadorRequest;
-//use App\Http\Requests\usuarios\UpdateAlumnoRequest;
 use App\Http\Requests\alumno\StoreAlumnoRequest;
 use App\Http\Requests\alumno\UpdateAlumnoRequest;
 use App\Http\Requests\excel\ExcelRequest;
 use Excel;
-use App\Http\Requests\usuarios\UpdateEditarPerfilRequest;
 use Validator;
 use App\Exports\AlumnosExportar;
 use Illuminate\Support\Arr;
@@ -133,9 +130,11 @@ class AlumnoController extends Controller
              FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
              FROM instituciones WHERE deleted_at IS NULL;
              "));
-                $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
-                $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
-                return view('alumno.editarAlumno',compact(['usuario','semana','instituciones']));
+            $semana = Semana::select('id_semana as id','url_logo','url_convocatoria')->where('vigente',1)->first();
+            $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:id,semestre,num_control','instituciones:id,nombre')->where('id',$id)->first();
+            //$usuario->nombre = $usuario->getNombre();
+            //dd($usuario);
+            return view('alumno.editarAlumno',compact(['usuario','semana','instituciones']));
             
         }else if ($request->ajax() && (auth('admin')->user() || (auth()->user() && auth()->user()->hasRoles(['coordinador'])) )) {
             $usuario = User::select('id','id_institucion','nombre','primer_apellido','segundo_apellido','email')->with('alumnos:alumnos.id,alumnos.id_programa,semestre,num_control,alumnos.id_director','instituciones:id,nombre','programas:programas.id,programas.id_programa,programas.nombre')->where('id',$id)->first();
@@ -378,13 +377,6 @@ class AlumnoController extends Controller
             ->toJson();   
         }
     }
-    /*
-    public function editarAlumno(){
-        dd(auth()->user()->nombre);
-        
-        return view('alumno.editarAlumno');
-    }
-    */
 
     /**
      * Display a listing of the resource.
@@ -411,9 +403,28 @@ class AlumnoController extends Controller
 
     public function generarGafete(){
         $semana = Semana::select('nombre','url_logo')->where('vigente',1)->first();
-        $instituciones = DB::select(DB::raw("SELECT instituciones.id,instituciones.url_logo,nombre,siglas 
+        $instituciones = DB::select(DB::raw("
+        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
+		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
+		 instituciones.url_logo, instituciones.ciudad, 
+		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
+		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
+		 (SELECT email 
+		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
+         FROM instituciones WHERE deleted_at IS NULL;
+         "));
+        
+        
+                              
+        if(!auth()->user()->institucionActiva()){
+            $institucionActiva = false;
+            return view('alumno.mostrarGafete', compact(['semana','instituciones','institucionActiva']));
+        }                      
+        
+        $institucionesGafete = DB::select(DB::raw("SELECT instituciones.id,instituciones.url_logo,nombre,siglas 
                                              FROM instituciones WHERE deleted_at IS NULL ORDER BY nombre"));
-                                        
+
         $alumno = User::select('id','id_institucion','email','nombre','primer_apellido','segundo_apellido')
                         ->with('alumnos:alumnos.id,num_control','instituciones:id,nombre,siglas')
                         ->where('id',auth()->user()->id)->first();
@@ -422,7 +433,7 @@ class AlumnoController extends Controller
         $logo =  asset('/storage/img/semanaLogo/'.$semana->url_logo);
         $imagenes .= '<img style="vertical-align: top;width:100px;height:70px;"src = "'.$logo.'">';
         
-        foreach ($instituciones as $insticion){
+        foreach ($institucionesGafete as $insticion){
             $ruta =  asset('/storage/img/logo/'.$insticion->url_logo);
             $imagenes .= '<img alt=" " style="vertical-align: top; width:100px;height:80px;"src = "'.$ruta.'"> ';
         }
@@ -437,19 +448,9 @@ class AlumnoController extends Controller
         $output = $pdf->output();
         File::put(public_path().'/storage/gafete.pdf',$output);
 
-        $instituciones = DB::select(DB::raw("
-        SELECT instituciones.id, instituciones.nombre, instituciones.latitud, instituciones.longitud,
-		 instituciones.siglas, instituciones.telefono, instituciones.direccion_web,
-		 instituciones.url_logo, instituciones.ciudad, 
-		 CONCAT(instituciones.calle,' #', instituciones.numero, ', col. ', instituciones.colonia , ', C.P.', instituciones.cp) AS domicilio,
-		 (SELECT CONCAT(users.nombre,' ', users.primer_apellido, ' ', users.segundo_apellido) 
-		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS coordinador_nombre,
-		 (SELECT email 
-		 FROM users WHERE users.deleted_at IS NULL AND users.id_institucion = instituciones.id AND id IN (SELECT id_usuario FROM rol_usuario WHERE id_rol= 3)) AS email
-         FROM instituciones WHERE deleted_at IS NULL;
-         "));
+        
 
-        return view('alumno.mostrarGafete', compact(['semana','instituciones','pdf']));
+        return view('alumno.mostrarGafete', compact(['semana','instituciones']));
         //return view('alumno.generarGafete',compact(['alumno','imagenes','semana']));   
     }
     public function ExportarAlumnos(){
@@ -464,7 +465,7 @@ class AlumnoController extends Controller
             $consulta = "SELECT num_control,u.nombre, primer_apellido,segundo_apellido,semestre, nivel
                             FROM users u , alumnos a, programas p
                             WHERE u.deleted_at IS NULL AND a.id = u.id AND u.id_institucion = $id_institucion AND a.id_programa = p.id
-                            ORDER BY semestre ASC, num_control ASC";
+                            ORDER BY nivel DESC, semestre ASC, num_control ASC";
             $alumnos = DB::select($consulta);
 
 

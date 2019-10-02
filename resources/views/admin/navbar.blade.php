@@ -3,7 +3,12 @@
         <div class="col-12">
             <div class="row d-flex  justify-content-center justify-content-xl-between align-items-center">
                 <div class="col-12 col-sm-3 col-md-3 d-flex justify-content-center justify-content-md-start">
-                    <a href="{{ route('admin.index')}}"><img id="logoMenu" src="{{ asset('/storage/img/semanaLogo').'/'.$semana->url_logo.'/?'.date('H:i:s') }}" width="120px" alt=""></a>
+                        
+                    @if(isset($semana->url_logo))
+                        <a href="{{ route('admin.index')}}"><img id="logoMenu" src="{{ asset('/storage/img/semanaLogo').'/'.$semana->url_logo.'/?'.date('H:i:s') }}" width="120px" alt=""></a>
+                    @else
+                        <a href="{{ route('admin.index')}}"><img id="logoMenu" src="{{ asset('/storage/img/semanaLogo/logo_evento.png').'/?'.date('H:i:s') }}" width="120px" alt=""></a>
+                    @endif
                 </div>
                 <div class="col-12 col-sm-9 col-md-6 col-xl-6  pt-3 pt-md-0">
                     <h1 class="text-center">Área Administrativa</h1>

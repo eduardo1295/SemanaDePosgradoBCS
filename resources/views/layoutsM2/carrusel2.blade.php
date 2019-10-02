@@ -28,31 +28,31 @@
                                 <i class="fa  fa-map-marker"></i> 
                             </div> 
                             <div class="col-11 pl-0 text-left">
-                                    <span>Ubicaci&oacute;n </span>{{$institucion->domicilio}}
+                                    <strong><span>Ubicaci&oacute;n: </span></strong>{{$institucion->domicilio}}
                             </div>
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="fa fa-phone"></i> 
                             </div> 
                             <div class="col-11 pl-0">
-                                    <span>Tel&eacute;fono:</span> {{$institucion->telefono}} 
+                              <strong><span>Tel&eacute;fono:</span></strong> {{$institucion->telefono}} 
                             </div>
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="fa  fa-envelope"> </i> 
                             </div>
                             <div class="col-11 pl-0">
-                                    <span>Email: </span><a href="mailto:{{ $institucion->email }}">{{$institucion->email}}</a> 
+                              <strong><span>Email: </span></strong><a href="mailto:{{ $institucion->email }}">{{$institucion->email}}</a> 
                             </div> 
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center"> 
                                 <i class="fas fa-globe"></i> 
                             </div>
                             <div class="col-11 pl-0 text-left">
-                                    <span>Direcci&oacute;n Web: </span><a href="{{$institucion->direccion_web}}" > {{$institucion->siglas}}</a> 
+                              <strong><span>Direcci&oacute;n Web: </span></strong><a href="{{$institucion->direccion_web}}" > {{$institucion->siglas}}</a> 
                             </div>  
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="far fa-address-card"></i> 
                             </div>
                             <div class="col-11 pl-0">
-                                <span>Coordinador: </span>{{ $institucion->coordinador_nombre }} 
+                              <strong><span>Coordinador: </span></strong>{{ $institucion->coordinador_nombre }} 
                            </div>
                             <div class="col-1 pl-0  d-flex justify-content-end align-items-center">
                                 <i class="fas fa-location-arrow"></i>

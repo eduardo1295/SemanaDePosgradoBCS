@@ -56,7 +56,11 @@ class InstitucionController extends Controller
         $institucion->nombre = $request->nombre;
         $institucion->siglas = $request->siglas;        
         //$institucion->id_institucion = date("Yhis");
-        $institucion->direccion_web = $request->direccion_web;
+        $url = $request->direccion_web;
+        if (strlen($request->direccion_web)>0 && !preg_match("~^(?:f|ht)tps?://~i", $url)) {
+            $url = "http://" . $url;
+        }
+        $institucion->direccion_web = $url;
         $institucion->telefono = $request->telefono;
         $institucion->ciudad = $request->ciudad;
         $institucion->calle = $request->calle;
@@ -160,7 +164,11 @@ class InstitucionController extends Controller
 
         $institucion->nombre = $request->nombre;
         $institucion->siglas = $request->siglas;
-        $institucion->direccion_web = $request->direccion_web;
+        $url = $request->direccion_web;
+        if (strlen($request->direccion_web)>0 && !preg_match("~^(?:f|ht)tps?://~i", $url)) {
+            $url = "http://" . $url;
+        }
+        $institucion->direccion_web = $url;
         $institucion->telefono = $request->telefono;
         $institucion->ciudad = $request->ciudad;
         $institucion->calle = $request->calle;
@@ -183,10 +191,25 @@ class InstitucionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $institucion = Institucion::where('id',$id)->delete();
-        return \Response::json($institucion);
+        // $institucion = Institucion::where('id',$id)->delete();
+        // return \Response::json($institucion);
+        if($request->ajax()){
+            //$institucionBuscar = DB::select('SELECT id_institucion from users where id_institucion = ?', [$id]);
+            
+            // if(count($institucionBuscar)>0){
+            //     $cadena = 'No se puede eliminar la instituciones porque tiene usuarios registrados.';
+            //     return \Response::json([
+            //         'errors' => $cadena,
+            //     ], 422);
+            // }else{
+                $institucion = Institucion::where('id',$id)->delete();
+                return \Response::json($institucion);
+            // }   
+        }else{
+            return abort(403);
+        }
     }
 
     /**

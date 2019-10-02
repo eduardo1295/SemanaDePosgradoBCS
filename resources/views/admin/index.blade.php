@@ -26,6 +26,7 @@
                     <tr>
                         <th>id_semana</th>
                         <th class="all">Nombre</th>
+                        <th class="all">Vigente</th>
                         <th>Sede</th>
                         <th>Fecha inicio</th>
                         <th>Fecha fin</th>
@@ -36,6 +37,7 @@
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>

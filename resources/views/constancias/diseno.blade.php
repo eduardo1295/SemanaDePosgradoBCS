@@ -1,20 +1,17 @@
 @extends('admin.plantilla')
 @section('contenido')
+@php
+$semanaContar = new App\Semana();
+$contadorS = $semanaContar->contarSemanas();
+@endphp
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex d-md-block justify-content-center justify-content-md-start">
             <h1>Diseño constancia de participación</h1>
         </div>
     </div>
-{{-- 
-    <div class="d-xl-none">
-        <div class="row">
-            <div class="col-12" style="text-align:center;color:red">
-                <h2>Es necesario un dispositivo con pantalla más grande para editar el diseño de la constancia</h2>
-            </div>
-        </div>
-    </div>
- --}}
+@if ($contadorS->contar>0)
     <div>
         <div class="row">
             <div class="col-12 mx-auto">
@@ -43,76 +40,79 @@
         </div>
 
     </div>
+    @else
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="display-4 alert alert-info mt-3" role="alert" style="text-align:center">Es necesario registrar un evento para editar el diseño de la constancia de participación.</h1>
+                </div>
+            </div>
+        </div>
+    @endif
     @endsection
     @section('scripts')
-    <script>
-        var imagenes = @json($imagenes);
-        var coordinadores = @json($coordinadores);
-        var constancia = @json($constancia);
-        var rutaImagenes = "{{ route('constancia.guardarImagenes')}}";
-        var ruta = "{{ route('constancia.store')}}";
-    </script>
-    <script src="{{ asset('js/admin/panelControl/constancia.js') }}"></script>
-    <script src="{{ asset('/plugins/grapesjs/js/vistaprevia.js') }}"></script>
-    <script src="{{ asset('/plugins/grapesjs/js/grapesjs.js') }}"></script>
-    <script src="{{ asset('/plugins/grapesjs/js/gjs-blocks-basic.js') }}"></script>
-    {{--<script src="{{ asset('/plugins/grapesjs/js/grapesjs/grapesjs-touch.min.js') }}"></script>--}}
-    <script src="{{ asset('/plugins/grapesjs/js/gjs-conf2.js') }}"></script>
-    
-    <script>
-      
-     
-        const getAllComponents = (model, result = []) => {
-            result.push(model);
-            model.components().each(mod => getAllComponents(mod, result))
-            return result;
-        }
+    @if ($contadorS->contar>0)
+        <script>
+            var imagenes = @json($imagenes);
+            var coordinadores = @json($coordinadores);
+            var constancia = @json($constancia);
+            var rutaImagenes = "{{ route('constancia.guardarImagenes')}}";
+            var ruta = "{{ route('constancia.store')}}";
+        </script>
+        <script src="{{ asset('js/admin/panelControl/constancia.js') }}"></script>
+        <script src="{{ asset('/plugins/grapesjs/js/vistaprevia.js') }}"></script>
+        <script src="{{ asset('/plugins/grapesjs/js/grapesjs.js') }}"></script>
+        <script src="{{ asset('/plugins/grapesjs/js/gjs-blocks-basic.js') }}"></script>
+        {{--<script src="{{ asset('/plugins/grapesjs/js/grapesjs/grapesjs-touch.min.js') }}"></script>--}}
+        <script src="{{ asset('/plugins/grapesjs/js/gjs-conf2.js') }}"></script>
+        
+        <script>
+        
+        
+            const getAllComponents = (model, result = []) => {
+                result.push(model);
+                model.components().each(mod => getAllComponents(mod, result))
+                return result;
+            }
 
-    </script>
+        </script>
+    @endif
     @endsection
 
-    @section('estilos')
-    
-    <link rel="stylesheet" href="{{ asset('/plugins/grapesjs/css/grapes.min.css') }}">
-    <style>
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-        }
-
-        .gjs-badge {
-            display: none !important
-        }
-
-        .gjs-clm-tags,
-        .gjs-devices-c,
-        .gjs-pn-devices-c {
-            display: none !important
-        }
-
-        .gjs-pn-views {
-            border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-            right: -198px;
-            width: 190px;
-            z-index: 4
-        }
-
-        .gjs-pn-views-container {
-            height: 600px;
-            padding: 42px 0 0;
-            right: -198px;
-            width: 190px;
-            overflow: auto;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
-
-
-        .custom-file-input~.custom-file-label::after {
-            content: "Elegir";
-        }
-
-    </style>
-
-
-    @endsection
+@section('estilos')
+    @if ($contadorS->contar>0)
+        <link rel="stylesheet" href="{{ asset('/plugins/grapesjs/css/grapes.min.css') }}">
+        <style>
+            body,
+            html {
+                height: 100%;
+                margin: 0;
+            }
+            .gjs-badge {
+                display: none !important
+            }
+            .gjs-clm-tags,
+            .gjs-devices-c,
+            .gjs-pn-devices-c {
+                display: none !important
+            }
+            .gjs-pn-views {
+                border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+                right: -198px;
+                width: 190px;
+                z-index: 4
+            }
+            .gjs-pn-views-container {
+                height: 600px;
+                padding: 42px 0 0;
+                right: -198px;
+                width: 190px;
+                overflow: auto;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            }
+            .custom-file-input~.custom-file-label::after {
+                content: "Elegir";
+            }
+        </style>
+    @endif
+@endsection

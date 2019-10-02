@@ -10,8 +10,14 @@ function doneResizing(){
             const element = document.querySelector("#menuAd");
 
             document.getElementById('contenedor').setAttribute("style","width: calc(100% + "+resPantalla+"px);z-index:0;background:#ececec;");
+            var tamano = document.getElementById('contenedor').offsetWidth;
+            if(document.body.scrollWidth>tamano){
+                var tPantalla = $(window).width();
+                var x = document.body.scrollWidth-tPantalla;
+                document.getElementById('contenedor').setAttribute("style","width: calc(100% + "+x+"px);z-index:0;background:#ececec;");
+            }
     }else{
-    var tPantalla = $(window).width();
+            var tPantalla = $(window).width();
             var x = document.body.scrollWidth-tPantalla;
             document.getElementById('contenedor').setAttribute("style","width: calc(100% + "+x+"px);z-index:0;background:#ececec;");
     }
